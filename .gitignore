@@ -1,5 +1,10 @@
-# folders
-node_modules
-db/
 
-compiled/
+
+# ignore folders
+node_modules
+db/*
+!db/.knex/
+db/.knex/*
+!db/.knex/knexfile.js
+
+
