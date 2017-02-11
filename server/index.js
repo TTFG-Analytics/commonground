@@ -7,12 +7,14 @@ app.use(bodyParser.urlencoded());
 
 module.exports = app;
 
-var knex = require('knex')({
-    client: 'sqlite3',
-    connection: {
-      filename: '../db/.knex/dev.sqlite3'
-    }
-  });
+// var knex = require('knex')({
+//     client: 'sqlite3',
+//     connection: {
+//       filename: '../db/.knex/dev.sqlite3'
+//     }
+//   });
+
+app.use(express.static(path.join(__dirname, '../public/')));
 
 app.post('/import', function(req,res){
   console.log("this is the req.body: ", req.body);
@@ -23,10 +25,10 @@ app.post('/import', function(req,res){
 })
 
 
-app.get('/', function (req, res) {
-  console.log('JUST REFRESHED!');
-  res.sendFile(path.resolve(__dirname + '/../client/index.html'));
-});
+// app.get('/', function (req, res) {
+//   console.log('JUST REFRESHED!');
+//   // res.sendFile(path.resolve(__dirname + '/../public/index.html'));
+// });
 
 var port = process.env.PORT || 4040;
 app.listen(port);

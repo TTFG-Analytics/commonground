@@ -1,129 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>CommonGround</title>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <title>Common Ground</title>
+  </head>
+  <body>
+    <div id="app">
+    </div>
 
-  <form class="user-fetcher">
-    <h4>id:</h4>
-    <input id="id" type="text" name="id" />
-    <h4>name:</h4>
-    <input id="name" type="text" name="name" />
-    <h4>age:</h4>
-    <input id="age" type="text" name="age" />
-    <h4>hometown:</h4>
-    <input id="hometown" type="text" name="hometown" />
-    <h4>gender:</h4>
-    <input id="gender" type="text" name="gender" />
-    <h4>race:</h4>
-    <input id="race" type="text" name="race" />
-    <h4>occupation:</h4>
-    <input id="occupation" type="text" name="occupation" />
-    <h4>politicalLeaning:</h4>
-    <input id="politicalLeaning" type="text" name="politicalLeaning" />
-    <h4>religion:</h4>
-    <input id="religion" type="text" name="religion" />
-    <h4>yearlyIncome:</h4>
-    <input id="yearlyIncome" type="text" name="yearlyIncome" />
-     <h4>createdAt:</h4>
-    <input id="createdAt" type="text" name="createdAt" />
-    <button type="submit">Insert and Fetch CG data</button>
-</form>
+    <!-- <script src="../dist/app_bundle.js"></script> -->
+    <script src="/bundle.js"></script>
 
-<br></br>
+  </body>
 
-<table class="top-repos" border='1'>
-  <tr>
-    <th>id:</th>
-    <th>name:</th>
-    <th>age:</th>
-    <th>hometown:</th>
-    <th>gender:</th>
-    <th>race:</th>
-    <th>occupation:</th>
-    <th>politicalLeaning:</th>
-    <th>religion:</th>
-    <th>yearlyIncome:</th>
-    <th>createdAt:</th>
-  </tr>
-</table>
-
-<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script>
-
-$('.user-fetcher').submit(function(e) {
-  var user = {
-    id: document.getElementById("id").value,
-    name: document.getElementById("name").value,
-    age: document.getElementById("age").value,
-    hometown: document.getElementById("hometown").value,
-    gender: document.getElementById("gender").value,
-    race: document.getElementById("race").value,
-    occupation: document.getElementById("occupation").value,
-    politicalLeaning: document.getElementById("politicalLeaning").value,
-    religion: document.getElementById("religion").value,
-    yearlyIncome: document.getElementById("yearlyIncome").value,
-    createdAt: document.getElementById("createdAt").value
-  }
-  e.preventDefault();
-  console.log("The user data is 2: ", user);
-
-  $.ajax({
-      url: '/import',
-      type: 'POST',
-      // contentType: 'application/x-www-form-urlencoded',
-      data: user,
-      success: function(data) {
-        console.log("data from server: ", data);
-        //resolve(data);
-      },
-      error: function(error){
-        console.error("There was an error on: ", error);
-        //reject(error);
-      }
-    })
-  });
-
-
-  // new Promise( function(resolve, reject) {
-  //   $.ajax({
-  //     url: '/import',
-  //     type: 'POST',
-  //     contentType: 'application/json',
-  //     data: JSON.stringify(user),
-  //     success: function(data) {
-  //       console.log("IMPORT: ", data);
-  //       resolve(data);
-  //     },
-  //     error: function(error){
-  //       console.error("There was an error on: ", error);
-  //       reject(error);
-  //     }
-  //   })
-  //   })
-
-    // .then( function(data) {
-    // new Promise( function(resolve, reject) {
-    //   $.ajax({
-    //     url: '/fetch',
-    //     type: "GET",
-    //     contentType: 'application/json',
-    //     data: JSON.stringify(data),
-    //     success: function(data) {
-    //       console.log("FETCH: ", data);
-    //       resolve(data);
-    //     },
-    //     error: function(error){
-    //       console.error("There was an error on: ", error);
-    //       reject(error);
-    //     }
-    //   })
-    // })
-  // });
-
-</script>
-
-
-</body>
 </html>
