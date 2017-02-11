@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/ttfg-analytics/commonground/issues"
   },
-  "homepage": "https://github.com/ttfg-analytics/commonground#readme"
+  "homepage": "https://github.com/ttfg-analytics/commonground#readme",
+  "devDependencies": {
+    "webpack": "^2.2.1"
+  }
 }
