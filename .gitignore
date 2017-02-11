@@ -3,6 +3,8 @@
 # ignore folders
 node_modules
 db/*
-
-# don't ingore
+!db/.knex/
+db/.knex/*
 !db/.knex/knexfile.js
+
+
