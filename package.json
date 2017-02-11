@@ -18,7 +18,7 @@
     "express": "^4.14.1",
     "fetch": "^1.1.0",
     "knex": "^0.12.6",
-    "sqlite3": "^3.1.8"
+    "pg": "^6.1.2"
   },
   "bugs": {
     "url": "https://github.com/ttfg-analytics/commonground/issues"
