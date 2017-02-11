@@ -3,16 +3,18 @@
 module.exports = {
 
   development: {
-    client: 'sqlite3',
+    client: 'postgresql',
     connection: {
-      filename: './dev.sqlite3'
+      database: 'cg_db',
+      user:     'Greg',
+      password: 'commonground'
     }
   },
 
   staging: {
     client: 'postgresql',
     connection: {
-      database: 'my_db',
+      database: 'cg_db',
       user:     'username',
       password: 'password'
     },
@@ -28,7 +30,7 @@ module.exports = {
   production: {
     client: 'postgresql',
     connection: {
-      database: 'my_db',
+      database: 'cg_db',
       user:     'username',
       password: 'password'
     },
