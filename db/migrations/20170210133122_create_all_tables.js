@@ -8,26 +8,26 @@ exports.up = function(knex, Promise) {
       t.integer('gender').nullable();
       t.integer('race').nullable();
       t.integer('occupation').nullable();
-      t.integer('politicalLeaning').nullable();
+      t.integer('politicalleaning').nullable();
       t.integer('religion').nullable();
-      t.integer('yearlyIncome').nullable();
-      t.dateTime('createdAt').notNull();
+      t.integer('yearlyincome').nullable();
+      t.timestamp('createdat').defaultTo(knex.fn.now());
     }),
 
     knex.schema.createTable('discussion', function(t) {
-      t.increments('id').unsigned().primary();
-      t.string('input').notNull();
-      t.dateTime('createdAt').notNull();
-      t.integer('user_id').notNull();
+      t.increments('id').unsigned().primary()
+      t.string('input').notNull()
+      t.timestamp('createdat').defaultTo(knex.fn.now())
+      t.integer('user_id').unsigned()
       t.foreign('user_id').references('users.id');
     }),
 
     knex.schema.createTable('commonground', function(t) {
       t.increments('id').unsigned().primary();
       t.string('input').notNull();
-      t.dateTime('createdAt').notNull();
-      t.integer('discussion_id').notNull();
-      t.integer('user_id').notNull();
+      t.timestamp('createdat').defaultTo(knex.fn.now());
+      t.integer('discussion_id')
+      t.integer('user_id')
       t.foreign('discussion_id').references('discussion.id');
       t.foreign('user_id').references('users.id');
     }),
@@ -37,9 +37,9 @@ exports.up = function(knex, Promise) {
       t.string('input').notNull();
       t.integer('upvoteCounter').notNull();
       t.integer('downvoteCounter').notNull();
-      t.dateTime('createdAt').notNull();
-      t.integer('commonground_id').notNull();
-      t.integer('user_id').notNull();
+      t.timestamp('createdat').defaultTo(knex.fn.now());
+      t.integer('commonground_id')
+      t.integer('user_id')
       t.foreign('commonground_id').references('commonground.id');
       t.foreign('user_id').references('users.id');
     }),
@@ -47,9 +47,9 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('vote', function(t) {
       t.increments('id').unsigned().primary();
       t.binary('input').notNull();
-      t.dateTime('createdAt').notNull();
-      t.integer('comment_id').notNull();
-      t.integer('user_id').notNull();
+      t.timestamp('createdat').defaultTo(knex.fn.now());
+      t.integer('comment_id')
+      t.integer('user_id')
       t.foreign('comment_id').references('comment.id');
       t.foreign('user_id').references('users.id');
     })
