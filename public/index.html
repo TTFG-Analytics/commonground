@@ -5,9 +5,9 @@
 </head>
 <body>
 
+
   <form class="user-fetcher">
-    <h4>id:</h4>
-    <input id="id" type="text" name="id" />
+    <h1>USER AUTH</h1>
     <h4>name:</h4>
     <input id="name" type="text" name="name" />
     <h4>age:</h4>
@@ -20,19 +20,22 @@
     <input id="race" type="text" name="race" />
     <h4>occupation:</h4>
     <input id="occupation" type="text" name="occupation" />
-    <h4>politicalLeaning:</h4>
-    <input id="politicalLeaning" type="text" name="politicalLeaning" />
+    <h4>politicalleaning:</h4>
+    <input id="politicalleaning" type="text" name="politicalleaning" />
     <h4>religion:</h4>
     <input id="religion" type="text" name="religion" />
-    <h4>yearlyIncome:</h4>
-    <input id="yearlyIncome" type="text" name="yearlyIncome" />
-     <h4>createdAt:</h4>
-    <input id="createdAt" type="text" name="createdAt" />
-    <button type="submit">Insert and Fetch CG data</button>
-</form>
+    <h4>yearlyincome:</h4>
+    <input id="yearlyincome" type="text" name="yearlyincome" />
 
-<br></br>
+    <h1>CREATE DISCUSSION</h1>
+    <h4>discussinput:</h4>
+    <input id="discussinput" type="text" name="discussinput" />
 
+    <button type="submit">SUBMIT</button>
+  </form>
+
+<!-- <br></br> -->
+<!--
 <table class="top-repos" border='1'>
   <tr>
     <th>id:</th>
@@ -42,85 +45,44 @@
     <th>gender:</th>
     <th>race:</th>
     <th>occupation:</th>
-    <th>politicalLeaning:</th>
+    <th>politicalleaning:</th>
     <th>religion:</th>
-    <th>yearlyIncome:</th>
-    <th>createdAt:</th>
+    <th>yearlyincome:</th>
+    <th>createdat:</th>
   </tr>
-</table>
+</table> -->
 
 <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script>
 
 $('.user-fetcher').submit(function(e) {
   var user = {
-    id: document.getElementById("id").value,
     name: document.getElementById("name").value,
     age: document.getElementById("age").value,
     hometown: document.getElementById("hometown").value,
     gender: document.getElementById("gender").value,
     race: document.getElementById("race").value,
     occupation: document.getElementById("occupation").value,
-    politicalLeaning: document.getElementById("politicalLeaning").value,
+    politicalleaning: document.getElementById("politicalleaning").value,
     religion: document.getElementById("religion").value,
-    yearlyIncome: document.getElementById("yearlyIncome").value,
-    createdAt: document.getElementById("createdAt").value
+    yearlyincome: document.getElementById("yearlyincome").value,
+    discussinput: document.getElementById("discussinput").value,
   }
   e.preventDefault();
-  console.log("The user data is 2: ", user);
+  console.log("The user data is: ", user);
 
   $.ajax({
-      url: '/import',
-      type: 'POST',
-      // contentType: 'application/x-www-form-urlencoded',
-      data: user,
-      success: function(data) {
-        console.log("data from server: ", data);
-        //resolve(data);
-      },
-      error: function(error){
-        console.error("There was an error on: ", error);
-        //reject(error);
-      }
-    })
-  });
-
-
-  // new Promise( function(resolve, reject) {
-  //   $.ajax({
-  //     url: '/import',
-  //     type: 'POST',
-  //     contentType: 'application/json',
-  //     data: JSON.stringify(user),
-  //     success: function(data) {
-  //       console.log("IMPORT: ", data);
-  //       resolve(data);
-  //     },
-  //     error: function(error){
-  //       console.error("There was an error on: ", error);
-  //       reject(error);
-  //     }
-  //   })
-  //   })
-
-    // .then( function(data) {
-    // new Promise( function(resolve, reject) {
-    //   $.ajax({
-    //     url: '/fetch',
-    //     type: "GET",
-    //     contentType: 'application/json',
-    //     data: JSON.stringify(data),
-    //     success: function(data) {
-    //       console.log("FETCH: ", data);
-    //       resolve(data);
-    //     },
-    //     error: function(error){
-    //       console.error("There was an error on: ", error);
-    //       reject(error);
-    //     }
-    //   })
-    // })
-  // });
+    url: '/import',
+    type: 'POST',
+    data: user,
+    success: function(data) {
+      console.log("data from server: ", data);
+    },
+    error: function(error){
+      console.error("There was an error on: ", error);
+    }
+  })
+})
 
 </script>
 
