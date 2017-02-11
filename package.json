@@ -4,7 +4,8 @@
   "description": "a web application that allows polling by social group",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack; nodemon ./server/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,24 @@
     "express": "^4.14.1",
     "fetch": "^1.1.0",
     "knex": "^0.12.6",
-    "pg": "^6.1.2"
+    "pg": "^6.1.2",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
   },
   "bugs": {
     "url": "https://github.com/ttfg-analytics/commonground/issues"
   },
-  "homepage": "https://github.com/ttfg-analytics/commonground#readme"
+  "homepage": "https://github.com/ttfg-analytics/commonground#readme",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "file-loader": "^0.10.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-middleware": "^1.10.0",
+    "webpack-dev-server": "^2.3.0",
+    "webpack-hot-middleware": "^2.16.1"
+  }
 }

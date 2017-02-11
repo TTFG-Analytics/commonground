@@ -1,91 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>CommonGround</title>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <title>Common Ground</title>
+  </head>
+  <body>
+    <div id="app">
+    </div>
+    <!-- <script src="../dist/app_bundle.js"></script> -->
+    <script src="/bundle.js"></script>
 
+  </body>
 
-  <form class="user-fetcher">
-    <h1>USER AUTH</h1>
-    <h4>name:</h4>
-    <input id="name" type="text" name="name" />
-    <h4>age:</h4>
-    <input id="age" type="text" name="age" />
-    <h4>hometown:</h4>
-    <input id="hometown" type="text" name="hometown" />
-    <h4>gender:</h4>
-    <input id="gender" type="text" name="gender" />
-    <h4>race:</h4>
-    <input id="race" type="text" name="race" />
-    <h4>occupation:</h4>
-    <input id="occupation" type="text" name="occupation" />
-    <h4>politicalleaning:</h4>
-    <input id="politicalleaning" type="text" name="politicalleaning" />
-    <h4>religion:</h4>
-    <input id="religion" type="text" name="religion" />
-    <h4>yearlyincome:</h4>
-    <input id="yearlyincome" type="text" name="yearlyincome" />
-
-    <h1>CREATE DISCUSSION</h1>
-    <h4>discussinput:</h4>
-    <input id="discussinput" type="text" name="discussinput" />
-
-    <button type="submit">SUBMIT</button>
-  </form>
-
-<!-- <br></br> -->
-<!--
-<table class="top-repos" border='1'>
-  <tr>
-    <th>id:</th>
-    <th>name:</th>
-    <th>age:</th>
-    <th>hometown:</th>
-    <th>gender:</th>
-    <th>race:</th>
-    <th>occupation:</th>
-    <th>politicalleaning:</th>
-    <th>religion:</th>
-    <th>yearlyincome:</th>
-    <th>createdat:</th>
-  </tr>
-</table> -->
-
-<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script>
-
-$('.user-fetcher').submit(function(e) {
-  var user = {
-    name: document.getElementById("name").value,
-    age: document.getElementById("age").value,
-    hometown: document.getElementById("hometown").value,
-    gender: document.getElementById("gender").value,
-    race: document.getElementById("race").value,
-    occupation: document.getElementById("occupation").value,
-    politicalleaning: document.getElementById("politicalleaning").value,
-    religion: document.getElementById("religion").value,
-    yearlyincome: document.getElementById("yearlyincome").value,
-    discussinput: document.getElementById("discussinput").value,
-  }
-  e.preventDefault();
-  console.log("The user data is: ", user);
-
-  $.ajax({
-    url: '/import',
-    type: 'POST',
-    data: user,
-    success: function(data) {
-      console.log("data from server: ", data);
-    },
-    error: function(error){
-      console.error("There was an error on: ", error);
-    }
-  })
-})
-
-</script>
-
-
-</body>
 </html>
