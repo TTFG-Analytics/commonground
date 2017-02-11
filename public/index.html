@@ -5,6 +5,7 @@
 </head>
 <body>
 
+<h4>Everything below mimics what our facebook authentication should pull. Optional data will be requested from user in settings profile. This can be seen in the post request on route "/import".</h4>
 
   <form class="user-fetcher">
     <h1>USER AUTH</h1>
@@ -27,30 +28,20 @@
     <h4>yearlyincome:</h4>
     <input id="yearlyincome" type="text" name="yearlyincome" />
 
+    <button type="submit">SUBMIT USER</button>
+  </form>
+
+<h4>Input below mimics a user creating a discussion topic. This can be seen in the post request on route "/discuss".</h4>
+
+  <form class="create-discussion">
     <h1>CREATE DISCUSSION</h1>
     <h4>discussinput:</h4>
     <input id="discussinput" type="text" name="discussinput" />
 
-    <button type="submit">SUBMIT</button>
+    <button type="submit">SUBMIT DISCUSSION</button>
   </form>
 
-<!-- <br></br> -->
-<!--
-<table class="top-repos" border='1'>
-  <tr>
-    <th>id:</th>
-    <th>name:</th>
-    <th>age:</th>
-    <th>hometown:</th>
-    <th>gender:</th>
-    <th>race:</th>
-    <th>occupation:</th>
-    <th>politicalleaning:</th>
-    <th>religion:</th>
-    <th>yearlyincome:</th>
-    <th>createdat:</th>
-  </tr>
-</table> -->
+
 
 <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script>
@@ -66,9 +57,9 @@ $('.user-fetcher').submit(function(e) {
     politicalleaning: document.getElementById("politicalleaning").value,
     religion: document.getElementById("religion").value,
     yearlyincome: document.getElementById("yearlyincome").value,
-    discussinput: document.getElementById("discussinput").value,
   }
   e.preventDefault();
+
   console.log("The user data is: ", user);
 
   $.ajax({
@@ -83,6 +74,29 @@ $('.user-fetcher').submit(function(e) {
     }
   })
 })
+
+$('.create-discussion').submit(function(e) {
+  var discussinput = {
+    topic: document.getElementById("discussinput").value
+  }
+  e.preventDefault();
+
+  console.log("The topic data is: ", discussinput);
+
+
+  $.ajax({
+    url: '/discuss',
+    type: 'POST',
+    data: discussinput,
+    success: function(data) {
+      console.log("data from server: ", data);
+    },
+    error: function(error){
+      console.error("There was an error on: ", error);
+    }
+  })
+})
+
 
 </script>
 
