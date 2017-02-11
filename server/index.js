@@ -7,6 +7,8 @@ app.use(bodyParser.urlencoded());
 
 module.exports = app;
 
+//Not correct - Greg fix
+
 // var knex = require('knex')({
 //     client: 'sqlite3',
 //     connection: {
@@ -16,13 +18,13 @@ module.exports = app;
 
 app.use(express.static(path.join(__dirname, '../public/')));
 
-app.post('/import', function(req,res){
-  console.log("this is the req.body: ", req.body);
+// app.post('/import', function(req,res){
+//   console.log("this is the req.body: ", req.body);
 
-  knex.raw(`INSERT OR REPLACE INTO user (id, name, age, hometown, gender, race, occupation, politicalLeaning, religion, yearlyIncome, createdAt) VALUES (${req.body.id},'${req.body.name}', ${req.body.age},'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.occupation}, ${req.body.politicalLeaning}, ${req.body.religion}, ${req.body.yearlyIncome}, ${req.body.createdAt})`).then(function(rows){console.log('Inserted or Replaced!', rows)});
+//   knex.raw(`INSERT OR REPLACE INTO user (id, name, age, hometown, gender, race, occupation, politicalLeaning, religion, yearlyIncome, createdAt) VALUES (${req.body.id},'${req.body.name}', ${req.body.age},'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.occupation}, ${req.body.politicalLeaning}, ${req.body.religion}, ${req.body.yearlyIncome}, ${req.body.createdAt})`).then(function(rows){console.log('Inserted or Replaced!', rows)});
 
-  res.status(200).send("random string");
-})
+//   res.status(200).send("random string");
+// })
 
 
 // app.get('/', function (req, res) {
