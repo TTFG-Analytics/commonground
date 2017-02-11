@@ -31,17 +31,49 @@
     <button type="submit">SUBMIT USER</button>
   </form>
 
-<h4>Input below mimics a user creating a discussion topic. This can be seen in the post request on route "/discuss".</h4>
+<h6>PAGE BREAK</h6>
+
+<h4>Input below mimics a user creating a discussion topic and two commongrounds. This can be seen in the post request on route "/discuss".</h4>
 
   <form class="create-discussion">
     <h1>CREATE DISCUSSION</h1>
-    <h4>discussinput:</h4>
+    <h4>Input Discussion Topic:</h4>
     <input id="discussinput" type="text" name="discussinput" />
+    <h4>CommonGround 1:</h4>
+    <input id="commonground1" type="text" name="commonground1" />
+    <h4>CommonGround 2:</h4>
+    <input id="commonground2" type="text" name="commonground2" />
 
     <button type="submit">SUBMIT DISCUSSION</button>
   </form>
 
+<h6>PAGE BREAK</h6>
 
+<h4>Input below mimics a user creating a comment. Must specifiy commonground ID for this mock view. This can be seen in the post request on route "/comment".</h4>
+
+
+  <form class="create-comment">
+    <h1>CREATE COMMENT</h1>
+    <h4>Input Comment:</h4>
+    <input id="comment" type="text" name="comment" />
+    <h4>CommonGround ID:</h4>
+    <input id="commonground-id" type="text" name="commonground-id" />
+    <button type="submit">SUBMIT COMMENT</button>
+  </form>
+
+
+<h6>PAGE BREAK</h6>
+
+<h4>Input below mimics a user voting on a comment. Must specifiy comment ID for this mock view. This can be seen in the post request on route "/vote".</h4>
+
+  <form class="create-vote">
+    <h1>VOTE:</h1>
+    <h4>1 = Up, 0 = Down</h4>
+    <input id="vote" type="text" name="vote" />
+    <h4>Comment ID:</h4>
+    <input id="comment-id" type="text" name="comment-id" />
+    <button type="submit">SUBMIT VOTE</button>
+  </form>
 
 <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script>
@@ -77,12 +109,13 @@ $('.user-fetcher').submit(function(e) {
 
 $('.create-discussion').submit(function(e) {
   var discussinput = {
-    topic: document.getElementById("discussinput").value
+    topic: document.getElementById("discussinput").value,
+    commonground1: document.getElementById("commonground1").value,
+    commonground2: document.getElementById("commonground2").value
   }
   e.preventDefault();
 
   console.log("The topic data is: ", discussinput);
-
 
   $.ajax({
     url: '/discuss',
@@ -97,6 +130,49 @@ $('.create-discussion').submit(function(e) {
   })
 })
 
+$('.create-comment').submit(function(e) {
+  var comment = {
+    comment: document.getElementById("comment").value,
+    commongroundId: document.getElementById("commonground-id").value
+  }
+  e.preventDefault();
+
+  console.log("The comment data is: ", comment);
+
+  $.ajax({
+    url: '/comment',
+    type: 'POST',
+    data: comment,
+    success: function(data) {
+      console.log("data from server: ", data);
+    },
+    error: function(error){
+      console.error("There was an error on: ", error);
+    }
+  })
+})
+
+$('.create-vote').submit(function(e) {
+  var vote = {
+    vote: document.getElementById("vote").value,
+    commentId: document.getElementById("comment-id").value
+  }
+  e.preventDefault();
+
+  console.log("The vote data is: ", vote);
+
+  $.ajax({
+    url: '/vote',
+    type: 'POST',
+    data: vote,
+    success: function(data) {
+      console.log("data from server: ", data);
+    },
+    error: function(error){
+      console.error("There was an error on: ", error);
+    }
+  })
+})
 
 </script>
 
