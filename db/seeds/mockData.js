@@ -18,55 +18,51 @@ exports.seed = function(knex, Promise) {
   return knex('users').del() // Deletes ALL existing entries
     .then(function() { // Inserts seed entries one by one in series
       return knex('users').insert({
-        name: 'Suits',
-        age: 'USA Network',
-        hometown: 'Drama',
-        gender: 3,
-        race: true,
-        occupation:
-        politicalleaning:
-        religion:
-        yearlyincome:
-        createdat:
+        name: 'Chester',
+        age: 32,
+        hometown: 'Austin',
+        gender: 1,
+        race: 2,
+        occupation: 4,
+        politicalleaning: 3,
+        religion: 5,
+        yearlyincome: 120000,
       });
     }).then(function () {
       return knex('users').insert({
-        name: 'Game of Thrones',
-        age: 'HBO',
-        hometown: 'Fantasy',
-        gender: 5,
-        race: true,
-        occupation:
-        politicalleaning:
-        religion:
-        yearlyincome:
-        createdat:
+        name: 'Eugene',
+        age: 32,
+        hometown: 'Austin',
+        gender: 1,
+        race: 2,
+        occupation: 4,
+        politicalleaning: 3,
+        religion: 5,
+        yearlyincome: 120000,
       });
     }).then(function () {
       return knex('users').insert({
-        name: 'South Park',
-        age: 'Comedy Central',
-        hometown: 'Comedy',
-        gender: 4,
-        race: true,
-        occupation:
-        politicalleaning:
-        religion:
-        yearlyincome:
-        createdat:
+        name: 'Tommy',
+        age: 32,
+        hometown: 'Austin',
+        gender: 1,
+        race: 2,
+        occupation: 4,
+        politicalleaning: 3,
+        religion: 5,
+        yearlyincome: 120000,
       });
     }).then(function () {
       return knex('users').insert({
-        name: 'Mad Men',
-        age: 'AMC',
-        hometown: 'Drama',
-        gender: 3,
-        race: fals,
-        occupation:
-        politicalleaning:
-        religion:
-        yearlyincome:
-        createdat:e
+        name: 'Gary',
+        age: 32,
+        hometown: 'Austin',
+        gender: 1,
+        race: 2,
+        occupation: 4,
+        politicalleaning: 3,
+        religion: 5,
+        yearlyincome: 120000,
       });
     });
 };
