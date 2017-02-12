@@ -5,9 +5,10 @@
 </head>
 <body>
 
+<h4>Everything below mimics what our facebook authentication should pull. Optional data will be requested from user in settings profile. This can be seen in the post request on route "/import".</h4>
+
   <form class="user-fetcher">
-    <h4>id:</h4>
-    <input id="id" type="text" name="id" />
+    <h1>USER AUTH</h1>
     <h4>name:</h4>
     <input id="name" type="text" name="name" />
     <h4>age:</h4>
@@ -20,108 +21,146 @@
     <input id="race" type="text" name="race" />
     <h4>occupation:</h4>
     <input id="occupation" type="text" name="occupation" />
-    <h4>politicalLeaning:</h4>
-    <input id="politicalLeaning" type="text" name="politicalLeaning" />
+    <h4>politicalleaning:</h4>
+    <input id="politicalleaning" type="text" name="politicalleaning" />
     <h4>religion:</h4>
     <input id="religion" type="text" name="religion" />
-    <h4>yearlyIncome:</h4>
-    <input id="yearlyIncome" type="text" name="yearlyIncome" />
-     <h4>createdAt:</h4>
-    <input id="createdAt" type="text" name="createdAt" />
-    <button type="submit">Insert and Fetch CG data</button>
-</form>
+    <h4>yearlyincome:</h4>
+    <input id="yearlyincome" type="text" name="yearlyincome" />
 
-<br></br>
+    <button type="submit">SUBMIT USER</button>
+  </form>
 
-<table class="top-repos" border='1'>
-  <tr>
-    <th>id:</th>
-    <th>name:</th>
-    <th>age:</th>
-    <th>hometown:</th>
-    <th>gender:</th>
-    <th>race:</th>
-    <th>occupation:</th>
-    <th>politicalLeaning:</th>
-    <th>religion:</th>
-    <th>yearlyIncome:</th>
-    <th>createdAt:</th>
-  </tr>
-</table>
+<h6>PAGE BREAK</h6>
+
+<h4>Input below mimics a user creating a discussion topic and two commongrounds. This can be seen in the post request on route "/discuss".</h4>
+
+  <form class="create-discussion">
+    <h1>CREATE DISCUSSION</h1>
+    <h4>Input Discussion Topic:</h4>
+    <input id="discussinput" type="text" name="discussinput" />
+    <h4>CommonGround 1:</h4>
+    <input id="commonground1" type="text" name="commonground1" />
+    <h4>CommonGround 2:</h4>
+    <input id="commonground2" type="text" name="commonground2" />
+
+    <button type="submit">SUBMIT DISCUSSION</button>
+  </form>
+
+<h6>PAGE BREAK</h6>
+
+<h4>Input below mimics a user creating a comment. Must specifiy commonground ID for this mock view. This can be seen in the post request on route "/comment".</h4>
+
+
+  <form class="create-comment">
+    <h1>CREATE COMMENT</h1>
+    <h4>Input Comment:</h4>
+    <input id="comment" type="text" name="comment" />
+    <h4>CommonGround ID:</h4>
+    <input id="commonground-id" type="text" name="commonground-id" />
+    <button type="submit">SUBMIT COMMENT</button>
+  </form>
+
+
+<h6>PAGE BREAK</h6>
+
+<h4>Input below mimics a user voting on a comment. Must specifiy comment ID for this mock view. This can be seen in the post request on route "/vote".</h4>
+
+  <form class="create-vote">
+    <h1>VOTE:</h1>
+    <h4>1 = Up, 0 = Down</h4>
+    <input id="vote" type="text" name="vote" />
+    <h4>Comment ID:</h4>
+    <input id="comment-id" type="text" name="comment-id" />
+    <button type="submit">SUBMIT VOTE</button>
+  </form>
 
 <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script>
-
 $('.user-fetcher').submit(function(e) {
   var user = {
-    id: document.getElementById("id").value,
     name: document.getElementById("name").value,
     age: document.getElementById("age").value,
     hometown: document.getElementById("hometown").value,
     gender: document.getElementById("gender").value,
     race: document.getElementById("race").value,
     occupation: document.getElementById("occupation").value,
-    politicalLeaning: document.getElementById("politicalLeaning").value,
+    politicalleaning: document.getElementById("politicalleaning").value,
     religion: document.getElementById("religion").value,
-    yearlyIncome: document.getElementById("yearlyIncome").value,
-    createdAt: document.getElementById("createdAt").value
+    yearlyincome: document.getElementById("yearlyincome").value,
   }
   e.preventDefault();
-  console.log("The user data is 2: ", user);
-
+  console.log("The user data is: ", user);
   $.ajax({
-      url: '/import',
-      type: 'POST',
-      // contentType: 'application/x-www-form-urlencoded',
-      data: user,
-      success: function(data) {
-        console.log("data from server: ", data);
-        //resolve(data);
-      },
-      error: function(error){
-        console.error("There was an error on: ", error);
-        //reject(error);
-      }
-    })
-  });
-
-
-  // new Promise( function(resolve, reject) {
-  //   $.ajax({
-  //     url: '/import',
-  //     type: 'POST',
-  //     contentType: 'application/json',
-  //     data: JSON.stringify(user),
-  //     success: function(data) {
-  //       console.log("IMPORT: ", data);
-  //       resolve(data);
-  //     },
-  //     error: function(error){
-  //       console.error("There was an error on: ", error);
-  //       reject(error);
-  //     }
-  //   })
-  //   })
-
-    // .then( function(data) {
-    // new Promise( function(resolve, reject) {
-    //   $.ajax({
-    //     url: '/fetch',
-    //     type: "GET",
-    //     contentType: 'application/json',
-    //     data: JSON.stringify(data),
-    //     success: function(data) {
-    //       console.log("FETCH: ", data);
-    //       resolve(data);
-    //     },
-    //     error: function(error){
-    //       console.error("There was an error on: ", error);
-    //       reject(error);
-    //     }
-    //   })
-    // })
-  // });
-
+    url: '/import',
+    type: 'POST',
+    data: user,
+    success: function(data) {
+      console.log("data from server: ", data);
+    },
+    error: function(error){
+      console.error("There was an error on: ", error);
+    }
+  })
+})
+$('.create-discussion').submit(function(e) {
+  var discussinput = {
+    topic: document.getElementById("discussinput").value,
+    commonground1: document.getElementById("commonground1").value,
+    commonground2: document.getElementById("commonground2").value
+  }
+  e.preventDefault();
+  console.log("The topic data is: ", discussinput);
+  $.ajax({
+    url: '/discuss',
+    type: 'POST',
+    data: discussinput,
+    success: function(data) {
+      console.log("data from server: ", data);
+    },
+    error: function(error){
+      console.error("There was an error on: ", error);
+    }
+  })
+})
+$('.create-comment').submit(function(e) {
+  var comment = {
+    comment: document.getElementById("comment").value,
+    commongroundId: document.getElementById("commonground-id").value
+  }
+  e.preventDefault();
+  console.log("The comment data is: ", comment);
+  $.ajax({
+    url: '/comment',
+    type: 'POST',
+    data: comment,
+    success: function(data) {
+      console.log("data from server: ", data);
+    },
+    error: function(error){
+      console.error("There was an error on: ", error);
+    }
+  })
+})
+$('.create-vote').submit(function(e) {
+  var vote = {
+    vote: document.getElementById("vote").value,
+    commentId: document.getElementById("comment-id").value
+  }
+  e.preventDefault();
+  console.log("The vote data is: ", vote);
+  $.ajax({
+    url: '/vote',
+    type: 'POST',
+    data: vote,
+    success: function(data) {
+      console.log("data from server: ", data);
+    },
+    error: function(error){
+      console.error("There was an error on: ", error);
+    }
+  })
+})
 </script>
 
 
