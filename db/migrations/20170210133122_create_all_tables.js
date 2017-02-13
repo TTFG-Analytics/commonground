@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('users', function(t) {
       t.increments('id').unsigned().primary();
       t.string('name').notNull();
+      t.string('title').nullable();
       t.integer('age').notNull();
       t.string('hometown').nullable();
       t.integer('gender').nullable();
