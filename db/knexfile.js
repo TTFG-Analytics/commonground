@@ -5,9 +5,9 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'cground_db',
-      user:     'commonground',
-      password: 'commonground123'
+      database: 'cg_db',
+      user:     'Greg',
+      password: 'commonground'
     }
   },
 
