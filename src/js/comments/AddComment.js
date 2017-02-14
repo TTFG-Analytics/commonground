@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createComment, createUpvote } from '../actions/actions'
+import { createCommentPost, createUpvote } from '../actions/actions'
 
 let AddComment = ({ dispatch, campId }) => {
   let input
@@ -11,7 +11,11 @@ let AddComment = ({ dispatch, campId }) => {
         if(!input.value.trim()) {
           return
         }
-        dispatch(createComment(campId, input.value))
+        let newComment = {
+          comment: input.value,
+          commongroundId: campId
+        }
+        dispatch(createCommentPost(newComment))
         dispatch(createUpvote())
         input.value = ''
       }}>

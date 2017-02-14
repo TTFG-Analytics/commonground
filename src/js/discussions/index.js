@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 
 import discussions from './discussionReducer'
 import camps from '../camps/campReducer'
-import comments from '../comment/commentReducer'
+import comments from '../comments/commentReducer'
 import upvotes from '../comments/upvoteReducer'
 import articleGet from './getDiscussionReducer'
 

@@ -3,7 +3,8 @@ var bodyParser = require('body-parser');
 const path = require('path');
 
 var app = express();
-app.use(bodyParser.urlencoded());
+//app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 module.exports = app;
 
@@ -15,9 +16,9 @@ var currentUser;
 var knex = require('knex')({
   client: 'postgresql',
   connection: {
-    database: 'cg_db',
-    user:     'Greg',
-    password: 'commonground'
+    database: 'cground_db',
+    user:     'postgres',
+    password: 'abc123'
   }
 });
 
@@ -32,19 +33,23 @@ app.post('/import', function(req,res){
 app.post('/discuss', function(req,res){
   console.log(req.body);
 
-  knex('discussion').returning('id').insert({input: req.body.topic, user_id: currentUser.id})
-  .then(function(data){
-    console.log(data);
-    knex('commonground').insert({input: req.body.commonground1, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
-    knex('commonground').insert({input: req.body.commonground2, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
-  })
+  knex('discussion').returning('id').insert({input: req.body.topic, user_id: 1}) //currentUser.id --- hard coding for now
+    .then(function(data){
+      res.status(200).send(data)
+    })
+  //   console.log(data);
+  //   knex('commonground').insert({input: req.body.commonground1, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
+  //   knex('commonground').insert({input: req.body.commonground2, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
+  // })
 })
 
 app.post('/comment', function(req,res){
   console.log(req.body);
 
-  knex('comment').insert({input: req.body.comment, user_id: currentUser.id, commonground_id: req.body.commongroundId }).then(function(){});
-
+  knex('comment').insert({input: req.body.comment, user_id: 1, commonground_id: req.body.commongroundId })
+    .then(function(data){
+      res.status(200).send(data)
+    }); //currentUser.id --- hard coding for now
 })
 
 app.post('/vote', function(req,res){

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createDiscussion } from '../actions/actions'
+import { createDiscussionPost } from '../actions/actions'
 
 let AddDiscussion = ({ dispatch }) => {
   let input
@@ -11,7 +11,8 @@ let AddDiscussion = ({ dispatch }) => {
         if(!input.value.trim()) {
           return
         }
-        dispatch(createDiscussion(input.value))
+        let newDiscussion = {topic: input.value}
+        dispatch(createDiscussionPost(newDiscussion))
         input.value = ''
       }}>
         <input ref={node => {

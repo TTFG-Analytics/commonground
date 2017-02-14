@@ -6,13 +6,6 @@ import { getDiscussions } from '../actions/actions'
 // import { bindActionCreators } from 'redux';
 
 class DiscussionList extends React.Component{
-  // componentWillMount() {
-  //   axios.get('https://chicagowepapp.firebaseio.com/articles.json')
-  //     .then((result) => {
-  //       console.log('get request successful')
-  //       getDiscussions(result)
-  //     })
-  // }
 
   render() {
     let thisObj = this
@@ -20,6 +13,7 @@ class DiscussionList extends React.Component{
     for(let article in thisObj.props.articles){
       articles.push(article)
     }
+    console.log('articles in DiscussionList', articles)
     return (
       <div>
       <ul>
@@ -32,8 +26,8 @@ class DiscussionList extends React.Component{
         )}
       </ul>
       <ul>
-        {articles.length > 0 && articles.map(articleX =>
-          <li>{articleX}</li>
+        {articles.length > 0 && articles.map((articleX, index) =>
+          <li key={index}>{articleX}</li>
         )}
       </ul>
       </div>
@@ -46,14 +40,8 @@ const mapStateToProps = (state) => {
     discussions: state.discussions,
     articles: state.articleGet.articles
   }
-} //all we need is the state.discussions array to pass into the DiscussionList as props
+} //we need the state.discussions array to pass into the DiscussionList as props
+//we'd also need the articles retrieved from the get request
 //DiscussionList then displays the discussions //
-
-// const mapDispatchToProps = (dispatch) => {
-//   return bindActionCreators(getDiscussions, dispatch)
-// } thisObj.props.articles && thisObj.props.articles.map((article) => {
-        //   <li>{article}
-        //   </li>
-        // })
 
 export default connect(mapStateToProps)(DiscussionList)

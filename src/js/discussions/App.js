@@ -1,7 +1,7 @@
 import React from 'react'
 import Discussion from './Discussion'
 import AddDiscussion from './AddDiscussion'
-import DiscussionList from '../containers/DiscussionList'
+import DiscussionList from './DiscussionList'
 import { getDiscussions } from '../actions/actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';

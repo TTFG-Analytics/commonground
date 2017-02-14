@@ -2,9 +2,9 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './src/app.js',
+  entry: './src/js/app.js',
   output: {
-    path: __dirname + '/src/',
+    path: __dirname + '/public/',
     filename: 'bundle.js'
   },
   module: {
@@ -12,5 +12,9 @@ module.exports = {
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/, query: {presets:['es2015', 'react']} },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/, query: {presets:['es2015', 'react']} },
     ],
+  },
+  node: {
+    fs: "empty",
+    net: 'empty',
   }
 }

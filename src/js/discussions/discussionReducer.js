@@ -1,5 +1,5 @@
 const discussion = (state = {}, action) => {
-  if(action.type === "CREATE_DISCUSSION") {
+  if(action.type === "CREATE_DISCUSSION_SUCCESS") {
     return {
       id: action.id,
       inputStr: action.inputStr
@@ -9,8 +9,8 @@ const discussion = (state = {}, action) => {
 }
 
 const discussions = (state = [], action) => {
-  if(action.type === "CREATE_DISCUSSION") {
-    console.log('discussion made!!!')
+  if(action.type === "CREATE_DISCUSSION_SUCCESS") {
+    console.log('discussion made!!!', action)
     return [
       ...state,
       discussion(undefined, action)
