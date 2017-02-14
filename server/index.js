@@ -35,8 +35,10 @@ app.post('/discuss', function(req,res){
 
   knex('discussion').returning('id').insert({input: req.body.topic, user_id: 1}) //currentUser.id --- hard coding for now
     .then(function(data){
+      console.log('data discuss', data)
       res.status(200).send(data)
     })
+    .then(function(){})
   //   console.log(data);
   //   knex('commonground').insert({input: req.body.commonground1, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
   //   knex('commonground').insert({input: req.body.commonground2, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
@@ -44,19 +46,23 @@ app.post('/discuss', function(req,res){
 })
 
 app.post('/commonground', function(req, res){
-  knex('commonground').insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 0})
+  console.log('req body commonground', req.body)
+  knex('commonground').returning('id').insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 1})
     .then(function(data){
+      console.log('data commonground res', data)
       res.status(200).send(data)
     })
+    .then(function(){})
 })
 
 app.post('/comment', function(req,res){
   console.log(req.body);
 
-  knex('comment').insert({input: req.body.comment, user_id: 1, commonground_id: req.body.commongroundId })
+  knex('comment').returning('id').insert({input: req.body.comment, user_id: 1, commonground_id: req.body.commongroundId })
     .then(function(data){
       res.status(200).send(data)
-    }); //currentUser.id --- hard coding for now
+    }) //currentUser.id --- hard coding for now
+    .then(function(){})
 })
 
 app.post('/vote', function(req,res){
