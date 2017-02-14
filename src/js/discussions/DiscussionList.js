@@ -2,18 +2,20 @@ import React, { PropTypes } from 'react'
 import Discussion from './Discussion'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { getDiscussions } from '../actions/actions'
+import { getCamps } from '../actions/actions'
 // import { bindActionCreators } from 'redux';
 
 class DiscussionList extends React.Component{
 
   render() {
     let thisObj = this
-    var articles = []
-    for(let article in thisObj.props.articles){
-      articles.push(article)
+    var commongrounds = []
+    console.log('state commongrounds', this.props.commongrounds)
+    for(let i in thisObj.props.commongrounds){
+      commongrounds.push(thisObj.props.commongrounds[i])
     }
-    console.log('articles in DiscussionList', articles)
+
+    console.log('commongrounds in DiscussionList', commongrounds)
     return (
       <div>
       <ul>
@@ -26,8 +28,8 @@ class DiscussionList extends React.Component{
         )}
       </ul>
       <ul>
-        {articles.length > 0 && articles.map((articleX, index) =>
-          <li key={index}>{articleX}</li>
+        {commongrounds.length > 0 && commongrounds.map((commongroundX, index) =>
+          <h3 key={index}>{commongroundX.input}</h3>
         )}
       </ul>
       </div>
@@ -38,7 +40,7 @@ class DiscussionList extends React.Component{
 const mapStateToProps = (state) => {
   return {
     discussions: state.discussions,
-    articles: state.articleGet.articles
+    commongrounds: state.campGet.commongrounds
   }
 } //we need the state.discussions array to pass into the DiscussionList as props
 //we'd also need the articles retrieved from the get request

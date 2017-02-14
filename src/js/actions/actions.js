@@ -84,6 +84,26 @@ export const getDiscussions = () => {
   }
 }
 
+export const getCampsSuccess = (camps) => {
+  return {
+    type: 'GET_CAMPS_SUCCESS',
+    camps: camps.data
+  }
+}
+
+export const getCamps = () => {
+  return (dispatch) => {
+    return axios.get('/discussion')
+      .then(response => {
+        console.log('get camps res', response)
+        dispatch(getCampsSuccess(response.data))
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
 //this worked the first time
 // export function getDiscussions(req) {
 //   console.log('getDiscussions action ------', req)

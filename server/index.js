@@ -22,7 +22,37 @@ var knex = require('knex')({
   }
 });
 
-app.post('/import', function(req,res){
+app.get('/discussion', function(req, res) {
+  var discussionInput = req.body.search;
+  knex('commonground').where({discussion_id: 2}).select('*')
+    .then(function(data) {
+      console.log('data', data)
+      var commongroundsResponse = {};
+      commongroundsResponse.data = [];
+      var cgCount = 0;
+      data.forEach(function(commonground) {
+        let commongroundObj = {};
+        commongroundObj.id = commonground.id;
+        commongroundObj.input = commonground.input;
+        commongroundObj.discussionId = commonground.discussion_id;
+        // cgCount++
+        console.log('commongroundObj in foreach', commongroundObj)
+        knex('comment').where({commonground_id: commonground.id}).select('*')
+          .then(function(comments) {
+            commongroundObj.comments = comments;
+            commongroundsResponse.data.push(commongroundObj)
+            console.log('comments obj', commongroundObj.comments)
+            cgCount++
+            if(cgCount === data.length){
+              console.log('cgCount', cgCount, '----------commongroundRes after foreach-------', commongroundsResponse);
+              res.send(commongroundsResponse)
+            }
+          })
+      })
+    })
+})
+
+app.post('/import', function(req,res) {
 
   currentUser = req.body;
 
@@ -30,7 +60,7 @@ app.post('/import', function(req,res){
   .then(function(data){ currentUser.id = data[0] });
 })
 
-app.post('/discuss', function(req,res){
+app.post('/discuss', function(req,res) {
   console.log(req.body);
 
   knex('discussion').returning('id').insert({input: req.body.topic, user_id: 1}) //currentUser.id --- hard coding for now
