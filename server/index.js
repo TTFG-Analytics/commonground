@@ -61,7 +61,6 @@ app.post('/vote', function(req,res){
 });
 
 
-
 var port = process.env.PORT || 4040;
 app.listen(port);
 console.log("Listening on port " + port);
