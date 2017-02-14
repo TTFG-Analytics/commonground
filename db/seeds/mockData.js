@@ -1,19 +1,3 @@
-
-// exports.seed = function(knex, Promise) {
-//   // Deletes ALL existing entries
-//   return knex('table_name').del()
-//     .then(function () {
-//       return Promise.all([
-//         // Inserts seed entries
-//         knex('table_name').insert({id: 1, colName: 'rowValue1'}),
-//         knex('table_name').insert({id: 2, colName: 'rowValue2'}),
-//         knex('table_name').insert({id: 3, colName: 'rowValue3'})
-//       ]);
-//     });
-// };
-
-
-
 exports.seed = function(knex, Promise) {
   return knex('users').del() // Deletes ALL existing entries
     .then(function() { // Inserts seed entries one by one in series
@@ -172,5 +156,131 @@ exports.seed = function(knex, Promise) {
         religion: 1,
         yearlyincome: 7
       });
-    });
+    }).then(function () {
+      return knex('discussion').insert({
+        input: "Would you ride as a pasenger in a self-driving car on today's roads and highways?",
+        user_id: 1
+      });
+    }).then(function () {
+      return knex('commonground').insert({
+        input: "Yes",
+        user_id: 1,
+        discussion_id: 1
+      });
+    }).then(function () {
+      return knex('commonground').insert({
+        input: "No",
+        user_id: 1,
+        discussion_id: 1
+      });
+    }).then(function () {
+      return knex('comment').insert({
+        input: "self-driving cars have come a long way in terms of technological advances in the past few years, however, I would not feel comfortable getting in a self-driving cars on today's roads. The industry and regulators need a few more years to make self-driving cars safe enough for me to ride in one.",
+        user_id: 2,
+        commonground_id: 2
+      });
+    }).then(function () {
+      return knex('comment').insert({
+        input: "I would absolutely ride in a self-driving car on today's roads. Statistics show that you are much safer as a passenger in a self-driving car than as the driver. Here at Ford we are developing the safest and most fuel efficient self-driving cars on the market.",
+        user_id: 6,
+        commonground_id: 1
+      });
+    }).then(function () {
+      return knex('comment').insert({
+        input: "Over the past year there have only been 2 self-driving car fatalities compared to over 4,000 non-self driving car fatalities.",
+        user_id: 3,
+        commonground_id: 1
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: false,
+        user_id: 5,
+        comment_id: 2
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: true,
+        user_id: 4,
+        comment_id: 1
+      });
+    }).then(function () {
+      return knex('discussion').insert({
+        input: "Climate Change in the Anthropocene: is it man-made or natural?",
+        user_id: 7
+      });
+    }).then(function () {
+      return knex('commonground').insert({
+        input: "Man-Made",
+        user_id: 7,
+        discussion_id: 2
+      });
+    }).then(function () {
+      return knex('commonground').insert({
+        input: "Natural",
+        user_id: 7,
+        discussion_id: 2
+      });
+    }).then(function () {
+      return knex('comment').insert({
+        input: "Climate change is just alarmist talk, the tempeture of earth changes naturally",
+        user_id: 10,
+        commonground_id: 4
+      });
+    }).then(function () {
+      return knex('comment').insert({
+        input: "It's not that the world hasn't had more carbon dioxide, it's not the world hasn't been warmer.  The problem is the speed at which things are changing.  We are inducing a sixth mass extinction event kind of by accident and we don't want to be the extinctee, if I may coin this noun.  So, I mean as far as Miss Blackburn, sounded like she had been coached on denial bullet points or talking points.  And I very much enjoy taking those people on, but meanwhile it breaks my heart because we got work to do.  And the fossil fuel industry has really gotten in their ears and it's really troublesome.  We're the world's most technically advanced country, or if the U.S. isn't the most technically advanced it's certainly in the top ten.  I mean you could say Japan, New Zealand are very sophisticated societies.  But the U.S. is where iPhone's are invented, what have you, the Internet; it's still a significant place. And so to have a generation of science students being brought up without awareness of climate change is just a formula for disaster.",
+        user_id: 8,
+        commonground_id: 3
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: 'True',
+        comment_id: 3,
+        user_id: 11,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: "True",
+        comment_id: 4,
+        user_id: 9,
+      });
+    })
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
