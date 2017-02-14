@@ -53,11 +53,8 @@ app.post('/vote', function(req,res){
   knex('vote').returning('comment_id').insert({input: req.body.vote, user_id: currentUser.id, comment_id: req.body.commentId })
   .then(function(data){
     if (req.body.vote === '1') {
-      console.log('UPVOTE!', data[0]);
-      // knex.raw("update 'comment' set 'upvotecounter' = 'upvotecounter' + 1 where 'id' = " + data[0]).then(function(){});
       knex('comment').where('id', data[0]).increment('upvotecounter', 1).then(function(){});
     } else {
-      console.log('DOWNVOTE!');
       knex('comment').where('id', data[0]).increment('downvotecounter', 1).then(function(){});
     }
   }).then(function(){});
