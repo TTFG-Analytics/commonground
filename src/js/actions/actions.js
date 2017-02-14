@@ -124,6 +124,26 @@ export const createDiscussionPost = (discussion) => {
   }
 }
 
+export const createCampSuccess = (camp) => {
+  return {
+    type: 'CREATE_CAMP_SUCCESS',
+    campId: campId++,
+    discussionId: camp.discussionId,
+    inputStr: camp.commonground
+  }
+}
+
+export const createCampPost = (camp) => {
+  return (dispatch) => {
+    return axios.post('/commonground', camp)
+      .then(response => {
+        console.log('create camp success', response)
+        let responseObj = JSON.parse(response.config.data)
+        dispatch(createCampSuccess(responseObj))
+      })
+  }
+}
+
 export const createCommentSuccess = (comment) => {
   console.log('createCommentSuccess', comment)
   return {
@@ -140,8 +160,8 @@ export const createCommentPost = (comment) => {
     return axios.post('/comment', comment)
       .then(response => {
         console.log('create comment success response', response)
-        let responseStr = JSON.parse(response.config.data)
-        dispatch(createCommentSuccess(responseStr))
+        let responseObj = JSON.parse(response.config.data)
+        dispatch(createCommentSuccess(responseObj))
       })
   }
 }

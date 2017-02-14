@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createCamp } from '../actions/actions'
+import { createCampPost } from '../actions/actions'
 
 let AddCamp = ({ dispatch, discussionId }) => {
   let input
@@ -11,7 +11,11 @@ let AddCamp = ({ dispatch, discussionId }) => {
         if(!input.value.trim()) {
           return
         }
-        dispatch(createCamp(discussionId, input.value))
+        let newCamp = {
+          commonground: input.value,
+          discussionId: discussionId
+        }
+        dispatch(createCampPost(newCamp))
         input.value = ''
       }}>
         <input ref={node => {

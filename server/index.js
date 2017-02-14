@@ -43,6 +43,13 @@ app.post('/discuss', function(req,res){
   // })
 })
 
+app.post('/commonground', function(req, res){
+  knex('commonground').insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 0})
+    .then(function(data){
+      res.status(200).send(data)
+    })
+})
+
 app.post('/comment', function(req,res){
   console.log(req.body);
 
