@@ -105,11 +105,11 @@ export const getDiscussions = () => {
 
 //post request section
 
-export const createDiscussionSuccess = (inputStr) => {
+export const createDiscussionSuccess = (discussion) => {
   return {
     type: 'CREATE_DISCUSSION_SUCCESS',
-    id: discussionId++,
-    inputStr: inputStr
+    id: discussion.discussionId,
+    inputStr: discussion.topic
   }
 }
 
@@ -118,8 +118,10 @@ export const createDiscussionPost = (discussion) => {
   return (dispatch) => {
     return axios.post('/discuss', discussion)
       .then(response => {
-        let responseStr = JSON.parse(response.config.data)
-        dispatch(createDiscussionSuccess(responseStr.topic))
+        let responseObj = JSON.parse(response.config.data)
+        responseObj.discussionId = response.data[0]
+        console.log('responseObj', responseObj)
+        dispatch(createDiscussionSuccess(responseObj))
       })
   }
 }
@@ -127,7 +129,7 @@ export const createDiscussionPost = (discussion) => {
 export const createCampSuccess = (camp) => {
   return {
     type: 'CREATE_CAMP_SUCCESS',
-    campId: campId++,
+    campId: camp.commongroundId,
     discussionId: camp.discussionId,
     inputStr: camp.commonground
   }
@@ -137,8 +139,10 @@ export const createCampPost = (camp) => {
   return (dispatch) => {
     return axios.post('/commonground', camp)
       .then(response => {
-        console.log('create camp success', response)
+        console.log('create camp success resobj', response)
         let responseObj = JSON.parse(response.config.data)
+        responseObj.commongroundId = response.data[0]
+        console.log('create camp success resobj', responseObj)
         dispatch(createCampSuccess(responseObj))
       })
   }
@@ -148,7 +152,7 @@ export const createCommentSuccess = (comment) => {
   console.log('createCommentSuccess', comment)
   return {
     type: 'CREATE_COMMENT_SUCCESS',
-    commentId: commentId++,
+    commentId: comment.commentId,
     campId: comment.commongroundId,
     inputStr: comment.comment
   }
@@ -161,6 +165,8 @@ export const createCommentPost = (comment) => {
       .then(response => {
         console.log('create comment success response', response)
         let responseObj = JSON.parse(response.config.data)
+        responseObj.commentId = response.data[0]
+        console.log('create comment success resobj', responseObj)
         dispatch(createCommentSuccess(responseObj))
       })
   }

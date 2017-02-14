@@ -3,7 +3,9 @@ import { increaseUpvotes } from '../actions/actions'
 import { connect } from 'react-redux'
 
 let Counter = ({dispatch, commentId, upvotes}) => {
-  let currentUpvote = upvotes[commentId].count
+  //let currentUpvote = upvotes[commentId].count
+  console.log('upvotes ', upvotes)
+  let currentUpvote = 1
   return (<div>
       <p className="upvoteCount">Upvotes: {currentUpvote}</p>
       <button onClick={() => {
