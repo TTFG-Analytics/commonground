@@ -25,7 +25,7 @@ app.post('/import', function(req,res){
 
   currentUser = req.body;
 
-  knex('users').returning('id').insert({name: req.body.name, age: req.body.age, hometown: req.body.hometown, gender: req.body.gender, race: req.body.race, occupation: req.body.occupation, politicalleaning:req.body.politicalleaning, religion: req.body.religion, yearlyincome:req.body.yearlyincome})
+  knex('users').returning('id').insert({name: req.body.name, age: req.body.age, hometown: req.body.hometown, gender: req.body.gender, race: req.body.race, industry: req.body.industry, politicalleaning:req.body.politicalleaning, religion: req.body.religion, yearlyincome:req.body.yearlyincome})
   .then(function(data){ currentUser.id = data[0] });
 })
 
@@ -50,9 +50,18 @@ app.post('/comment', function(req,res){
 app.post('/vote', function(req,res){
   console.log(req.body);
 
-  knex('vote').insert({input: req.body.vote, user_id: currentUser.id, comment_id: req.body.commentId }).then(function(){});
-
-})
+  knex('vote').returning('comment_id').insert({input: req.body.vote, user_id: currentUser.id, comment_id: req.body.commentId })
+  .then(function(data){
+    if (req.body.vote === '1') {
+      console.log('UPVOTE!', data[0]);
+      // knex.raw("update 'comment' set 'upvotecounter' = 'upvotecounter' + 1 where 'id' = " + data[0]).then(function(){});
+      knex('comment').where('id', data[0]).increment('upvotecounter', 1).then(function(){});
+    } else {
+      console.log('DOWNVOTE!');
+      knex('comment').where('id', data[0]).increment('downvotecounter', 1).then(function(){});
+    }
+  }).then(function(){});
+});
 
 
 
