@@ -157,6 +157,84 @@ exports.seed = function(knex, Promise) {
         yearlyincome: 7
       });
     }).then(function () {
+      return knex('users').insert({
+        name: 'Chris Farley',
+        title: "Actor, Comedian",
+        age: 33,
+        hometown: 'Madison, Wisconsin',
+        gender: 1,
+        race: 1,
+        industry: 10,
+        politicalleaning: 3,
+        religion: 2,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        name: 'Betty White',
+        title: "Actor",
+        age: 95,
+        hometown: 'Oak Park, Illinois',
+        gender: 2,
+        race: 1,
+        industry: 10,
+        politicalleaning: 3,
+        religion: 1,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        name: 'Kevin Hart',
+        title: "Comedian and Actor",
+        age: 75,
+        hometown: 'Oxford',
+        gender: 1,
+        race: 2,
+        industry: 10,
+        politicalleaning: 3,
+        religion: 9,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        name: 'Louis C.K.',
+        title: 'Entertainer, Comedian',
+        age: 66,
+        hometown: 'Cape Girardeau',
+        gender: 1,
+        race: 1,
+        industry: 10,
+        politicalleaning: 3,
+        religion: 9,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        name: 'Amy Schumer',
+        title: "Comedian",
+        age: 53,
+        hometown: 'Sandpoint',
+        gender: 2,
+        race: 1,
+        industry: 10,
+        politicalleaning: 5,
+        religion: 10,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        name: 'Tina Fey',
+        title: "Comedian",
+        age: 68,
+        hometown: 'Redford',
+        gender: 2,
+        race: 1,
+        industry: 10,
+        politicalleaning: 5,
+        religion: 10,
+        yearlyincome: 7
+      });
+    }).then(function () {
       return knex('discussion').insert({
         input: "Would you ride as a pasenger in a self-driving car on today's roads and highways?",
         user_id: 1
@@ -222,7 +300,7 @@ exports.seed = function(knex, Promise) {
       });
     }).then(function () {
       return knex('comment').insert({
-        input: "Climate change is just alarmist talk, the tempeture of earth changes naturally",
+        input: "I have a theory about global warming and why people think it's real. Go back 30, 40 years when there was much less air conditioning in the country. When you didn't have air conditioning and you left the house, it may in fact have gotten a little cooler out there, because sometimes houses become hot boxes. Especially if you're on the second or third floor of a house in the summer time and all you've got is open windows and maybe a window fan. Or you have some servant standing there fanning you with a piece of paper. When you walked outside, no big deal, it's still hot as hell. Now, 30, 40 years later, all this air conditioning, and it's a huge difference when you go outside. When you go outside now, my golly, is it hot. Oh. Global warming. It's all about the baseline you're using for comparison.",
         user_id: 10,
         commonground_id: 4
       });
@@ -244,8 +322,110 @@ exports.seed = function(knex, Promise) {
         comment_id: 4,
         user_id: 9,
       });
+    }).then(function () {
+      return knex('vote').insert({
+        input: 'True',
+        comment_id: 4,
+        user_id: 1,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: "True",
+        comment_id: 4,
+        user_id: 2,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: 'True',
+        comment_id: 4,
+        user_id: 3,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: "True",
+        comment_id: 4,
+        user_id: 4,
+      });
+    }).then(function () {
+      return knex('discussion').insert({
+        input: "Would you rather fight 50 duck sized horses or 1 horse sized duck",
+        user_id: 13
+      });
+    }).then(function () {
+      return knex('commonground').insert({
+        input: "50 duck sized horses",
+        user_id: 7,
+        discussion_id: 2
+      });
+    }).then(function () {
+      return knex('commonground').insert({
+        input: "1 horse sized duck",
+        user_id: 7,
+        discussion_id: 2
+      });
+    }).then(function () {
+      return knex('comment').insert({
+        input: "A flying quacking horse sized monstrosity would be terrifying",
+        user_id: 15,
+        commonground_id: 5
+      });
+    }).then(function () {
+      return knex('comment').insert({
+        input: "A small pack of ducks could take me out, no way I'd try my hand at 50 mini horses.",
+        user_id: 14,
+        commonground_id: 6
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: 'True',
+        comment_id: 5,
+        user_id: 14,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: "True",
+        comment_id: 6,
+        user_id: 7,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: 'True',
+        comment_id: 5,
+        user_id: 16,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: "True",
+        comment_id: 6,
+        user_id: 17,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: 'True',
+        comment_id: 5,
+        user_id: 1,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: "True",
+        comment_id: 6,
+        user_id: 2,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: 'True',
+        comment_id: 5,
+        user_id: 3,
+      });
+    }).then(function () {
+      return knex('vote').insert({
+        input: "True",
+        comment_id: 6,
+        user_id: 4,
+      });
     })
 };
+
 
 
 
