@@ -1,5 +1,6 @@
 const comment = (state = {}, action) => {
-  if(action.type === 'MAKE_COMMENT') {
+  if(action.type === 'CREATE_COMMENT_SUCCESS') {
+    console.log('action campid', action.campId)
     return {
       commentId: action.commentId,
       campId: action.campId,
@@ -10,7 +11,7 @@ const comment = (state = {}, action) => {
 }
 
 const comments = (state = [], action) => {
-  if(action.type === 'MAKE_COMMENT') {
+  if(action.type === 'CREATE_COMMENT_SUCCESS') {
     return [
       ...state,
       comment(undefined, action)

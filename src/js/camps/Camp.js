@@ -1,6 +1,6 @@
 // singular camp component - just presentational
 import React from 'react'
-import CampList from '../CampList'
+import CampList from './CampList'
 import CommentParent from '../comments/CommentParent'
 
 const Camp = ({inputStr, key, campId}) => (

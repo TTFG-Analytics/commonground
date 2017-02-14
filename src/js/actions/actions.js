@@ -61,22 +61,87 @@ export function increaseDownvotes() {
   }
 }
 
+//get request section
 export const GET_DISCUSSIONS_REQUEST = 'GET_DISCUSSIONS_REQUEST';
-export const GET_DISCUSSIONS_SUCCESS = 'GET_DISCUSSIONS_SUCCESS';
-//export const ARTICLES_GET_FAILURE = 'ARTICLES_GET_FAILURE';
 
-export function getDiscussions(req) {
-  console.log('getDiscussions action ------', req)
-  var url = 'https://chicagowepapp.firebaseio.com/articles.json';
-  let promise = axios.get(url)
+export const getDiscussionsSuccess = (discussions) =>{
   return {
-    type: 'GET_DISCUSSIONS_REQUEST',
-    payload: promise
+    type: 'GET_DISCUSSIONS_SUCCESS',
+    discussions: discussions
   }
 }
 
+export const getDiscussions = () => {
+  var url = 'https://chicagowepapp.firebaseio.com/articles.json'
+  return (dispatch) => {
+    return axios.get(url)
+      .then(response => {
+        dispatch(getDiscussionsSuccess(response.data))
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+//this worked the first time
+// export function getDiscussions(req) {
+//   console.log('getDiscussions action ------', req)
+//   var url = 'https://chicagowepapp.firebaseio.com/articles.json';
+//   let promise = axios.get(url)
+//   return {
+//     type: 'GET_DISCUSSIONS_REQUEST',
+//     payload: promise
+//   }
+// }
+
+//might work because we have the promise() middleware
 // {
 //     type: 'GET_DISCUSSIONS_REQUEST',
 //     promise: axios.get('https://chicagowepapp.firebaseio.com/articles.json'),
 //     payload: request.data
 //   }
+
+
+//post request section
+
+export const createDiscussionSuccess = (inputStr) => {
+  return {
+    type: 'CREATE_DISCUSSION_SUCCESS',
+    id: discussionId++,
+    inputStr: inputStr
+  }
+}
+
+export const createDiscussionPost = (discussion) => {
+  console.log('createDiscussionPost discussion', discussion)
+  return (dispatch) => {
+    return axios.post('/discuss', discussion)
+      .then(response => {
+        let responseStr = JSON.parse(response.config.data)
+        dispatch(createDiscussionSuccess(responseStr.topic))
+      })
+  }
+}
+
+export const createCommentSuccess = (comment) => {
+  console.log('createCommentSuccess', comment)
+  return {
+    type: 'CREATE_COMMENT_SUCCESS',
+    commentId: commentId++,
+    campId: comment.commongroundId,
+    inputStr: comment.comment
+  }
+}
+
+export const createCommentPost = (comment) => {
+  console.log('createCommentPost comment', comment)
+  return (dispatch) => {
+    return axios.post('/comment', comment)
+      .then(response => {
+        console.log('create comment success response', response)
+        let responseStr = JSON.parse(response.config.data)
+        dispatch(createCommentSuccess(responseStr))
+      })
+  }
+}
