@@ -4,11 +4,15 @@
 
 if services not running, put the following in Command Line
 
-- brew services start postgresql
+- brew services restart postgresql
 
 Once services have started
 
 - psql -d <db-name>
+
+Run knex seed file
+
+- knex seed:run --env development
 
 
 Gender Index

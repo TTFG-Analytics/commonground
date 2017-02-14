@@ -35,9 +35,9 @@ exports.up = function(knex, Promise) {
 
     knex.schema.createTable('comment', function(t) {
       t.increments('id').unsigned().primary();
-      t.string('input').notNull();
-      t.integer('upvoteCounter')
-      t.integer('downvoteCounter')
+      t.string('input', 2000).notNull();
+      t.integer('upvotecounter').defaultTo(0);
+      t.integer('downvotecounter').defaultTo(0);
       t.timestamp('createdat').defaultTo(knex.fn.now());
       t.integer('commonground_id')
       t.integer('user_id')
@@ -47,7 +47,7 @@ exports.up = function(knex, Promise) {
 
     knex.schema.createTable('vote', function(t) {
       t.increments('id').unsigned().primary();
-      t.integer('input').notNull();
+      t.boolean('input');
       t.timestamp('createdat').defaultTo(knex.fn.now());
       t.integer('comment_id')
       t.integer('user_id')
