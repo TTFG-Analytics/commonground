@@ -47,7 +47,7 @@ exports.up = function(knex, Promise) {
 
     knex.schema.createTable('vote', function(t) {
       t.increments('id').unsigned().primary();
-      t.boolean('input');
+      t.integer('input');
       t.timestamp('createdat').defaultTo(knex.fn.now());
       t.integer('comment_id')
       t.integer('user_id')
