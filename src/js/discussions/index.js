@@ -5,14 +5,14 @@ import discussions from './discussionReducer'
 import camps from '../camps/campReducer'
 import comments from '../comments/commentReducer'
 import upvotes from '../comments/upvoteReducer'
-import articleGet from './getDiscussionReducer'
+import campGet from './getDiscussionReducer'
 
 const cgApp = combineReducers({
   discussions,
   camps,
   comments,
   upvotes,
-  articleGet
+  campGet
 })
 
 export default cgApp
