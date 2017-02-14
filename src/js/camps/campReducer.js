@@ -1,5 +1,5 @@
 const camp = (state = {}, action) => {
-  if(action.type === 'SET_CAMP') {
+  if(action.type === 'CREATE_CAMP_SUCCESS') {
     return {
       campId: action.campId,
       discussionId: action.discussionId,
@@ -10,7 +10,7 @@ const camp = (state = {}, action) => {
 }
 
 const camps = (state = [], action) => {
-  if(action.type === 'SET_CAMP') {
+  if(action.type === 'CREATE_CAMP_SUCCESS') {
     return [
       ...state,
       camp(undefined, action)
