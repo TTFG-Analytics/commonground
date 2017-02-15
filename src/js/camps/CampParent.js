@@ -18,18 +18,22 @@ class CampParent extends React.Component{
   // }
 
   render(){
-    console.log('camp parent params', this.props.params)
+    console.log('camp parent params', this.props.discussions)
     console.log('discussionId', this.props.params.discussionId)
+    var discussionId = this.props.params.discussionId
+    var discussionName = this.props.discussions[discussionId-1].input
     return (<div>
-      <AddCamp discussionId={this.props.params.discussionId} />
-      <CampList discussionId={this.props.params.discussionId} />
+      <h2>{discussionName}</h2>
+      <AddCamp discussionId={discussionId} />
+      <CampList discussionId={discussionId} />
     </div>)
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    camps: state.campGet
+    camps: state.campGet,
+    discussions: state.discussionsGet.discussions
   }
 }
 
