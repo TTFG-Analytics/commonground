@@ -65,16 +65,16 @@ export function increaseDownvotes() {
 export const GET_DISCUSSIONS_REQUEST = 'GET_DISCUSSIONS_REQUEST';
 
 export const getDiscussionsSuccess = (discussions) =>{
+  console.log('discussions get', discussions)
   return {
     type: 'GET_DISCUSSIONS_SUCCESS',
     discussions: discussions
   }
-}
+} //sends action that is picked up by getDiscussionsReducer
 
 export const getDiscussions = () => {
-  var url = 'https://chicagowepapp.firebaseio.com/articles.json'
   return (dispatch) => {
-    return axios.get(url)
+    return axios.get('/discussions')
       .then(response => {
         dispatch(getDiscussionsSuccess(response.data))
       })
@@ -89,7 +89,7 @@ export const getCampsSuccess = (camps) => {
     type: 'GET_CAMPS_SUCCESS',
     camps: camps.data
   }
-}
+} //sends action that is picked up by getCampsReducer
 
 export const getCamps = () => {
   return (dispatch) => {
@@ -131,7 +131,7 @@ export const createDiscussionSuccess = (discussion) => {
     id: discussion.discussionId,
     inputStr: discussion.topic
   }
-}
+} //sends action that's picked up by discussionReducer
 
 export const createDiscussionPost = (discussion) => {
   console.log('createDiscussionPost discussion', discussion)
@@ -153,7 +153,7 @@ export const createCampSuccess = (camp) => {
     discussionId: camp.discussionId,
     inputStr: camp.commonground
   }
-}
+} //sends action that's picked up by campReducer
 
 export const createCampPost = (camp) => {
   return (dispatch) => {

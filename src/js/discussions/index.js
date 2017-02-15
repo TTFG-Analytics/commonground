@@ -1,18 +1,21 @@
-//3) combine reducers so that only one object needs to be exported
+//3) combine reducers so that only one object needs to be exported and then the lone cgApp reducer
+//goes to the store.js file
 import { combineReducers } from 'redux'
 
 import discussions from './discussionReducer'
+import discussionsGet from './getDiscussionsReducer'
 import camps from '../camps/campReducer'
+import campGet from '../camps/getCampsReducer'
 import comments from '../comments/commentReducer'
 import upvotes from '../comments/upvoteReducer'
-import campGet from './getDiscussionReducer'
 
 const cgApp = combineReducers({
   discussions,
   camps,
   comments,
   upvotes,
-  campGet
+  campGet,
+  discussionsGet
 })
 
 export default cgApp

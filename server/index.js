@@ -22,6 +22,14 @@ var knex = require('knex')({
   }
 });
 
+app.get('/discussions', (req, res) => {
+  knex('discussion').select('*')
+    .then((data) => {
+      console.log('discussions data', data)
+      res.send(data)
+    })
+})
+
 app.get('/discussion', function(req, res) {
   var discussionInput = req.body.search;
   knex('commonground').where({discussion_id: 2}).select('*')
@@ -35,7 +43,6 @@ app.get('/discussion', function(req, res) {
         commongroundObj.id = commonground.id;
         commongroundObj.input = commonground.input;
         commongroundObj.discussionId = commonground.discussion_id;
-        // cgCount++
         console.log('commongroundObj in foreach', commongroundObj)
         knex('comment').where({commonground_id: commonground.id}).select('*')
           .then(function(comments) {

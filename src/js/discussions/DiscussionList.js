@@ -2,20 +2,20 @@ import React, { PropTypes } from 'react'
 import Discussion from './Discussion'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import { getCamps } from '../actions/actions'
+import { getDiscussions } from '../actions/actions'
 // import { bindActionCreators } from 'redux';
 
 class DiscussionList extends React.Component{
 
   render() {
     let thisObj = this
-    var commongrounds = []
-    console.log('state commongrounds', this.props.commongrounds)
-    for(let i in thisObj.props.commongrounds){
-      commongrounds.push(thisObj.props.commongrounds[i])
-    }
+    // let discussionsListArr = []
+    // console.log('state discussions', this.props.discussionsList)
+    // for(let i in thisObj.props.discussionsList){
+    //   discussionsListArr.push(thisObj.props.discussionsList[i])
+    // }
 
-    console.log('commongrounds in DiscussionList', commongrounds)
+    // console.log('discussions in DiscussionList', discussionsListArr)
     return (
       <div>
       <ul>
@@ -28,8 +28,8 @@ class DiscussionList extends React.Component{
         )}
       </ul>
       <ul>
-        {commongrounds.length > 0 && commongrounds.map((commongroundX, index) =>
-          <h3 key={index}>{commongroundX.input}</h3>
+        {thisObj.props.discussionsList.length > 0 && thisObj.props.discussionsList.map((discussionX, index) =>
+          <h3 key={index}>{discussionX.input}</h3>
         )}
       </ul>
       </div>
@@ -40,10 +40,20 @@ class DiscussionList extends React.Component{
 const mapStateToProps = (state) => {
   return {
     discussions: state.discussions,
-    commongrounds: state.campGet.commongrounds
+    discussionsList: state.discussionsGet.discussions
   }
 } //we need the state.discussions array to pass into the DiscussionList as props
 //we'd also need the articles retrieved from the get request
 //DiscussionList then displays the discussions //
 
 export default connect(mapStateToProps)(DiscussionList)
+
+    // var commongrounds = []
+    // console.log('state commongrounds', this.props.commongrounds)
+    // for(let i in thisObj.props.commongrounds){
+    //   commongrounds.push(thisObj.props.commongrounds[i])
+    // }
+
+// //{commongrounds.length > 0 && commongrounds.map((commongroundX, index) =>
+//           <h3 key={index}>{commongroundX.input}</h3>
+//         )}

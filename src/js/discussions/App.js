@@ -2,12 +2,12 @@ import React from 'react'
 import Discussion from './Discussion'
 import AddDiscussion from './AddDiscussion'
 import DiscussionList from './DiscussionList'
-import { getCamps } from '../actions/actions'
+import { getDiscussions } from '../actions/actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
 DiscussionList.need = [
-  getCamps
+  getDiscussions
 ]
 
 class App extends React.Component{
@@ -23,12 +23,12 @@ class App extends React.Component{
 //component dispatch the getDiscussions axios call before rendering DiscussionList
 const mapStateToProps = (state) => {
   return {
-    commongrounds: state.campGet.commongrounds
+    discussionsList: state.discussionsGet
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(getCamps, dispatch)
+  return bindActionCreators(getDiscussions, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
