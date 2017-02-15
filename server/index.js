@@ -3,8 +3,8 @@ var bodyParser = require('body-parser');
 const path = require('path');
 
 var app = express();
-//app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false})); //needed for testing purposes on gregindex.html
+// app.use(bodyParser.json());
 
 module.exports = app;
 
@@ -16,9 +16,9 @@ var currentUser;
 var knex = require('knex')({
   client: 'postgresql',
   connection: {
-    database: 'cground_db',
-    user:     'postgres',
-    password: 'abc123'
+    database: 'cg_db',
+    user:     'commonground',
+    password: 'commonground123'
   }
 });
 
@@ -59,12 +59,19 @@ app.get('/discussion', function(req, res) {
     })
 })
 
-app.post('/import', function(req,res) {
-
+app.post('/user', function(req,res) {
   currentUser = req.body;
 
-  knex('users').returning('id').insert({name: req.body.name, age: req.body.age, hometown: req.body.hometown, gender: req.body.gender, race: req.body.race, industry: req.body.industry, politicalleaning:req.body.politicalleaning, religion: req.body.religion, yearlyincome:req.body.yearlyincome})
-  .then(function(data){ currentUser.id = data[0] });
+  knex.raw(`
+    INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome)
+    VALUES ('${req.body.fullname}', ${req.body.facebookid}, ${req.body.age} ,'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
+    ON CONFLICT (facebookid) DO UPDATE
+    SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.fullname}', ${req.body.age} ,'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
+    RETURNING id
+    `)
+  .then(function(data){
+    currentUser.id = data.rows[0].id
+  });
 })
 
 app.post('/discuss', function(req,res) {
