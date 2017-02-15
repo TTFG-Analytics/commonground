@@ -12,9 +12,9 @@ class CampList extends React.Component{
       <ul>
         {currCamps.map(currCamp =>
           <Camp 
-            key={currCamp.campId}
-            campId={currCamp.campId}
-            {...currCamp}
+            key={currCamp.id}
+            campId={currCamp.id}
+            inputStr={currCamp.input}
           />
         )}
       </ul>
@@ -25,7 +25,7 @@ class CampList extends React.Component{
 const mapStateToProps = (state) => {
   console.log('state', state);
   return {
-    camps: state.camps
+    camps: state.campGet.commongrounds
   }
 }
 

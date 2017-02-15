@@ -11,6 +11,21 @@ const campGet = (state = {isFetching: false, commongrounds: [], error: null}, ac
       }
     )
   }
+  if(action.type === 'CREATE_CAMP_SUCCESS') {
+    var newCamp = action;
+    console.log('action create camp', newCamp, action)
+    return {
+      state,
+      commongrounds: [...state.commongrounds, newCamp]
+    }
+  }
+  if(action.type === 'CREATE_COMMENT_SUCCESS') {
+    console.log('action create comment', action)
+    return {
+      state,
+      commongrounds: [...state.commongrounds, ...state.commongrounds[action.campId].comments[action.commentId] = action] //how to get commetn array to update
+    }
+  }
   return state
 }
 

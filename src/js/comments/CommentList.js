@@ -4,17 +4,23 @@ import { connect } from 'react-redux'
 
 class CommentList extends React.Component{
   render(){
-    var currComments = this.props.comments.filter(comment => {
-      return comment.campId === this.props.campId
-    });
+    // var currComments = this.props.comments.filter(comment => {
+    //   return comment.campId === this.props.campId
+    // });
+    let campIndex = this.props.campId
+    console.log('campIndex', this.props.comments[campIndex])
+    let currComments;
+    if(this.props.comments[campIndex]){
+      currComments = this.props.comments[campIndex].comments
+    }
     
     return (
       <ul>
-        {currComments.map(currComment =>
+        {currComments && currComments.map(currComment =>
           <Comment 
             key={currComment.commentId}
             commentId={currComment.commentId}
-            {...currComment}
+            inputStr={currComment.input}
           />
         )}
       </ul>
@@ -25,7 +31,7 @@ class CommentList extends React.Component{
 const mapStateToProps = (state) => {
   console.log('state', state);
   return {
-    comments: state.comments
+    comments: state.campGet.commongrounds
   }
 }
 

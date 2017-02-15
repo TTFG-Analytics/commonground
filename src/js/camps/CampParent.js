@@ -2,6 +2,13 @@ import React from 'react'
 import Camp from './Camp'
 import AddCamp from './AddCamp'
 import CampList from './CampList'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { getCamps } from '../actions/actions'
+
+CampList.need = [
+  getCamps
+]
 
 //discussionId is used to associate which camps belong to which discussions
 class CampParent extends React.Component{
@@ -14,4 +21,14 @@ class CampParent extends React.Component{
   }
 }
 
-export default CampParent
+const mapStateToProps = (state) => {
+  return {
+    camps: state.campGet
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(getCamps, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CampParent)

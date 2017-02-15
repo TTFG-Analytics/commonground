@@ -1,13 +1,3 @@
-const discussion = (state = {}, action) => {
-  if(action.type === "CREATE_DISCUSSION_SUCCESS") {
-    return {
-      id: action.id,
-      inputStr: action.inputStr
-    }
-  }
-  return state;
-}
-
 const discussionsGet = (state = {isFetching: false, discussions: [], error: null}, action) => {
   if(action.type === 'GET_DISCUSSIONS_SUCCESS') {
     console.log('action discussions', action.discussions)
@@ -23,10 +13,11 @@ const discussionsGet = (state = {isFetching: false, discussions: [], error: null
   }
   if(action.type === "CREATE_DISCUSSION_SUCCESS") {
     console.log('discussion made!!!', action)
-    return [
-      discussion(undefined, action),
-      ...state
-    ]
+    var newDiscuss = action;
+    return {
+      state,
+      discussions: [...state.discussions, newDiscuss]
+    }
   }
   return state
 }

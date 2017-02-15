@@ -126,10 +126,11 @@ export const getCamps = () => {
 //post request section
 
 export const createDiscussionSuccess = (discussion) => {
+  console.log('discussion create success', discussion)
   return {
     type: 'CREATE_DISCUSSION_SUCCESS',
     id: discussion.discussionId,
-    inputStr: discussion.topic
+    input: discussion.topic
   }
 } //sends action that's picked up by discussionReducer
 
@@ -151,7 +152,7 @@ export const createCampSuccess = (camp) => {
     type: 'CREATE_CAMP_SUCCESS',
     campId: camp.commongroundId,
     discussionId: camp.discussionId,
-    inputStr: camp.commonground
+    input: camp.commonground
   }
 } //sends action that's picked up by campReducer
 
@@ -174,7 +175,7 @@ export const createCommentSuccess = (comment) => {
     type: 'CREATE_COMMENT_SUCCESS',
     commentId: comment.commentId,
     campId: comment.commongroundId,
-    inputStr: comment.comment
+    input: comment.comment
   }
 }
 

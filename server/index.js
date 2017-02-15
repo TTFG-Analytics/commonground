@@ -32,7 +32,7 @@ app.get('/discussions', (req, res) => {
 
 app.get('/discussion', function(req, res) {
   var discussionInput = req.body.search;
-  knex('commonground').where({discussion_id: 2}).select('*')
+  knex('commonground').select('*')
     .then(function(data) {
       console.log('data', data)
       var commongroundsResponse = {};
