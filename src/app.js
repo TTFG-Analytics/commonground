@@ -47,12 +47,7 @@ class App extends React.Component {
       <div style={{textAlign: 'center'}}>
         <h1>Hello World!!! Testing hot loader.</h1>
       </div>
-      <div className="fb-login-button" data-max-row="1" 
-        data-size="xlarge" 
-        data-show-faces="true" 
-        data-auto-logout-link="true"
-        data-scope="public_profile, email" 
-        href="javascript:void(0)">Login</div>
+      <div className="fb-login-button" data-max-row="1" data-size="xlarge" data-show-faces="true" data-auto-logout-link="true" data-scope="public_profile, email" href="javascript:void(0)">Login</div>
     </div>
       );
   }
