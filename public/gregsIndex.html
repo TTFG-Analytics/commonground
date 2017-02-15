@@ -9,8 +9,10 @@
 
   <form class="user-fetcher">
     <h1>USER AUTH</h1>
-    <h4>name:</h4>
-    <input id="name" type="text" name="name" />
+    <h4>fullname:</h4>
+    <input id="fullname" type="text" name="fullname" />
+    <h4>facebookid:</h4>
+    <input id="facebookid" type="text" name="facebookid" />
     <h4>age:</h4>
     <input id="age" type="text" name="age" />
     <h4>hometown:</h4>
@@ -79,7 +81,8 @@
 <script>
 $('.user-fetcher').submit(function(e) {
   var user = {
-    name: document.getElementById("name").value,
+    fullname: document.getElementById("fullname").value,
+    facebookid: document.getElementById("facebookid").value,
     age: document.getElementById("age").value,
     hometown: document.getElementById("hometown").value,
     gender: document.getElementById("gender").value,
@@ -92,7 +95,7 @@ $('.user-fetcher').submit(function(e) {
   e.preventDefault();
   console.log("The user data is: ", user);
   $.ajax({
-    url: '/import',
+    url: '/user',
     type: 'POST',
     data: user,
     success: function(data) {

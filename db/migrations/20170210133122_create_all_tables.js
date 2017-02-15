@@ -2,7 +2,8 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('users', function(t) {
       t.increments('id').unsigned().primary();
-      t.string('name').notNull();
+      t.integer('facebookid').unique();
+      t.string('fullname').notNull();
       t.string('title').nullable();
       t.integer('age').notNull();
       t.string('hometown').nullable();
