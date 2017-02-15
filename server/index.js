@@ -3,7 +3,8 @@ var bodyParser = require('body-parser');
 const path = require('path');
 
 var app = express();
-app.use(bodyParser.urlencoded());
+//app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 module.exports = app;
 
@@ -15,13 +16,50 @@ var currentUser;
 var knex = require('knex')({
   client: 'postgresql',
   connection: {
-    database: 'cg_db',
-    user:     'Greg',
-    password: 'commonground'
+    database: 'cground_db',
+    user:     'postgres',
+    password: 'abc123'
   }
 });
 
-app.post('/import', function(req,res){
+app.get('/discussions', (req, res) => {
+  knex('discussion').select('*')
+    .then((data) => {
+      console.log('discussions data', data)
+      res.send(data)
+    })
+})
+
+app.get('/discussion', function(req, res) {
+  var discussionInput = req.body.search;
+  knex('commonground').select('*')
+    .then(function(data) {
+      console.log('data', data)
+      var commongroundsResponse = {};
+      commongroundsResponse.data = [];
+      var cgCount = 0;
+      data.forEach(function(commonground) {
+        let commongroundObj = {};
+        commongroundObj.id = commonground.id;
+        commongroundObj.input = commonground.input;
+        commongroundObj.discussionId = commonground.discussion_id;
+        console.log('commongroundObj in foreach', commongroundObj)
+        knex('comment').where({commonground_id: commonground.id}).select('*')
+          .then(function(comments) {
+            commongroundObj.comments = comments;
+            commongroundsResponse.data.push(commongroundObj)
+            console.log('comments obj', commongroundObj.comments)
+            cgCount++
+            if(cgCount === data.length){
+              console.log('cgCount', cgCount, '----------commongroundRes after foreach-------', commongroundsResponse);
+              res.send(commongroundsResponse)
+            }
+          })
+      })
+    })
+})
+
+app.post('/import', function(req,res) {
 
   currentUser = req.body;
 
@@ -29,22 +67,39 @@ app.post('/import', function(req,res){
   .then(function(data){ currentUser.id = data[0] });
 })
 
-app.post('/discuss', function(req,res){
+app.post('/discuss', function(req,res) {
   console.log(req.body);
 
-  knex('discussion').returning('id').insert({input: req.body.topic, user_id: currentUser.id})
-  .then(function(data){
-    console.log(data);
-    knex('commonground').insert({input: req.body.commonground1, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
-    knex('commonground').insert({input: req.body.commonground2, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
-  })
+  knex('discussion').returning('id').insert({input: req.body.topic, user_id: 1}) //currentUser.id --- hard coding for now
+    .then(function(data){
+      console.log('data discuss', data)
+      res.status(200).send(data)
+    })
+    .then(function(){})
+  //   console.log(data);
+  //   knex('commonground').insert({input: req.body.commonground1, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
+  //   knex('commonground').insert({input: req.body.commonground2, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
+  // })
+})
+
+app.post('/commonground', function(req, res){
+  console.log('req body commonground', req.body)
+  knex('commonground').returning('id').insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 1})
+    .then(function(data){
+      console.log('data commonground res', data)
+      res.status(200).send(data)
+    })
+    .then(function(){})
 })
 
 app.post('/comment', function(req,res){
   console.log(req.body);
 
-  knex('comment').insert({input: req.body.comment, user_id: currentUser.id, commonground_id: req.body.commongroundId }).then(function(){});
-
+  knex('comment').returning('id').insert({input: req.body.comment, user_id: 1, commonground_id: req.body.commongroundId })
+    .then(function(data){
+      res.status(200).send(data)
+    }) //currentUser.id --- hard coding for now
+    .then(function(){})
 })
 
 app.post('/vote', function(req,res){
