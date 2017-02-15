@@ -63,8 +63,22 @@ app.post('/import', function(req,res) {
 
   currentUser = req.body;
 
-  knex('users').returning('id').insert({name: req.body.name, age: req.body.age, hometown: req.body.hometown, gender: req.body.gender, race: req.body.race, industry: req.body.industry, politicalleaning:req.body.politicalleaning, religion: req.body.religion, yearlyincome:req.body.yearlyincome})
-  .then(function(data){ currentUser.id = data[0] });
+  knex.raw(`
+    INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome)
+    VALUES ('${req.body.fullname}', ${req.body.facebookid}, ${req.body.age} ,'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
+    ON CONFLICT (facebookid) DO UPDATE
+    SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.fullname}', ${req.body.age} ,'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
+    `)
+  .then(function(data){
+    // currentUser.id = data.rows[0].id
+    // console.log(currentUser.id);
+  });
+
+  // RETURNING id
+  // ON CONFLICT (name) DO UPDATE SET name = Timmy
+
+  // knex('users').returning('id').insert({name: req.body.name, age: req.body.age, hometown: req.body.hometown, gender: req.body.gender, race: req.body.race, industry: req.body.industry, politicalleaning:req.body.politicalleaning, religion: req.body.religion, yearlyincome:req.body.yearlyincome})
+  // .then(function(data){ currentUser.id = data[0] });
 })
 
 app.post('/discuss', function(req,res) {
