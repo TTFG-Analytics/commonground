@@ -271,16 +271,24 @@ exports.seed = function(knex, Promise) {
       });
     }).then(function () {
       return knex('vote').insert({
-        input: false,
+        input: 0,
         user_id: 5,
         comment_id: 2
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 2)
+      .increment('downvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: true,
+        input: 1,
         user_id: 4,
         comment_id: 1
       });
+    }).then(function () {
+      return knex('comment')
+      .where('id', 1)
+      .increment('upvotecounter',1)
     }).then(function () {
       return knex('discussion').insert({
         input: "Climate Change in the Anthropocene: is it man-made or natural?",
@@ -312,40 +320,64 @@ exports.seed = function(knex, Promise) {
       });
     }).then(function () {
       return knex('vote').insert({
-        input: 'True',
+        input: 1,
         comment_id: 3,
         user_id: 11,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 3)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: "True",
+        input: 1,
         comment_id: 4,
         user_id: 9,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 4)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: 'True',
+        input: 1,
         comment_id: 4,
         user_id: 1,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 4)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: "True",
+        input: 1,
         comment_id: 4,
         user_id: 2,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 4)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: 'True',
+        input: 1,
         comment_id: 4,
         user_id: 3,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 4)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: "True",
+        input: 1,
         comment_id: 4,
         user_id: 4,
       });
+    }).then(function () {
+      return knex('comment')
+      .where('id', 4)
+      .increment('upvotecounter',1)
     }).then(function () {
       return knex('discussion').insert({
         input: "Would you rather fight 50 duck sized horses or 1 horse sized duck",
@@ -377,52 +409,84 @@ exports.seed = function(knex, Promise) {
       });
     }).then(function () {
       return knex('vote').insert({
-        input: 'True',
+        input: 1,
         comment_id: 5,
         user_id: 14,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 5)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: "True",
+        input: 1,
         comment_id: 6,
         user_id: 7,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 6)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: 'True',
+        input: 1,
         comment_id: 5,
         user_id: 16,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 5)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: "True",
+        input: 1,
         comment_id: 6,
         user_id: 17,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 6)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: 'True',
+        input: 1,
         comment_id: 5,
         user_id: 1,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 1)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: "True",
+        input: 1,
         comment_id: 6,
         user_id: 2,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 6)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: 'True',
+        input: 1,
         comment_id: 5,
         user_id: 3,
       });
     }).then(function () {
+      return knex('comment')
+      .where('id', 5)
+      .increment('upvotecounter',1)
+    }).then(function () {
       return knex('vote').insert({
-        input: "True",
+        input: 1,
         comment_id: 6,
         user_id: 4,
       });
+    }).then(function () {
+      return knex('comment')
+      .where('id', 6)
+      .increment('upvotecounter',1)
     })
 };
 
