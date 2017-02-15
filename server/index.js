@@ -3,8 +3,8 @@ var bodyParser = require('body-parser');
 const path = require('path');
 
 var app = express();
-//app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false})); //needed for testing purposes on gregindex.html
+// app.use(bodyParser.json());
 
 module.exports = app;
 
@@ -16,9 +16,9 @@ var currentUser;
 var knex = require('knex')({
   client: 'postgresql',
   connection: {
-    database: 'cground_db',
-    user:     'postgres',
-    password: 'abc123'
+    database: 'cg_db',
+    user:     'Greg',
+    password: 'commonground'
   }
 });
 
@@ -60,7 +60,6 @@ app.get('/discussion', function(req, res) {
 })
 
 app.post('/user', function(req,res) {
-
   currentUser = req.body;
 
   knex.raw(`
@@ -72,7 +71,6 @@ app.post('/user', function(req,res) {
     `)
   .then(function(data){
     currentUser.id = data.rows[0].id
-    console.log(currentUser.id);
   });
 })
 
