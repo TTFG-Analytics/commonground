@@ -85,18 +85,42 @@ export const getDiscussions = () => {
 }
 
 export const getCampsSuccess = (camps) => {
+  console.log('getCampsSuccess', camps)
   return {
     type: 'GET_CAMPS_SUCCESS',
     camps: camps.data
   }
 } //sends action that is picked up by getCampsReducer
 
-export const getCamps = () => {
+export const getCamps = (discussionId) => {
+  console.log('discussionid', discussionId)
   return (dispatch) => {
-    return axios.get('/discussion')
+    return axios.get('/discussion/' + discussionId)
       .then(response => {
         console.log('get camps res', response)
         dispatch(getCampsSuccess(response.data))
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+export const getCommentsSuccess = (comments) => {
+  console.log('getCommentsSuccess', comments)
+  return {
+    type: 'GET_COMMENTS_SUCCESS',
+    comments: comments.data
+  }
+} //sends action that is picked up by getCommentsReducer
+
+export const getComments = (campId) => {
+  console.log('campid getComments is going', campId)
+  return (dispatch) => {
+    return axios.get('/comments/' + campId)
+      .then(response => {
+        console.log('get camps res', response)
+        dispatch(getCommentsSuccess(response.data))
       })
       .catch(error => {
         console.log(error);

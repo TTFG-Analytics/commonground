@@ -1,23 +1,23 @@
-const comment = (state = {}, action) => {
+const commentGet = (state={comments:[]}, action) => {
+  if(action.type === 'GET_COMMENTS_SUCCESS') {
+    console.log('action comments', action.comments)
+    return Object.assign(
+      {},
+      state,
+      {
+        comments: [...state.comments].concat(action.comments)
+      }
+    )
+  }
   if(action.type === 'CREATE_COMMENT_SUCCESS') {
-    console.log('action campid', action.campId)
+    var newComment = action;
+    console.log('action create comment', newComment, action)
     return {
-      commentId: action.commentId,
-      campId: action.campId,
-      inputStr: action.inputStr
+      state,
+      comments: [...state.comments, newComment]
     }
   }
   return state
 }
 
-const comments = (state = [], action) => {
-  if(action.type === 'CREATE_COMMENT_SUCCESS') {
-    return [
-      ...state,
-      comment(undefined, action)
-    ]
-  }
-  return state
-}
-
-export default comments
+export default commentGet

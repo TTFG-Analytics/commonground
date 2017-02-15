@@ -30,32 +30,27 @@ app.get('/discussions', (req, res) => {
     })
 })
 
-app.get('/discussion', function(req, res) {
-  var discussionInput = req.body.search;
-  knex('commonground').select('*')
+app.get('/discussion/:discussionId', function(req, res) {
+  let id = req.params.discussionId;
+  console.log('id', id, req.params);
+  knex('commonground').where({discussion_id: id}).select('*')
     .then(function(data) {
       console.log('data', data)
       var commongroundsResponse = {};
-      commongroundsResponse.data = [];
-      var cgCount = 0;
-      data.forEach(function(commonground) {
-        let commongroundObj = {};
-        commongroundObj.id = commonground.id;
-        commongroundObj.input = commonground.input;
-        commongroundObj.discussionId = commonground.discussion_id;
-        console.log('commongroundObj in foreach', commongroundObj)
-        knex('comment').where({commonground_id: commonground.id}).select('*')
-          .then(function(comments) {
-            commongroundObj.comments = comments;
-            commongroundsResponse.data.push(commongroundObj)
-            console.log('comments obj', commongroundObj.comments)
-            cgCount++
-            if(cgCount === data.length){
-              console.log('cgCount', cgCount, '----------commongroundRes after foreach-------', commongroundsResponse);
-              res.send(commongroundsResponse)
-            }
-          })
-      })
+      commongroundsResponse.data = data;
+      res.send(commongroundsResponse);
+    })
+})
+
+app.get('/comments/:campId', function(req, res) {
+  let id = req.params.campId;
+  console.log('id', id, req.params);
+  knex('comment').where({commonground_id: id}).select('*')
+    .then(function(data) {
+      console.log('data', data)
+      var commentsResponse = {};
+      commentsResponse.data = data;
+      res.send(commentsResponse);
     })
 })
 

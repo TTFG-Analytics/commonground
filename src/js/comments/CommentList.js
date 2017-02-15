@@ -4,22 +4,29 @@ import { connect } from 'react-redux'
 
 class CommentList extends React.Component{
   render(){
-    // var currComments = this.props.comments.filter(comment => {
-    //   return comment.campId === this.props.campId
-    // });
-    let campIndex = this.props.campId
-    console.log('campIndex', this.props.comments[campIndex])
-    let currComments;
-    if(this.props.comments[campIndex]){
-      currComments = this.props.comments[campIndex].comments
-    }
+
+    //let campIndex = this.props.campId
+    //console.log('campIndex', this.props.comments[campIndex])
+    // let currComments = this.props.comments;
+    // if(this.props.comments[campIndex]){
+    //   currComments = this.props.comments[campIndex].comments
+    // }
+    var currComments = [];
+    //if(currComments.length > 0){
+    //console.log('currrcomments', currComments[0][0].input)
+    currComments = this.props.comments.filter(comment => {
+      return comment.commonground_id === this.props.campId
+    });
+    //console.log('confussed', currComments[0])
+    console.log('this props commetns curr', this.props)
+    //}
     
     return (
       <ul>
-        {currComments && currComments.map(currComment =>
+        {currComments && currComments.length > 0 && currComments.map(currComment =>
           <Comment 
             key={currComment.commentId}
-            commentId={currComment.commentId}
+            commentId={currComment.id}
             inputStr={currComment.input}
           />
         )}
@@ -29,9 +36,9 @@ class CommentList extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-  console.log('state', state);
+  //console.log('state', state);
   return {
-    comments: state.campGet.commongrounds
+    comments: state.commentGet.comments
   }
 }
 

@@ -1,12 +1,10 @@
-const campGet = (state = {isFetching: false, commongrounds: [], error: null}, action) => {
+const campGet = (state={commongrounds: []}, action) => {
   if(action.type === 'GET_CAMPS_SUCCESS') {
     console.log('action commongrounds', action.camps)
     return Object.assign(
       {},
       state,
       {
-        isFetching: false,
-        error: false,
         commongrounds: action.camps
       }
     )
@@ -17,13 +15,6 @@ const campGet = (state = {isFetching: false, commongrounds: [], error: null}, ac
     return {
       state,
       commongrounds: [...state.commongrounds, newCamp]
-    }
-  }
-  if(action.type === 'CREATE_COMMENT_SUCCESS') {
-    console.log('action create comment', action)
-    return {
-      state,
-      commongrounds: [...state.commongrounds, ...state.commongrounds[action.campId].comments[action.commentId] = action] //how to get commetn array to update
     }
   }
   return state

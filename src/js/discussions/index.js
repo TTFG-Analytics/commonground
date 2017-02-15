@@ -6,12 +6,12 @@ import { combineReducers } from 'redux'
 import discussionsGet from './getDiscussionsReducer'
 import camps from '../camps/campReducer'
 import campGet from '../camps/getCampsReducer'
-import comments from '../comments/commentReducer'
+import commentGet from '../comments/commentReducer'
 import upvotes from '../comments/upvoteReducer'
 
 const cgApp = combineReducers({
   camps,
-  comments,
+  commentGet,
   upvotes,
   campGet,
   discussionsGet
