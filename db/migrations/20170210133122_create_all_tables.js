@@ -13,6 +13,8 @@ exports.up = function(knex, Promise) {
       t.integer('politicalleaning').nullable();
       t.integer('religion').nullable();
       t.integer('yearlyincome').nullable();
+      t.string('email').nullable();
+      t.string('facebookpicture').nullable();
       t.timestamp('createdat').defaultTo(knex.fn.now());
     }),
 

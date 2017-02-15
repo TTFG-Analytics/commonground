@@ -17,8 +17,8 @@ var knex = require('knex')({
   client: 'postgresql',
   connection: {
     database: 'cg_db',
-    user:     'Greg',
-    password: 'commonground'
+    user:     'commonground',
+    password: 'commonground123'
   }
 });
 
