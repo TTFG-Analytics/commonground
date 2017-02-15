@@ -68,10 +68,11 @@ app.post('/import', function(req,res) {
     VALUES ('${req.body.fullname}', ${req.body.facebookid}, ${req.body.age} ,'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
     ON CONFLICT (facebookid) DO UPDATE
     SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.fullname}', ${req.body.age} ,'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
+    RETURNING id
     `)
   .then(function(data){
-    // currentUser.id = data.rows[0].id
-    // console.log(currentUser.id);
+    currentUser.id = data.rows[0].id
+    console.log(currentUser.id);
   });
 
   // RETURNING id
