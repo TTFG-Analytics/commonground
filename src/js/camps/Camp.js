@@ -6,9 +6,28 @@ import { connect } from 'react-redux'
 import { getComments } from '../actions/actions'
 
 class Camp extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      showComments: false,
+      hasFetched: false
+    }
+  }
+
   fetchComments(campId) {
-    console.log('fetchComments campid', campId)
-    this.props.getComments(campId)
+    console.log('this fetchComments', this)
+    if(!this.state.hasFetched){
+      console.log('fetchComments campid', campId)
+      this.props.getComments(campId)
+      this.setState({
+        showComments: true,
+        hasFetched: true
+      })
+    } else {
+      this.setState({
+        showComments: !this.state.showComments
+      })
+    }
   }
 
   render() {
@@ -16,7 +35,7 @@ class Camp extends React.Component{
     return (
       <li>
         <h3 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h3>
-        <CommentParent campId={campId} />
+        {this.state.showComments && <CommentParent campId={campId} />}
       </li>
     )
   }
