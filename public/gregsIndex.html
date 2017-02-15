@@ -95,7 +95,7 @@ $('.user-fetcher').submit(function(e) {
   e.preventDefault();
   console.log("The user data is: ", user);
   $.ajax({
-    url: '/import',
+    url: '/user',
     type: 'POST',
     data: user,
     success: function(data) {

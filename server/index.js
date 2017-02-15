@@ -59,7 +59,7 @@ app.get('/discussion', function(req, res) {
     })
 })
 
-app.post('/import', function(req,res) {
+app.post('/user', function(req,res) {
 
   currentUser = req.body;
 
@@ -74,12 +74,6 @@ app.post('/import', function(req,res) {
     currentUser.id = data.rows[0].id
     console.log(currentUser.id);
   });
-
-  // RETURNING id
-  // ON CONFLICT (name) DO UPDATE SET name = Timmy
-
-  // knex('users').returning('id').insert({name: req.body.name, age: req.body.age, hometown: req.body.hometown, gender: req.body.gender, race: req.body.race, industry: req.body.industry, politicalleaning:req.body.politicalleaning, religion: req.body.religion, yearlyincome:req.body.yearlyincome})
-  // .then(function(data){ currentUser.id = data[0] });
 })
 
 app.post('/discuss', function(req,res) {
