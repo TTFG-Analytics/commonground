@@ -19,7 +19,7 @@ class CampParent extends React.Component{
 
   render(){
     console.log('camp parent params', this.props.params)
-    //console.log('discussionId', this.props.discussionId)
+    console.log('discussionId', this.props.params.discussionId)
     return (<div>
       <AddCamp discussionId={this.props.params.discussionId} />
       <CampList discussionId={this.props.params.discussionId} />

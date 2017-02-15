@@ -4,10 +4,10 @@ import { connect } from 'react-redux'
 
 class CampList extends React.Component{
   render(){
-     var currCamps = this.props.camps
-    //  .filter(camp => {
-    //   return camp.discussion_id === this.props.discussionId
-    // });
+    console.log('this camplist props', this.props)
+    var currCamps = this.props.camps.filter(camp => {
+      return camp.discussion_id == this.props.discussionId
+    });
     console.log('currCamps', currCamps, this.props.camps)
 
     return (

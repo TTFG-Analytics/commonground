@@ -175,7 +175,7 @@ export const createCampSuccess = (camp) => {
   return {
     type: 'CREATE_CAMP_SUCCESS',
     campId: camp.commongroundId,
-    discussionId: camp.discussionId,
+    discussion_id: camp.discussionId,
     input: camp.commonground
   }
 } //sends action that's picked up by campReducer
@@ -198,7 +198,7 @@ export const createCommentSuccess = (comment) => {
   return {
     type: 'CREATE_COMMENT_SUCCESS',
     commentId: comment.commentId,
-    campId: comment.commongroundId,
+    commonground_id: comment.commongroundId,
     input: comment.comment
   }
 }

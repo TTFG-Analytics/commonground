@@ -13,6 +13,7 @@ class Discussion extends React.Component{
   render(){
     console.log('this props discussion', this.props)
     var discussionId = this.props.discussionId;
+    //discussionId += 1;
     var inputStr = this.props.inputStr;
     return (
       <li>
