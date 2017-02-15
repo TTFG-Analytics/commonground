@@ -2,7 +2,7 @@
 //goes to the store.js file
 import { combineReducers } from 'redux'
 
-import discussions from './discussionReducer'
+// import discussions from './discussionReducer'
 import discussionsGet from './getDiscussionsReducer'
 import camps from '../camps/campReducer'
 import campGet from '../camps/getCampsReducer'
@@ -10,7 +10,6 @@ import comments from '../comments/commentReducer'
 import upvotes from '../comments/upvoteReducer'
 
 const cgApp = combineReducers({
-  discussions,
   camps,
   comments,
   upvotes,

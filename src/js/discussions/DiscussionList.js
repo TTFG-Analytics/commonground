@@ -19,17 +19,12 @@ class DiscussionList extends React.Component{
     return (
       <div>
       <ul>
-        {thisObj.props.discussions.map(discussion =>
-          <Discussion 
-            key={discussion.id}
-            discussionId={discussion.id}
-            {...discussion}
-          />  
-        )}
-      </ul>
-      <ul>
         {thisObj.props.discussionsList.length > 0 && thisObj.props.discussionsList.map((discussionX, index) =>
-          <h3 key={index}>{discussionX.input}</h3>
+          <Discussion 
+            key={discussionX.id}
+            discussionId={discussionX.id}
+            inputStr={discussionX.input}
+          />
         )}
       </ul>
       </div>
@@ -39,7 +34,7 @@ class DiscussionList extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    discussions: state.discussions,
+    // discussions: state.discussions,
     discussionsList: state.discussionsGet.discussions
   }
 } //we need the state.discussions array to pass into the DiscussionList as props
