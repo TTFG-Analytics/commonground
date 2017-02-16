@@ -95,7 +95,7 @@ app.post('/discuss', function(req,res) {
 
 app.post('/commonground', function(req, res){
   console.log('req body commonground', req.body)
-  knex('commonground').returning('id').insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 1})
+  knex('commonground').returning(['id', 'discussion_id', 'input']).insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 1})
     .then(function(data){
       console.log('data commonground res --------------------------', data)
       res.status(200).send(data)
