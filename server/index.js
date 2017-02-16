@@ -147,6 +147,9 @@ app.post('/vote', function(req,res){
   }).then(function(){});
 });
 
+app.get('/*', function(req, res) {
+  res.sendFile(path.resolve(__dirname + '/../public/index.html'));
+});
 
 var port = process.env.PORT || 4040;
 app.listen(port);
