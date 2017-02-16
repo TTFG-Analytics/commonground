@@ -16,18 +16,17 @@ class Camp extends React.Component{
 
   fetchComments(campId) {
     console.log('this fetchComments', this)
-    if(!this.state.hasFetched){
+    //if(!this.state.hasFetched){  //hasFetched: true
       console.log('fetchComments campid', campId)
       this.props.getComments(campId)
-      this.setState({
-        showComments: true,
-        hasFetched: true
-      })
-    } else {
+      // this.setState({
+      //   showComments: true,
+      // })
+    //} else {
       this.setState({
         showComments: !this.state.showComments
       })
-    }
+    //}
   }
 
   render() {
