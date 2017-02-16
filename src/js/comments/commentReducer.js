@@ -17,6 +17,15 @@ const commentGet = (state={comments:[]}, action) => {
       comments: [...state.comments, newComment]
     }
   }
+  if(action.type === 'UPVOTE_SUCCESS') {
+    return {
+      state,
+      comments: [...state.comments.slice(0, action.commentId),
+        state.comments[action.commentId].upvotecount = action.upvotecounter,
+        ...state.comments.slice(action.commentId+1)
+      ]
+    }
+  }
   return state
 }
 

@@ -108,7 +108,7 @@ app.post('/vote', function(req,res){
   console.log(currentUser);
   console.log(req.body);
 
-  knex('vote').returning('comment_id').insert({input: req.body.vote, user_id: currentUser.id, comment_id: req.body.commentId })
+  knex('vote').insert({input: req.body.vote, user_id: 1, comment_id: req.body.commentId })
   .then(function(data){
     if (req.body.vote === '1') {
       knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where('id', data[0]).increment('upvotecounter', 1)

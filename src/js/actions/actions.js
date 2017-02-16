@@ -48,13 +48,6 @@ export function createUpvote() {
   }
 }
 
-export function increaseUpvotes(commentId) {
-  return {
-    type: 'UPVOTE',
-    commentId: commentId
-  }
-}
-
 export function increaseDownvotes() {
   return {
     type: 'DOWNVOTE'
@@ -216,3 +209,28 @@ export const createCommentPost = (comment) => {
       })
   }
 }
+
+export const increaseUpvotesSuccess = (upvote) => {
+  console.log('upvote success', upvote)
+  return {
+    type: 'UPVOTE_SUCCESS',
+    commentId: upvote.id,
+    upvotecounter: upvote.upvotecounter
+  }
+}
+
+export function increaseUpvotesPost(vote) {
+  console.log('increasing upvotes ==============')
+  return (dispatch) => {
+    return axios.post('/vote', vote)
+      .then(response => {
+        console.log('upvote success response', response)
+        let responseObj = JSON.parse(response.config.data)
+        responseObj.commentId = response.data[0]
+        dispatch(increaseUpvotesSuccess(response))
+      })
+  }
+}
+
+//type: 'UPVOTE',
+    // commentId: commentId,
