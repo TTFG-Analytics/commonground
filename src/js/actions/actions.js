@@ -232,5 +232,27 @@ export function increaseUpvotesPost(vote) {
   }
 }
 
+export const increaseDownvotesSuccess = (downvote) => {
+  console.log('downvote success', downvote)
+  return {
+    type: 'DOWNVOTE_SUCCESS',
+    commentId: downvote.id,
+    downvotecounter: downvote.downvotecounter
+  }
+}
+
+export function increaseDownvotesPost(downvote) {
+  console.log('downvotinggggg')
+  return (dispatch) => {
+    return axios.post('/vote', downvote)
+      .then(response => {
+        console.log('downvote success response', response)
+        let responseObj = JSON.parse(response.config.data)
+        responseObj.commentId = response.data[0]
+        dispatch(increaseDownvotesSuccess(response.data))
+      })
+  }
+}
+
 //type: 'UPVOTE',
     // commentId: commentId,

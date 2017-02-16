@@ -37,6 +37,23 @@ const commentGet = (state={comments:[]}, action) => {
       })
     }
   }
+  if(action.type === 'DOWNVOTE_SUCCESS') {
+    console.log('action downvote', action)
+    let commentIndex = 0
+    state.comments.forEach((comment, index) => {
+      if(comment.id === action.commentId) {
+        commentIndex = index;
+      }
+    })
+    return {
+      state,
+      comments: update(state.comments, {
+        [commentIndex]: {
+          downvotecounter: {$set: action.downvotecounter}
+        }
+      })
+    }
+  }
   return state
 }
 
