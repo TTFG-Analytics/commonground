@@ -7,7 +7,7 @@ const commentGet = (state={comments:[]}, action) => {
       {},
       state,
       {
-        comments: [...state.comments].concat(action.comments)
+        comments: action.comments
       }
     )
   }
@@ -58,3 +58,5 @@ const commentGet = (state={comments:[]}, action) => {
 }
 
 export default commentGet
+
+//[...state.comments].concat(action.comments)

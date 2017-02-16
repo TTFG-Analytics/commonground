@@ -17,7 +17,7 @@ class Discussion extends React.Component{
     var inputStr = this.props.inputStr;
     return (
       <li>
-        <Link to={`/discussion/${discussionId}`}><h3 onClick={()=> this.fetchCamps(discussionId)}>{inputStr}</h3></Link>
+        <Link to={`/discuss/${discussionId}`}><h3 onClick={()=> this.fetchCamps(discussionId)}>{inputStr}</h3></Link>
       </li>
     )
   }
