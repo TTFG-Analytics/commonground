@@ -54,7 +54,16 @@ app.get('/comments/:campId', function(req, res) {
     })
 })
 
-app.post('/user', function(req,res) {
+app.get('/profile', function(req, res) {
+  knex('users').select('*')
+  .where({id: 18})
+    .then(function(data) {
+      console.log('datatatatata', data)
+      res.send(data);
+    })
+})
+
+app.post('/profile', function(req,res) {
   currentUser = req.body;
 
   knex.raw(`
