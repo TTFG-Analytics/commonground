@@ -227,7 +227,7 @@ export function increaseUpvotesPost(vote) {
         console.log('upvote success response', response)
         let responseObj = JSON.parse(response.config.data)
         responseObj.commentId = response.data[0]
-        dispatch(increaseUpvotesSuccess(response))
+        dispatch(increaseUpvotesSuccess(response.data))
       })
   }
 }

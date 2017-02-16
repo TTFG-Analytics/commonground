@@ -14,6 +14,7 @@ class CommentList extends React.Component{
     var currComments = [];
     //if(currComments.length > 0){
     //console.log('currrcomments', currComments[0][0].input)
+    console.log('this.props', this.props)
     currComments = this.props.comments.filter(comment => {
       return comment.commonground_id === this.props.campId
     });

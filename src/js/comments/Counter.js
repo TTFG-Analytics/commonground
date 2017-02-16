@@ -5,20 +5,27 @@ import { connect } from 'react-redux'
 class Counter extends React.Component {
   render() {
     console.log('upvotes props -----', this.props)
-    let currentUpvote;
+    let currentUpvote = 0;
+    let currentDownvote = 0;
     // if(this.props.upvotes.length > 0){
     //   currentUpvote = this.props.upvotes.length
     // } else {
-      currentUpvote = 0
+    
     // }
     let commentId = this.props.commentId
+    this.props.comments.forEach(comment => {
+      if(comment.id === commentId) {
+        currentUpvote = comment.upvotecounter
+        currentDownvote = comment.downvotecounter
+      }
+    })
     return (
       <div>
         <p className="upvoteCount">Upvotes: {currentUpvote}</p>
         <button onClick={() => {
-          this.props.increaseUpvotesPost({vote: 1, commentId: commentId})
+          this.props.increaseUpvotesPost({vote: '1', commentId: commentId})
         }}>+1</button>
-        <p className="downvoteCount">Downvotes</p>
+        <p className="downvoteCount">Downvotes: {currentDownvote}</p>
         <button>-1</button>
       </div>
     )
@@ -34,8 +41,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increaseUpvotesPost: (commentId) => {
-      dispatch(increaseUpvotesPost(commentId))
+    increaseUpvotesPost: (vote) => {
+      dispatch(increaseUpvotesPost(vote))
     }
   }
 }

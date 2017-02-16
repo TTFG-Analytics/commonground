@@ -1,3 +1,5 @@
+import update from 'react-addons-update';
+
 const commentGet = (state={comments:[]}, action) => {
   if(action.type === 'GET_COMMENTS_SUCCESS') {
     console.log('action comments', action.comments)
@@ -18,12 +20,21 @@ const commentGet = (state={comments:[]}, action) => {
     }
   }
   if(action.type === 'UPVOTE_SUCCESS') {
+    console.log('action upvote', action)
+    let commentIndex = 0;
+    state.comments.forEach((comment, index) => {
+      if(comment.id === action.commentId){
+        commentIndex = index;
+      }
+    })
+    console.log('commentIndex', commentIndex)
     return {
       state,
-      comments: [...state.comments.slice(0, action.commentId),
-        state.comments[action.commentId].upvotecount = action.upvotecounter,
-        ...state.comments.slice(action.commentId+1)
-      ]
+      comments: update(state.comments, {
+        [commentIndex]: { 
+          upvotecounter: {$set: action.upvotecounter} 
+        }
+      })
     }
   }
   return state
