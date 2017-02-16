@@ -190,11 +190,11 @@ export const createCommentSuccess = (comment) => {
   console.log('createCommentSuccess', comment)
   return {
     type: 'CREATE_COMMENT_SUCCESS',
-    id: comment.commentId,
-    commonground_id: comment.commongroundId,
-    input: comment.comment,
-    upvotecounter: 0,
-    downvotecounter: 0,
+    id: comment.id,
+    commonground_id: comment.commonground_id,
+    input: comment.input,
+    upvotecounter: comment.upvotecounter,
+    downvotecounter: comment.downvotecounter,
     // upvotecounter: comment.upvotecounter,
     // downvotecounter: comment.downvotecounter,
     delta: 0
@@ -207,10 +207,10 @@ export const createCommentPost = (comment) => {
     return axios.post('/comment', comment)
       .then(response => {
         console.log('create comment success response', response)
-        let responseObj = JSON.parse(response.config.data)
+        //let responseObj = JSON.parse(response.data)
         // responseObj.commentId = response.data[0]
-        console.log('create comment success resobj', responseObj)
-        dispatch(createCommentSuccess(responseObj))
+        console.log('create comment success resobj', response.data)
+        dispatch(createCommentSuccess(response.data))
       })
   }
 }
