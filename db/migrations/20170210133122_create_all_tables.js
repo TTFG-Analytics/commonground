@@ -41,6 +41,7 @@ exports.up = function(knex, Promise) {
       t.string('input', 2000).notNull();
       t.integer('upvotecounter').defaultTo(0);
       t.integer('downvotecounter').defaultTo(0);
+      t.integer('delta').defaultTo(0); //HERE
       t.timestamp('createdat').defaultTo(knex.fn.now());
       t.integer('commonground_id')
       t.integer('user_id')
