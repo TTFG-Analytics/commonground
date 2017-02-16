@@ -26,7 +26,7 @@ class CommentList extends React.Component{
       <ul>
         {currComments && currComments.length > 0 && currComments.map(currComment =>
           <Comment 
-            key={currComment.commentId}
+            key={currComment.id}
             commentId={currComment.id}
             inputStr={currComment.input}
           />
