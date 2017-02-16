@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import App from './discussions/App'
-import CampParent from './camps/CampParent'
+import App from './discussion/discuss/App'
+import CampParent from './discussion/camps/CampParent'
 import store from './store' //tie react application to redux
 import { Router, Route, browserHistory } from 'react-router'
 

@@ -190,9 +190,14 @@ export const createCommentSuccess = (comment) => {
   console.log('createCommentSuccess', comment)
   return {
     type: 'CREATE_COMMENT_SUCCESS',
-    commentId: comment.commentId,
+    id: comment.commentId,
     commonground_id: comment.commongroundId,
-    input: comment.comment
+    input: comment.comment,
+    upvotecounter: 0,
+    downvotecounter: 0,
+    // upvotecounter: comment.upvotecounter,
+    // downvotecounter: comment.downvotecounter,
+    delta: 0
   }
 }
 
@@ -203,7 +208,7 @@ export const createCommentPost = (comment) => {
       .then(response => {
         console.log('create comment success response', response)
         let responseObj = JSON.parse(response.config.data)
-        responseObj.commentId = response.data[0]
+        // responseObj.commentId = response.data[0]
         console.log('create comment success resobj', responseObj)
         dispatch(createCommentSuccess(responseObj))
       })

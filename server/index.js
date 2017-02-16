@@ -88,7 +88,7 @@ app.post('/commonground', function(req, res){
   console.log('req body commonground', req.body)
   knex('commonground').returning('id').insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 1})
     .then(function(data){
-      console.log('data commonground res', data)
+      console.log('data commonground res --------------------------', data)
       res.status(200).send(data)
     })
     .then(function(){})
@@ -97,9 +97,16 @@ app.post('/commonground', function(req, res){
 app.post('/comment', function(req,res){
   console.log(req.body);
 
-  knex('comment').returning('id').insert({input: req.body.comment, user_id: 1, commonground_id: req.body.commongroundId })
+  knex('comment').returning(['id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: req.body.comment, user_id: 1, commonground_id: req.body.commongroundId })
     .then(function(data){
-      res.status(200).send(data)
+      console.log('----- data comment res -------------------', data[0].id)
+      var commentResObj = {
+            id: data[0].id,
+            upvotecounter: data[0].upvotecounter,
+            downvotecounter: data[0].downvotecounter,
+            delta: data[0].delta
+          }
+      res.status(200).send(commentResObj)
     }) //currentUser.id --- hard coding for now
     .then(function(){})
 })
