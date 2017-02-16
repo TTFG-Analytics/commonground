@@ -14,32 +14,6 @@ export function createDiscussion(inputStr) {
   }
 }
 
-export function createCamp(discussionId, inputStr) {
-  return {
-    type: 'SET_CAMP',
-    campId: campId++,
-    discussionId: discussionId,
-    inputStr
-  }
-}
-
-export function selectCamp(campId) { //function is 'action creator'
-  console.log('you clicked on camp', campId);
-  return {//object that gets returned is the 'action'
-    type: 'CAMP_SELECTED',
-    campId
-  }
-}
-
-export function createComment(campId, inputStr) {
-  return {
-    type: 'MAKE_COMMENT',
-    commentId: commentId++,
-    campId: campId,
-    inputStr
-  }
-}
-
 export function createUpvote() {
   return {
     type: 'CREATE_UPVOTE_COUNTER',
@@ -167,9 +141,9 @@ export const createDiscussionPost = (discussion) => {
 export const createCampSuccess = (camp) => {
   return {
     type: 'CREATE_CAMP_SUCCESS',
-    campId: camp.commongroundId,
-    discussion_id: camp.discussionId,
-    input: camp.commonground
+    id: camp.id,
+    discussion_id: camp.discussion_id,
+    input: camp.input
   }
 } //sends action that's picked up by campReducer
 
@@ -178,10 +152,10 @@ export const createCampPost = (camp) => {
     return axios.post('/commonground', camp)
       .then(response => {
         console.log('create camp success resobj', response)
-        let responseObj = JSON.parse(response.config.data)
-        responseObj.commongroundId = response.data[0]
-        console.log('create camp success resobj', responseObj)
-        dispatch(createCampSuccess(responseObj))
+        // let responseObj = JSON.parse(response.config.data)
+        // responseObj.commongroundId = response.data[0]
+        //console.log('create camp success resobj', response)
+        dispatch(createCampSuccess(response.data[0]))
       })
   }
 }
@@ -190,11 +164,11 @@ export const createCommentSuccess = (comment) => {
   console.log('createCommentSuccess', comment)
   return {
     type: 'CREATE_COMMENT_SUCCESS',
-    id: comment.commentId,
-    commonground_id: comment.commongroundId,
-    input: comment.comment,
-    upvotecounter: 0,
-    downvotecounter: 0,
+    id: comment.id,
+    commonground_id: comment.commonground_id,
+    input: comment.input,
+    upvotecounter: comment.upvotecounter,
+    downvotecounter: comment.downvotecounter,
     // upvotecounter: comment.upvotecounter,
     // downvotecounter: comment.downvotecounter,
     delta: 0
@@ -207,10 +181,10 @@ export const createCommentPost = (comment) => {
     return axios.post('/comment', comment)
       .then(response => {
         console.log('create comment success response', response)
-        let responseObj = JSON.parse(response.config.data)
+        //let responseObj = JSON.parse(response.data)
         // responseObj.commentId = response.data[0]
-        console.log('create comment success resobj', responseObj)
-        dispatch(createCommentSuccess(responseObj))
+        console.log('create comment success resobj', response.data)
+        dispatch(createCommentSuccess(response.data))
       })
   }
 }
