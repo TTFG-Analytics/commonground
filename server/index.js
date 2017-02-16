@@ -110,14 +110,23 @@ app.post('/comment', function(req,res){
 })
 
 app.post('/vote', function(req,res){
+  console.log(currentUser);
   console.log(req.body);
 
   knex('vote').returning('comment_id').insert({input: req.body.vote, user_id: currentUser.id, comment_id: req.body.commentId })
   .then(function(data){
     if (req.body.vote === '1') {
-      knex('comment').where('id', data[0]).increment('upvotecounter', 1).then(function(){});
+      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where('id', data[0]).increment('upvotecounter', 1)
+      .then(function(data){
+          let diff = data[0].upvotecounter - data[0].downvotecounter;
+          knex('comment').where('id', data[0].id).update({delta: diff}).then(function(){})
+        });
     } else {
-      knex('comment').where('id', data[0]).increment('downvotecounter', 1).then(function(){});
+      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where('id', data[0]).increment('downvotecounter', 1)
+      .then(function(data){
+          let diff = data[0].upvotecounter - data[0].downvotecounter;
+          knex('comment').where('id', data[0].id).update({delta: diff}).then(function(){})
+        });
     }
   }).then(function(){});
 });

@@ -252,22 +252,25 @@ exports.seed = function(knex, Promise) {
         discussion_id: 1
       });
     }).then(function () {
-      return knex('comment').insert({
+      return knex('comment').insert({ //comment 1
         input: "self-driving cars have come a long way in terms of technological advances in the past few years, however, I would not feel comfortable getting in a self-driving cars on today's roads. The industry and regulators need a few more years to make self-driving cars safe enough for me to ride in one.",
         user_id: 2,
-        commonground_id: 2
+        commonground_id: 2,
+        delta: 1
       });
     }).then(function () {
-      return knex('comment').insert({
+      return knex('comment').insert({ //comment 2
         input: "I would absolutely ride in a self-driving car on today's roads. Statistics show that you are much safer as a passenger in a self-driving car than as the driver. Here at Ford we are developing the safest and most fuel efficient self-driving cars on the market.",
         user_id: 6,
-        commonground_id: 1
+        commonground_id: 1,
+        delta: -1
       });
     }).then(function () {
-      return knex('comment').insert({
+      return knex('comment').insert({ //comment 3
         input: "Over the past year there have only been 2 self-driving car fatalities compared to over 4,000 non-self driving car fatalities.",
         user_id: 3,
-        commonground_id: 1
+        commonground_id: 1,
+        delta: 1
       });
     }).then(function () {
       return knex('vote').insert({
@@ -307,16 +310,18 @@ exports.seed = function(knex, Promise) {
         discussion_id: 2
       });
     }).then(function () {
-      return knex('comment').insert({
+      return knex('comment').insert({ //comment 4
         input: "I have a theory about global warming and why people think it's real. Go back 30, 40 years when there was much less air conditioning in the country. When you didn't have air conditioning and you left the house, it may in fact have gotten a little cooler out there, because sometimes houses become hot boxes. Especially if you're on the second or third floor of a house in the summer time and all you've got is open windows and maybe a window fan. Or you have some servant standing there fanning you with a piece of paper. When you walked outside, no big deal, it's still hot as hell. Now, 30, 40 years later, all this air conditioning, and it's a huge difference when you go outside. When you go outside now, my golly, is it hot. Oh. Global warming. It's all about the baseline you're using for comparison.",
         user_id: 10,
-        commonground_id: 4
+        commonground_id: 4,
+        delta: 5
       });
     }).then(function () {
-      return knex('comment').insert({
+      return knex('comment').insert({ //comment 5
         input: "It's not that the world hasn't had more carbon dioxide, it's not the world hasn't been warmer.  The problem is the speed at which things are changing.  We are inducing a sixth mass extinction event kind of by accident and we don't want to be the extinctee, if I may coin this noun.  So, I mean as far as Miss Blackburn, sounded like she had been coached on denial bullet points or talking points.  And I very much enjoy taking those people on, but meanwhile it breaks my heart because we got work to do.  And the fossil fuel industry has really gotten in their ears and it's really troublesome.  We're the world's most technically advanced country, or if the U.S. isn't the most technically advanced it's certainly in the top ten.  I mean you could say Japan, New Zealand are very sophisticated societies.  But the U.S. is where iPhone's are invented, what have you, the Internet; it's still a significant place. And so to have a generation of science students being brought up without awareness of climate change is just a formula for disaster.",
         user_id: 8,
-        commonground_id: 3
+        commonground_id: 3,
+        delta: 4
       });
     }).then(function () {
       return knex('vote').insert({
@@ -396,13 +401,14 @@ exports.seed = function(knex, Promise) {
         discussion_id: 2
       });
     }).then(function () {
-      return knex('comment').insert({
+      return knex('comment').insert({ //comment 6
         input: "A flying quacking horse sized monstrosity would be terrifying",
         user_id: 15,
-        commonground_id: 5
+        commonground_id: 5,
+        delta: 4
       });
     }).then(function () {
-      return knex('comment').insert({
+      return knex('comment').insert({ //comment 7
         input: "A small pack of ducks could take me out, no way I'd try my hand at 50 mini horses.",
         user_id: 14,
         commonground_id: 6
@@ -455,8 +461,8 @@ exports.seed = function(knex, Promise) {
       });
     }).then(function () {
       return knex('comment')
-      .where('id', 1)
-      .increment('upvotecounter',1)
+      .where('id', 5)
+      .increment('upvotecounter', 1)
     }).then(function () {
       return knex('vote').insert({
         input: 1,
