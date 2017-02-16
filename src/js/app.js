@@ -19,5 +19,4 @@ ReactDOM.render(
     </Router>
   </Provider>, app);
 
-
 //      <Route path='*' component={NoMatch} /> add this to routing eventually for 404 page
