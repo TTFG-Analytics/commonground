@@ -5,6 +5,7 @@ import CampList from './CampList'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getCamps } from '../actions/actions'
+import BackButton from './BackButton'
 
 // CampList.need = [
 //   getCamps
@@ -22,11 +23,14 @@ class CampParent extends React.Component{
     console.log('discussionId', this.props.params.discussionId)
     var discussionId = this.props.params.discussionId
     var discussionName = this.props.discussions[discussionId-1].input
-    return (<div>
-      <h2>{discussionName}</h2>
-      <AddCamp discussionId={discussionId} />
-      <CampList discussionId={discussionId} />
-    </div>)
+    return (
+      <div>
+        <BackButton />
+        <h2>{discussionName}</h2>
+        <AddCamp discussionId={discussionId} />
+        <CampList discussionId={discussionId} />
+      </div>
+    )
   }
 }
 
