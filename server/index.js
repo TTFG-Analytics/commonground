@@ -3,8 +3,8 @@ var bodyParser = require('body-parser');
 const path = require('path');
 
 var app = express();
-app.use(bodyParser.urlencoded({extended: false})); //needed for testing purposes on gregindex.html
-// app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({extended: false})); //needed for testing purposes on gregindex.html
+app.use(bodyParser.json());
 
 module.exports = app;
 
@@ -30,32 +30,27 @@ app.get('/discussions', (req, res) => {
     })
 })
 
-app.get('/discussion', function(req, res) {
-  var discussionInput = req.body.search;
-  knex('commonground').select('*')
+app.get('/discussion/:discussionId', function(req, res) {
+  let id = req.params.discussionId;
+  console.log('id', id, req.params);
+  knex('commonground').where({discussion_id: id}).select('*')
     .then(function(data) {
       console.log('data', data)
       var commongroundsResponse = {};
-      commongroundsResponse.data = [];
-      var cgCount = 0;
-      data.forEach(function(commonground) {
-        let commongroundObj = {};
-        commongroundObj.id = commonground.id;
-        commongroundObj.input = commonground.input;
-        commongroundObj.discussionId = commonground.discussion_id;
-        console.log('commongroundObj in foreach', commongroundObj)
-        knex('comment').where({commonground_id: commonground.id}).select('*')
-          .then(function(comments) {
-            commongroundObj.comments = comments;
-            commongroundsResponse.data.push(commongroundObj)
-            console.log('comments obj', commongroundObj.comments)
-            cgCount++
-            if(cgCount === data.length){
-              console.log('cgCount', cgCount, '----------commongroundRes after foreach-------', commongroundsResponse);
-              res.send(commongroundsResponse)
-            }
-          })
-      })
+      commongroundsResponse.data = data;
+      res.send(commongroundsResponse);
+    })
+})
+
+app.get('/comments/:campId', function(req, res) {
+  let id = req.params.campId;
+  console.log('id', id, req.params);
+  knex('comment').where({commonground_id: id}).select('*')
+    .then(function(data) {
+      console.log('data', data)
+      var commentsResponse = {};
+      commentsResponse.data = data;
+      res.send(commentsResponse);
     })
 })
 
@@ -93,7 +88,7 @@ app.post('/commonground', function(req, res){
   console.log('req body commonground', req.body)
   knex('commonground').returning('id').insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 1})
     .then(function(data){
-      console.log('data commonground res', data)
+      console.log('data commonground res --------------------------', data)
       res.status(200).send(data)
     })
     .then(function(){})
@@ -102,30 +97,51 @@ app.post('/commonground', function(req, res){
 app.post('/comment', function(req,res){
   console.log(req.body);
 
-  knex('comment').returning('id').insert({input: req.body.comment, user_id: 1, commonground_id: req.body.commongroundId })
+  knex('comment').returning(['id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: req.body.comment, user_id: 1, commonground_id: req.body.commongroundId })
     .then(function(data){
-      res.status(200).send(data)
+      console.log('----- data comment res -------------------', data[0].id)
+      var commentResObj = {
+            id: data[0].id,
+            upvotecounter: data[0].upvotecounter,
+            downvotecounter: data[0].downvotecounter,
+            delta: data[0].delta
+          }
+      res.status(200).send(commentResObj)
     }) //currentUser.id --- hard coding for now
     .then(function(){})
 })
 
 app.post('/vote', function(req,res){
-  console.log(currentUser);
   console.log(req.body);
-
-  knex('vote').returning('comment_id').insert({input: req.body.vote, user_id: currentUser.id, comment_id: req.body.commentId })
+  var commentId = req.body.commentId
+  var vote = req.body.vote
+  knex('vote').insert({input: req.body.vote, user_id: 1, comment_id: req.body.commentId })
   .then(function(data){
-    if (req.body.vote === '1') {
-      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where('id', data[0]).increment('upvotecounter', 1)
+    if (vote === '1') {
+      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where({id: commentId}).increment('upvotecounter', 1)
       .then(function(data){
+          var voteResObj = {
+            id: data[0].id,
+            upvotecounter: data[0].upvotecounter,
+            downvotecounter: data[0].downvotecounter
+          }
           let diff = data[0].upvotecounter - data[0].downvotecounter;
-          knex('comment').where('id', data[0].id).update({delta: diff}).then(function(){})
+          knex('comment').where('id', data[0].id).update({delta: diff}).then(function(diffData){
+            res.status(200).send(voteResObj);
+          })
         });
     } else {
-      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where('id', data[0]).increment('downvotecounter', 1)
+      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where({id: commentId}).increment('downvotecounter', 1)
       .then(function(data){
+          var downvoteResObj = {
+            id: data[0].id,
+            upvotecounter: data[0].upvotecounter,
+            downvotecounter: data[0].downvotecounter
+          }
           let diff = data[0].upvotecounter - data[0].downvotecounter;
-          knex('comment').where('id', data[0].id).update({delta: diff}).then(function(){})
+          knex('comment').where('id', data[0].id).update({delta: diff}).then(function(diffData){
+            res.status(200).send(downvoteResObj);
+          })
         });
     }
   }).then(function(){});

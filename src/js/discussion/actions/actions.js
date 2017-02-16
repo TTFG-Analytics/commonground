@@ -48,13 +48,6 @@ export function createUpvote() {
   }
 }
 
-export function increaseUpvotes(commentId) {
-  return {
-    type: 'UPVOTE',
-    commentId: commentId
-  }
-}
-
 export function increaseDownvotes() {
   return {
     type: 'DOWNVOTE'
@@ -85,18 +78,42 @@ export const getDiscussions = () => {
 }
 
 export const getCampsSuccess = (camps) => {
+  console.log('getCampsSuccess', camps)
   return {
     type: 'GET_CAMPS_SUCCESS',
     camps: camps.data
   }
 } //sends action that is picked up by getCampsReducer
 
-export const getCamps = () => {
+export const getCamps = (discussionId) => {
+  console.log('discussionid', discussionId)
   return (dispatch) => {
-    return axios.get('/discussion')
+    return axios.get('/discussion/' + discussionId)
       .then(response => {
         console.log('get camps res', response)
         dispatch(getCampsSuccess(response.data))
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+export const getCommentsSuccess = (comments) => {
+  console.log('getCommentsSuccess', comments)
+  return {
+    type: 'GET_COMMENTS_SUCCESS',
+    comments: comments.data
+  }
+} //sends action that is picked up by getCommentsReducer
+
+export const getComments = (campId) => {
+  console.log('campid getComments is going', campId)
+  return (dispatch) => {
+    return axios.get('/comments/' + campId)
+      .then(response => {
+        console.log('get camps res', response)
+        dispatch(getCommentsSuccess(response.data))
       })
       .catch(error => {
         console.log(error);
@@ -151,7 +168,7 @@ export const createCampSuccess = (camp) => {
   return {
     type: 'CREATE_CAMP_SUCCESS',
     campId: camp.commongroundId,
-    discussionId: camp.discussionId,
+    discussion_id: camp.discussionId,
     input: camp.commonground
   }
 } //sends action that's picked up by campReducer
@@ -173,9 +190,14 @@ export const createCommentSuccess = (comment) => {
   console.log('createCommentSuccess', comment)
   return {
     type: 'CREATE_COMMENT_SUCCESS',
-    commentId: comment.commentId,
-    campId: comment.commongroundId,
-    input: comment.comment
+    id: comment.commentId,
+    commonground_id: comment.commongroundId,
+    input: comment.comment,
+    upvotecounter: 0,
+    downvotecounter: 0,
+    // upvotecounter: comment.upvotecounter,
+    // downvotecounter: comment.downvotecounter,
+    delta: 0
   }
 }
 
@@ -186,9 +208,56 @@ export const createCommentPost = (comment) => {
       .then(response => {
         console.log('create comment success response', response)
         let responseObj = JSON.parse(response.config.data)
-        responseObj.commentId = response.data[0]
+        // responseObj.commentId = response.data[0]
         console.log('create comment success resobj', responseObj)
         dispatch(createCommentSuccess(responseObj))
       })
   }
 }
+
+export const increaseUpvotesSuccess = (upvote) => {
+  console.log('upvote success', upvote)
+  return {
+    type: 'UPVOTE_SUCCESS',
+    commentId: upvote.id,
+    upvotecounter: upvote.upvotecounter
+  }
+}
+
+export function increaseUpvotesPost(vote) {
+  console.log('increasing upvotes ==============')
+  return (dispatch) => {
+    return axios.post('/vote', vote)
+      .then(response => {
+        console.log('upvote success response', response)
+        let responseObj = JSON.parse(response.config.data)
+        responseObj.commentId = response.data[0]
+        dispatch(increaseUpvotesSuccess(response.data))
+      })
+  }
+}
+
+export const increaseDownvotesSuccess = (downvote) => {
+  console.log('downvote success', downvote)
+  return {
+    type: 'DOWNVOTE_SUCCESS',
+    commentId: downvote.id,
+    downvotecounter: downvote.downvotecounter
+  }
+}
+
+export function increaseDownvotesPost(downvote) {
+  console.log('downvotinggggg')
+  return (dispatch) => {
+    return axios.post('/vote', downvote)
+      .then(response => {
+        console.log('downvote success response', response)
+        let responseObj = JSON.parse(response.config.data)
+        responseObj.commentId = response.data[0]
+        dispatch(increaseDownvotesSuccess(response.data))
+      })
+  }
+}
+
+//type: 'UPVOTE',
+    // commentId: commentId,

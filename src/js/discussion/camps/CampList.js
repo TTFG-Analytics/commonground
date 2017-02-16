@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 
 class CampList extends React.Component{
   render(){
+    console.log('this camplist props', this.props)
     var currCamps = this.props.camps.filter(camp => {
-      return camp.discussionId === this.props.discussionId
+      return camp.discussion_id == this.props.discussionId
     });
+    console.log('currCamps', currCamps, this.props.camps)
 
     return (
       <ul>
@@ -23,7 +25,7 @@ class CampList extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-  console.log('state', state);
+  //console.log('state', state);
   return {
     camps: state.campGet.commongrounds
   }
