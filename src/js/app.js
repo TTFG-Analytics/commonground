@@ -15,10 +15,9 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path='/' component={App} />
       <Route path='/discuss/:discussionId' component={CampParent} />
-      
+      <Route path='/userprofile' component={ProfileApp} />
     </Router>
   </Provider>, app);
 
-
 //      <Route path='*' component={NoMatch} /> add this to routing eventually for 404 page
-// <Route path='/userprofile' component={ProfileApp} />
+

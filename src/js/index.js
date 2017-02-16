@@ -6,11 +6,13 @@ import { combineReducers } from 'redux'
 import discussionsGet from './discussion/discuss/getDiscussionsReducer'
 import campGet from './discussion/camps/getCampsReducer'
 import commentGet from './discussion/comments/commentReducer'
+import profileReducer from './profile/reducers/profileReducer';
 
 const cgReducers = combineReducers({
   commentGet,
   campGet,
-  discussionsGet
+  discussionsGet,
+  profile: profileReducer
 })
 
 export default cgReducers

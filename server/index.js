@@ -59,7 +59,7 @@ app.get('/profile', function(req, res) {
   .where({id: 18})
     .then(function(data) {
       console.log('datatatatata', data)
-      res.send(data);
+      res.send(data[0]);
     })
 })
 
