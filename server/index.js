@@ -54,7 +54,16 @@ app.get('/comments/:campId', function(req, res) {
     })
 })
 
-app.post('/user', function(req,res) {
+app.get('/profile', function(req, res) {
+  knex('users').select('*')
+  .where({id: 18})
+    .then(function(data) {
+      console.log('datatatatata', data)
+      res.send(data);
+    })
+})
+
+app.post('/profile', function(req,res) {
   currentUser = req.body;
 
   knex.raw(`
@@ -147,6 +156,9 @@ app.post('/vote', function(req,res){
   }).then(function(){});
 });
 
+app.get('/*', function(req, res) {
+  res.sendFile(path.resolve(__dirname + '/../public/index.html'));
+});
 
 var port = process.env.PORT || 4040;
 app.listen(port);
