@@ -1,6 +1,7 @@
 // singular camp component - just presentational
 import React from 'react'
 import CampList from './CampList'
+import CampAnalytics from './CampAnalytics'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments } from '../actions/actions'
@@ -32,10 +33,13 @@ class Camp extends React.Component{
   render() {
     var campId = this.props.campId
     return (
+      <div>
       <li>
         <h3 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h3>
         {this.state.showComments && <CommentParent campId={campId} />}
       </li>
+      <CampAnalytics campId={campId} />
+      </div>
     )
   }
 }
