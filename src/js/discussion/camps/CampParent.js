@@ -8,7 +8,7 @@ import { getCamps } from '../actions/actions'
 import BackButton from './BackButton'
 import FaceBookIntegration from './FaceBookIntegration'
 import ProfileButton from './ProfileButton'
-
+import DiscussionAnalytics from './DiscussionAnalytics'
 
 // CampList.need = [
 //   getCamps
@@ -56,6 +56,7 @@ class CampParent extends React.Component{
         <h2>{discussionName}</h2>
         <AddCamp discussionId={discussionId} />
         <CampList discussionId={discussionId} />
+        <DiscussionAnalytics discussionId={discussionId}/>
       </div>
     )
   }
