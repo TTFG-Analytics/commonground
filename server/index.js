@@ -76,6 +76,16 @@ app.get('/discussionPolitics/:discussionId', (req, res) => {
   })
 })
 
+app.get('/analytics/:campName/:demographic', (req, res) => {
+  console.log('req params', req.params)
+  knex.select(`${req.params.demographic}`).from('users').innerJoin('comment', 'users.id', 'comment.user_id')
+    .innerJoin('commonground', 'comment.commonground_id', 'commonground.id').whereRaw(`commonground.input=('${req.params.campName}')`)
+  .then(data => {
+    console.log('analytics data', data)
+    res.send(data)
+  })
+})
+
 app.get('/campAges/:campId', (req, res) => {
   console.log('req params ages', req.params)
   knex.raw(`

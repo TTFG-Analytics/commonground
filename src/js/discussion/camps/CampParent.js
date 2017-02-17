@@ -9,6 +9,7 @@ import BackButton from './BackButton'
 import FaceBookIntegration from './FaceBookIntegration'
 import ProfileButton from './ProfileButton'
 import DiscussionAnalytics from './DiscussionAnalytics'
+import Analytics from '../discuss/Analytics'
 
 // CampList.need = [
 //   getCamps
@@ -51,12 +52,15 @@ class CampParent extends React.Component{
     var discussionName = this.props.discussions[discussionId-1].input
     return (
       <div>
-        <ProfileButton />
-        <BackButton />
+        <nav style={{backgroundColor:'grey'}}>
+          <BackButton />
+          <ProfileButton />
+        </nav>
         <h2>{discussionName}</h2>
         <AddCamp discussionId={discussionId} />
         <CampList discussionId={discussionId} />
         <DiscussionAnalytics discussionId={discussionId}/>
+        <Analytics />
       </div>
     )
   }
