@@ -30,6 +30,14 @@ app.get('/discussions', (req, res) => {
     })
 })
 
+app.get('/ages', (req, res) =>{
+  knex('users').select('age')
+    .then((data) => {
+      console.log('age data', data)
+      res.send(data)
+    })
+})
+
 app.get('/discussion/:discussionId', function(req, res) {
   let id = req.params.discussionId;
   console.log('id', id, req.params);
