@@ -5,16 +5,22 @@ import DiscussionList from './DiscussionList'
 import { getDiscussions } from '../actions/actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import FaceBookIntegration from '../camps/FaceBookIntegration'
+
 
 DiscussionList.need = [
   getDiscussions
 ]
 
 class App extends React.Component{
+
   render(){
-    return (<div>
-      <AddDiscussion />
-      <DiscussionList />
+    return (
+    <div>
+      <div>
+        <AddDiscussion />
+        <DiscussionList />
+      </div>
     </div>)
   }
 }
