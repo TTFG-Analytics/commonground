@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import ProfileDetail from '../containers/profile-detail';
+import BackButton from '../../discussion/camps/BackButton'
+
 
 class ProfileApp extends React.Component {
 
   render() {
    return ( <div>
+    <BackButton />
     <h2>Profile Settings: </h2>
     <ProfileDetail />
     </div>

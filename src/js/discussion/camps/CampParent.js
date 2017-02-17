@@ -6,6 +6,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getCamps } from '../actions/actions'
 import BackButton from './BackButton'
+import FaceBookIntegration from './FaceBookIntegration'
+import ProfileButton from './ProfileButton'
+
 
 // CampList.need = [
 //   getCamps
@@ -13,10 +16,33 @@ import BackButton from './BackButton'
 
 //discussionId is used to associate which camps belong to which discussions
 class CampParent extends React.Component{
-  // componentDidMount() {
+  componentDidMount() {
   //   var discussionId = this.props.params.discussionId
   //   this.props.getCamps(discussionId)
-  // }
+    FB.getLoginStatus(function(response) {
+      if (response.status === 'connected') {
+        console.log('user is logged in and authenticated');
+        // the user is logged in and has authenticated your
+        // app, and response.authResponse supplies
+        // the user's ID, a valid access token, a signed
+        // request, and the time the access token 
+        // and signed request each expire
+        var uid = response.authResponse.userID;
+        var accessToken = response.authResponse.accessToken;
+      } else if (response.status === 'not_authorized') {
+        console.log('user is logged into Facebook but not authenticated');
+
+        // the user is logged in to Facebook, 
+        // but has not authenticated your app
+      } else {
+        console.log('user is not logged in to to facebook');
+        // the user isn't logged in to Facebook.
+      }
+    });
+
+  }
+
+
 
   render(){
     console.log('camp parent params', this.props.discussions)
@@ -25,6 +51,7 @@ class CampParent extends React.Component{
     var discussionName = this.props.discussions[discussionId-1].input
     return (
       <div>
+        <ProfileButton />
         <BackButton />
         <h2>{discussionName}</h2>
         <AddCamp discussionId={discussionId} />
