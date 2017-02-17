@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { getCamps } from '../actions/actions'
 import BackButton from './BackButton'
 import FaceBookIntegration from './FaceBookIntegration'
+import ProfileButton from './ProfileButton'
+
 
 // CampList.need = [
 //   getCamps
@@ -49,6 +51,7 @@ class CampParent extends React.Component{
     var discussionName = this.props.discussions[discussionId-1].input
     return (
       <div>
+        <ProfileButton />
         <BackButton />
         <h2>{discussionName}</h2>
         <AddCamp discussionId={discussionId} />

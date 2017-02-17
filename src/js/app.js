@@ -6,8 +6,7 @@ import App from './discussion/discuss/App'
 import CampParent from './discussion/camps/CampParent'
 import store from './store' //tie react application to redux
 import FaceBookIntegration from './discussion/camps/FaceBookIntegration'
-
-//import ProfileApp from './profile/components/profileApp'
+import ProfileApp from './profile/components/profileApp'
 
 //7) in client.js, import all components and render using ReactDOM
 const app = document.getElementById('app')
