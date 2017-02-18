@@ -2,8 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {cachingFbData} from '../actions/actions'
 
-// const fbHolding = {};
-
 class FaceBookIntegration extends React.Component{
     componentDidMount() {
     // facebook signin  button render
@@ -25,14 +23,6 @@ class FaceBookIntegration extends React.Component{
             console.log('Good to see you, ' + response.name + '.');
             console.log('Response', response);
             console.log('Response.email', response.email)
-            // const fbHolding = {
-            //   fbName: response.name,
-            //   fbId: response.id,
-            //   fbGender: response.gender,
-            //   fbLocale: response.locale,
-            //   fbEmail: response.email,
-            //   fbPicture: response.picture
-            // }
             context.getFbData(response)
           });
         } else {
