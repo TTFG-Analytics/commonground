@@ -12,7 +12,8 @@ import ProfileApp from './profile/components/profileApp'
 const app = document.getElementById('app')
 
 ReactDOM.render(
-  <div><FaceBookIntegration />
+  <div>
+  <FaceBookIntegration store={store} />
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App} />
