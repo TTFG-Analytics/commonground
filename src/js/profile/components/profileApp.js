@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ProfileDetail from '../containers/profile-detail';
 import BackButton from '../../discussion/camps/BackButton'
+// import {fbHolding} from '../../discussion/camps/FaceBookIntegration'
 
 
 class ProfileApp extends React.Component {

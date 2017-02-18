@@ -233,5 +233,18 @@ export function increaseDownvotesPost(downvote) {
   }
 }
 
+// export const cachingFbData = (fbUser) => {
+//   console.log('cachingFBData', fbUser)
+//   return {
+//     type: 'GET_FBDATA_SUCCESS',
+//     fbName: fbUser.name,
+//     fbId: fbUser.id,
+//     fbGender: fbUser.gender,
+//     fbLocale: fbUser.locale,
+//     fbEmail: fbUser.email,
+//     fbPicture: fbUser.picture
+//   }
+// }
+
 //type: 'UPVOTE',
     // commentId: commentId,
