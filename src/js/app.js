@@ -14,7 +14,7 @@ const app = document.getElementById('app')
 
 ReactDOM.render(
   <div>
-  <FaceBookIntegration />
+  <FaceBookIntegration store={store} />
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App} />

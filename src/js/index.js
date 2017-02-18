@@ -6,7 +6,7 @@ import { combineReducers } from 'redux'
 import discussionsGet from './discussion/discuss/getDiscussionsReducer'
 import campGet from './discussion/camps/getCampsReducer'
 import commentGet from './discussion/comments/commentReducer'
-// import fbGet from './discussion/camps/FaceBookReducer'
+import fbGet from './discussion/camps/FaceBookReducer'
 import profileReducer from './profile/reducers/profileReducer';
 
 const cgReducers = combineReducers({
@@ -14,7 +14,7 @@ const cgReducers = combineReducers({
   campGet,
   discussionsGet,
   profileReducer,
-  // fbGet
+  fbGet
 })
 
 export default cgReducers
