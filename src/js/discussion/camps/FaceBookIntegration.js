@@ -1,4 +1,8 @@
 import React from 'react'
+import {connect} from 'react-redux'
+// import {cachingFbData} from '../actions/actions'
+
+// const fbHolding = {};
 
 class FaceBookIntegration extends React.Component{
     componentDidMount() {
@@ -11,7 +15,7 @@ class FaceBookIntegration extends React.Component{
         xfbml      : true,  // parse social plugins on this page
         version    : 'v2.1' // use version 2.1
       });
-
+      const context = this;
       // login callback implementation goes inside the function() { ... } block
       FB.Event.subscribe('auth.statusChange', function(response) {
         // example implementation
@@ -21,6 +25,15 @@ class FaceBookIntegration extends React.Component{
             console.log('Good to see you, ' + response.name + '.');
             console.log('Response', response);
             console.log('Response.email', response.email)
+            // fbHolding = {
+            //   fbName: response.name,
+            //   fbId: response.id,
+            //   fbGender: response.gender,
+            //   fbLocale: response.locale,
+            //   fbEmail: response.email,
+            //   fbPicture: response.picture
+            // }
+            // context.getFbData(response)
           });
         } else {
           console.log('User cancelled login or did not fully authorize.');
@@ -39,6 +52,9 @@ class FaceBookIntegration extends React.Component{
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   }
+  // getFbData(fbUserData){
+  //   this.props.cachingFbData(fbUserData)
+  // }
 
   render(){
     return (
@@ -50,4 +66,24 @@ class FaceBookIntegration extends React.Component{
   }
 }
 
+// const mapStateToProps = (state) => {
+//   return {
+//     fbName: state.fbGet.fbName,
+//     fbId: state.fbGet.fbId,
+//     fbGender: state.fbGet.fbGender,
+//     fbLocale: state.fbGet.fbLocale,
+//     fbEmail: state.fbGet.fbEmail,
+//     fbPicture: state.fbGet.fbPicture
+//   }
+// }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     cachingFbData: (fbUserData) => {
+//       dispatch(cachingFbData(fbUserData))
+//     }
+//   }
+// }
+// export default connect(mapStateToProps, mapDispatchToProps)(FaceBookIntegration)
 export default FaceBookIntegration
+// export {fbHolding}
