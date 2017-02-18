@@ -8,8 +8,6 @@ import { bindActionCreators } from 'redux';
 import FaceBookIntegration from '../camps/FaceBookIntegration'
 import ProfileButton from '../camps/ProfileButton'
 
-
-
 DiscussionList.need = [
   getDiscussions
 ]
@@ -19,12 +17,11 @@ class App extends React.Component{
   render(){
     return (
     <div>
-      <div>
         <ProfileButton />
         <AddDiscussion />
         <DiscussionList />
-      </div>
-    </div>)
+    </div>
+    )
   }
 }
 

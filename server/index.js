@@ -50,6 +50,66 @@ app.get('/discussion/:discussionId', function(req, res) {
     })
 })
 
+app.get('/discussionAges/:discussionId', (req, res) => {
+  console.log('req params ages', req.params)
+  knex.raw(`
+    SELECT users.age FROM users INNER JOIN comment on users.id=comment.user_id
+    INNER JOIN commonground on comment.commonground_id=commonground.id 
+    INNER JOIN discussion on commonground.discussion_id=discussion.id where discussion.id=('${req.params.discussionId}')
+    `)
+    .then(data => {
+      console.log('ages data', data);
+      res.send(data)
+    })
+})
+
+app.get('/discussionPolitics/:discussionId', (req, res) => {
+  console.log('req params', req.params)
+  knex.raw(`
+    SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id
+    INNER JOIN commonground on comment.commonground_id=commonground.id
+    INNER JOIN discussion on commonground.discussion_id=discussion.id where discussion.id=('${req.params.discussionId}')
+  `)
+  .then(data => {
+    console.log('politics data', data);
+    res.send(data)
+  })
+})
+
+app.get('/analytics/:campName/:demographic', (req, res) => {
+  console.log('req params', req.params)
+  knex.select(`${req.params.demographic}`).from('users').innerJoin('comment', 'users.id', 'comment.user_id')
+    .innerJoin('commonground', 'comment.commonground_id', 'commonground.id').whereRaw(`commonground.input=('${req.params.campName}')`)
+  .then(data => {
+    console.log('analytics data', data)
+    res.send(data)
+  })
+})
+
+app.get('/campAges/:campId', (req, res) => {
+  console.log('req params ages', req.params)
+  knex.raw(`
+    SELECT users.age FROM users INNER JOIN comment on users.id=comment.user_id
+    INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')
+    `)
+    .then(data => {
+      console.log('ages data', data);
+      res.send(data)
+    })
+})
+
+app.get('/campPolitics/:campId', (req, res) => {
+  console.log('req params', req.params)
+  knex.raw(`
+    SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id 
+    INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')  
+  `)
+  .then(data => {
+    console.log('politics data', data);
+    res.send(data)
+  })
+})
+
 app.get('/comments/:campId', function(req, res) {
   let id = req.params.campId;
   console.log('id', id, req.params);
