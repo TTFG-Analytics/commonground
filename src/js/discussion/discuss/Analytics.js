@@ -41,10 +41,10 @@ class Analytics extends React.Component{
         var dataObj = {}
         console.log('people -----------', people)
         people.forEach(person => {
-          if(!dataObj.hasOwnProperty(person.politicalleaning)) {
-            dataObj[person.politicalleaning] = 1;
+          if(!dataObj.hasOwnProperty(person[demographic])) {
+            dataObj[person[demographic]] = 1;
           } else {
-            dataObj[person.politicalleaning] += 1;
+            dataObj[person[demographic]] += 1;
           }
         }) //dataObj now has the count for each property - for example the number of politically centrist responders to a commonground
         console.log('dataObj -----------', dataObj)
@@ -71,15 +71,55 @@ class Analytics extends React.Component{
     var chartData = this.state.people;
     console.log('this props analytics', this.props)
     var politicalleaning = ['','Conservative', 'Authoritarian', 'Centrist', 'Libertarian', 'Progressive']
+    var gender = ['', 'Male', 'Female', 'Other']
+    var race = ['', 'White Hispanic', 'White Non-Hispanic', 'Black or African American', 'American Indian or Alaska Native',
+    'Asian', 'Native Hawaiian or Other Pacific Islander', 'Other']
+    var industry = ['', 
+      'Aerospace, defence & security',
+      'Asset & wealth management', 
+      'Automotive', 
+      'Banking & capital markets',
+      'Capital projects & infrastructure',
+      'Chemicals',
+      'Communications',
+      'Energy, utilities & mining',
+      'Engineering & construction',
+      'Entertainment & media',
+      'Financial services',
+      'Forest, paper & packaging',
+      'Government & public services',
+      'Healthcare',
+      'Hospitality & leisure',
+      'Industrial manufacturing',
+      'Insurance',
+      'Metals',
+      'Pharmaceuticals & life sciences',
+      'Private equity',
+      'Retail & consumer',
+      'Sovereign investment funds',
+      'Technology',
+      'Transportation & logistics',
+      'Other'
+    ]
+    var religion = ['', 'Protestant', 'Catholic', 'Mormon', 'Other Christian', 'Judaism', 'Islam', 
+    'Buddhism', 'Hinduism', 'Agnostic', 'Atheist', 'Other']
+    var income = ['', 'Under $35,000 / year', '$35,000 - $50,000', '$50,000 - $65,000', '$65,000 - $80,000',
+    '$80,000 - $95,000', '$95,000 - $120,000', 'Over $120,000']
     var categories = [];
     if(this.state.demographic === 'politicalleaning') {
       categories = politicalleaning;
+    } else if(this.state.demographic === 'gender') {
+      categories = gender
+    } else if(this.state.demographic === 'race') {
+      categories = race
+    } else if(this.state.demographic === 'industry') {
+      categories = industry
+    } else if(this.state.demographic === 'religion') {
+      categories = religion
+    } else if(this.state.demographic === 'yearlyincome') {
+      categories = income
     }
-    // 1 - Conservative
-    // 2 - Authoritarian
-    // 3 - Centrist
-    // 4 - Libertarian
-    // 5 - Progressive
+    console.log('categories =============', categories, this.state)
     var config = {
       chart: {
         type: 'column'
