@@ -120,9 +120,14 @@ class Analytics extends React.Component{
       categories = income
     }
     console.log('categories =============', categories, this.state)
+    let camp = this.state.camp
+    console.log('camp', camp)
     var config = {
       chart: {
         type: 'column'
+      },
+      title: {
+        text: `Statistics for ${camp}`
       },
       plotOptions: {
         column: {

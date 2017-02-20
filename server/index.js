@@ -30,14 +30,6 @@ app.get('/discussions', (req, res) => {
     })
 })
 
-app.get('/ages', (req, res) =>{
-  knex('users').select('age')
-    .then((data) => {
-      console.log('age data', data)
-      res.send(data)
-    })
-})
-
 app.get('/discussion/:discussionId', function(req, res) {
   let id = req.params.discussionId;
   console.log('id', id, req.params);
@@ -50,62 +42,12 @@ app.get('/discussion/:discussionId', function(req, res) {
     })
 })
 
-app.get('/discussionAges/:discussionId', (req, res) => {
-  console.log('req params ages', req.params)
-  knex.raw(`
-    SELECT users.age FROM users INNER JOIN comment on users.id=comment.user_id
-    INNER JOIN commonground on comment.commonground_id=commonground.id 
-    INNER JOIN discussion on commonground.discussion_id=discussion.id where discussion.id=('${req.params.discussionId}')
-    `)
-    .then(data => {
-      console.log('ages data', data);
-      res.send(data)
-    })
-})
-
-app.get('/discussionPolitics/:discussionId', (req, res) => {
-  console.log('req params', req.params)
-  knex.raw(`
-    SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id
-    INNER JOIN commonground on comment.commonground_id=commonground.id
-    INNER JOIN discussion on commonground.discussion_id=discussion.id where discussion.id=('${req.params.discussionId}')
-  `)
-  .then(data => {
-    console.log('politics data', data);
-    res.send(data)
-  })
-})
-
 app.get('/analytics/:campName/:demographic', (req, res) => {
   console.log('req params', req.params)
   knex.select(`${req.params.demographic}`, 'users.id').from('users').distinct('users.id').orderBy('users.id').innerJoin('comment', 'users.id', 'comment.user_id')
     .innerJoin('commonground', 'comment.commonground_id', 'commonground.id').whereRaw(`commonground.input=('${req.params.campName}')`)
   .then(data => {
     console.log('analytics data', data)
-    res.send(data)
-  })
-})
-
-app.get('/campAges/:campId', (req, res) => {
-  console.log('req params ages', req.params)
-  knex.raw(`
-    SELECT users.age FROM users INNER JOIN comment on users.id=comment.user_id
-    INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')
-    `)
-    .then(data => {
-      console.log('ages data', data);
-      res.send(data)
-    })
-})
-
-app.get('/campPolitics/:campId', (req, res) => {
-  console.log('req params', req.params)
-  knex.raw(`
-    SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id 
-    INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')  
-  `)
-  .then(data => {
-    console.log('politics data', data);
     res.send(data)
   })
 })
@@ -148,8 +90,7 @@ app.post('/profile', function(req,res) {
 
 app.post('/discuss', function(req,res) {
   console.log(req.body);
-
-  knex('discussion').returning('id').insert({input: req.body.topic, user_id: 1}) //currentUser.id --- hard coding for now
+  knex('discussion').returning('id').insert({input: req.body.topic, user_id: 11}) //currentUser.id --- hard coding for now
     .then(function(data){
       console.log('data discuss', data)
       res.status(200).send(data)
@@ -163,7 +104,7 @@ app.post('/discuss', function(req,res) {
 
 app.post('/commonground', function(req, res){
   console.log('req body commonground', req.body)
-  knex('commonground').returning(['id', 'discussion_id', 'input']).insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 1})
+  knex('commonground').returning(['id', 'discussion_id', 'input']).insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 16})
     .then(function(data){
       console.log('data commonground res --------------------------', data)
       res.status(200).send(data)
@@ -172,9 +113,7 @@ app.post('/commonground', function(req, res){
 })
 
 app.post('/comment', function(req,res){
-  console.log(req.body);
-
-  knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: req.body.comment, user_id: 1, commonground_id: req.body.commongroundId })
+  knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: req.body.comment, user_id: 16, commonground_id: req.body.commongroundId })
     .then(function(data){
       console.log('----- data comment res -------------------', data[0])
       var commentResObj = {
@@ -235,3 +174,62 @@ app.get('/*', function(req, res) {
 var port = process.env.PORT || 4040;
 app.listen(port);
 console.log("Listening on port " + port);
+
+
+// app.get('/ages', (req, res) =>{
+//   knex('users').select('age')
+//     .then((data) => {
+//       console.log('age data', data)
+//       res.send(data)
+//     })
+// })
+
+// app.get('/discussionAges/:discussionId', (req, res) => {
+//   console.log('req params ages', req.params)
+//   knex.raw(`
+//     SELECT users.age FROM users INNER JOIN comment on users.id=comment.user_id
+//     INNER JOIN commonground on comment.commonground_id=commonground.id 
+//     INNER JOIN discussion on commonground.discussion_id=discussion.id where discussion.id=('${req.params.discussionId}')
+//     `)
+//     .then(data => {
+//       console.log('ages data', data);
+//       res.send(data)
+//     })
+// })
+
+// app.get('/discussionPolitics/:discussionId', (req, res) => {
+//   console.log('req params', req.params)
+//   knex.raw(`
+//     SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id
+//     INNER JOIN commonground on comment.commonground_id=commonground.id
+//     INNER JOIN discussion on commonground.discussion_id=discussion.id where discussion.id=('${req.params.discussionId}')
+//   `)
+//   .then(data => {
+//     console.log('politics data', data);
+//     res.send(data)
+//   })
+// })
+
+// app.get('/campAges/:campId', (req, res) => {
+//   console.log('req params ages', req.params)
+//   knex.raw(`
+//     SELECT users.age FROM users INNER JOIN comment on users.id=comment.user_id
+//     INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')
+//     `)
+//     .then(data => {
+//       console.log('ages data', data);
+//       res.send(data)
+//     })
+// })
+
+// app.get('/campPolitics/:campId', (req, res) => {
+//   console.log('req params', req.params)
+//   knex.raw(`
+//     SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id 
+//     INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')  
+//   `)
+//   .then(data => {
+//     console.log('politics data', data);
+//     res.send(data)
+//   })
+// })

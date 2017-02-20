@@ -8,12 +8,7 @@ import { getCamps } from '../actions/actions'
 import BackButton from './BackButton'
 import FaceBookIntegration from './FaceBookIntegration'
 import ProfileButton from './ProfileButton'
-import DiscussionAnalytics from './DiscussionAnalytics'
 import Analytics from '../discuss/Analytics'
-
-// CampList.need = [
-//   getCamps
-// ]
 
 //discussionId is used to associate which camps belong to which discussions
 class CampParent extends React.Component{
@@ -40,14 +35,9 @@ class CampParent extends React.Component{
         // the user isn't logged in to Facebook.
       }
     });
-
   }
 
-
-
   render(){
-    console.log('camp parent params', this.props.discussions)
-    console.log('discussionId', this.props.params.discussionId)
     var discussionId = this.props.params.discussionId
     var discussionName = this.props.discussions[discussionId-1].input
     return (
@@ -59,7 +49,6 @@ class CampParent extends React.Component{
         <h2>{discussionName}</h2>
         <AddCamp discussionId={discussionId} />
         <CampList discussionId={discussionId} />
-        <DiscussionAnalytics discussionId={discussionId}/>
         <Analytics />
       </div>
     )
@@ -72,14 +61,5 @@ const mapStateToProps = (state) => {
     discussions: state.discussionsGet.discussions
   }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//   //return bindActionCreators(getCamps, dispatch)
-//   return {
-//     getCamps: (discussionId) => {
-//       dispatch(getCamps(discussionId))
-//     }
-//   }
-// }
 
 export default connect(mapStateToProps)(CampParent)
