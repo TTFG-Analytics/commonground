@@ -493,6 +493,23 @@ exports.seed = function(knex, Promise) {
       return knex('comment')
       .where('id', 6)
       .increment('upvotecounter',1)
+    }).then(function () {
+      return knex('discussion').insert({
+        input: "Which front end framework is better and why?",
+        user_id: 4
+      });
+    }).then(function () {
+      return knex('commonground').insert({
+        input: "React",
+        user_id: 4,
+        discussion_id: 4
+      });
+    }).then(function () {
+      return knex('commonground').insert({
+        input: "Angular",
+        user_id: 4,
+        discussion_id: 4
+      });
     })
 };
 
