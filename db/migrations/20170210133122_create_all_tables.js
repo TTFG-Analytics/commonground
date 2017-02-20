@@ -15,6 +15,7 @@ exports.up = function(knex, Promise) {
       t.integer('yearlyincome').nullable();
       t.string('email').nullable();
       t.string('facebookpicture').nullable();
+      t.integer('admin').defaultTo(0);
       t.timestamp('createdat').defaultTo(knex.fn.now());
     }),
 
