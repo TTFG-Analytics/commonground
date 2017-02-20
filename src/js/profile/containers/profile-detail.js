@@ -12,6 +12,7 @@ class UserProfile extends Component {
   }
 
   render () {
+    console.log('=======================props=====================', this.props)
 
     return (
       <div>
@@ -35,8 +36,9 @@ class UserProfile extends Component {
 
 
 function mapStateToProps(state) {
+  console.log('##############state###############',state)
   return {
-    profile: state.profile
+    profile: state.profileReducer
   };
 }
 
