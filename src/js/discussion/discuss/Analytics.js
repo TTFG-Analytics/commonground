@@ -1,8 +1,6 @@
-//import {BarChart} from 'react-d3-components';
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-//import { BarChart } from 'react-d3-basic';
 import ReactHighcharts from 'react-highcharts'
 import Dropdown from 'react-toolbox/lib/dropdown'
 import {Button, IconButton} from 'react-toolbox/lib/button'
@@ -35,11 +33,8 @@ class Analytics extends React.Component{
   }
 
   getData() {
-    console.log('this state', this.state)
     axios.get(`/analytics/${this.state.camp}/${this.state.demographic}`)
       .then(function(response) {
-        console.log('response all', response)
-        console.log('response getdata', response.data);
         var people = response.data
         let demographic = this.state.demographic
         var commentDataObj = {}
@@ -47,10 +42,6 @@ class Analytics extends React.Component{
         var downvoteDataObj = {}
         console.log('people -----------', people)
         people.forEach(person => {
-          if(person.input){
-            console.log('person input', person.input)
-
-          }
           if(!commentDataObj.hasOwnProperty(person[demographic]) && !person.hasOwnProperty('input')) {
             commentDataObj[person[demographic]] = 1;
           } else if(commentDataObj.hasOwnProperty(person[demographic]) && !person.hasOwnProperty('input')) {
@@ -119,8 +110,6 @@ class Analytics extends React.Component{
       {value: 'religion', label:'religion'},
       {value: 'yearlyincome', label:'yearlyincome'}
     ];
-    //var chartData = this.state.people;
-    console.log('this props analytics', this.props)
     var politicalleaning = ['','Conservative', 'Authoritarian', 'Centrist', 'Libertarian', 'Progressive']
     var gender = ['', 'Male', 'Female', 'Other']
     var race = ['', 'White Hispanic', 'White Non-Hispanic', 'Black or African American', 'American Indian or Alaska Native',
