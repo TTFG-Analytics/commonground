@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createCommentPost, createUpvote } from '../actions/actions'
+import Input from 'react-toolbox/lib/input'
+import {Button, IconButton} from 'react-toolbox/lib/button'
 
 let AddComment = ({ dispatch, campId }) => {
   let input
@@ -19,10 +21,10 @@ let AddComment = ({ dispatch, campId }) => {
         dispatch(createUpvote())
         input.value = ''
       }}>
-        <input ref={node => {
+        <Input type='text' label='Comment' ref={node => {
           input = node
         }} />
-        <button type='submit'>Reply</button>
+        <Button type='submit' label='Reply' raised primary />
       </form>
     </div>
   )

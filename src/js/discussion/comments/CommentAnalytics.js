@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import ReactHighcharts from 'react-highcharts'
+import Dropdown from 'react-toolbox/lib/dropdown'
+import {Button, IconButton} from 'react-toolbox/lib/button'
 
 class CommentAnalytics extends React.Component{
   constructor(props){
@@ -13,9 +15,9 @@ class CommentAnalytics extends React.Component{
     }
   }
 
-  demographicChange(event){
+  demographicChange(value){
     this.setState({
-      demographic: this.refs.demographicSelect.value
+      demographic: value
     });
     console.log('demo change', this.state)
   }
@@ -72,7 +74,16 @@ class CommentAnalytics extends React.Component{
 
   render() {
 
-    var demographics = ['age', 'hometown', 'gender', 'race', 'industry', 'politicalleaning', 'religion', 'yearlyincome'];
+    var demographics = [
+      {value:'age', label: 'age'},
+      {value: 'hometown', label:'hometown'},
+      {value: 'gender', label:'gender'},
+      {value: 'race', label:'race'},
+      {value: 'industry', label:'industry'},
+      {value: 'politicalleaning', label:'politicalleaning'},
+      {value: 'religion', label:'religion'},
+      {value: 'yearlyincome', label:'yearlyincome'}
+    ];
     var politicalleaning = ['','Conservative', 'Authoritarian', 'Centrist', 'Libertarian', 'Progressive']
     var gender = ['', 'Male', 'Female', 'Other']
     var race = ['', 'White Hispanic', 'White Non-Hispanic', 'Black or African American', 'American Indian or Alaska Native',
@@ -149,12 +160,9 @@ class CommentAnalytics extends React.Component{
     }
     return (
       <div>
-      <select ref="demographicSelect" onChange={(event)=> this.demographicChange(event)}>
-        {demographics.map(demographicOption => {
-          return <option>{demographicOption}</option>
-        })}
-      </select>
-      <button onClick={() => this.getVoteData()}>Get data</button>
+      <Dropdown ref="demographicSelect" onChange={(value)=> this.demographicChange(value)} 
+      source={demographics} value={this.state.demographic} />
+      <Button onClick={() => this.getVoteData()} label='Get Data' raised primary/>
       {this.state.showChart && <ReactHighcharts config={config} />}
       </div>
     )
@@ -162,3 +170,7 @@ class CommentAnalytics extends React.Component{
 }
 
 export default CommentAnalytics
+
+        // {demographics.map(demographicOption => {
+        //   return <option>{demographicOption}</option>
+        // })}

@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import FaceBookIntegration from '../camps/FaceBookIntegration'
 import ProfileButton from '../camps/ProfileButton'
+import { AppBar } from 'react-toolbox/lib/app_bar'
 
 DiscussionList.need = [
   getDiscussions
@@ -17,9 +18,11 @@ class App extends React.Component{
   render(){
     return (
     <div>
+      <AppBar>
         <ProfileButton />
-        <AddDiscussion />
-        <DiscussionList />
+      </AppBar>
+      <AddDiscussion />
+      <DiscussionList />
     </div>
     )
   }

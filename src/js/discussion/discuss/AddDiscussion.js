@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createDiscussionPost } from '../actions/actions'
+import Input from 'react-toolbox/lib/input'
+import {Button, IconButton} from 'react-toolbox/lib/button'
 
 let AddDiscussion = ({ dispatch }) => {
   let input
@@ -15,10 +17,10 @@ let AddDiscussion = ({ dispatch }) => {
         dispatch(createDiscussionPost(newDiscussion))
         input.value = ''
       }}>
-        <input ref={node => {
+        <Input ref={node => {
           input = node
-        }} />
-        <button type='submit'>Create Discussion</button>
+        }} type='text' label='Discussion' />
+        <Button type='submit' label='Create Discussion' raised primary/>
       </form>
     </div>
   )

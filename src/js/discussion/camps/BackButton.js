@@ -4,9 +4,9 @@ import { browserHistory } from 'react-router'
 class BackButton extends React.Component{
   render() {
     return (
-      <button className='btn' onClick={browserHistory.goBack}>
+      <h4 className='btn' onClick={browserHistory.goBack}>
       Back
-      </button>
+      </h4>
     )
   }
 }

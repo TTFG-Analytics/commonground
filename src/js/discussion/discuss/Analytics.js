@@ -4,6 +4,8 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 //import { BarChart } from 'react-d3-basic';
 import ReactHighcharts from 'react-highcharts'
+import Dropdown from 'react-toolbox/lib/dropdown'
+import {Button, IconButton} from 'react-toolbox/lib/button'
 
 class Analytics extends React.Component{
   constructor(props){
@@ -16,17 +18,16 @@ class Analytics extends React.Component{
     }
   }
 
-  campChange(event){
-    console.log('this camp change', this, 'refs', this.refs)
+  campChange(value){
     this.setState({
-      camp: this.refs.campSelect.value
+      camp: value
     });
     console.log('camp change', this.state)
   }
 
-  demographicChange(event){
+  demographicChange(value){
     this.setState({
-      demographic: this.refs.demographicSelect.value
+      demographic: value
     });
     console.log('demo change', this.state)
   }
@@ -66,8 +67,19 @@ class Analytics extends React.Component{
   }
 
   render() {
-
-    var demographics = ['age', 'hometown', 'gender', 'race', 'industry', 'politicalleaning', 'religion', 'yearlyincome'];
+    var commongrounds = this.props.campList.map(camp => {
+      return {value: camp.input, label: camp.input}
+    })
+    var demographics = [
+      {value:'age', label: 'age'},
+      {value: 'hometown', label:'hometown'},
+      {value: 'gender', label:'gender'},
+      {value: 'race', label:'race'},
+      {value: 'industry', label:'industry'},
+      {value: 'politicalleaning', label:'politicalleaning'},
+      {value: 'religion', label:'religion'},
+      {value: 'yearlyincome', label:'yearlyincome'}
+    ];
     var chartData = this.state.people;
     console.log('this props analytics', this.props)
     var politicalleaning = ['','Conservative', 'Authoritarian', 'Centrist', 'Libertarian', 'Progressive']
@@ -146,18 +158,9 @@ class Analytics extends React.Component{
     }
     return (
       <div>
-      <h4>Select commonground</h4>
-      <select ref="campSelect" onChange={(event)=> this.campChange(event)}>
-        {this.props.campList.map((camp, index) => {
-          return <option>{camp.input}</option>
-        })}
-      </select>
-      <select ref="demographicSelect" onChange={(event)=> this.demographicChange(event)}>
-        {demographics.map(demographicOption => {
-          return <option>{demographicOption}</option>
-        })}
-      </select>
-      <button onClick={() => this.getData()}>Get data</button>
+      <Dropdown label='Select a CommonGround' ref="campSelect" onChange={(value)=> this.campChange(value)} source={commongrounds} value={this.state.camp} />
+      <Dropdown label='Select a Demographic Property' ref="demographicSelect" onChange={(value)=> this.demographicChange(value)} source={demographics} value={this.state.demographic} />
+      <Button onClick={() => this.getData()} label='Get Data' raised primary />
       {this.state.showChart && <ReactHighcharts config={config} />}
       </div>
     )
@@ -214,3 +217,13 @@ export default connect(mapStateToProps)(Analytics)
       //   x={x}
       //   xScale={xScale}
       // />}
+
+        //       {this.props.campList.map((camp, index) => {
+        //   return <option>{camp.input}</option>
+        // })}
+      // </select>
+
+      //         {demographics.map(demographicOption => {
+      //     return <option>{demographicOption}</option>
+      //   })}
+      // </select>

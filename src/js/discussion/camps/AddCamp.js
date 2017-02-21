@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createCampPost } from '../actions/actions'
+import Input from 'react-toolbox/lib/input'
+import {Button, IconButton} from 'react-toolbox/lib/button'
 
 let AddCamp = ({ dispatch, discussionId }) => {
   let input
@@ -18,10 +20,10 @@ let AddCamp = ({ dispatch, discussionId }) => {
         dispatch(createCampPost(newCamp))
         input.value = ''
       }}>
-        <input ref={node => {
+        <Input ref={node => {
           input = node
-        }} />
-        <button type='submit'>Create CommonGround</button>
+        }} type='text' label='CommonGround' />
+        <Button type='submit' label='Create CommonGround' raised primary />
       </form>
     </div>
   )
