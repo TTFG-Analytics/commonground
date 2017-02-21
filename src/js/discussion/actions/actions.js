@@ -250,7 +250,7 @@ export const cachingFbData = (fbUser) => {
 export function sendingFbData(fbData) {
   console.log('posting response data')
   return (dispatch) => {
-    return axios.post('/profile', fbData)
+    return axios.post('/login', fbData)
       .then(response => {
         console.log('POSTING SUCCESS:', response)
         dispatch(sendingFbDataSuccess(response))
