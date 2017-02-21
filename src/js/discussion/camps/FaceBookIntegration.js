@@ -24,8 +24,9 @@ class FaceBookIntegration extends React.Component{
             console.log('Good to see you, ' + response.name + '.');
             console.log('Response', response);
             console.log('Response.email', response.email)
+            console.log('CONTEXT', context)
             context.getFbData(response)
-            sendingFbData(response)
+            context.props.sendingFbData(response)
           });
         } else {
           console.log('User cancelled login or did not fully authorize.');
@@ -73,7 +74,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     cachingFbData: (fbUserData) => {
       dispatch(cachingFbData(fbUserData))
+    },
+    sendingFbData: (response) => {
+      dispatch(sendingFbData(response))
     }
   }
 }
+
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(FaceBookIntegration)

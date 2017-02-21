@@ -97,16 +97,21 @@ app.post('/profile', function(req,res) {
 //     currentUser.id = data.rows[0].id
 //   });
 // })
+
+  // ON CONFLICT (facebookid) DO UPDATE
+  // SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+
 console.log('/PROFILE WAS HIT!!', req.body);
 knex.raw(`
-  INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale)
-  VALUES ('${req.body.name}', ${req.body.id}, ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+  INSERT INTO users (fullname, facebookid, gender, email, facebookpicture, locale)
+  VALUES ('${req.body.name}', '${req.body.id}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
   ON CONFLICT (facebookid) DO UPDATE
-  SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+  SET (fullname, gender, email, facebookpicture, locale) = ('${req.body.name}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
   RETURNING id
   `).then(function(data){
     currentUser.id = data.rows[0].id
   });
+  res.status(200).send();
 })
 
 app.post('/discuss', function(req,res) {

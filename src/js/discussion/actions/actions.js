@@ -249,10 +249,26 @@ export const cachingFbData = (fbUser) => {
 // get data from facebook auth
 export function sendingFbData(fbData) {
   console.log('posting response data')
-  return axios.post('/profile', fbData)
-    .then(response => {
-      console.log('POSTING:', response)
+  return (dispatch) => {
+    return axios.post('/profile', fbData)
+      .then(response => {
+        console.log('POSTING SUCCESS:', response)
+        dispatch(sendingFbDataSuccess(response))
       })
+  }
+}
+
+export function sendingFbDataSuccess(fbUser) {
+  console.log('cachingFBData', fbUser)
+  return {
+    type: 'GET_FBDATA_SUCCESS',
+    fbName: fbUser.name,
+    fbId: fbUser.id,
+    fbGender: fbUser.gender,
+    fbLocale: fbUser.locale,
+    fbEmail: fbUser.email,
+    fbPicture: fbUser.picture
+  }
 }
 
 //type: 'UPVOTE',
