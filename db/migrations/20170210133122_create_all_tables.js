@@ -2,7 +2,7 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('users', function(t) {
       t.increments('id').unsigned().primary();
-      t.integer('facebookid').unique();
+      t.string('facebookid').unique();
       t.string('fullname').notNull();
       t.string('title').nullable();
       t.integer('age').nullable();
@@ -15,6 +15,7 @@ exports.up = function(knex, Promise) {
       t.integer('yearlyincome').nullable();
       t.string('email').nullable();
       t.string('facebookpicture').nullable();
+      t.string('locale').nullable();
       t.integer('admin').defaultTo(0);
       t.timestamp('createdat').defaultTo(knex.fn.now());
     }),
