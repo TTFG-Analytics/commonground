@@ -21,7 +21,7 @@ let AddCamp = ({ dispatch, discussionId }) => {
         <input ref={node => {
           input = node
         }} />
-        <button type='submit'>Create Camp</button>
+        <button type='submit'>Create CommonGround</button>
       </form>
     </div>
   )
