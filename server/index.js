@@ -94,7 +94,6 @@ app.get('/profile', function(req, res) {
 
 app.post('/profile', function(req,res) {
   currentUser = req.body;
-
 //   knex.raw(`
 //     INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome)
 //     VALUES ('${req.body.name}', ${req.body.id}, 0 ,'Fort Worth', '${req.body.gender}', 0, 0, 0, 0, 0)

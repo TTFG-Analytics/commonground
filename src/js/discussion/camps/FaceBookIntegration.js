@@ -26,6 +26,7 @@ class FaceBookIntegration extends React.Component{
             console.log('Response.email', response.email)
             console.log('CONTEXT', context)
             context.getFbData(response)
+
             context.props.sendingFbData(response)
           });
         } else {

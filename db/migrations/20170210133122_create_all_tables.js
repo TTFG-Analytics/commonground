@@ -17,6 +17,7 @@ exports.up = function(knex, Promise) {
       t.string('facebookpicture').nullable();
       t.string('locale').nullable();
       t.integer('admin').defaultTo(0);
+      t.string('locale').nullable();
       t.timestamp('createdat').defaultTo(knex.fn.now());
     }),
 
