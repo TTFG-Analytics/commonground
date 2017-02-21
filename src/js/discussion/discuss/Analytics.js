@@ -1,8 +1,6 @@
-//import {BarChart} from 'react-d3-components';
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-//import { BarChart } from 'react-d3-basic';
 import ReactHighcharts from 'react-highcharts'
 import Dropdown from 'react-toolbox/lib/dropdown'
 import {Button, IconButton} from 'react-toolbox/lib/button'
@@ -13,7 +11,9 @@ class Analytics extends React.Component{
     this.state = {
       camp: null,
       demographic: 'age',
-      people: null,
+      commenters: null,
+      upvoters: null,
+      downvoters: null,
       showChart: false
     }
   }
@@ -33,33 +33,63 @@ class Analytics extends React.Component{
   }
 
   getData() {
-    console.log('this state', this.state)
     axios.get(`/analytics/${this.state.camp}/${this.state.demographic}`)
       .then(function(response) {
-        console.log('response getdata', response.data);
         var people = response.data
         let demographic = this.state.demographic
-        var dataObj = {}
+        var commentDataObj = {}
+        var upvoteDataObj = {}
+        var downvoteDataObj = {}
         console.log('people -----------', people)
         people.forEach(person => {
-          if(!dataObj.hasOwnProperty(person[demographic])) {
-            dataObj[person[demographic]] = 1;
-          } else {
-            dataObj[person[demographic]] += 1;
+          if(!commentDataObj.hasOwnProperty(person[demographic]) && !person.hasOwnProperty('input')) {
+            commentDataObj[person[demographic]] = 1;
+          } else if(commentDataObj.hasOwnProperty(person[demographic]) && !person.hasOwnProperty('input')) {
+            commentDataObj[person[demographic]] += 1;
+          } else if(!downvoteDataObj.hasOwnProperty(person[demographic]) && person.input === 0) {
+            downvoteDataObj[person[demographic]] = 1;
+          } else if(downvoteDataObj.hasOwnProperty(person[demographic]) && person.input === 0) {
+            downvoteDataObj[person[demographic]] += 1;
+          } else if(!upvoteDataObj.hasOwnProperty(person[demographic]) && person.input === 1) {
+            upvoteDataObj[person[demographic]] = 1;
+          } else if(upvoteDataObj.hasOwnProperty(person[demographic]) && person.input === 1) {
+            upvoteDataObj[person[demographic]] += 1;
           }
         }) //dataObj now has the count for each property - for example the number of politically centrist responders to a commonground
-        console.log('dataObj -----------', dataObj)
-        console.log('dataobj keys keys', Object.keys(dataObj))
-        var dataArr = []
-        for(var demo in dataObj) {
+        console.log('dataObj -----------', commentDataObj)
+        console.log('commentdataobj keys keys', Object.keys(commentDataObj))
+        console.log('upvotedataObj -----------', upvoteDataObj)
+        console.log('upvoteDataobj keys keys', Object.keys(upvoteDataObj))
+        console.log('downvotedataObj -----------', downvoteDataObj)
+        console.log('downvoteDataobj keys keys', Object.keys(downvoteDataObj))
+        var commentDataArr = []
+        for(let demo in commentDataObj) {
           let tuple = []
           tuple[0] = parseInt(demo)
-          tuple[1] = dataObj[demo]
-          dataArr.push(tuple)
+          tuple[1] = commentDataObj[demo]
+          commentDataArr.push(tuple)
         }
-        console.log('data arr ~~~~~~~~~~~~~~~', dataArr)
+        var upvoteDataArr = []
+        for(let demo in upvoteDataObj) {
+          let tuple = []
+          tuple[0] = parseInt(demo)
+          tuple[1] = upvoteDataObj[demo]
+          upvoteDataArr.push(tuple)
+        }
+        var downvoteDataArr = []
+        for(let demo in downvoteDataObj) {
+          let tuple = []
+          tuple[0] = parseInt(demo)
+          tuple[1] = downvoteDataObj[demo]
+          downvoteDataArr.push(tuple)
+        }
+        console.log('comment arr ~~~~~~~~~~~~~~~', commentDataArr)
+        console.log('updata arr ~~~~~~~~~~~~~~~', upvoteDataArr)
+        console.log('downdata arr ~~~~~~~~~~~~~~~', downvoteDataArr)
         this.setState({
-          people: dataArr,
+          commenters: commentDataArr,
+          upvoters: upvoteDataArr,
+          downvoters: downvoteDataArr,
           showChart: true
         })
         console.log('this this', this)
@@ -80,8 +110,6 @@ class Analytics extends React.Component{
       {value: 'religion', label:'religion'},
       {value: 'yearlyincome', label:'yearlyincome'}
     ];
-    var chartData = this.state.people;
-    console.log('this props analytics', this.props)
     var politicalleaning = ['','Conservative', 'Authoritarian', 'Centrist', 'Libertarian', 'Progressive']
     var gender = ['', 'Male', 'Female', 'Other']
     var race = ['', 'White Hispanic', 'White Non-Hispanic', 'Black or African American', 'American Indian or Alaska Native',
@@ -153,7 +181,16 @@ class Analytics extends React.Component{
         categories: categories
       },
       series: [{
-        data: this.state.people
+        name: 'Commenters',
+        data: this.state.commenters
+      },
+      {
+        name: 'Upvoters',
+        data: this.state.upvoters
+      },
+      {
+        name: 'Downvoters',
+        data: this.state.downvoters
       }]
     }
     return (

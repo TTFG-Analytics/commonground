@@ -43,13 +43,22 @@ app.get('/discussion/:discussionId', function(req, res) {
 })
 
 app.get('/analytics/:campName/:demographic', (req, res) => {
-  console.log('req params', req.params)
-  knex.select(`${req.params.demographic}`, 'users.id').from('users').distinct('users.id').orderBy('users.id').innerJoin('comment', 'users.id', 'comment.user_id')
-    .innerJoin('commonground', 'comment.commonground_id', 'commonground.id').whereRaw(`commonground.input=('${req.params.campName}')`)
-  .then(data => {
-    console.log('analytics data', data)
-    res.send(data)
-  })
+  knex.select(`${req.params.demographic}`, 'users.id').from('users').distinct('users.id')
+    .innerJoin('comment', 'users.id', 'comment.user_id')
+    .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
+    .whereRaw(`commonground.input=('${req.params.campName}')`)   
+    .then(data => {
+      knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id')
+        .innerJoin('vote', 'users.id', 'vote.user_id')
+        .innerJoin('comment', 'vote.comment_id', 'comment.id')
+        .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
+        .whereRaw(`commonground.input=('${req.params.campName}')`)
+        .then(data2 => {
+          var ans = data2.concat(data)
+          console.log('responseArr analytics array ---------------', ans)
+          res.send(ans)
+        })
+    })
 })
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
