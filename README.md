@@ -14,6 +14,10 @@ Run knex seed file
 
 - knex seed:run --env development
 
+On Deployment
+
+-fix Facebook Integration redirect
+
 
 Gender Index
 1 - Male
