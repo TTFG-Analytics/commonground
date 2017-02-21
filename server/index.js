@@ -86,27 +86,28 @@ app.get('/profile', function(req, res) {
 app.post('/profile', function(req,res) {
   currentUser = req.body;
 
-  knex.raw(`
-    INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome)
-    VALUES ('${req.body.name}', ${req.body.id}, 0 ,'Fort Worth', '${req.body.gender}', 0, 0, 0, 0, 0)
-    ON CONFLICT (facebookid) DO UPDATE
-    SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
-    RETURNING id
-    `)
-  .then(function(data){
-    currentUser.id = data.rows[0].id
-  });
-})
-// knex.raw(`
-//   INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale)
-//   VALUES ('${req.body.name}', ${req.body.id}, ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
-//   ON CONFLICT (facebookid) DO UPDATE
-//   SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
-//   RETURNING id
-//   `).then(function(data){
+//   knex.raw(`
+//     INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome)
+//     VALUES ('${req.body.name}', ${req.body.id}, 0 ,'Fort Worth', '${req.body.gender}', 0, 0, 0, 0, 0)
+//     ON CONFLICT (facebookid) DO UPDATE
+//     SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
+//     RETURNING id
+//     `)
+//   .then(function(data){
 //     currentUser.id = data.rows[0].id
 //   });
 // })
+console.log('/PROFILE WAS HIT!!', req.body);
+knex.raw(`
+  INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale)
+  VALUES ('${req.body.name}', ${req.body.id}, ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+  ON CONFLICT (facebookid) DO UPDATE
+  SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+  RETURNING id
+  `).then(function(data){
+    currentUser.id = data.rows[0].id
+  });
+})
 
 app.post('/discuss', function(req,res) {
   console.log(req.body);
