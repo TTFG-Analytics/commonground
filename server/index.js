@@ -52,6 +52,16 @@ app.get('/analytics/:campName/:demographic', (req, res) => {
   })
 })
 
+app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
+  console.log('req params', req.params)
+  knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
+    .whereRaw(`vote.comment_id=('${req.params.commentId}')`)
+    .then(data => {
+      console.log('comment vote analytics', data)
+      res.send(data)
+    })
+})
+
 app.get('/comments/:campId', function(req, res) {
   let id = req.params.campId;
   console.log('id', id, req.params);
@@ -133,7 +143,7 @@ app.post('/vote', function(req,res){
   console.log(req.body);
   var commentId = req.body.commentId
   var vote = req.body.vote
-  knex('vote').insert({input: req.body.vote, user_id: 1, comment_id: req.body.commentId })
+  knex('vote').insert({input: req.body.vote, user_id: 12, comment_id: req.body.commentId })
   .then(function(data){
     if (vote === '1') {
       knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where({id: commentId}).increment('upvotecounter', 1)

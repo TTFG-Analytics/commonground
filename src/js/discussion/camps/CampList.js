@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import Camp from './Camp'
 import { connect } from 'react-redux'
+import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 
 class CampList extends React.Component{
   render(){
@@ -11,7 +12,7 @@ class CampList extends React.Component{
     console.log('currCamps', currCamps, this.props.camps)
 
     return (
-      <ul>
+      <div>
         {currCamps.map(currCamp =>
           <Camp 
             key={currCamp.id}
@@ -19,7 +20,7 @@ class CampList extends React.Component{
             inputStr={currCamp.input}
           />
         )}
-      </ul>
+      </div>
     );
   }
 }

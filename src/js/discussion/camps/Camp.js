@@ -3,6 +3,7 @@ import CampList from './CampList'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments } from '../actions/actions'
+import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 
 class Camp extends React.Component{
   constructor(props){
@@ -24,10 +25,10 @@ class Camp extends React.Component{
   render() {
     var campId = this.props.campId
     return (
-      <li>
-        <h3 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h3>
+      <Card style={{width: '100%'}}>
+      <CardTitle onClick={()=> this.fetchComments(campId)} title={this.props.inputStr} />
         {this.state.showComments && <CommentParent campId={campId} />}
-      </li>
+      </Card>
     )
   }
 }

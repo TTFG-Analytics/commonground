@@ -9,6 +9,7 @@ import BackButton from './BackButton'
 import FaceBookIntegration from './FaceBookIntegration'
 import ProfileButton from './ProfileButton'
 import Analytics from '../discuss/Analytics'
+import { AppBar } from 'react-toolbox/lib/app_bar'
 
 //discussionId is used to associate which camps belong to which discussions
 class CampParent extends React.Component{
@@ -42,10 +43,10 @@ class CampParent extends React.Component{
     var discussionName = this.props.discussions[discussionId-1].input
     return (
       <div>
-        <nav style={{backgroundColor:'grey'}}>
+        <AppBar>
           <BackButton />
           <ProfileButton />
-        </nav>
+        </AppBar>
         <h2>{discussionName}</h2>
         <AddCamp discussionId={discussionId} />
         <CampList discussionId={discussionId} />
