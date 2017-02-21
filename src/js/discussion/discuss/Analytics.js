@@ -36,6 +36,7 @@ class Analytics extends React.Component{
     console.log('this state', this.state)
     axios.get(`/analytics/${this.state.camp}/${this.state.demographic}`)
       .then(function(response) {
+        console.log('response all', response)
         console.log('response getdata', response.data);
         var people = response.data
         let demographic = this.state.demographic
