@@ -233,15 +233,6 @@ export function increaseDownvotesPost(downvote) {
   }
 }
 
-export function sendingFbData(fbData) {
-  console.log('posting response data')
-  return axios.post('/profile', fbData)
-    .then(response => {
-      console.log('POSTING:', response)
-      })
-}
-
-
 export const cachingFbData = (fbUser) => {
   console.log('cachingFBData', fbUser)
   return {
