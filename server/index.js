@@ -1,7 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 const path = require('path');
-const chalk = require('chalk')
 
 var app = express();
 //app.use(bodyParser.urlencoded({extended: false})); //needed for testing purposes on gregindex.html
