@@ -17,7 +17,6 @@ class FaceBookIntegration extends React.Component{
       const context = this;
       // login callback implementation goes inside the function() { ... } block
       FB.Event.subscribe('auth.statusChange', function(response) {
-        // example implementation
         if (response.authResponse) {
           console.log('Welcome!  Fetching your information.... ');
           FB.api('/me', 'GET', {fields: 'name, id, gender, locale, age_range, email, picture.width(150).height(150)'}, function(response) {
@@ -26,10 +25,12 @@ class FaceBookIntegration extends React.Component{
             console.log('Response.email', response.email)
             console.log('CONTEXT', context)
             context.getFbData(response)
+
             context.props.sendingFbData(response)
           });
         } else {
           console.log('User cancelled login or did not fully authorize.');
+          window.location.href = "http://localhost:4040"
         }
       },
       {scope: 'email'}
@@ -45,6 +46,8 @@ class FaceBookIntegration extends React.Component{
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   }
+
+  // (FB.Event.subscribe('auth.logout', (response) => console.log('*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*LOGOUT')))
   getFbData(fbUserData){
     this.props.cachingFbData(fbUserData)
   }
