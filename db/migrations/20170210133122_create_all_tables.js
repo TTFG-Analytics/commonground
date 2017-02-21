@@ -5,9 +5,9 @@ exports.up = function(knex, Promise) {
       t.integer('facebookid').unique();
       t.string('fullname').notNull();
       t.string('title').nullable();
-      t.integer('age').notNull();
+      t.integer('age').nullable();
       t.string('hometown').nullable();
-      t.integer('gender').nullable();
+      t.string('gender').nullable();
       t.integer('race').nullable();
       t.integer('industry').nullable();
       t.integer('politicalleaning').nullable();
@@ -15,6 +15,7 @@ exports.up = function(knex, Promise) {
       t.integer('yearlyincome').nullable();
       t.string('email').nullable();
       t.string('facebookpicture').nullable();
+      t.integer('admin').defaultTo(0);
       t.timestamp('createdat').defaultTo(knex.fn.now());
     }),
 
@@ -42,6 +43,7 @@ exports.up = function(knex, Promise) {
       t.integer('upvotecounter').defaultTo(0);
       t.integer('downvotecounter').defaultTo(0);
       t.integer('delta').defaultTo(0); //HERE
+      t.integer('flag').defaultTo(0);
       t.timestamp('createdat').defaultTo(knex.fn.now());
       t.integer('commonground_id')
       t.integer('user_id')
