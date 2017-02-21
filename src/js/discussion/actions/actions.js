@@ -246,5 +246,14 @@ export const cachingFbData = (fbUser) => {
   }
 }
 
+// get data from facebook auth
+export function sendingFbData(fbData) {
+  console.log('posting response data')
+  return axios.post('/profile', fbData)
+    .then(response => {
+      console.log('POSTING:', response)
+      })
+}
+
 //type: 'UPVOTE',
     // commentId: commentId,

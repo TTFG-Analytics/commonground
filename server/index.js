@@ -88,15 +88,25 @@ app.post('/profile', function(req,res) {
 
   knex.raw(`
     INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome)
-    VALUES ('${req.body.fullname}', ${req.body.facebookid}, ${req.body.age} ,'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
+    VALUES ('${req.body.name}', ${req.body.id}, 0 ,'Fort Worth', '${req.body.gender}', 0, 0, 0, 0, 0)
     ON CONFLICT (facebookid) DO UPDATE
-    SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.fullname}', ${req.body.age} ,'${req.body.hometown}', ${req.body.gender}, ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
+    SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
     RETURNING id
     `)
   .then(function(data){
     currentUser.id = data.rows[0].id
   });
 })
+// knex.raw(`
+//   INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale)
+//   VALUES ('${req.body.name}', ${req.body.id}, ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+//   ON CONFLICT (facebookid) DO UPDATE
+//   SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+//   RETURNING id
+//   `).then(function(data){
+//     currentUser.id = data.rows[0].id
+//   });
+// })
 
 app.post('/discuss', function(req,res) {
   console.log(req.body);
@@ -198,7 +208,7 @@ console.log("Listening on port " + port);
 //   console.log('req params ages', req.params)
 //   knex.raw(`
 //     SELECT users.age FROM users INNER JOIN comment on users.id=comment.user_id
-//     INNER JOIN commonground on comment.commonground_id=commonground.id 
+//     INNER JOIN commonground on comment.commonground_id=commonground.id
 //     INNER JOIN discussion on commonground.discussion_id=discussion.id where discussion.id=('${req.params.discussionId}')
 //     `)
 //     .then(data => {
@@ -235,8 +245,8 @@ console.log("Listening on port " + port);
 // app.get('/campPolitics/:campId', (req, res) => {
 //   console.log('req params', req.params)
 //   knex.raw(`
-//     SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id 
-//     INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')  
+//     SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id
+//     INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')
 //   `)
 //   .then(data => {
 //     console.log('politics data', data);

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {cachingFbData} from '../actions/actions'
+import {sendingFbData} from '../actions/actions'
 
 class FaceBookIntegration extends React.Component{
     componentDidMount() {
@@ -24,6 +25,7 @@ class FaceBookIntegration extends React.Component{
             console.log('Response', response);
             console.log('Response.email', response.email)
             context.getFbData(response)
+            sendingFbData(response)
           });
         } else {
           console.log('User cancelled login or did not fully authorize.');
@@ -49,8 +51,8 @@ class FaceBookIntegration extends React.Component{
   render(){
     return (
     <div>
-      <div className="fb-login-button" data-max-row="1" data-size="xlarge" data-show-faces="false" 
-      data-auto-logout-link="true" data-scope="public_profile, email" 
+      <div className="fb-login-button" data-max-row="1" data-size="xlarge" data-show-faces="false"
+      data-auto-logout-link="true" data-scope="public_profile, email"
       href="javascript:void(0)">Login</div>
     </div>)
   }
