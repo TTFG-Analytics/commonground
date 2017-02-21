@@ -5,9 +5,9 @@ exports.up = function(knex, Promise) {
       t.integer('facebookid').unique();
       t.string('fullname').notNull();
       t.string('title').nullable();
-      t.integer('age').notNull();
+      t.integer('age').nullable();
       t.string('hometown').nullable();
-      t.integer('gender').nullable();
+      t.string('gender').nullable();
       t.integer('race').nullable();
       t.integer('industry').nullable();
       t.integer('politicalleaning').nullable();
