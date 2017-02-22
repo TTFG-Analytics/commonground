@@ -5,14 +5,25 @@ const should = chai.should();
 
 chai.use(chaiHttp)
 
-describe('Discussions', () => {
-  it('should list ALL discussions on /discussions GET');
+describe('discussions', () => {
+  it('should list ALL discussions on /discussions GET', (done) => {
+    chai.request(server)
+      .get('/discussions')
+      .end((err,res) => {
+        res.should.have.status(200);
+        res.body.should.be.a('array');
+        done();
+      });
+  });
   it('should list a SINGLE discussions on /discussions/<id> GET');
 })
 
 describe('comments', () => {
   it('should list all commonground comments on /comments/<campId> GET');
-  it('should be inserting a comment into the db on /comments Post');
+  it('should be inserting a comment into the db on /comment Post', (done) => {
+    chai.request(server)
+      
+  });
 })
 
 describe('comments', () => {
