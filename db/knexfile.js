@@ -2,6 +2,21 @@
 
 module.exports = {
 
+  test: {
+    client: 'postgresql',
+    connection: {
+      database: 'cg_db',
+      user:     'commonground',
+      password: 'commonground123'
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    },
+    seeds: {
+      directory: __dirname + '/db/seeds/mockData'
+    }
+  },
+
   development: {
     client: 'postgresql',
     connection: {
