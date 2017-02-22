@@ -158,12 +158,69 @@ class CommentAnalytics extends React.Component{
         data: this.state.downvoters
       }]
     }
+    console.log('this state upvotes', this.state.upvoters)
+    console.log('this state downvotes', this.state.downvoters)
+    var upvotePieData = [];
+    if(this.state.upvoters){
+      this.state.upvoters.forEach(upvoter => {
+        let pieTuple = [];
+        let name = categories[upvoter[0]]
+        console.log('name', name);
+        pieTuple[0] = name + ' Upvoter'
+        pieTuple[1] = upvoter[1]
+        upvotePieData.push(pieTuple)
+      })
+    }
+    console.log('upvotePieData', upvotePieData)
+
+    var downvotePieData = [];
+    if(this.state.downvoters){
+      this.state.downvoters.forEach(downvoter => {
+        let pieTuple = [];
+        let name = categories[downvoter[0]]
+        console.log('name', name);
+        pieTuple[0] = name + ' Downvoter'
+        pieTuple[1] = downvoter[1]
+        downvotePieData.push(pieTuple)
+      })
+    }
+    console.log('downvotePieData', downvotePieData)
+    var pieData = upvotePieData.concat(downvotePieData)
+
+    var pieConfig = {
+      chart: {
+        type: 'pie',
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+      },
+      title: {
+        text: `Statistics for Comment`
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+          }
+        }
+      },
+      series: [
+      {
+        name: 'Voters',
+        data: pieData
+      }
+      ]
+    }
     return (
       <div>
       <Dropdown ref="demographicSelect" onChange={(value)=> this.demographicChange(value)} 
       source={demographics} value={this.state.demographic} />
       <Button onClick={() => this.getVoteData()} label='Get Data' raised primary/>
       {this.state.showChart && <ReactHighcharts config={config} />}
+      {this.state.showChart && <ReactHighcharts config={pieConfig} />}
       </div>
     )
   }
