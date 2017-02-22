@@ -60,12 +60,25 @@ exports.up = function(knex, Promise) {
       t.integer('user_id')
       t.foreign('comment_id').references('comment.id');
       t.foreign('user_id').references('users.id');
+    }),
+
+    knex.schema.createTable('users_join', function(t) {
+      t.increments('id').unsigned().primary();
+      t.integer('user_id').notNull();
+      t.integer('commonground_id').notNull();
+      t.integer('comment_id').nullable();
+      t.integer('vote_id').nullable();
+      t.timestamp('createdat').defaultTo(knex.fn.now());
+      t.foreign('user_id').references('users.id');
+      t.foreign('commonground_id').references('commonground.id');
+      t.foreign('vote_id').references('vote.id');
     })
   ]);
 };
 
 exports.down = function(knex, Promise) {
   return Promise.all([
+    knex.schema.dropTable("users_join"),
     knex.schema.dropTable("vote"),
     knex.schema.dropTable("comment"),
     knex.schema.dropTable("commonground"),
