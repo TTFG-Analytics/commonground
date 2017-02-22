@@ -157,8 +157,9 @@ app.post('/comment', function(req,res){
             downvotecounter: data[0].downvotecounter,
             delta: data[0].delta
           }
+      knex('users_join').insert({user_id: 16, commonground_id: data[0].commonground_id, comment_id:data[0].id}).then(function(){});
       res.status(200).send(commentResObj)
-    }) //currentUser.id --- hard coding for now
+    }) //currentUser.id --- hard coding for now to 16
     .then(function(){})
 })
 
@@ -166,35 +167,40 @@ app.post('/vote', function(req,res){
   console.log(req.body);
   var commentId = req.body.commentId
   var vote = req.body.vote
-  knex('vote').insert({input: req.body.vote, user_id: 12, comment_id: req.body.commentId })
-  .then(function(data){
+  knex('vote').returning('id').insert({input: req.body.vote, user_id: 16, comment_id: req.body.commentId })
+  .then(function(data1){
     if (vote === '1') {
-      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where({id: commentId}).increment('upvotecounter', 1)
-      .then(function(data){
-          console.log('vote data data~~~~~~~~~', data)
+      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter', 'commonground_id']).where({id: commentId}).increment('upvotecounter', 1)
+      .then(function(data2){
+          console.log('DATA 1: ', data1)
+          console.log('DATA 2: ', data2)
           var voteResObj = {
-            id: data[0].id,
-            upvotecounter: data[0].upvotecounter,
-            downvotecounter: data[0].downvotecounter
+            id: data2[0].id,
+            upvotecounter: data2[0].upvotecounter,
+            downvotecounter: data2[0].downvotecounter
           }
           console.log('voteResObj ---------------', voteResObj)
-          let diff = data[0].upvotecounter - data[0].downvotecounter;
-          knex('comment').where('id', data[0].id).update({delta: diff}).then(function(diffData){
+          let diff = data2[0].upvotecounter - data2[0].downvotecounter;
+          knex('comment').where('id', data2[0].id).update({delta: diff}).then(function(diffdata2){
             res.status(200).send(voteResObj);
-          })
+          });
+          knex('users_join').insert({user_id: 16, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).then(function(){});
         });
     } else {
-      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter']).where({id: commentId}).increment('downvotecounter', 1)
-      .then(function(data){
+      knex('comment').returning(['id', 'upvotecounter', 'downvotecounter', 'commonground_id']).where({id: commentId}).increment('downvotecounter', 1)
+      .then(function(data2){
+          console.log('DATA 1: ', data1)
+          console.log('DATA 2: ', data2)
           var downvoteResObj = {
-            id: data[0].id,
-            upvotecounter: data[0].upvotecounter,
-            downvotecounter: data[0].downvotecounter
+            id: data2[0].id,
+            upvotecounter: data2[0].upvotecounter,
+            downvotecounter: data2[0].downvotecounter
           }
-          let diff = data[0].upvotecounter - data[0].downvotecounter;
-          knex('comment').where('id', data[0].id).update({delta: diff}).then(function(diffData){
+          let diff = data2[0].upvotecounter - data2[0].downvotecounter;
+          knex('comment').where('id', data2[0].id).update({delta: diff}).then(function(diffData){
             res.status(200).send(downvoteResObj);
           })
+          knex('users_join').insert({user_id: 16, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).then(function(){});
         });
     }
   }).then(function(){});
