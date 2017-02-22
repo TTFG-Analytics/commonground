@@ -145,7 +145,7 @@ app.post('/commonground', function(req, res){
 })
 
 app.post('/comment', function(req,res){
-  console.log("THIS IS THE CURRENT USER ID", currentUser.id);
+  console.log("THIS IS THE CURRENT req.body", req.body);
   knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: req.body.comment, user_id: 16, commonground_id: req.body.commongroundId })
     .then(function(data){
       console.log('----- data comment res -------------------', data[0])
