@@ -72,6 +72,7 @@ app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
 })
 
 app.get('/comments/:campId', function(req, res) {
+  console.log('req params', req.params)
   let id = req.params.campId;
   console.log('id', id, req.params);
   knex('comment').where({commonground_id: id}).select('*')
