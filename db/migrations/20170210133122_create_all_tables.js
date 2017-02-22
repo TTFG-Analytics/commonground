@@ -5,19 +5,18 @@ exports.up = function(knex, Promise) {
       t.string('facebookid').unique();
       t.string('fullname').notNull();
       t.string('title').nullable();
-      t.integer('age').nullable();
+      t.string('age').nullable();
       t.string('hometown').nullable();
       t.string('gender').nullable();
-      t.integer('race').nullable();
-      t.integer('industry').nullable();
-      t.integer('politicalleaning').nullable();
-      t.integer('religion').nullable();
-      t.integer('yearlyincome').nullable();
+      t.string('race').nullable();
+      t.string('industry').nullable();
+      t.string('politicalleaning').nullable();
+      t.string('religion').nullable();
+      t.string('yearlyincome').nullable();
       t.string('email').nullable();
       t.string('facebookpicture').nullable();
       t.string('locale').nullable();
-      t.integer('admin').defaultTo(0);
-      t.string('locale').nullable();
+      t.string('admin').defaultTo(0);
       t.timestamp('createdat').defaultTo(knex.fn.now());
     }),
 

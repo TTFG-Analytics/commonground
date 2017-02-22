@@ -46,7 +46,7 @@ app.get('/analytics/:campName/:demographic', (req, res) => {
   knex.select(`${req.params.demographic}`, 'users.id').from('users').distinct('users.id')
     .innerJoin('comment', 'users.id', 'comment.user_id')
     .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
-    .whereRaw(`commonground.input=('${req.params.campName}')`)   
+    .whereRaw(`commonground.input=('${req.params.campName}')`)
     .then(data => {
       knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id')
         .innerJoin('vote', 'users.id', 'vote.user_id')
@@ -92,34 +92,32 @@ app.get('/profile', function(req, res) {
     })
 })
 
-app.post('/profile', function(req,res) {
+// /login route puts user facebook data in database upon login
+app.post('/login', function(req,res) {
   currentUser = req.body;
-//   knex.raw(`
-//     INSERT INTO users (fullname, facebookid, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome)
-//     VALUES ('${req.body.name}', ${req.body.id}, 0 ,'Fort Worth', '${req.body.gender}', 0, 0, 0, 0, 0)
-//     ON CONFLICT (facebookid) DO UPDATE
-//     SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome})
-//     RETURNING id
-//     `)
-//   .then(function(data){
-//     currentUser.id = data.rows[0].id
-//   });
-// })
+  knex.raw(`
+    INSERT INTO users (fullname, facebookid, gender, email, facebookpicture, locale)
+    VALUES ('${req.body.name}', '${req.body.id}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+    ON CONFLICT (facebookid) DO UPDATE
+    SET (fullname, gender, email, facebookpicture, locale) = ('${req.body.name}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+    RETURNING id
+    `).then(function(data){
+      currentUser.id = data.rows[0].id
+    });
+    res.status(200).send();
+})
 
-  // ON CONFLICT (facebookid) DO UPDATE
-  // SET (fullname, age, hometown, gender, race, industry, politicalleaning, religion, yearlyincome, email, facebookpicture, locale) = ('${req.body.name}', ${req.body.age} ,'${req.body.hometown}', '${req.body.gender}', ${req.body.race}, ${req.body.industry}, ${req.body.politicalleaning}, ${req.body.religion}, ${req.body.yearlyincome}, '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
-
-console.log('/PROFILE WAS HIT!!', req.body);
-knex.raw(`
-  INSERT INTO users (fullname, facebookid, gender, email, facebookpicture, locale)
-  VALUES ('${req.body.name}', '${req.body.id}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
-  ON CONFLICT (facebookid) DO UPDATE
-  SET (fullname, gender, email, facebookpicture, locale) = ('${req.body.name}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
-  RETURNING id
-  `).then(function(data){
-    currentUser.id = data.rows[0].id
-  });
-  res.status(200).send();
+// profile route upserts data into database that user inputs in profile page.
+// may need updating once profile page is built
+app.post('/profile', function(req,res) {
+  console.log('REQ.BODY', req.body);
+  knex.raw(`
+    UPDATE users
+    SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}', '${req.body.politicalleaning}', '${req.body.religion}')
+    `).then(function(data){
+      console.log(data);
+    });
+    res.status(200).send();
 })
 
 app.post('/discuss', function(req,res) {
@@ -147,6 +145,7 @@ app.post('/commonground', function(req, res){
 })
 
 app.post('/comment', function(req,res){
+  console.log("THIS IS THE CURRENT USER ID", currentUser.id);
   knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: req.body.comment, user_id: 16, commonground_id: req.body.commongroundId })
     .then(function(data){
       console.log('----- data comment res -------------------', data[0])
