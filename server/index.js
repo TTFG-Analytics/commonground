@@ -4,6 +4,8 @@ const path = require('path');
 
 var app = express();
 //app.use(bodyParser.urlencoded({extended: false})); //needed for testing purposes on gregindex.html
+var http = require('http').createServer(app);
+var io = require('socket.io')(http)
 app.use(bodyParser.json());
 
 module.exports = app;
@@ -21,6 +23,8 @@ var knex = require('knex')({
     password: 'commonground123'
   }
 });
+
+
 
 app.get('/discussions', (req, res) => {
   knex('discussion').select('*')
@@ -137,9 +141,19 @@ app.post('/discuss', function(req,res) {
 
 app.post('/commonground', function(req, res){
   console.log('req body commonground', req.body)
+  
   knex('commonground').returning(['id', 'discussion_id', 'input']).insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 16})
     .then(function(data){
       console.log('data commonground res --------------------------', data)
+      //create namespace for sockets.io. This creates a namespace where users looking at a commonground see comments update instantaneously
+      var nspName = data[0].id
+      const nsp = io.of(`/${nspName}`);
+      console.log('nsp created!', nsp)
+      nsp.on('connection', (socketClient) => {
+        console.log('connected to commonground')
+        console.log('============================================', socketClient)
+        nsp.emit('cgConnection');
+      })
       res.status(200).send(data)
     })
     .then(function(){})
@@ -212,7 +226,7 @@ app.get('/*', function(req, res) {
 });
 
 var port = process.env.PORT || 4040;
-app.listen(port);
+http.listen(port); //needed to listen using the http server and not the express 'app' server
 console.log("Listening on port " + port);
 
 
