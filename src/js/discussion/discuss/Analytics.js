@@ -193,6 +193,7 @@ class Analytics extends React.Component{
         data: this.state.downvoters
       }]
     }
+    
     return (
       <div>
       <Dropdown label='Select a CommonGround' ref="campSelect" onChange={(value)=> this.campChange(value)} source={commongrounds} value={this.state.camp} />
