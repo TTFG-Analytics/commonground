@@ -90,7 +90,14 @@ describe('Server API routes', () => {
     it('should be inserting a comment into the db', (done) => {
       chai.request(server)
       .post('/comment')
-      .send('')//need to fill this out
+      .send({
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum'
+      })
       .end((err,res) => {
         res.should.have.status(200);
         res.body.should.be.a.('array');
@@ -101,15 +108,52 @@ describe('Server API routes', () => {
 
   describe('POST /commonground', () => {  
     it('should be inserting a commonground into the db on /commonground Post', (done) =>{      
-    
+      chai.request(server)
+      .post('/commonground')
+      .send({
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum'
+      })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.have.property('Lorem')
+        res.body.should.have.property('Lorem')
+        res.body.should.have.property('Lorem')
+        res.body.should.have.property('Lorem')
+        res.body.should.have.property('Lorem')
+        done();
+      })
     });
   })
 
   describe('POST /vote', () => {  
-  it('should be inserting a vote into the db on /vote Post', (done) => {
-  
+    it('should be inserting a vote into the db', (done) => {
+      chai.request(server)
+      .post('/vote')
+      .send({
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+        // lorem: 'ipsum',
+      })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object')
+        res.body.should.have.property('id')
+        res.body.should.have.property('upvotecounter')
+        res.body.should.have.property('downvotecounter')
+        done();
+      })
+    });
   });
-});
 
   describe('GET /profile', () => {
     it('should be getting user profile data from the db', (done) => {
@@ -140,12 +184,6 @@ describe('Server API routes', () => {
       });
     });  
   });
-
-  describe('POST /vote', () => {  
-    it('should be inserting or updating user data in the db', (done) => {
-  
-  });
-});
 
   describe('GET /analytics/:campName/:demographic', () => {  
     it('should be pulling campground data from the db', (done) => {
@@ -189,7 +227,8 @@ describe('Server API routes', () => {
       chai.request(server)
       .get('/haberdashery')
       .end((err, res) => {
-        res.should.have.status(300);
+        res.should.have.status(302);
+        res.('Location', '/home')
         done()
       });
     });  
