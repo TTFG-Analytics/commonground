@@ -152,7 +152,12 @@ app.post('/commonground', function(req, res){
       nsp.on('connection', (socketClient) => {
         console.log('connected to commonground')
         console.log('============================================', socketClient)
-        nsp.emit('cgConnection');
+        nsp.emit('cgConnection', {namespace: `/${nspName}`});
+
+        socketClient.on('comment', (commentData) => {
+          console.log('~~~~~~~~~~ new comment has been made ~~~~~~~~~~~')
+          nsp.emit('comment')
+        })
       })
       res.status(200).send(data)
     })
