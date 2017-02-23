@@ -10,6 +10,7 @@ import FaceBookIntegration from './FaceBookIntegration'
 import ProfileButton from './ProfileButton'
 import Analytics from '../discuss/Analytics'
 import { AppBar } from 'react-toolbox/lib/app_bar'
+import { Link } from 'react-router'
 
 //discussionId is used to associate which camps belong to which discussions
 class CampParent extends React.Component{
@@ -46,6 +47,7 @@ class CampParent extends React.Component{
         <AppBar>
           <BackButton />
           <ProfileButton />
+          <Link to={`/logout`} style={{marginLeft: '45px'}}><h4>Logout</h4></Link>
         </AppBar>
         <h2>{discussionName}</h2>
         <AddCamp discussionId={discussionId} />

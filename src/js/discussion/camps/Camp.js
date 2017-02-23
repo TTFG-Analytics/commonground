@@ -17,6 +17,7 @@ class Camp extends React.Component{
   }
 
   fetchComments(campId) {
+    this.disconnectFromPrev();
     console.log('this fetchComments', this)
     var context = this;
     window.socket = io(`/${campId}`)
@@ -33,12 +34,20 @@ class Camp extends React.Component{
       console.log('context props', context.props)
       setTimeout(function(){
         context.props.getComments(campId)
-      }, 2000)
+      }, 1000)
     })
     this.props.getComments(campId)
     this.setState({
       showComments: !this.state.showComments
     })
+  }
+
+  disconnectFromPrev() {
+    if(window.socket) {
+      console.log('starting disconnect')
+      window.socket.disconnect()
+      console.log('disconnected from sockets!!!!!')
+    }
   }
 
   render() {
