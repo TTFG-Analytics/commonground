@@ -5,16 +5,16 @@ import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox
 
 class CampList extends React.Component{
   render(){
-    console.log('this camplist props', this.props)
+    // console.log('this camplist props', this.props)
     var currCamps = this.props.camps.filter(camp => {
       return camp.discussion_id == this.props.discussionId
     });
-    console.log('currCamps', currCamps, this.props.camps)
+    // console.log('currCamps', currCamps, this.props.camps)
 
     return (
       <div>
         {currCamps.map(currCamp =>
-          <Camp 
+          <Camp
             key={currCamp.id}
             campId={currCamp.id}
             inputStr={currCamp.input}

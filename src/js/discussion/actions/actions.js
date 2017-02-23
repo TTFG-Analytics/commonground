@@ -35,7 +35,7 @@ export function increaseDownvotes() {
 export const GET_DISCUSSIONS_REQUEST = 'GET_DISCUSSIONS_REQUEST';
 
 export const getDiscussionsSuccess = (discussions) =>{
-  console.log('discussions get', discussions)
+  // console.log('discussions get', discussions)
   return {
     type: 'GET_DISCUSSIONS_SUCCESS',
     discussions: discussions
@@ -55,7 +55,7 @@ export const getDiscussions = () => {
 }
 
 export const getCampsSuccess = (camps) => {
-  console.log('getCampsSuccess', camps)
+  // console.log('getCampsSuccess', camps)
   return {
     type: 'GET_CAMPS_SUCCESS',
     camps: camps.data
@@ -63,11 +63,11 @@ export const getCampsSuccess = (camps) => {
 } //sends action that is picked up by getCampsReducer
 
 export const getCamps = (discussionId) => {
-  console.log('discussionid', discussionId)
+  // console.log('discussionid', discussionId)
   return (dispatch) => {
     return axios.get('/discussion/' + discussionId)
       .then(response => {
-        console.log('get camps res', response)
+        // console.log('get camps res', response)
         dispatch(getCampsSuccess(response.data))
       })
       .catch(error => {
@@ -77,7 +77,7 @@ export const getCamps = (discussionId) => {
 }
 
 export const getCommentsSuccess = (comments) => {
-  console.log('getCommentsSuccess', comments)
+  // console.log('getCommentsSuccess', comments)
   return {
     type: 'GET_COMMENTS_SUCCESS',
     comments: comments.data
@@ -88,7 +88,7 @@ export const getComments = (campId) => {
   return (dispatch) => {
     return axios.get('/comments/' + campId)
       .then(response => {
-        console.log('get camps res', response)
+        // console.log('get camps res', response)
         dispatch(getCommentsSuccess(response.data))
       })
       .catch(error => {
@@ -119,7 +119,7 @@ export const getComments = (campId) => {
 //post request section
 
 export const createDiscussionSuccess = (discussion) => {
-  console.log('discussion create success', discussion)
+  // console.log('discussion create success', discussion)
   return {
     type: 'CREATE_DISCUSSION_SUCCESS',
     id: discussion.discussionId,
@@ -128,13 +128,13 @@ export const createDiscussionSuccess = (discussion) => {
 } //sends action that's picked up by discussionReducer
 
 export const createDiscussionPost = (discussion) => {
-  console.log('createDiscussionPost discussion', discussion)
+  // console.log('createDiscussionPost discussion', discussion)
   return (dispatch) => {
     return axios.post('/discuss', discussion)
       .then(response => {
         let responseObj = JSON.parse(response.config.data)
         responseObj.discussionId = response.data[0]
-        console.log('responseObj', responseObj)
+        // console.log('responseObj', responseObj)
         dispatch(createDiscussionSuccess(responseObj))
       })
   }
@@ -153,7 +153,7 @@ export const createCampPost = (camp) => {
   return (dispatch) => {
     return axios.post('/commonground', camp)
       .then(response => {
-        console.log('create camp success resobj', response)
+        // console.log('create camp success resobj', response)
         // let responseObj = JSON.parse(response.config.data)
         // responseObj.commongroundId = response.data[0]
         //console.log('create camp success resobj', response)
@@ -177,23 +177,23 @@ export const createCommentSuccess = (comment) => {
   }
 }
 
-export const createCommentPost = (comment) => {
-  console.log('createCommentPost comment', comment)
+// export const createCommentPost = (comment) => {
+//   // console.log('createCommentPost comment', comment)
 
-  return (dispatch) => {
-    return axios.post('/comment', comment)
-      .then(response => {
-        console.log('create comment success response', response)
-        //let responseObj = JSON.parse(response.data)
-        // responseObj.commentId = response.data[0]
-        console.log('create comment success resobj', response.data)
-        dispatch(createCommentSuccess(response.data))
-      })
-  }
-}
+//   return (dispatch) => {
+//     return axios.post('/comment', comment)
+//       .then(response => {
+//         // console.log('create comment success response', response)
+//         //let responseObj = JSON.parse(response.data)
+//         // responseObj.commentId = response.data[0]
+//         // console.log('create comment success resobj', response.data)
+//         dispatch(createCommentSuccess(response.data))
+//       })
+//   }
+// }
 
 export const increaseUpvotesSuccess = (upvote) => {
-  console.log('upvote success', upvote)
+  // console.log('upvote success', upvote)
   return {
     type: 'UPVOTE_SUCCESS',
     commentId: upvote.id,
@@ -206,7 +206,7 @@ export function increaseUpvotesPost(vote) {
   return (dispatch) => {
     return axios.post('/vote', vote)
       .then(response => {
-        console.log('upvote success response', response)
+        // console.log('upvote success response', response)
         let responseObj = JSON.parse(response.config.data)
         responseObj.commentId = response.data[0]
         dispatch(increaseUpvotesSuccess(response.data))
@@ -215,7 +215,7 @@ export function increaseUpvotesPost(vote) {
 }
 
 export const increaseDownvotesSuccess = (downvote) => {
-  console.log('downvote success', downvote)
+  // console.log('downvote success', downvote)
   return {
     type: 'DOWNVOTE_SUCCESS',
     commentId: downvote.id,
@@ -224,11 +224,11 @@ export const increaseDownvotesSuccess = (downvote) => {
 }
 
 export function increaseDownvotesPost(downvote) {
-  console.log('downvotinggggg')
+  // console.log('downvotinggggg')
   return (dispatch) => {
     return axios.post('/vote', downvote)
       .then(response => {
-        console.log('downvote success response', response)
+        // console.log('downvote success response', response)
         let responseObj = JSON.parse(response.config.data)
         responseObj.commentId = response.data[0]
         dispatch(increaseDownvotesSuccess(response.data))
@@ -237,7 +237,7 @@ export function increaseDownvotesPost(downvote) {
 }
 
 export const cachingFbData = (fbUser) => {
-  console.log('cachingFBData', fbUser)
+  // console.log('cachingFBData', fbUser)
   return {
     type: 'GET_FBDATA_SUCCESS',
     fbName: fbUser.name,
@@ -251,7 +251,7 @@ export const cachingFbData = (fbUser) => {
 
 // get data from facebook auth
 export function sendingFbData(fbData) {
-  console.log('posting response data')
+  // console.log('posting response data')
   return (dispatch) => {
     return axios.post('/login', fbData)
       .then(response => {
@@ -262,7 +262,7 @@ export function sendingFbData(fbData) {
 }
 
 export function sendingFbDataSuccess(fbUser) {
-  console.log('cachingFBData', fbUser)
+  // console.log('cachingFBData', fbUser)
   return {
     type: 'GET_FBDATA_SUCCESS',
     fbName: fbUser.name,

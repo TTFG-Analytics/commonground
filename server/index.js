@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 const path = require('path');
 
 var app = express();
-//app.use(bodyParser.urlencoded({extended: false})); //needed for testing purposes on gregindex.html
 var http = require('http').createServer(app);
 var io = require('socket.io')(http)
 app.use(bodyParser.json());
@@ -29,7 +28,7 @@ var knex = require('knex')({
 app.get('/discussions', (req, res) => {
   knex('discussion').select('*')
     .then((data) => {
-      console.log('discussions data', data)
+      // console.log('discussions data', data)
       res.send(data)
     })
 })
@@ -39,7 +38,7 @@ app.get('/discussion/:discussionId', function(req, res) {
   console.log('id', id, req.params);
   knex('commonground').where({discussion_id: id}).select('*')
     .then(function(data) {
-      console.log('data', data)
+      // console.log('data', data)
       var commongroundsResponse = {};
       commongroundsResponse.data = data;
       res.send(commongroundsResponse);
@@ -59,29 +58,29 @@ app.get('/analytics/:campName/:demographic', (req, res) => {
         .whereRaw(`commonground.input=('${req.params.campName}')`)
         .then(data2 => {
           var ans = data2.concat(data)
-          console.log('responseArr analytics array ---------------', ans)
+          // console.log('responseArr analytics array ---------------', ans)
           res.send(ans)
         })
     })
 })
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
-  console.log('req params', req.params)
+  // console.log('req params', req.params)
   knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
     .whereRaw(`vote.comment_id=('${req.params.commentId}')`)
     .then(data => {
-      console.log('comment vote analytics', data)
+      // console.log('comment vote analytics', data)
       res.send(data)
     })
 })
 
 app.get('/comments/:campId', function(req, res) {
-  console.log('req params', req.params)
+  // console.log('req params', req.params)
   let id = req.params.campId;
-  console.log('id', id, req.params);
+  // console.log('id', id, req.params);
   knex('comment').where({commonground_id: id}).select('*')
     .then(function(data) {
-      console.log('data', data)
+      // console.log('data', data)
       var commentsResponse = {};
       commentsResponse.data = data;
       res.send(commentsResponse);
@@ -92,7 +91,7 @@ app.get('/profile', function(req, res) {
   knex('users').select('*')
   .where({id: 18})
     .then(function(data) {
-      console.log('datatatatata', data)
+      // console.log('datatatatata', data)
       res.send(data[0]);
     })
 })
@@ -120,16 +119,16 @@ app.post('/profile', function(req,res) {
     UPDATE users
     SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}', '${req.body.politicalleaning}', '${req.body.religion}')
     `).then(function(data){
-      console.log(data);
+      // console.log(data);
     });
     res.status(200).send();
 })
 
 app.post('/discuss', function(req,res) {
-  console.log(req.body);
+  // console.log(req.body);
   knex('discussion').returning('id').insert({input: req.body.topic, user_id: 11}) //currentUser.id --- hard coding for now
     .then(function(data){
-      console.log('data discuss', data)
+      // console.log('data discuss', data)
       res.status(200).send(data)
     })
     .then(function(){})
@@ -140,51 +139,53 @@ app.post('/discuss', function(req,res) {
 })
 
 app.post('/commonground', function(req, res){
-  console.log('req body commonground', req.body)
-  
+  // console.log('req body commonground', req.body)
+  var commentResObj;
+
   knex('commonground').returning(['id', 'discussion_id', 'input']).insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 16})
     .then(function(data){
-      console.log('data commonground res --------------------------', data)
+      // console.log('data commonground res --------------------------', data)
       //create namespace for sockets.io. This creates a namespace where users looking at a commonground see comments update instantaneously
-      var nspName = data[0].id
-      const nsp = io.of(`/${nspName}`);
-      console.log('nsp created!', nsp)
-      nsp.on('connection', (socketClient) => {
+      var cgNspName = data[0].id
+      const cgNsp = io.of(`/${cgNspName}`);
+      console.log('cgNsp created!', cgNsp)
+      cgNsp.on('connection', (socketClient) => {
         console.log('connected to commonground')
-        console.log('============================================', socketClient)
-        nsp.emit('cgConnection', {namespace: `/${nspName}`});
+        console.log('============================================')
+        cgNsp.emit('cgConnection', {namespace: `/${cgNspName.name}`});
 
         socketClient.on('comment', (commentData) => {
           console.log('~~~~~~~~~~ new comment has been made ~~~~~~~~~~~')
-          nsp.emit('comment')
+          knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: commentData.comment, user_id: 16, commonground_id: commentData.commongroundId })
+          .then(function(data){
+            console.log('----- data comment res -------------------', data)
+            commentResObj = {
+              id: data[0].id,
+              input: data[0].input,
+              commonground_id: data[0].commonground_id,
+              upvotecounter: data[0].upvotecounter,
+              downvotecounter: data[0].downvotecounter,
+              delta: data[0].delta
+            }
+            // knex('users_join').insert({user_id: 16, commonground_id: data[0].commonground_id, comment_id:data[0].id}).then(function(){});
+            // })
+            // .then(function(){});
+            console.log('About to emit!', commentResObj);
+            cgNsp.emit('comment', commentResObj);
+          }).then(function(){})
         })
       })
-      res.status(200).send(data)
-    })
-    .then(function(){})
-})
+      res.status(200).send(data);
+    // .then(function(){})
 
-app.post('/comment', function(req,res){
-  console.log("THIS IS THE CURRENT req.body", req.body);
-  knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: req.body.comment, user_id: 16, commonground_id: req.body.commongroundId })
-    .then(function(data){
-      console.log('----- data comment res -------------------', data[0])
-      var commentResObj = {
-            id: data[0].id,
-            input: data[0].input,
-            commonground_id: data[0].commonground_id,
-            upvotecounter: data[0].upvotecounter,
-            downvotecounter: data[0].downvotecounter,
-            delta: data[0].delta
-          }
-      knex('users_join').insert({user_id: 16, commonground_id: data[0].commonground_id, comment_id:data[0].id}).then(function(){});
-      res.status(200).send(commentResObj)
-    }) //currentUser.id --- hard coding for now to 16
-    .then(function(){})
+// app.post('/comment', function(req,res){
+//   // console.log("THIS IS THE CURRENT req.body", req.body);
+
+  })
 })
 
 app.post('/vote', function(req,res){
-  console.log(req.body);
+  // console.log(req.body);
   var commentId = req.body.commentId
   var vote = req.body.vote
   knex('vote').returning('id').insert({input: req.body.vote, user_id: 16, comment_id: req.body.commentId })
@@ -192,8 +193,8 @@ app.post('/vote', function(req,res){
     if (vote === '1') {
       knex('comment').returning(['id', 'upvotecounter', 'downvotecounter', 'commonground_id']).where({id: commentId}).increment('upvotecounter', 1)
       .then(function(data2){
-          console.log('DATA 1: ', data1)
-          console.log('DATA 2: ', data2)
+          // console.log('DATA 1: ', data1)
+          // console.log('DATA 2: ', data2)
           var voteResObj = {
             id: data2[0].id,
             upvotecounter: data2[0].upvotecounter,
@@ -209,8 +210,8 @@ app.post('/vote', function(req,res){
     } else {
       knex('comment').returning(['id', 'upvotecounter', 'downvotecounter', 'commonground_id']).where({id: commentId}).increment('downvotecounter', 1)
       .then(function(data2){
-          console.log('DATA 1: ', data1)
-          console.log('DATA 2: ', data2)
+          // console.log('DATA 1: ', data1)
+          // console.log('DATA 2: ', data2)
           var downvoteResObj = {
             id: data2[0].id,
             upvotecounter: data2[0].upvotecounter,

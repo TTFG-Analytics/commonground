@@ -3,7 +3,7 @@ import io from 'socket.io-client'
 import CampList from './CampList'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
-import { getComments } from '../actions/actions'
+import { getComments, createCommentSuccess } from '../actions/actions'
 import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 
 class Camp extends React.Component{
@@ -23,18 +23,19 @@ class Camp extends React.Component{
     window.socket = io(`/${campId}`)
     // var socket = io.connect(`http://localhost:4040/${campId}`)
     console.log('-------SOCKETS FTW----', window.socket)
-    socket.on('cgConnection', (data)=> {
+    window.socket.on('cgConnection', (data)=> {
       console.log('connected to commonground', data)
       this.setState({
         ioNamespace: data.namespace
       })
       console.log('^^^^^^^^^^^ socket nsp ^^^^^', this.state)
     });
-    socket.on('comment', (data) => {
+    window.socket.on('comment', (data) => {
       console.log('context props', context.props)
-      setTimeout(function(){
-        context.props.getComments(campId)
-      }, 1000)
+      // setTimeout(function(){
+      //   context.props.getComments(campId)
+      // }, 1000)
+      this.props.createCommentSuccess(data)
     })
     this.props.getComments(campId)
     this.setState({
@@ -71,7 +72,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getComments: (campId) => {
       dispatch(getComments(campId))
-    }
+    },
+    createCommentSuccess: (campId) =>
+      dispatch(createCommentSuccess(campId))
   }
 }
 

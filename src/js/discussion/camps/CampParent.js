@@ -19,21 +19,21 @@ class CampParent extends React.Component{
   //   this.props.getCamps(discussionId)
     FB.getLoginStatus(function(response) {
       if (response.status === 'connected') {
-        console.log('user is logged in and authenticated');
+        // console.log('user is logged in and authenticated');
         // the user is logged in and has authenticated your
         // app, and response.authResponse supplies
         // the user's ID, a valid access token, a signed
-        // request, and the time the access token 
+        // request, and the time the access token
         // and signed request each expire
         var uid = response.authResponse.userID;
         var accessToken = response.authResponse.accessToken;
       } else if (response.status === 'not_authorized') {
-        console.log('user is logged into Facebook but not authenticated');
+        // console.log('user is logged into Facebook but not authenticated');
 
-        // the user is logged in to Facebook, 
+        // the user is logged in to Facebook,
         // but has not authenticated your app
       } else {
-        console.log('user is not logged in to to facebook');
+        // console.log('user is not logged in to to facebook');
         // the user isn't logged in to Facebook.
       }
     });

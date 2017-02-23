@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createCommentPost, createUpvote } from '../actions/actions'
+import { createCommentSuccess, createUpvote } from '../actions/actions'
 import Input from 'react-toolbox/lib/input'
 import {Button, IconButton} from 'react-toolbox/lib/button'
 import io from 'socket.io-client'
@@ -23,7 +23,7 @@ class AddComment extends React.Component{
             console.log('window socket', window, window.socket)
             window.socket.emit('comment', newComment)
           }
-          this.props.createCommentPost(newComment)
+          // this.props.createCommentSuccess(newComment)
           this.props.createUpvote()
           this.refs.comment.refs.wrappedInstance.inputNode.value = ''
         }}>
@@ -37,8 +37,8 @@ class AddComment extends React.Component{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createCommentPost: (comment) => {
-      dispatch(createCommentPost(comment))
+    createCommentSuccess: (comment) => {
+      dispatch(createCommentSuccess(comment))
     },
     createUpvote: () => {
       dispatch(createUpvote())
