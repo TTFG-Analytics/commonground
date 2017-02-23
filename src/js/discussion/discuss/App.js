@@ -5,9 +5,10 @@ import DiscussionList from './DiscussionList'
 import { getDiscussions } from '../actions/actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import FaceBookIntegration from '../camps/FaceBookIntegration'
+
 import ProfileButton from '../camps/ProfileButton'
 import { AppBar } from 'react-toolbox/lib/app_bar'
+import { Link } from 'react-router'
 
 DiscussionList.need = [
   getDiscussions
@@ -20,6 +21,7 @@ class App extends React.Component{
     <div>
       <AppBar>
         <ProfileButton />
+        <Link to={`/home`}><h4>Home</h4></Link>
       </AppBar>
       <AddDiscussion />
       <DiscussionList />

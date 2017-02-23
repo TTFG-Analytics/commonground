@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+//import sockets from 'socket.io'
+// var connection = io.connect( "http://localhost:4040");
+
 let discussionId = 0
 let campId = 0
 let commentId = 0
@@ -82,7 +85,6 @@ export const getCommentsSuccess = (comments) => {
 } //sends action that is picked up by getCommentsReducer
 
 export const getComments = (campId) => {
-  console.log('campid getComments is going', campId)
   return (dispatch) => {
     return axios.get('/comments/' + campId)
       .then(response => {
@@ -177,6 +179,7 @@ export const createCommentSuccess = (comment) => {
 
 export const createCommentPost = (comment) => {
   console.log('createCommentPost comment', comment)
+
   return (dispatch) => {
     return axios.post('/comment', comment)
       .then(response => {

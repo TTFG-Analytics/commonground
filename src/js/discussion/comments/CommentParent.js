@@ -8,7 +8,7 @@ class CommentParent extends React.Component{
   render(){
     console.log('=======campId in CommentParent ============', this.props.campId)
     return (<div>
-      <AddComment campId={this.props.campId} />
+      <AddComment campId={this.props.campId} nsp={this.props.nsp} />
       <CommentList campId={this.props.campId} />
     </div>)
   }

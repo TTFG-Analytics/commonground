@@ -8,6 +8,8 @@ import CampParent from './discussion/camps/CampParent'
 import store from './store' //tie react application to redux
 import FaceBookIntegration from './discussion/camps/FaceBookIntegration'
 import ProfileApp from './profile/components/profileApp'
+import Splash from './splash/Splash'
+import Logout from './logout/Logout'
 
 //7) in client.js, import all components and render using ReactDOM
 const app = document.getElementById('app')
@@ -18,8 +20,10 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App} />
+      <Route path='/home' component={Splash} />
       <Route path='/discuss/:discussionId' component={CampParent} />
       <Route path='/userprofile' component={ProfileApp} />
+      <Route path='/logout' component={Logout} />
     </Router>
   </Provider> </div>, app
   );
