@@ -19,20 +19,20 @@ class CommentAnalytics extends React.Component{
     this.setState({
       demographic: value
     });
-    console.log('demo change', this.state)
+    // console.log('demo change', this.state)
   }
 
   getVoteData() {
-    console.log('this state', this.state)
-    console.log('this props', this.props)
+    // console.log('this state', this.state)
+    // console.log('this props', this.props)
     axios.get(`/voteanalytics/${this.props.commentId}/${this.state.demographic}`)
       .then(function(response) {
-        console.log('response getdata', response.data);
+        // console.log('response getdata', response.data);
         var people = response.data
         let demographic = this.state.demographic
         var upvoteDataObj = {}
         var downvoteDataObj = {}
-        console.log('people -----------', people)
+        // console.log('people -----------', people)
         people.forEach(person => {
           if(!upvoteDataObj.hasOwnProperty(person[demographic]) && person.input == 1) {
             upvoteDataObj[person[demographic]] = 1;
@@ -44,9 +44,9 @@ class CommentAnalytics extends React.Component{
             downvoteDataObj[person[demographic]] += 1;
           }
         }) //upvoteDataObj now has the count for each property - for example the number of politically centrist responders to a commonground
-        console.log('upvoteDataObj -----------', upvoteDataObj)
-        console.log('downvoteDataObj ==========', downvoteDataObj)
-        console.log('upvoteDataobj keys keys', Object.keys(upvoteDataObj))
+        // console.log('upvoteDataObj -----------', upvoteDataObj)
+        // console.log('downvoteDataObj ==========', downvoteDataObj)
+        // console.log('upvoteDataobj keys keys', Object.keys(upvoteDataObj))
         var upvoteDataArr = []
         for(let demo in upvoteDataObj) {
           let tuple = []
@@ -61,14 +61,14 @@ class CommentAnalytics extends React.Component{
           tuple[1] = downvoteDataObj[demo]
           downvoteDataArr.push(tuple)
         }
-        console.log('updata arr ~~~~~~~~~~~~~~~', upvoteDataArr)
-        console.log('downdata arr ~~~~~~~~~~~~~~~', downvoteDataArr)
+        // console.log('updata arr ~~~~~~~~~~~~~~~', upvoteDataArr)
+        // console.log('downdata arr ~~~~~~~~~~~~~~~', downvoteDataArr)
         this.setState({
           upvoters: upvoteDataArr,
           downvoters: downvoteDataArr,
           showChart: true
         })
-        console.log('this this', this)
+        // console.log('this this', this)
       }.bind(this))
   }
 
@@ -88,10 +88,10 @@ class CommentAnalytics extends React.Component{
     var gender = ['', 'Male', 'Female', 'Other']
     var race = ['', 'White Hispanic', 'White Non-Hispanic', 'Black or African American', 'American Indian or Alaska Native',
     'Asian', 'Native Hawaiian or Other Pacific Islander', 'Other']
-    var industry = ['', 
+    var industry = ['',
       'Aerospace, defence & security',
-      'Asset & wealth management', 
-      'Automotive', 
+      'Asset & wealth management',
+      'Automotive',
       'Banking & capital markets',
       'Capital projects & infrastructure',
       'Chemicals',
@@ -115,7 +115,7 @@ class CommentAnalytics extends React.Component{
       'Transportation & logistics',
       'Other'
     ]
-    var religion = ['', 'Protestant', 'Catholic', 'Mormon', 'Other Christian', 'Judaism', 'Islam', 
+    var religion = ['', 'Protestant', 'Catholic', 'Mormon', 'Other Christian', 'Judaism', 'Islam',
     'Buddhism', 'Hinduism', 'Agnostic', 'Atheist', 'Other']
     var income = ['', 'Under $35,000 / year', '$35,000 - $50,000', '$50,000 - $65,000', '$65,000 - $80,000',
     '$80,000 - $95,000', '$95,000 - $120,000', 'Over $120,000']
@@ -133,7 +133,7 @@ class CommentAnalytics extends React.Component{
     } else if(this.state.demographic === 'yearlyincome') {
       categories = income
     }
-    console.log('categories =============', categories, this.state)
+    // console.log('categories =============', categories, this.state)
     var config = {
       chart: {
         type: 'column'
@@ -158,8 +158,8 @@ class CommentAnalytics extends React.Component{
         data: this.state.downvoters
       }]
     }
-    console.log('this state upvotes', this.state.upvoters)
-    console.log('this state downvotes', this.state.downvoters)
+    // console.log('this state upvotes', this.state.upvoters)
+    // console.log('this state downvotes', this.state.downvoters)
     var upvotePieData = [];
     if(this.state.upvoters){
       this.state.upvoters.forEach(upvoter => {
@@ -171,7 +171,7 @@ class CommentAnalytics extends React.Component{
         upvotePieData.push(pieTuple)
       })
     }
-    console.log('upvotePieData', upvotePieData)
+    // console.log('upvotePieData', upvotePieData)
 
     var downvotePieData = [];
     if(this.state.downvoters){
@@ -184,7 +184,7 @@ class CommentAnalytics extends React.Component{
         downvotePieData.push(pieTuple)
       })
     }
-    console.log('downvotePieData', downvotePieData)
+    // console.log('downvotePieData', downvotePieData)
     var pieData = upvotePieData.concat(downvotePieData)
 
     var pieConfig = {
@@ -216,7 +216,7 @@ class CommentAnalytics extends React.Component{
     }
     return (
       <div>
-      <Dropdown ref="demographicSelect" onChange={(value)=> this.demographicChange(value)} 
+      <Dropdown ref="demographicSelect" onChange={(value)=> this.demographicChange(value)}
       source={demographics} value={this.state.demographic} />
       <Button onClick={() => this.getVoteData()} label='Get Data' raised primary/>
       {this.state.showChart && <ReactHighcharts config={config} />}

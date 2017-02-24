@@ -29,7 +29,7 @@ class Analytics extends React.Component{
     this.setState({
       demographic: value
     });
-    console.log('demo change', this.state)
+    // console.log('demo change', this.state)
   }
 
   getData() {
@@ -40,7 +40,7 @@ class Analytics extends React.Component{
         var commentDataObj = {}
         var upvoteDataObj = {}
         var downvoteDataObj = {}
-        console.log('people -----------', people)
+        // console.log('people -----------', people)
         people.forEach(person => {
           if(!commentDataObj.hasOwnProperty(person[demographic]) && !person.hasOwnProperty('input')) {
             commentDataObj[person[demographic]] = 1;
@@ -114,10 +114,10 @@ class Analytics extends React.Component{
     var gender = ['', 'Male', 'Female', 'Other']
     var race = ['', 'White Hispanic', 'White Non-Hispanic', 'Black or African American', 'American Indian or Alaska Native',
     'Asian', 'Native Hawaiian or Other Pacific Islander', 'Other']
-    var industry = ['', 
+    var industry = ['',
       'Aerospace, defence & security',
-      'Asset & wealth management', 
-      'Automotive', 
+      'Asset & wealth management',
+      'Automotive',
       'Banking & capital markets',
       'Capital projects & infrastructure',
       'Chemicals',
@@ -141,7 +141,7 @@ class Analytics extends React.Component{
       'Transportation & logistics',
       'Other'
     ]
-    var religion = ['', 'Protestant', 'Catholic', 'Mormon', 'Other Christian', 'Judaism', 'Islam', 
+    var religion = ['', 'Protestant', 'Catholic', 'Mormon', 'Other Christian', 'Judaism', 'Islam',
     'Buddhism', 'Hinduism', 'Agnostic', 'Atheist', 'Other']
     var income = ['', 'Under $35,000 / year', '$35,000 - $50,000', '$50,000 - $65,000', '$65,000 - $80,000',
     '$80,000 - $95,000', '$95,000 - $120,000', 'Over $120,000']
@@ -159,9 +159,9 @@ class Analytics extends React.Component{
     } else if(this.state.demographic === 'yearlyincome') {
       categories = income
     }
-    console.log('categories =============', categories, this.state)
+    // console.log('categories =============', categories, this.state)
     let camp = this.state.camp
-    console.log('camp', camp)
+    // console.log('camp', camp)
     var config = {
       chart: {
         type: 'column'
@@ -193,7 +193,7 @@ class Analytics extends React.Component{
         data: this.state.downvoters
       }]
     }
-    
+
     return (
       <div>
       <Dropdown label='Select a CommonGround' ref="campSelect" onChange={(value)=> this.campChange(value)} source={commongrounds} value={this.state.camp} />
@@ -242,11 +242,11 @@ export default connect(mapStateToProps)(Analytics)
     // counter = 0,
     // x = function(d) {
     //   var index = Object.keys(d)
-      
+
     //   return index
     // },
     // xScale = 'identity',
-      // {this.state.people && <BarChart 
+      // {this.state.people && <BarChart
       //   title={title}
       //   data={chartData}
       //   width={width}

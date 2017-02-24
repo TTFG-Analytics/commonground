@@ -11,7 +11,7 @@ class Discussion extends React.Component{
   }
 
   render(){
-    console.log('this props discussion', this.props)
+    // console.log('this props discussion', this.props)
     var discussionId = this.props.discussionId;
     var inputStr = this.props.inputStr;
     return (
