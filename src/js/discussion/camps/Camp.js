@@ -32,9 +32,6 @@ class Camp extends React.Component{
     });
     window.socket.on('comment', (data) => {
       console.log('context props', context.props)
-      // setTimeout(function(){
-      //   context.props.getComments(campId)
-      // }, 1000)
       this.props.createCommentSuccess(data)
     })
     this.props.getComments(campId)

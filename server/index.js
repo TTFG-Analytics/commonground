@@ -23,6 +23,19 @@ var knex = require('knex')({
   }
 });
 
+io.on('connection', (client) => {
+  client.emit('connection')
+  client.on('discussion', (data) => {
+    console.log("banana", data);
+     knex('discussion').returning(['id', 'input']).insert({input: data.topic, user_id: 11}) //currentUser.id --- hard coding for now
+    .then(function(data){
+      console.log('.then data', data)
+      io.emit('discussion', data[0])
+      // res.status(200).send(data)
+    })
+    //.then(function(){})
+  })
+})
 
 
 app.get('/discussions', (req, res) => {
@@ -32,6 +45,20 @@ app.get('/discussions', (req, res) => {
       res.send(data)
     })
 })
+
+// app.post('/discuss', function(req,res) {
+//   // console.log(data);
+//   knex('discussion').returning('id').insert({input: req.body.topic, user_id: 11}) //currentUser.id --- hard coding for now
+//     .then(function(data){
+//       // console.log('data discuss', data)
+//       res.status(200).send(data)
+//     })
+//     .then(function(){})
+//   //   console.log(data);
+//   //   knex('commonground').insert({input: req.body.commonground1, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
+//   //   knex('commonground').insert({input: req.body.commonground2, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
+//   // })
+// })
 
 app.get('/discussion/:discussionId', function(req, res) {
   let id = req.params.discussionId;
@@ -124,19 +151,6 @@ app.post('/profile', function(req,res) {
     res.status(200).send();
 })
 
-app.post('/discuss', function(req,res) {
-  // console.log(req.body);
-  knex('discussion').returning('id').insert({input: req.body.topic, user_id: 11}) //currentUser.id --- hard coding for now
-    .then(function(data){
-      // console.log('data discuss', data)
-      res.status(200).send(data)
-    })
-    .then(function(){})
-  //   console.log(data);
-  //   knex('commonground').insert({input: req.body.commonground1, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
-  //   knex('commonground').insert({input: req.body.commonground2, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
-  // })
-})
 
 app.post('/commonground', function(req, res){
   // console.log('req body commonground', req.body)
@@ -172,7 +186,11 @@ app.post('/commonground', function(req, res){
             // .then(function(){});
             console.log('About to emit!', commentResObj);
             cgNsp.emit('comment', commentResObj);
-          }).then(function(){})
+            return commentResObj;
+          }).then(function(){
+            knex('users_join').insert({user_id: 16, commonground_id: commentResObj.commonground_id, comment_id:commentResObj.id})
+            .then(function(){});
+          })
         })
       })
       res.status(200).send(data);
