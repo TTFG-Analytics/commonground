@@ -116,7 +116,7 @@ app.get('/comments/:campId', function(req, res) {
 
 app.get('/profile', function(req, res) {
   knex('users').select('*')
-  .where({id: 18})
+  .where({id: 16})
     .then(function(data) {
       // console.log('datatatatata', data)
       res.send(data[0]);

@@ -1,4 +1,4 @@
-export default function(state = {}, action) {
+ const ProfileReducer = (state = {}, action) => {
 
   switch(action.type) {
     case "GET_PROFILE":
@@ -7,3 +7,5 @@ export default function(state = {}, action) {
   }
   return state;
 }
+
+export default ProfileReducer

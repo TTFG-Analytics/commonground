@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getProfile} from '../actions/profileActions';
@@ -6,45 +6,65 @@ import Input from 'react-toolbox/lib/input';
 import Dropdown from 'react-toolbox/lib/dropdown';
 import {Button, IconButton} from 'react-toolbox/lib/button';
 
-class UserProfile extends Component {
+class UserProfile extends React.Component{
   constructor(props){
     super(props);
-
-
-    console.log('props:', props);
     this.state = {
-      name: 'Tin',
-      title: '',
-      hometown: 'Indiana',
-      gender: {value: 'male'},
-      race: {value: 'race-1'},
-      industry: {value: 'industry-1'},
-      politicalLeaning: {},
-      religion: {value: 'religion-1'},
-      yearlyIncome: {}
-      // title: this.props.profile.title,
-      // hometown: this.props.profile.hometown,
-      // gender: this.props.profile.gender,
-      // race: this.props.profile.race,
-      // industry: this.props.profile.industry,
-      // politicalLeaning: this.props.profile.politicalleaning,
-      // religion: this.props.profile.religion,
-      // yearlyIncome: this.props.profile.yearlyincome
-    };
+      name: null
+    }
 
-    this.handleChange = this.handleChange.bind(this);
+  //   console.log('props:', props);
+  //   this.state = {
+  //     name: 'Tin',
+  //     title: '',
+  //     hometown: 'Indiana',
+  //     gender: {value: 'male'},
+  //     race: {value: 'race-1'},
+  //     industry: {value: 'industry-1'},
+  //     politicalLeaning: {},
+  //     religion: {value: 'religion-1'},
+  //     yearlyIncome: {}
+  //     // title: this.props.profile.title,
+  //     // hometown: this.props.profile.hometown,
+  //     // gender: this.props.profile.gender,
+  //     // race: this.props.profile.race,
+  //     // industry: this.props.profile.industry,
+  //     // politicalLeaning: this.props.profile.politicalleaning,
+  //     // religion: this.props.profile.religion,
+  //     // yearlyIncome: this.props.profile.yearlyincome
+  //   };
+
+  //   this.handleChange = this.handleChange.bind(this);
+  // }
+
+  // state {
+  //   name: 'Tin'
   }
 
   componentWillMount() {
     this.props.getProfile();
+    console.log('los propos ----', this.props)
+  }
+
+  componentDidMount() {
+    console.log('thissss', this.props.profile)
+  //   //if(this.props.profileReducer){
+    this.setState({
+      name: this.props.profile
+    })
+  // //   //}
+  //   console.log('state changed', this.state)
   }
 
   //temp just to see if name can be changeable
-  handleName(value) {
-    this.setState({
-      name: value
-    })
-  }
+  // handleName() {
+  //   // console.log('this handleName', this)
+  //   // console.log('name val', this.refs.name.refs.wrappedInstance.inputNode.value)
+  //   // this.setState({
+  //   //   name: this.refs.name.refs.wrappedInstance.inputNode.value
+  //   // })
+  // }
+
 
   handleChange(value) {
     // this.setState({gender: value});
@@ -105,10 +125,8 @@ class UserProfile extends Component {
       {value: 'industry-22', label: 'Sovereign investment funds'},
       {value: 'industry-23', label: 'Technology'},
       {value: 'industry-24', label: 'Transportation & logistics'},
-      {value: 'industry-25', label: 'Other'},
+      {value: 'industry-25', label: 'Other'}]
 
-
-    ]
     const religion = [
       {value: 'religon-1', label: 'Protestant'},
       {value: 'religon-2', label: 'Catholic'},
@@ -133,13 +151,26 @@ class UserProfile extends Component {
       {value: 'income-7', label: 'Over $120,000'},
       ];
 
-      this.state.name = this.props.profile.name;
+      console.log('profile reducer ........', this.props.profile)
+      this.state.name = this.state.name || this.props.profile;
+      // if(this.props.profile.fullname){
+      // var fullname = this.props.profile.fullname.slice(0)
+      // console.log('fullname', fullname);
+      // this.state.name = fullname
+      // }onChange={() => this.handleName()} onChange={this.handleName.bind(this, 'name')}
 
       console.log('djsakdjask', this.state);
+      console.log('propsssss', this.props)
+      var x = this.state.name
     return (
-      <div>
+      <form onSubmit={(e) => {
+        e.preventDefault()
+        console.log('nnnnnnnn', this.refs.name.refs.wrappedInstance.inputNode.value)
+        this.setState({
+          name: this.refs.name.refs.wrappedInstance.inputNode.value
+        })}}>
       <p>Name: </p>
-      <Input type='text' name='name' value={this.state.name} onChange={this.handleName.bind(this)}/>
+      <Input type='text'  ref='name' label={this.state.name} />
       <p>Title: </p>
       <Input type='text' name='title' value={this.state.title}/>
       <p>Hometown: </p>
@@ -158,21 +189,25 @@ class UserProfile extends Component {
       <Dropdown auto onChange={this.handleChange} source={income} value={this.state.income} />
 
       <Button type='submit' label='Submit' raised primary/>
-      </div>
+      </form>
     )
   }
 }
 
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
   console.log('##############state###############',state)
   return {
-    profile: state.profileReducer
+    profile: state.profileReducer.fullname
   };
 }
 
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators({getProfile: getProfile}, dispatch)
+const matchDispatchToProps = (dispatch) => {
+  return {
+    getProfile: () => {
+      dispatch(getProfile())
+    }
+  }
 }
 
 
