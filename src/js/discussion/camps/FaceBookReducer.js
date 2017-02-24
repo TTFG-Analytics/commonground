@@ -5,6 +5,7 @@ const fbGet = (state={}, action) => {
       {},
       state,
       {
+        userId: action.userId,
         fbName: action.fbName,
         fbId: action.fbId,
         fbGender: action.fbGender,

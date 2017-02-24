@@ -131,11 +131,13 @@ app.post('/login', function(req,res) {
     VALUES ('${req.body.name}', '${req.body.id}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
     ON CONFLICT (facebookid) DO UPDATE
     SET (fullname, gender, email, facebookpicture, locale) = ('${req.body.name}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
-    RETURNING id
+    RETURNING *
     `).then(function(data){
-      currentUser.id = data.rows[0].id
+      //currentUser.id = data.rows[0].id
+      console.log('fb data from db', data)
+      //console.log('fb user logged in', currentUser.id)
+      res.status(200).send(data);
     });
-    res.status(200).send();
 })
 
 // profile route upserts data into database that user inputs in profile page.
@@ -170,7 +172,7 @@ app.post('/commonground', function(req, res){
 
         socketClient.on('comment', (commentData) => {
           console.log('~~~~~~~~~~ new comment has been made ~~~~~~~~~~~')
-          knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: commentData.comment, user_id: 16, commonground_id: commentData.commongroundId })
+          knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: commentData.comment, user_id: commentData.user_id, commonground_id: commentData.commongroundId })
           .then(function(data){
             console.log('----- data comment res -------------------', data)
             commentResObj = {
@@ -179,7 +181,8 @@ app.post('/commonground', function(req, res){
               commonground_id: data[0].commonground_id,
               upvotecounter: data[0].upvotecounter,
               downvotecounter: data[0].downvotecounter,
-              delta: data[0].delta
+              delta: data[0].delta,
+              user_id: data[0].user_id
             }
             // knex('users_join').insert({user_id: 16, commonground_id: data[0].commonground_id, comment_id:data[0].id}).then(function(){});
             // })

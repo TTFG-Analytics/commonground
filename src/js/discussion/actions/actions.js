@@ -237,15 +237,16 @@ export function increaseDownvotesPost(downvote) {
 }
 
 export const cachingFbData = (fbUser) => {
-  // console.log('cachingFBData', fbUser)
+  console.log('cachingFBData', fbUser)
   return {
     type: 'GET_FBDATA_SUCCESS',
-    fbName: fbUser.name,
-    fbId: fbUser.id,
+    userId: fbUser.id,
+    fbName: fbUser.fullname,
+    fbId: fbUser.facebookid,
     fbGender: fbUser.gender,
     fbLocale: fbUser.locale,
     fbEmail: fbUser.email,
-    fbPicture: fbUser.picture
+    fbPicture: fbUser.facebookpicture
   }
 }
 
@@ -255,22 +256,24 @@ export function sendingFbData(fbData) {
   return (dispatch) => {
     return axios.post('/login', fbData)
       .then(response => {
-        console.log('POSTING SUCCESS:', response)
-        dispatch(sendingFbDataSuccess(response))
+        console.log('POSTING SUCCESS>>>>>>>>>:', response.data.rows[0])
+        // dispatch(sendingFbDataSuccess(response.data.rows[0]))
+        dispatch(cachingFbData(response.data.rows[0]))
       })
   }
 }
 
 export function sendingFbDataSuccess(fbUser) {
-  // console.log('cachingFBData', fbUser)
+  console.log('****sendingFBData', fbUser)
   return {
-    type: 'GET_FBDATA_SUCCESS',
-    fbName: fbUser.name,
-    fbId: fbUser.id,
+    type: 'GET_FBDATA',
+    userId: fbUser.id,
+    fbName: fbUser.fullname,
+    fbId: fbUser.facebookid,
     fbGender: fbUser.gender,
     fbLocale: fbUser.locale,
     fbEmail: fbUser.email,
-    fbPicture: fbUser.picture
+    fbPicture: fbUser.facebookpicture
   }
 }
 

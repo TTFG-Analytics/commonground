@@ -17,7 +17,8 @@ class AddComment extends React.Component{
           console.log('refs comment', this.refs.comment.refs.wrappedInstance.inputNode.value)
           let newComment = {
             comment: this.refs.comment.refs.wrappedInstance.inputNode.value,
-            commongroundId: this.props.campId
+            commongroundId: this.props.campId,
+            userId: this.props.fbId
           }
           if(window.socket){
             console.log('window socket', window, window.socket)
@@ -32,6 +33,12 @@ class AddComment extends React.Component{
         </form>
       </div>
     )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    fbId: state.fbGet.fbId
   }
 }
 
