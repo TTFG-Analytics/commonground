@@ -78,11 +78,11 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return Promise.all([
-    // knex.schema.dropTable("users_join"),
+    knex.schema.dropTable("users_join"),
     knex.schema.dropTable("vote"),
     knex.schema.dropTable("comment"),
     knex.schema.dropTable("commonground"),
     knex.schema.dropTable("discussion"),
-    knex.schema.dropTable("users")
+    knex.schema.dropTable("users"),
   ]);
 };
