@@ -18,7 +18,7 @@ class Camp extends React.Component{
 
   fetchComments(campId) {
     this.disconnectFromPrev();
-    console.log('this fetchComments', this)
+    console.log('this fetchComments', this, campId)
     var context = this;
     window.socket = io(`/${campId}`)
     // var socket = io.connect(`http://localhost:4040/${campId}`)

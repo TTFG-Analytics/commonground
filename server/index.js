@@ -85,18 +85,18 @@ app.get('/analytics/:campName/:demographic', (req, res) => {
         .whereRaw(`commonground.input=('${req.params.campName}')`)
         .then(data2 => {
           var ans = data2.concat(data)
-          // console.log('responseArr analytics array ---------------', ans)
+          console.log('responseArr analytics array ---------------', ans)
           res.send(ans)
         })
     })
 })
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
-  // console.log('req params', req.params)
+  console.log('req params', req.params)
   knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
     .whereRaw(`vote.comment_id=('${req.params.commentId}')`)
     .then(data => {
-      // console.log('comment vote analytics', data)
+      console.log('comment vote analytics', data)
       res.send(data)
     })
 })
@@ -168,6 +168,7 @@ app.post('/commonground', function(req, res){
       cgNsp.on('connection', (socketClient) => {
         console.log('connected to commonground')
         console.log('============================================')
+        console.log('object keys nsps........', Object.keys(io.nsps))
         cgNsp.emit('cgConnection', {namespace: `/${cgNspName.name}`});
 
         socketClient.on('comment', (commentData) => {

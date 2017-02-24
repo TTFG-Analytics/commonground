@@ -61,8 +61,8 @@ class CommentAnalytics extends React.Component{
           tuple[1] = downvoteDataObj[demo]
           downvoteDataArr.push(tuple)
         }
-        // console.log('updata arr ~~~~~~~~~~~~~~~', upvoteDataArr)
-        // console.log('downdata arr ~~~~~~~~~~~~~~~', downvoteDataArr)
+        console.log('updata arr ~~~~~~~~~~~~~~~', upvoteDataArr)
+        console.log('downdata arr ~~~~~~~~~~~~~~~', downvoteDataArr)
         this.setState({
           upvoters: upvoteDataArr,
           downvoters: downvoteDataArr,
@@ -132,6 +132,8 @@ class CommentAnalytics extends React.Component{
       categories = religion
     } else if(this.state.demographic === 'yearlyincome') {
       categories = income
+    } else if(this.state.categories === 'age') {
+
     }
     // console.log('categories =============', categories, this.state)
     var config = {
@@ -158,33 +160,55 @@ class CommentAnalytics extends React.Component{
         data: this.state.downvoters
       }]
     }
-    // console.log('this state upvotes', this.state.upvoters)
-    // console.log('this state downvotes', this.state.downvoters)
+    console.log('this state upvotes', this.state.upvoters)
+    console.log('this state downvotes', this.state.downvoters)
     var upvotePieData = [];
     if(this.state.upvoters){
       this.state.upvoters.forEach(upvoter => {
         let pieTuple = [];
-        let name = categories[upvoter[0]]
-        console.log('name', name);
-        pieTuple[0] = name + ' Upvoter'
+        let name = ''
+        if(this.state.demographic === 'age'){
+          let upvoterCategory = upvoter[0]
+          console.log('upvoter category', upvoterCategory)
+          name = upvoterCategory
+          console.log('name', name);
+        } else {
+          name = categories[upvoter[0]]
+        }
+        if(name){
+          pieTuple[0] = name + ' Upvoter'
+        } else {
+          pieTuple[0] = 'Other Upvoter'
+        }
         pieTuple[1] = upvoter[1]
         upvotePieData.push(pieTuple)
       })
     }
-    // console.log('upvotePieData', upvotePieData)
+    console.log('upvotePieData', upvotePieData)
 
     var downvotePieData = [];
     if(this.state.downvoters){
       this.state.downvoters.forEach(downvoter => {
         let pieTuple = [];
-        let name = categories[downvoter[0]]
-        console.log('name', name);
-        pieTuple[0] = name + ' Downvoter'
+        let name = ''
+        if(this.state.demographic === 'age'){
+          let downvoterCategory = downvoter[0]
+          console.log('upvoter category', downvoterCategory)
+          name = downvoterCategory
+          console.log('name', name);
+        } else {
+          name = categories[downvoter[0]]
+        }
+        if(name){
+          pieTuple[0] = name + ' Downvoter'
+        } else {
+          pieTuple[0] = 'Other Downvoter'
+        }
         pieTuple[1] = downvoter[1]
         downvotePieData.push(pieTuple)
       })
     }
-    // console.log('downvotePieData', downvotePieData)
+    console.log('downvotePieData', downvotePieData)
     var pieData = upvotePieData.concat(downvotePieData)
 
     var pieConfig = {
