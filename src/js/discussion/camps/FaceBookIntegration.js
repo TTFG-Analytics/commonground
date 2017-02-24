@@ -1,4 +1,7 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {cachingFbData} from '../actions/actions'
+import {sendingFbData} from '../actions/actions'
 
 class FaceBookIntegration extends React.Component{
     componentDidMount() {
@@ -11,19 +14,23 @@ class FaceBookIntegration extends React.Component{
         xfbml      : true,  // parse social plugins on this page
         version    : 'v2.1' // use version 2.1
       });
-
+      const context = this;
       // login callback implementation goes inside the function() { ... } block
       FB.Event.subscribe('auth.statusChange', function(response) {
-        // example implementation
         if (response.authResponse) {
           console.log('Welcome!  Fetching your information.... ');
           FB.api('/me', 'GET', {fields: 'name, id, gender, locale, age_range, email, picture.width(150).height(150)'}, function(response) {
             console.log('Good to see you, ' + response.name + '.');
             console.log('Response', response);
             console.log('Response.email', response.email)
+            console.log('CONTEXT', context)
+            context.getFbData(response)
+
+            context.props.sendingFbData(response)
           });
         } else {
           console.log('User cancelled login or did not fully authorize.');
+          window.location.href = "http://localhost:4040"
         }
       },
       {scope: 'email'}
@@ -40,14 +47,43 @@ class FaceBookIntegration extends React.Component{
     }(document, 'script', 'facebook-jssdk'));
   }
 
+  // (FB.Event.subscribe('auth.logout', (response) => console.log('*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*LOGOUT')))
+  getFbData(fbUserData){
+    this.props.cachingFbData(fbUserData)
+  }
+
   render(){
     return (
     <div>
-      <div className="fb-login-button" data-max-row="1" data-size="xlarge" data-show-faces="false" 
-      data-auto-logout-link="true" data-scope="public_profile, email" 
+      <div className="fb-login-button" data-max-row="1" data-size="xlarge" data-show-faces="false"
+      data-auto-logout-link="true" data-scope="public_profile, email"
       href="javascript:void(0)">Login</div>
     </div>)
   }
 }
 
-export default FaceBookIntegration
+const mapStateToProps = (state) => {
+  return {
+    fbName: state.fbGet.fbName,
+    fbId: state.fbGet.fbId,
+    fbGender: state.fbGet.fbGender,
+    fbLocale: state.fbGet.fbLocale,
+    fbEmail: state.fbGet.fbEmail,
+    fbPicture: state.fbGet.fbPicture
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    cachingFbData: (fbUserData) => {
+      dispatch(cachingFbData(fbUserData))
+    },
+    sendingFbData: (response) => {
+      dispatch(sendingFbData(response))
+    }
+  }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(FaceBookIntegration)

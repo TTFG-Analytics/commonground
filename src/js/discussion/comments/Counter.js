@@ -1,6 +1,7 @@
 import React from 'react'
 import { increaseUpvotesPost, increaseDownvotesPost } from '../actions/actions'
 import { connect } from 'react-redux'
+import {Button, IconButton} from 'react-toolbox/lib/button'
 
 class Counter extends React.Component {
   render() {
@@ -17,13 +18,13 @@ class Counter extends React.Component {
     return (
       <div>
         <p className="upvoteCount">Upvotes: {currentUpvote}</p>
-        <button onClick={() => {
+        <Button onClick={() => {
           this.props.increaseUpvotesPost({vote: '1', commentId: commentId})
-        }}>Upvote</button>
+        }} label='Upvote' raised primary/>
         <p className="downvoteCount">Downvotes: {currentDownvote}</p>
-        <button onClick={() => {
+        <Button onClick={() => {
           this.props.increaseDownvotesPost({vote: '0', commentId: commentId})
-        }}>Downvote</button>
+        }} label='Downvote' raised primary/>
       </div>
     )
   }

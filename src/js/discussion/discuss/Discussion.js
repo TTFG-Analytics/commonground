@@ -13,7 +13,6 @@ class Discussion extends React.Component{
   render(){
     console.log('this props discussion', this.props)
     var discussionId = this.props.discussionId;
-    //discussionId += 1;
     var inputStr = this.props.inputStr;
     return (
       <li>
@@ -24,7 +23,6 @@ class Discussion extends React.Component{
 }
 
 const mapDispatchToProps = (dispatch) => {
-  //return bindActionCreators(getCamps, dispatch)
   return {
     getCamps: (discussionId) => {
       dispatch(getCamps(discussionId))

@@ -1,41 +1,62 @@
-// singular camp component - just presentational
 import React from 'react'
+import io from 'socket.io-client'
 import CampList from './CampList'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments } from '../actions/actions'
+import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 
 class Camp extends React.Component{
   constructor(props){
     super(props)
     this.state = {
       showComments: false,
-      hasFetched: false
+      hasFetched: false,
+      ioNamespace: null
     }
   }
 
   fetchComments(campId) {
+    this.disconnectFromPrev();
     console.log('this fetchComments', this)
-    //if(!this.state.hasFetched){  //hasFetched: true
-      console.log('fetchComments campid', campId)
-      this.props.getComments(campId)
-      // this.setState({
-      //   showComments: true,
-      // })
-    //} else {
+    var context = this;
+    window.socket = io(`/${campId}`)
+    // var socket = io.connect(`http://localhost:4040/${campId}`)
+    console.log('-------SOCKETS FTW----', window.socket)
+    socket.on('cgConnection', (data)=> {
+      console.log('connected to commonground', data)
       this.setState({
-        showComments: !this.state.showComments
+        ioNamespace: data.namespace
       })
-    //}
+      console.log('^^^^^^^^^^^ socket nsp ^^^^^', this.state)
+    });
+    socket.on('comment', (data) => {
+      console.log('context props', context.props)
+      setTimeout(function(){
+        context.props.getComments(campId)
+      }, 1000)
+    })
+    this.props.getComments(campId)
+    this.setState({
+      showComments: !this.state.showComments
+    })
+  }
+
+  disconnectFromPrev() {
+    if(window.socket) {
+      console.log('starting disconnect')
+      window.socket.disconnect()
+      console.log('disconnected from sockets!!!!!')
+    }
   }
 
   render() {
     var campId = this.props.campId
     return (
-      <li>
-        <h3 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h3>
-        {this.state.showComments && <CommentParent campId={campId} />}
-      </li>
+      <Card style={{width: '100%'}}>
+      <CardTitle onClick={()=> this.fetchComments(campId)} title={this.props.inputStr} />
+        {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
+      </Card>
     )
   }
 }
