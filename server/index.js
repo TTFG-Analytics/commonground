@@ -134,7 +134,7 @@ app.post('/login', function(req,res) {
     RETURNING *
     `).then(function(data){
       //currentUser.id = data.rows[0].id
-      console.log('fb data from db', data)
+      //console.log('fb data from db', data)
       //console.log('fb user logged in', currentUser.id)
       res.status(200).send(data);
     });
@@ -171,8 +171,8 @@ app.post('/commonground', function(req, res){
         cgNsp.emit('cgConnection', {namespace: `/${cgNspName.name}`});
 
         socketClient.on('comment', (commentData) => {
-          console.log('~~~~~~~~~~ new comment has been made ~~~~~~~~~~~')
-          knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: commentData.comment, user_id: commentData.user_id, commonground_id: commentData.commongroundId })
+          console.log('~~~~~~~~~~ new comment has been made ~~~~~~~~~~~', commentData)
+          knex('comment').returning(['id', 'user_id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: commentData.comment, user_id: commentData.userId, commonground_id: commentData.commongroundId })
           .then(function(data){
             console.log('----- data comment res -------------------', data)
             commentResObj = {
@@ -209,7 +209,7 @@ app.post('/vote', function(req,res){
   // console.log(req.body);
   var commentId = req.body.commentId
   var vote = req.body.vote
-  knex('vote').returning('id').insert({input: req.body.vote, user_id: 16, comment_id: req.body.commentId })
+  knex('vote').returning('id').insert({input: req.body.vote, user_id: req.body.userId, comment_id: req.body.commentId })
   .then(function(data1){
     if (vote === '1') {
       knex('comment').returning(['id', 'upvotecounter', 'downvotecounter', 'commonground_id']).where({id: commentId}).increment('upvotecounter', 1)

@@ -263,6 +263,7 @@ export function sendingFbData(fbData) {
   }
 }
 
+//not sure why we need this
 export function sendingFbDataSuccess(fbUser) {
   console.log('****sendingFBData', fbUser)
   return {

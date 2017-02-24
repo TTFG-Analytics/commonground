@@ -18,7 +18,7 @@ class AddComment extends React.Component{
           let newComment = {
             comment: this.refs.comment.refs.wrappedInstance.inputNode.value,
             commongroundId: this.props.campId,
-            userId: this.props.fbId
+            userId: this.props.userId
           }
           if(window.socket){
             console.log('window socket', window, window.socket)
@@ -37,8 +37,9 @@ class AddComment extends React.Component{
 }
 
 const mapStateToProps = (state) => {
+  console.log('state user id', state.fbGet.userId)
   return {
-    fbId: state.fbGet.fbId
+    userId: state.fbGet.userId
   }
 }
 
@@ -53,6 +54,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-AddComment = connect(null, mapDispatchToProps)(AddComment)
+AddComment = connect(mapStateToProps, mapDispatchToProps)(AddComment)
 
 export default AddComment

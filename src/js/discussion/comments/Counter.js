@@ -9,6 +9,7 @@ class Counter extends React.Component {
     let currentUpvote = 0;
     let currentDownvote = 0;
     let commentId = this.props.commentId
+    let userId = this.props.userId
     this.props.comments.forEach(comment => {
       if(comment.id === commentId) {
         currentUpvote = comment.upvotecounter
@@ -19,11 +20,11 @@ class Counter extends React.Component {
       <div>
         <p className="upvoteCount">Upvotes: {currentUpvote}</p>
         <Button onClick={() => {
-          this.props.increaseUpvotesPost({vote: '1', commentId: commentId})
+          this.props.increaseUpvotesPost({vote: '1', commentId: commentId, userId: userId})
         }} label='Upvote' raised primary/>
         <p className="downvoteCount">Downvotes: {currentDownvote}</p>
         <Button onClick={() => {
-          this.props.increaseDownvotesPost({vote: '0', commentId: commentId})
+          this.props.increaseDownvotesPost({vote: '0', commentId: commentId, userId: userId})
         }} label='Downvote' raised primary/>
       </div>
     )
@@ -31,8 +32,10 @@ class Counter extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('state user id', state.fbGet.userId)
   return {
-    comments: state.commentGet.comments
+    comments: state.commentGet.comments,
+    userId: state.fbGet.userId
   }
 }
 
