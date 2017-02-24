@@ -1,26 +1,36 @@
-process.env.NODE_ENV = 'test';
+process.env.NODE_ENV = 'development';
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require ('../server/index');
-const knex = require('../db/knex')
+// const knex = require('../db/knex')
 const should = chai.should();
+const chalk = require('chalk')
 
 chai.use(chaiHttp)
 
-describe('Server API routes', () => {
+const knex = require('knex')({
+  client: 'postgresql',
+  connection: {
+    database: 'cg_db',
+    user:     'commonground',
+    password: 'commonground123'
+  }
+});
+
+describe(chalk.yellow('Server API routes'), () => {
 
   beforeEach((done) => {
-    console.log('----------------------------------')
     knex.migrate.rollback()
+    .catch((err) => console.error(err))
     .then(() => {
-      console.log('++++++++++++++++++++++++++++++++++')
       knex.migrate.latest()
       .catch((err) => console.error(err))
       .then(() => {
-        console.log('*********************************')
         return knex.seed.run()
+        .catch((err) => console.error(err))
         .then(() => {
+          console.log(chalk.blue('knex rolledback, remigrated, and reseeded'));
           done();
         });
       });
@@ -29,13 +39,14 @@ describe('Server API routes', () => {
 
   afterEach((done) => {
     knex.migrate.rollback()
+    .catch((err) => console.error(err))
     .then(() => {
       done();
     });
   });
 
   describe('GET all discussions', () => {
-    it('should list ALL discussions on /discussions GET', (done) => {
+    it(chalk.cyan('should list ALL discussions on /discussions GET'), (done) => {
       chai.request(server)
       .get('/discussions')
       .end((err,res) => {
@@ -52,13 +63,14 @@ describe('Server API routes', () => {
   });
 
   describe('GET /discussion/:discussionId', () => {
-    it('should return a SINGLE discussion', (done) => {
+    it(chalk.cyan('should return a SINGLE discussion'), (done) => {
       chai.request(server)
       .get('/discussion/2')
       .end((err, res) => {
         res.should.have.status(200);
         res.should.be.json;
-        res.body.should.be.a('array');
+        res.body.should.be.a('object');
+        // console.log(chalk.red.inverse(res.body))
         res.body.should.have.property('id');
         res.body.should.have.property('input');
         res.body.should.have.property('createdat');
@@ -69,7 +81,7 @@ describe('Server API routes', () => {
   });
 
   describe('GET /comments/<campId>', () => {
-    it('should return ALL commonground comments', (done) => {
+    it(chalk.cyan('should return ALL commonground comments'), (done) => {
       chai.request(server)
       .get('/discussion/2')
       .end((err, res) => {
@@ -91,7 +103,7 @@ describe('Server API routes', () => {
   });
 
   describe('POST /comment', () => {
-    it('should be inserting a comment into the db', (done) => {
+    it(chalk.cyan('should be inserting a comment into the db'), (done) => {
       chai.request(server)
       .post('/comment')
       .send({
@@ -111,7 +123,7 @@ describe('Server API routes', () => {
   });
 
   describe('POST /commonground', () => {  
-    it('should be inserting a commonground into the db on /commonground Post', (done) =>{      
+    it(chalk.cyan('should be inserting a commonground into the db'), (done) =>{      
       chai.request(server)
       .post('/commonground')
       .send({
@@ -137,7 +149,7 @@ describe('Server API routes', () => {
   })
 
   describe('POST /vote', () => {  
-    it('should be inserting a vote into the db', (done) => {
+    it(chalk.cyan('should be inserting a vote into the db'), (done) => {
       chai.request(server)
       .post('/vote')
       .send({
@@ -160,7 +172,7 @@ describe('Server API routes', () => {
   });
 
   describe('GET /profile', () => {
-    it('should be getting user profile data from the db', (done) => {
+    it(chalk.cyan('should be getting user profile data from the db'), (done) => {
       chai.request(server)
       .get('/profile')
       .end((err, res) => {
@@ -190,7 +202,7 @@ describe('Server API routes', () => {
   });
 
   describe('POST /profile', () => {
-    it('should be uploading user profile data to the db', (done) => {
+    it(chalk.cyan('should be uploading user profile data to the db'), (done) => {
       chai.request(server)
       .post('/profile')
       .send({
@@ -272,7 +284,7 @@ describe('Server API routes', () => {
   });
 
   describe('GET /voteanalytics/:commentId/:demographic', () => {  
-    it('should be pulling comment vote data from the db', (done) => {
+    it(chalk.cyan('should be pulling comment vote data from the db'), (done) => {
       chai.request(server)
       .get('/profile')
       .end((err,res) => {
@@ -291,7 +303,7 @@ describe('Server API routes', () => {
 
   
   describe('GET /../public/index.html', () => {
-    it('should redirict user on faulty route', (done) => {
+    it(chalk.cyan('should redirict user on faulty route'), (done) => {
       chai.request(server)
       .get('/haberdashery')
       .end((err, res) => {
