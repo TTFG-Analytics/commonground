@@ -2,27 +2,18 @@
 
 module.exports = {
 
-  test: {
-    client: 'postgresql',
-    connection: {
-      database: 'cg_db',
-      user:     'commonground',
-      password: 'commonground123'
-    },
-    migrations: {
-      directory: __dirname + '/migrations'
-    },
-    seeds: {
-      directory: __dirname + '/seeds/mockTestData'
-    }
-  },
-
   development: {
     client: 'postgresql',
     connection: {
       database: 'cg_db',
       user:     'commonground',
       password: 'commonground123'
+    } ,
+    migrations: {
+      directory: __dirname + '/migrations'
+    },
+    seeds: {
+      directory: __dirname + '/seeds/mockTestData'
     }
   },
 
