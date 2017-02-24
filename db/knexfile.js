@@ -10,10 +10,10 @@ module.exports = {
       password: 'commonground123'
     },
     migrations: {
-      tableName: 'knex_migrations'
+      directory: __dirname + '/migrations'
     },
     seeds: {
-      directory: __dirname + '/db/seeds/mockTestData'
+      directory: __dirname + '/seeds/mockTestData'
     }
   },
 
