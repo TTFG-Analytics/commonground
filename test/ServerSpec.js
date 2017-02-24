@@ -11,10 +11,14 @@ chai.use(chaiHttp)
 describe('Server API routes', () => {
 
   beforeEach((done) => {
+    console.log('----------------------------------')
     knex.migrate.rollback()
     .then(() => {
+      console.log('++++++++++++++++++++++++++++++++++')
       knex.migrate.latest()
+      .catch((err) => console.error(err))
       .then(() => {
+        console.log('*********************************')
         return knex.seed.run()
         .then(() => {
           done();
@@ -100,7 +104,7 @@ describe('Server API routes', () => {
       })
       .end((err,res) => {
         res.should.have.status(200);
-        res.body.should.be.a.('array');
+        res.body.should.be.a('array');
         done();
       })
     });
@@ -191,7 +195,7 @@ describe('Server API routes', () => {
       .post('/profile')
       .send({
         id: "50",
-        facebookid: "737373737373737373"
+        facebookid: "737373737373737373",
         fullname: "James Joyce",
         title: "General Ulysses of Authors",
         age: "135",
@@ -205,7 +209,7 @@ describe('Server API routes', () => {
         email: "jamesjoyce@aol.com",
         facebookpicture: "insert url here",
         locale: "IRL",
-        admin: "0",
+        admin: "0"
       })
       .end((err, res) => {
         res.should.have.status(200);
@@ -256,7 +260,7 @@ describe('Server API routes', () => {
       .end((err,res) => {
         res.should.have.status(200); 
         res.should.be.json;
-        res.should.body.should.be.a.('array')
+        res.should.body.should.be.a('array')
         // need
         // to
         // fill
@@ -292,7 +296,7 @@ describe('Server API routes', () => {
       .get('/haberdashery')
       .end((err, res) => {
         res.should.have.status(302);
-        res.('Location', '/home')
+        res.header['Location'].should.include('/')
         done()
       });
     });  
