@@ -6,6 +6,7 @@ var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http)
 app.use(bodyParser.json());
+const chalk = require('chalk')
 
 module.exports = app;
 
@@ -42,7 +43,7 @@ app.get('/discussions', (req, res) => {
   knex('discussion').select('*')
     .then((data) => {
       // console.log('discussions data', data)
-      res.send(data)
+      res.status(200).send(data)
     })
 })
 

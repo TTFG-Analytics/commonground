@@ -70,11 +70,12 @@ describe(chalk.yellow('Server API routes'), () => {
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('object');
-        // console.log(chalk.red.inverse(res.body))
-        res.body.should.have.property('id');
-        res.body.should.have.property('input');
-        res.body.should.have.property('createdat');
-        res.body.should.have.property('user_id');
+        res.body.data.should.be.a('array');
+        res.body.data[0].should.have.property('id');
+        res.body.data[0].should.have.property('input');
+        res.body.data[0].should.have.property('createdat');
+        res.body.data[0].should.have.property('user_id');
+        res.body.data[0].should.have.property('discussion_id');
         done();
       });
     });
@@ -83,93 +84,94 @@ describe(chalk.yellow('Server API routes'), () => {
   describe('GET /comments/<campId>', () => {
     it(chalk.cyan('should return ALL commonground comments'), (done) => {
       chai.request(server)
-      .get('/discussion/2')
+      .get('/comments/2')
       .end((err, res) => {
         res.should.have.status(200);
         res.should.be.json;
-        res.body[0].should.be.a('array');
-        res.body[0].should.have.property('id');
-        res.body[0].should.have.property('input');
-        res.body[0].should.have.property('createdat');
-        res.body[0].should.have.property('upvotecounter');
-        res.body[0].should.have.property('downvotecounter');
-        res.body[0].should.have.property('delta');
-        res.body[0].should.have.property('flag');
-        res.body[0].should.have.property('commonground_id');
-        res.body[0].should.have.property('user_id');
+        res.body.should.be.a('object')
+        res.body.data.should.be.a('array');
+        res.body.data[0].should.have.property('id');
+        res.body.data[0].should.have.property('input');
+        res.body.data[0].should.have.property('createdat');
+        res.body.data[0].should.have.property('upvotecounter');
+        res.body.data[0].should.have.property('downvotecounter');
+        res.body.data[0].should.have.property('delta');
+        res.body.data[0].should.have.property('flag');
+        res.body.data[0].should.have.property('commonground_id');
+        res.body.data[0].should.have.property('user_id');
         done();
       });
     });
   });
 
-  describe('POST /comment', () => {
-    it(chalk.cyan('should be inserting a comment into the db'), (done) => {
-      chai.request(server)
-      .post('/comment')
-      .send({
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum'
-      })
-      .end((err,res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('array');
-        done();
-      })
-    });
-  });
+  // describe('POST /comment', () => {
+  //   it(chalk.cyan('should be inserting a comment into the db'), (done) => {
+  //     chai.request(server)
+  //     .post('/comment')
+  //     .send({
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum'
+  //     })
+  //     .end((err,res) => {
+  //       res.should.have.status(200);
+  //       res.body.should.be.a('array');
+  //       done();
+  //     })
+  //   });
+  // });
 
-  describe('POST /commonground', () => {  
-    it(chalk.cyan('should be inserting a commonground into the db'), (done) =>{      
-      chai.request(server)
-      .post('/commonground')
-      .send({
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum'
-      })
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a('object');
-        res.body.should.have.property('Lorem')
-        res.body.should.have.property('Lorem')
-        res.body.should.have.property('Lorem')
-        res.body.should.have.property('Lorem')
-        res.body.should.have.property('Lorem')
-        done();
-      })
-    });
-  })
+  // describe('POST /commonground', () => {  
+  //   it(chalk.cyan('should be inserting a commonground into the db'), (done) =>{      
+  //     chai.request(server)
+  //     .post('/commonground')
+  //     .send({
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum'
+  //     })
+  //     .end((err, res) => {
+  //       res.should.have.status(200);
+  //       res.should.be.json;
+  //       res.body.should.be.a('object');
+  //       res.body.should.have.property('Lorem')
+  //       res.body.should.have.property('Lorem')
+  //       res.body.should.have.property('Lorem')
+  //       res.body.should.have.property('Lorem')
+  //       res.body.should.have.property('Lorem')
+  //       done();
+  //     })
+  //   });
+  // })
 
-  describe('POST /vote', () => {  
-    it(chalk.cyan('should be inserting a vote into the db'), (done) => {
-      chai.request(server)
-      .post('/vote')
-      .send({
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-        // lorem: 'ipsum',
-      })
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a('object')
-        res.body.should.have.property('id')
-        res.body.should.have.property('upvotecounter')
-        res.body.should.have.property('downvotecounter')
-        done();
-      })
-    });
-  });
+  // describe('POST /vote', () => {  
+  //   it(chalk.cyan('should be inserting a vote into the db'), (done) => {
+  //     chai.request(server)
+  //     .post('/vote')
+  //     .send({
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //       // lorem: 'ipsum',
+  //     })
+  //     .end((err, res) => {
+  //       res.should.have.status(200);
+  //       res.should.be.json;
+  //       res.body.should.be.a('object')
+  //       res.body.should.have.property('id')
+  //       res.body.should.have.property('upvotecounter')
+  //       res.body.should.have.property('downvotecounter')
+  //       done();
+  //     })
+  //   });
+  // });
 
   describe('GET /profile', () => {
     it(chalk.cyan('should be getting user profile data from the db'), (done) => {
@@ -177,8 +179,8 @@ describe(chalk.yellow('Server API routes'), () => {
       .get('/profile')
       .end((err, res) => {
         res.should.have.status(200);
-        res.should.be.json;
-        res.body.should.be.a('array');
+        res.should.be.JSON;
+        res.body.should.be.a('object');
         res.body.should.have.property('id');
         res.body.should.have.property('facebookid');
         res.body.should.have.property('fullname');
@@ -195,7 +197,7 @@ describe(chalk.yellow('Server API routes'), () => {
         res.body.should.have.property('facebookpicture');
         res.body.should.have.property('locale');
         res.body.should.have.property('admin');
-        res.body.should.have.property('timestamp');
+        res.body.should.have.property('createdat');
         done()
       });
     });  
@@ -224,6 +226,7 @@ describe(chalk.yellow('Server API routes'), () => {
         admin: "0"
       })
       .end((err, res) => {
+        console.log(chalk.magenta.inverse(JSON.stringify(res.body)))
         res.should.have.status(200);
         res.should.be.json;
         res.body.should.be.a('array');
@@ -265,53 +268,53 @@ describe(chalk.yellow('Server API routes'), () => {
     });  
   });
 
-  describe('GET /analytics/:campName/:demographic', () => {  
-    it('should be pulling campground data from the db', (done) => {
-      chai.request(server)
-      .get('/profile')
-      .end((err,res) => {
-        res.should.have.status(200); 
-        res.should.be.json;
-        res.should.body.should.be.a('array')
-        // need
-        // to
-        // fill
-        // in
-        // here
-        done();
-      });
-    });
-  });
+  // describe('GET /analytics/:campName/:demographic', () => {  
+  //   it('should be pulling campground data from the db', (done) => {
+  //     chai.request(server)
+  //     .get('/profile')
+  //     .end((err,res) => {
+  //       res.should.have.status(200); 
+  //       res.should.be.json;
+  //       res.should.body.should.be.a('array')
+  //       // need
+  //       // to
+  //       // fill
+  //       // in
+  //       // here
+  //       done();
+  //     });
+  //   });
+  // });
 
-  describe('GET /voteanalytics/:commentId/:demographic', () => {  
-    it(chalk.cyan('should be pulling comment vote data from the db'), (done) => {
-      chai.request(server)
-      .get('/profile')
-      .end((err,res) => {
-       res.should.have.status(200);
-       res.should.be.json;
-       res.should.body.should.be.a('array')
-        // need
-        // to
-        // fill
-        // in
-        // here
-        done(); 
-      })
-    });
-  });  
+  // describe('GET /voteanalytics/:commentId/:demographic', () => {  
+  //   it(chalk.cyan('should be pulling comment vote data from the db'), (done) => {
+  //     chai.request(server)
+  //     .get('/profile')
+  //     .end((err,res) => {
+  //      res.should.have.status(200);
+  //      res.should.be.json;
+  //      res.should.body.should.be.a('array')
+  //       // need
+  //       // to
+  //       // fill
+  //       // in
+  //       // here
+  //       done(); 
+  //     })
+  //   });
+  // });  
 
   
-  describe('GET /../public/index.html', () => {
-    it(chalk.cyan('should redirict user on faulty route'), (done) => {
-      chai.request(server)
-      .get('/haberdashery')
-      .end((err, res) => {
-        res.should.have.status(302);
-        res.header['Location'].should.include('/')
-        done()
-      });
-    });  
-  });
+  // describe('GET /../public/index.html', () => {
+  //   it(chalk.cyan('should redirict user on faulty route'), (done) => {
+  //     chai.request(server)
+  //     .get('/haberdashery')
+  //     .end((err, res) => {
+  //       res.should.have.status(302);
+  //       res.header['Location'].should.include('/')
+  //       done()
+  //     });
+  //   });  
+  // });
 
 })
