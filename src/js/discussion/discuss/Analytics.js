@@ -2,8 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import ReactHighcharts from 'react-highcharts'
-import Dropdown from 'react-toolbox/lib/dropdown'
-import {Button, IconButton} from 'react-toolbox/lib/button'
+// import Dropdown from 'react-toolbox/lib/dropdown'
+// import {Button, IconButton} from 'react-toolbox/lib/button'
+import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
+
 
 class Analytics extends React.Component{
   constructor(props){
@@ -18,21 +20,22 @@ class Analytics extends React.Component{
     }
   }
 
-  campChange(value){
+  campChange(e){
     this.setState({
-      camp: value
+      camp: e.target.value
     });
     console.log('camp change', this.state)
   }
 
-  demographicChange(value){
+  demographicChange(e){
     this.setState({
-      demographic: value
+      demographic: e.target.value
     });
     // console.log('demo change', this.state)
   }
 
   getData() {
+    console.log('THIS.STATE in getData()', this.state);
     axios.get(`/analytics/${this.state.camp}/${this.state.demographic}`)
       .then(function(response) {
         var people = response.data
@@ -40,7 +43,7 @@ class Analytics extends React.Component{
         var commentDataObj = {}
         var upvoteDataObj = {}
         var downvoteDataObj = {}
-        // console.log('people -----------', people)
+        console.log('people -----------', people)
         people.forEach(person => {
           if(!commentDataObj.hasOwnProperty(person[demographic]) && !person.hasOwnProperty('input')) {
             commentDataObj[person[demographic]] = 1;
@@ -194,11 +197,34 @@ class Analytics extends React.Component{
       }]
     }
 
+    var listCommonground = commongrounds.map((commonground) => {
+      return(
+          <option value={commonground.value}>{commonground.value}</option>
+        )
+    })
+
+    var listDemographics = demographics.map((demographic) => {
+      return(
+          <option value={demographic.value}>{demographic.value}</option>
+        )
+    })
+
     return (
       <div>
-      <Dropdown label='Select a CommonGround' ref="campSelect" onChange={(value)=> this.campChange(value)} source={commongrounds} value={this.state.camp} />
-      <Dropdown label='Select a Demographic Property' ref="demographicSelect" onChange={(value)=> this.demographicChange(value)} source={demographics} value={this.state.demographic} />
-      <Button onClick={() => this.getData()} label='Get Data' raised primary />
+      <FormGroup controlId="formControlsSelect">
+        <ControlLabel>Select a CommonGround</ControlLabel>
+        <FormControl onChange={this.campChange.bind(this)} componentClass="select" placeholder="select" ref="select">
+          {listCommonground}
+        </FormControl>
+      </FormGroup>
+      <FormGroup controlId="formControlsSelect">
+        <ControlLabel>Select Demographic Property</ControlLabel>
+        <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
+          {listDemographics}
+        </FormControl>
+      </FormGroup>
+      <Button onClick={() => this.getData()} type='submit' bsStyle="primary">Get Data</Button>
+
       {this.state.showChart && <ReactHighcharts config={config} />}
       </div>
     )

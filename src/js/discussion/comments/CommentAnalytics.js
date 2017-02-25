@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ReactHighcharts from 'react-highcharts'
-import Dropdown from 'react-toolbox/lib/dropdown'
+//import Dropdown from 'react-toolbox/lib/dropdown'
 // import {Button, IconButton} from 'react-toolbox/lib/button'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
@@ -260,7 +260,7 @@ class CommentAnalytics extends React.Component{
           {list}
         </FormControl>
       </FormGroup>
-      <Button onClick={() => this.getVoteData()} type='submit' bsStyle="primary">Submit</Button>
+      <Button onClick={() => this.getVoteData()} type='submit' bsStyle="primary">Get Data</Button>
 
       {this.state.showChart && <ReactHighcharts config={config} />}
       {this.state.showChart && <ReactHighcharts config={pieConfig} />}
