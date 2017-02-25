@@ -17,14 +17,16 @@ class CommentAnalytics extends React.Component{
     }
   }
 
-  demographicChange(value){
+  demographicChange(e){
+    console.log('e', e);
     this.setState({
-      demographic: value
+      demographic: e.target.value
     });
     // console.log('demo change', this.state)
   }
 
   getVoteData() {
+      console.log("THIS.STATE!!", this.state)
     // console.log('this state', this.state)
     // console.log('this props', this.props)
     axios.get(`/voteanalytics/${this.props.commentId}/${this.state.demographic}`)
@@ -254,11 +256,11 @@ class CommentAnalytics extends React.Component{
       <div>
       <FormGroup controlId="formControlsSelect">
         <ControlLabel>Select Demographic Property</ControlLabel>
-        <FormControl componentClass="select" placeholder="select">
+        <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
           {list}
         </FormControl>
       </FormGroup>
-
+      <Button onClick={() => this.getVoteData()} type='submit' bsStyle="primary">Submit</Button>
 
       {this.state.showChart && <ReactHighcharts config={config} />}
       {this.state.showChart && <ReactHighcharts config={pieConfig} />}
