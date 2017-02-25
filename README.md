@@ -14,6 +14,14 @@ Run knex seed file
 
 - knex seed:run --env development
 
+To Run Test
+
+-cd to db
+
+-mocha -R nyan ../test/*.js
+
+-Dont forget to rollback, remigrate, and reseed after testing!
+
 On Deployment
 
 -fix Facebook Integration redirect

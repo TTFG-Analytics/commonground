@@ -6,6 +6,7 @@ var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http)
 app.use(bodyParser.json());
+const chalk = require('chalk')
 
 module.exports = app;
 
@@ -42,7 +43,7 @@ app.get('/discussions', (req, res) => {
   knex('discussion').select('*')
     .then((data) => {
       // console.log('discussions data', data)
-      res.send(data)
+      res.status(200).send(data)
     })
 })
 
@@ -92,7 +93,7 @@ app.get('/analytics/:campName/:demographic', (req, res) => {
 })
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
-  console.log('req params', req.params)
+  // console.log(chalk.red.inverse('req params', req.params))
   knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
     .whereRaw(`vote.comment_id=('${req.params.commentId}')`)
     .then(data => {
@@ -138,7 +139,7 @@ app.post('/login', function(req,res) {
       //console.log('fb data from db', data)
       //console.log('fb user logged in', currentUser.id)
       res.status(200).send(data);
-    });
+    }).catch((err) => console.log(chalk.red.inverse(err)));
 })
 
 // profile route upserts data into database that user inputs in profile page.
@@ -158,7 +159,7 @@ app.post('/profile', function(req,res) {
   .then((data) => {
     console.log('updated profile data........',data[0]);
     res.send(data[0]);
-  })
+  }).catch((err) => console.log(chalk.red.inverse(err)));
 })
 
   // knex.raw(`

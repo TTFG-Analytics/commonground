@@ -4,7 +4,7 @@
   "description": "a web application that allows polling by social group",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./test/*.js",
     "start": "webpack && nodemon ./server/index.js"
   },
   "repository": {

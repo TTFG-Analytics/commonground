@@ -8,6 +8,12 @@ module.exports = {
       database: 'cg_db',
       user:     'commonground',
       password: 'commonground123'
+    } ,
+    migrations: {
+      directory: __dirname + '/migrations'
+    },
+    seeds: {
+      directory: __dirname + '/seeds'
     }
   },
 
