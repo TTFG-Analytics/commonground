@@ -3,9 +3,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getProfile, postProfile} from '../actions/profileActions';
 import Input from 'react-toolbox/lib/input';
-import Dropdown from 'react-toolbox/lib/dropdown';
-import {Button, IconButton} from 'react-toolbox/lib/button';
+// import Dropdown from 'react-toolbox/lib/dropdown';
+// import {Button, IconButton} from 'react-toolbox/lib/button';
 import FaceBookIntegration from '../../discussion/camps/FaceBookIntegration'
+import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
+
 
 class UserProfile extends React.Component{
   constructor(props){
@@ -52,32 +54,165 @@ class UserProfile extends React.Component{
     })
   }
 
+  handleChange(e) {
+    this.setState({ cgValue: e.target.value });
+  }
+
   render (){
+
+    const gender = [
+      {value: 0, label: 'Select'},
+      {value: 1, label: 'Male'},
+      {value: 2, label: 'Female'},
+      {value: 3, label: 'Other'},
+    ];
+
+    var genderList = gender.map((item) => {
+      return (
+        <option value={item.value}>{item.label}</option>
+      )
+    })
+
+    const race = [
+      {value: 0, label: 'Select'},
+      {value: 1, label: 'White Hispanic'},
+      {value: 2, label: 'White Non-Hispanic'},
+      {value: 3, label: 'Black or African American'},
+      {value: 4, label: 'American Indiana or Alaska Native'},
+      {value: 5, label: 'Asian'},
+      {value: 6, label: 'Native Hawaiian or Other Pacific Islander'},
+      {value: 7, label: 'Other'}
+    ];
+
+    var raceList = race.map((item) => {
+      return (
+        <option value={item.value}>{item.label}</option>
+      )
+    })
+
+    const politicalleaning = [
+      {value: 0, label: 'Select'},
+      {value: 1, label: 'Conservative'},
+      {value: 2, label: 'Authoritarian'},
+      {value: 3, label: 'Centrist'},
+      {value: 4, label: 'Libertarian'},
+      {value: 5, label: 'Progressive'}
+    ];
+
+     var politicalleaningList = politicalleaning.map((item) => {
+      return (
+        <option value={item.value}>{item.label}</option>
+      )
+    })
+
+    const industry = [
+      {value: 0, label: 'Select'},
+      {value: 1, label: 'Aerospace, defence & security'},
+      {value: 2, label: 'Asset & wealth management'},
+      {value: 3, label: 'Automotive'},
+      {value: 4, label: 'Banking & capital markets'},
+      {value: 5, label: 'Capital projects & infrastructure'},
+      {value: 6, label: 'Chemicals'},
+      {value: 7, label: 'Communications'},
+      {value: 8, label: 'Energy, utilities & mining'},
+      {value: 9, label: 'Engineering & construction'},
+      {value: 10, label: 'Entertainment & media'},
+      {value: 11, label: 'Financial services'},
+      {value: 12, label: 'Forest, paper & packaging'},
+      {value: 13, label: 'Government & public services'},
+      {value: 14, label: 'Healthcare'},
+      {value: 15, label: 'Hospitality & leisure'},
+      {value: 16, label: 'Industrial manufacturing'},
+      {value: 17, label: 'Insurance'},
+      {value: 18, label: 'Metals'},
+      {value: 19, label: 'Pharmaceuticals & life sciences'},
+      {value: 20, label: 'Private equity'},
+      {value: 21, label: 'Retail & consumer'},
+      {value: 22, label: 'Sovereign investment funds'},
+      {value: 23, label: 'Technology'},
+      {value: 24, label: 'Transportation & logistics'},
+      {value: 25, label: 'Other'}
+    ]
+
+    var industryList = industry.map((item) => {
+      return (
+        <option value={item.value}>{item.label}</option>
+      )
+    })
+
+    const religion = [
+      {value: 0, label: 'Select'},
+      {value: 1, label: 'Protestant'},
+      {value: 2, label: 'Catholic'},
+      {value: 3, label: 'Mormon'},
+      {value: 4, label: 'Other Christian'},
+      {value: 5, label: 'Judaism'},
+      {value: 6, label: 'Islam'},
+      {value: 7, label: 'Buddhism'},
+      {value: 8, label: 'Hinduism'},
+      {value: 9, label: 'Agnostic'},
+      {value: 10, label: 'Atheist'},
+      {value: 11, label: 'Other'},
+    ];
+
+    var religionList = religion.map((item) => {
+      return (
+        <option value={item.value}>{item.label}</option>
+      )
+    })
+
+    const income = [
+      {value: 0, label: 'Select'},
+      {value: 1, label: 'Under $35,000 / year'},
+      {value: 2, label: '$35,000 - $50,000'},
+      {value: 3, label: '$50,000 - $65,000'},
+      {value: 4, label: '$65,000 - $80,000'},
+      {value: 5, label: '$80,000 - $95,000'},
+      {value: 6, label: '$95,000 - $120,000'},
+      {value: 7, label: 'Over $120,000'},
+    ];
+
+     var incomeList = income.map((item) => {
+      return (
+        <option value={item.value}>{item.label}</option>
+      )
+    })
+
+
+
     console.log('--------render props ************', this.props)
     return (
-      <form onSubmit={(e) => this.handleSubmit(e)}>
-      <p>Name: </p>
-      <Input type='text'  ref='name' label={this.props.profile.fullname} />
-      <p>Title: </p>
-      <Input type='text' ref='title' label={this.props.profile.title} />
-      <p>Hometown: </p>
-      <Input type='text' ref='hometown' label={this.props.profile.hometown} />
-      <p>Gender: </p>
-      <Input type='text' ref='gender' label={this.props.profile.gender}  />
-      <p>Age: </p>
-      <Input type='text' ref='age' label={this.props.profile.age}  />
-      <p>Race: </p>
-      <Input type='text' ref='race' label={this.props.profile.race}  />
-      <p>Political Leaning: </p>
-      <Input type='text' ref='politicalleaning' label={this.props.profile.politicalleaning}  />
-      <p>Industry: </p>
-      <Input type='text' ref='industry' label={this.props.profile.industry}  />
-      <p>Religion: </p>
-      <Input type='text' ref='religion' label={this.props.profile.religion}  />
-      <p>Income: </p>
-      <Input type='text' ref='yearlyincome' label={this.props.profile.yearlyincome} />
 
-      <Button type='submit' label='Submit' raised primary/>
+
+      <form onSubmit={(e) => this.handleSubmit(e)}>
+        <FormGroup controlId="formControlsSelect">
+          <ControlLabel>Gender: </ControlLabel>
+          <FormControl componentClass="select" placeholder="select" ref="select">{genderList}</FormControl>
+
+          <FormGroup controlId="formBasicText">
+            <ControlLabel>Age:</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.discussionValue}
+              placeholder="Enter your age"
+              ref='age'
+            />
+            <FormControl.Feedback />
+          </FormGroup>
+          <ControlLabel>Race: </ControlLabel>
+          <FormControl componentClass="select" placeholder="select" ref="select">{raceList}</FormControl>
+          <ControlLabel>Political Leaning: </ControlLabel>
+          <FormControl componentClass="select" placeholder="select" ref="select">{politicalleaningList}</FormControl>
+          <ControlLabel>Industry: </ControlLabel>
+          <FormControl componentClass="select" placeholder="select" ref="select">{industryList}</FormControl>
+          <ControlLabel>Religion: </ControlLabel>
+          <FormControl componentClass="select" placeholder="select" ref="select">{religionList}</FormControl>
+          <ControlLabel>Income: </ControlLabel>
+          <FormControl componentClass="select" placeholder="select" ref="select">{incomeList}</FormControl>
+        </FormGroup>
+
+        <Button type='submit' bsStyle="primary">Submit</Button>
+
       </form>
     )
   }
@@ -171,83 +306,21 @@ export default connect(mapStateToProps, matchDispatchToProps)(UserProfile);
   //   // })
   // }
 
-  // const gender = [
-  //     {value: 'male', label: 'Male'},
-  //     {value: 'female', label: 'Female'}
-  //   ];
 
-  //   const politicalleaning = [
-  //     {value: 'pol-1', label: 'Conservative'},
-  //     {value: 'pol-2', label: 'Authoritarian'},
-  //     {value: 'pol-3', label: 'Centrist'},
-  //     {value: 'pol-4', label: 'Libertarian'},
-  //     {value: 'pol-5', label: 'Progressive'}
-  //     ];
-  //   const race = [
-  //     {value: 'race-1', label: 'White Hispanic'},
-  //     {value: 'race-2', label: 'White Non-Hispanic'},
-  //     {value: 'race-3', label: 'Black or African American'},
-  //     {value: 'race-4', label: 'American Indiana or Alaska Native'},
-  //     {value: 'race-5', label: 'Asian'},
-  //     {value: 'race-6', label: 'Native Hawaiian or Other Pacific Islander'},
-  //     {value: 'race-7', label: 'Other'}
-  //     ];
 
-  //   const industry = [
-  //     {value: 'industry-1', label: 'Aerospace, defence & security'},
-  //     {value: 'industry-2', label: 'Asset & wealth management'},
-  //     {value: 'industry-3', label: 'Automotive'},
-  //     {value: 'industry-4', label: 'Banking & capital markets'},
-  //     {value: 'industry-5', label: 'Capital projects & infrastructure'},
-  //     {value: 'industry-6', label: 'Chemicals'},
-  //     {value: 'industry-7', label: 'Communications'},
-  //     {value: 'industry-8', label: 'Energy, utilities & mining'},
-  //     {value: 'industry-9', label: 'Engineering & construction'},
-  //     {value: 'industry-10', label: 'Entertainment & media'},
-  //     {value: 'industry-11', label: 'Financial services'},
-  //     {value: 'industry-12', label: 'Forest, paper & packaging'},
-  //     {value: 'industry-13', label: 'Government & public services'},
-  //     {value: 'industry-14', label: 'Healthcare'},
-  //     {value: 'industry-15', label: 'Hospitality & leisure'},
-  //     {value: 'industry-16', label: 'Industrial manufacturing'},
-  //     {value: 'industry-17', label: 'Insurance'},
-    //   {value: 'industry-18', label: 'Metals'},
-    //   {value: 'industry-19', label: 'Pharmaceuticals & life sciences'},
-    //   {value: 'industry-20', label: 'Private equity'},
-    //   {value: 'industry-21', label: 'Retail & consumer'},
-    //   {value: 'industry-22', label: 'Sovereign investment funds'},
-    //   {value: 'industry-23', label: 'Technology'},
-    //   {value: 'industry-24', label: 'Transportation & logistics'},
-    //   {value: 'industry-25', label: 'Other'}]
 
-    // const religion = [
-    //   {value: 'religon-1', label: 'Protestant'},
-    //   {value: 'religon-2', label: 'Catholic'},
-    //   {value: 'religon-3', label: 'Mormon'},
-    //   {value: 'religon-4', label: 'Other Christian'},
-    //   {value: 'religon-5', label: 'Judaism'},
-    //   {value: 'religon-6', label: 'Islam'},
-    //   {value: 'religon-7', label: 'Buddhism'},
-    //   {value: 'religon-8', label: 'Hinduism'},
-    //   {value: 'religon-9', label: 'Agnostic'},
-    //   {value: 'religon-10', label: 'Atheist'},
-    //   {value: 'religon-11', label: 'Other'},
-    //   ];
 
-    // const income = [
-    //   {value: 'income-1', label: 'Under $35,000 / year'},
-    //   {value: 'income-2', label: '$35,000 - $50,000'},
-    //   {value: 'income-3', label: '$50,000 - $65,000'},
-    //   {value: 'income-4', label: '$65,000 - $80,000'},
-    //   {value: 'income-5', label: '$80,000 - $95,000'},
-    //   {value: 'income-6', label: '$95,000 - $120,000'},
-    //   {value: 'income-7', label: 'Over $120,000'},
-    //   ];
+
+
+
+
+
+
 
         // console.log('=======================props=====================', this.props)
 
     // console.log('this.state', this.state);
-    
+
 
     //   console.log('profile reducer ........', this.props.profile)
     //   this.state.name = this.state.name || this.props.profile.name;
@@ -255,3 +328,26 @@ export default connect(mapStateToProps, matchDispatchToProps)(UserProfile);
     //   console.log('djsakdjask', this.state);
     //   console.log('propsssss', this.props)
     //   var x = this.state.name
+
+
+    // old react toolbox code
+    //       <p>Name: </p>
+    //     <Input type='text'  ref='name' label={this.props.profile.fullname} />
+    //     <p>Title: </p>
+    //     <Input type='text' ref='title' label={this.props.profile.title} />
+    //     <p>Hometown: </p>
+    //     <Input type='text' ref='hometown' label={this.props.profile.hometown} />
+    //     <p>Gender: </p>
+    //     <Input type='text' ref='gender' label={this.props.profile.gender}  />
+    //     <p>Age: </p>
+    //     <Input type='text' ref='age' label={this.props.profile.age}  />
+    //     <p>Race: </p>
+    //     <Input type='text' ref='race' label={this.props.profile.race}  />
+    //     <p>Political Leaning: </p>
+    //     <Input type='text' ref='politicalleaning' label={this.props.profile.politicalleaning}  />
+    //     <p>Industry: </p>
+    //     <Input type='text' ref='industry' label={this.props.profile.industry}  />
+    //     <p>Religion: </p>
+    //     <Input type='text' ref='religion' label={this.props.profile.religion}  />
+    //     <p>Income: </p>
+    //     <Input type='text' ref='yearlyincome' label={this.props.profile.yearlyincome} />
