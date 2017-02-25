@@ -93,7 +93,7 @@ app.get('/analytics/:campName/:demographic', (req, res) => {
 })
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
-  console.log('req params', req.params)
+  // console.log(chalk.red.inverse('req params', req.params))
   knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
     .whereRaw(`vote.comment_id=('${req.params.commentId}')`)
     .then(data => {
@@ -139,12 +139,13 @@ app.post('/login', function(req,res) {
       //console.log('fb data from db', data)
       //console.log('fb user logged in', currentUser.id)
       res.status(200).send(data);
-    });
+    }).catch((err) => console.log(chalk.red.inverse(err)));
 })
 
 // profile route upserts data into database that user inputs in profile page.
 // may need updating once profile page is built
 app.post('/profile', function(req,res) {
+<<<<<<< HEAD
   console.log('profile REQ.BODY', req.body);
   knex('users').returning('*').where('id', req.body.id).update({
     title: `${req.body.title}`,
@@ -160,6 +161,16 @@ app.post('/profile', function(req,res) {
     console.log('updated profile data........',data[0]);
     res.send(data[0]);
   })
+=======
+  console.log('REQ.BODY', req.body);
+  knex.raw(`
+    UPDATE users
+    SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}', '${req.body.politicalleaning}', '${req.body.religion}')
+    `).then(function(data){
+      // console.log(data);
+    }).catch((err) => console.log(chalk.red.inverse(err)));
+    res.status(200).send();
+>>>>>>> testing works for get, due to our changing nature of post request they have been commented out
 })
 
   // knex.raw(`
