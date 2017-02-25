@@ -19,7 +19,7 @@ class FaceBookIntegration extends React.Component{
       FB.Event.subscribe('auth.statusChange', function(response) {
         if (response.authResponse) {
           console.log('Welcome!  Fetching your information.... ');
-          FB.api('/me', 'GET', {fields: 'name, id, gender, locale, age_range, email, picture.width(150).height(150)'}, function(response) {
+          FB.api('/me', 'GET', {fields: 'name, id, gender, locale, age_range, email, picture'}, function(response) {
             console.log('Good to see you, ' + response.name + '.');
             console.log('Response', response);
             console.log('Response.email', response.email)

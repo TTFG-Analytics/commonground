@@ -6,9 +6,12 @@ import { getDiscussions } from '../actions/actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-import ProfileButton from '../camps/ProfileButton'
-import { AppBar } from 'react-toolbox/lib/app_bar'
+//import ProfileButton from '../camps/ProfileButton'
+//import { AppBar } from 'react-toolbox/lib/app_bar'
 import { Link } from 'react-router'
+import Navigation from '../../navbar/navbar'
+
+
 
 DiscussionList.need = [
   getDiscussions
@@ -19,10 +22,7 @@ class App extends React.Component{
   render(){
     return (
     <div>
-      <AppBar>
-        <ProfileButton />
-        <Link to={`/home`}><h4>Home</h4></Link>
-      </AppBar>
+      <Navigation />
       <AddDiscussion />
       <DiscussionList />
     </div>
