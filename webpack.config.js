@@ -13,7 +13,8 @@ module.exports = {
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/, query: {presets:['es2015', 'react']} },
       { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/, query: {presets:['es2015', 'react']} },
       { test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
-      {test: /\.css$/, use: [
+      //{ test: /\.css/, loaders: ['style-loader', 'css-loader'], include: __dirname + '/src/js/discussion/discuss/styles.css' },
+      { test: /\.css$/, use: [
           "style-loader",
           {
             loader: "css-loader",
@@ -26,6 +27,8 @@ module.exports = {
           },
           "postcss-loader" // has separate config, see postcss.config.js nearby
       ]}
+
+
       // { test: /\.scss$/, include: [
       //     /node_modules\/react-toolbox/,
       //   ],

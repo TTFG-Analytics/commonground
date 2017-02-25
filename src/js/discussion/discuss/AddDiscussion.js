@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { createDiscussionPost, createDiscussionSuccess } from '../actions/actions'
 import Input from 'react-toolbox/lib/input'
@@ -6,6 +7,7 @@ import Input from 'react-toolbox/lib/input'
 import io from 'socket.io-client'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 import Navigation from '../../navbar/navbar'
+
 // import styles from "../../../styles.css"
 //import 'bootstrap';
 //import 'bootstrap/dist/css/bootstrap.css';
@@ -60,7 +62,7 @@ class AddDiscussion extends React.Component{
       name: "Greg Bacus",
       input: "Hello, my name is Greg and I am posting the greatest comment of all time. This comment should be upvoted into the stratosphere. Thanks for your support.",
       createdAt: new Date(),
-      delta: 101
+      delta: -102
     }
 
     var upStyle = {
@@ -82,11 +84,25 @@ class AddDiscussion extends React.Component{
       align: 'left'
     }
 
+    var timeStyle = {
+      float: 'right',
+      fontSize: '14px'
+    }
+
+    var deltaStyle;
+
+    if(dummyComment.delta > 0) {
+      deltaStyle = {float: 'right', color:'green', fontSize: '16px'}
+    } else {
+      deltaStyle = {float: 'right', color:'red', fontSize: '16px'}
+    }
+
     return (
       <div>
         <form onSubmit={e => {
           e.preventDefault()
           let newDiscussion = {topic: this.state.discussionValue}
+
           if(window.discussionSocket){
             console.log('window discussionSocket', window, window.discussionSocket)
             console.log('New Discussion', newDiscussion);
@@ -95,6 +111,7 @@ class AddDiscussion extends React.Component{
           // this.props.createDiscussionSuccess(newDiscussion)
           this.refs.discussion.value = '';
         }}>
+
 
           <FormGroup controlId="formBasicText">
             <ControlLabel>Create a New Discussion</ControlLabel>
@@ -109,6 +126,7 @@ class AddDiscussion extends React.Component{
             <HelpBlock>Character limit: </HelpBlock>
           </FormGroup>
           <Button type='submit' bsStyle="primary">Submit</Button>
+
         </form>
 
         <br></br>
@@ -124,9 +142,9 @@ class AddDiscussion extends React.Component{
                       <img width={64} height={64} src={dummyComment.facebook} alt="Image"/>
                     </Media.Left>
                     <Media.Body>
-                      <Media.Heading>{dummyComment.name}</Media.Heading>
+                      <Media.Heading>{dummyComment.name}<span style={deltaStyle} >{dummyComment.delta}</span></Media.Heading>
                       <p>{dummyComment.input}</p>
-                      <p> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString()}</em></p>
+                      <p style={timeStyle}> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
                     </Media.Body>
                     <Media>
                       <span className="glyphicon glyphicon-menu-up" aria-hidden="true" style={upStyle}></span>
@@ -144,7 +162,7 @@ class AddDiscussion extends React.Component{
                     </Media.Left>
                     <Media.Body>
                       <Media.Heading>{dummyComment.name}</Media.Heading>
-                      <p>{dummyComment.input + ' - '}<em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString()}</em></p>
+                      <p>{dummyComment.input + ' - '}<em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
                     </Media.Body>
                   </Media>
                 </div>
@@ -172,7 +190,3 @@ AddDiscussion = connect(null, mapDispatchToProps)(AddDiscussion)
 export default AddDiscussion
 
 
-// Old React Toolbox code
-
-// <Input ref='discussion' type='text' label='Discussion' />
-// <Button type='submit' label='Create Discussion' raised primary/>
