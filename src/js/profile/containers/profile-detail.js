@@ -13,7 +13,6 @@ class UserProfile extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      name: null,
       gender: null
     }
   }
@@ -41,21 +40,26 @@ class UserProfile extends React.Component{
     console.log('this', this)
     var thisObj = this
     console.log('thisObj', thisObj)
-    this.props.postProfile({
-      id: thisObj.props.profile.id,
-      title: thisObj.refs.title.refs.wrappedInstance.inputNode.value,
-      age: thisObj.refs.age.refs.wrappedInstance.inputNode.value,
-      hometown: thisObj.refs.hometown.refs.wrappedInstance.inputNode.value,
-      race: thisObj.refs.race.refs.wrappedInstance.inputNode.value,
-      industry: thisObj.refs.industry.refs.wrappedInstance.inputNode.value,
-      politicalleaning: thisObj.refs.politicalleaning.refs.wrappedInstance.inputNode.value,
-      religion: thisObj.refs.religion.refs.wrappedInstance.inputNode.value,
-      yearlyincome: thisObj.refs.yearlyincome.refs.wrappedInstance.inputNode.value
-    })
+    // this.props.postProfile({
+      // id: thisObj.props.profile.id,
+      // title: thisObj.refs.title.refs.wrappedInstance.inputNode.value,
+      // age: thisObj.refs.age.refs.wrappedInstance.inputNode.value,
+      // hometown: thisObj.refs.hometown.refs.wrappedInstance.inputNode.value,
+      // race: thisObj.refs.race.refs.wrappedInstance.inputNode.value,
+      // industry: thisObj.refs.industry.refs.wrappedInstance.inputNode.value,
+      // politicalleaning: thisObj.refs.politicalleaning.refs.wrappedInstance.inputNode.value,
+      // religion: thisObj.refs.religion.refs.wrappedInstance.inputNode.value,
+      // yearlyincome: thisObj.refs.yearlyincome.refs.wrappedInstance.inputNode.value
+    // })
   }
 
-  handleChange(e) {
-    this.setState({ cgValue: e.target.value });
+
+  handleChange(propertyName, event) {
+    const profile = this.state;
+    profile[propertyName] = event.target.value;
+    console.log('profile', profile);
+    this.setState({[propertyName]: profile[propertyName]});
+    console.log(this.state);
   }
 
   render (){
@@ -187,9 +191,9 @@ class UserProfile extends React.Component{
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup controlId="formControlsSelect">
           <ControlLabel>Gender: </ControlLabel>
-          <FormControl componentClass="select" placeholder="select" ref="select">{genderList}</FormControl>
+          <FormControl onChange={this.handleChange.bind(this, 'gender')} componentClass="select" placeholder="select" ref="select">{genderList}</FormControl>
 
-          <FormGroup controlId="formBasicText">
+          <FormGroup onChange={this.handleChange.bind(this, 'age')} controlId="formBasicText">
             <ControlLabel>Age:</ControlLabel>
             <FormControl
               type="text"
@@ -200,15 +204,15 @@ class UserProfile extends React.Component{
             <FormControl.Feedback />
           </FormGroup>
           <ControlLabel>Race: </ControlLabel>
-          <FormControl componentClass="select" placeholder="select" ref="select">{raceList}</FormControl>
+          <FormControl onChange={this.handleChange.bind(this, 'race')} componentClass="select" placeholder="select" ref="select">{raceList}</FormControl>
           <ControlLabel>Political Leaning: </ControlLabel>
-          <FormControl componentClass="select" placeholder="select" ref="select">{politicalleaningList}</FormControl>
+          <FormControl onChange={this.handleChange.bind(this, 'politicalleaning')} componentClass="select" placeholder="select" ref="select">{politicalleaningList}</FormControl>
           <ControlLabel>Industry: </ControlLabel>
-          <FormControl componentClass="select" placeholder="select" ref="select">{industryList}</FormControl>
+          <FormControl onChange={this.handleChange.bind(this, 'industry')} componentClass="select" placeholder="select" ref="select">{industryList}</FormControl>
           <ControlLabel>Religion: </ControlLabel>
-          <FormControl componentClass="select" placeholder="select" ref="select">{religionList}</FormControl>
+          <FormControl onChange={this.handleChange.bind(this, 'religion')} componentClass="select" placeholder="select" ref="select">{religionList}</FormControl>
           <ControlLabel>Income: </ControlLabel>
-          <FormControl componentClass="select" placeholder="select" ref="select">{incomeList}</FormControl>
+          <FormControl onChange={this.handleChange.bind(this, 'income')} componentClass="select" placeholder="select" ref="select">{incomeList}</FormControl>
         </FormGroup>
 
         <Button type='submit' bsStyle="primary">Submit</Button>
