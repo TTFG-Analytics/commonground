@@ -246,7 +246,15 @@ export const cachingFbData = (fbUser) => {
     fbGender: fbUser.gender,
     fbLocale: fbUser.locale,
     fbEmail: fbUser.email,
-    fbPicture: fbUser.facebookpicture
+    fbPicture: fbUser.facebookpicture,
+    title: fbUser.title,
+    age: fbUser.age,
+    hometown: fbUser.hometown,
+    race: fbUser.race,
+    industry: fbUser.industry,
+    politicalleaning: fbUser.politicalleaning,
+    religion: fbUser.religion,
+    yearlyincome: fbUser.yearlyincome
   }
 }
 

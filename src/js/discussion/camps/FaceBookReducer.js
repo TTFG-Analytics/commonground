@@ -4,15 +4,7 @@ const fbGet = (state={}, action) => {
     return Object.assign(
       {},
       state,
-      {
-        userId: action.userId,
-        fbName: action.fbName,
-        fbId: action.fbId,
-        fbGender: action.fbGender,
-        fbLocale: action.fbLocale,
-        fbEmail: action.fbEmail,
-        fbPicture: action.fbPicture
-      }
+      action.payload
     )
   }
   
@@ -21,4 +13,21 @@ const fbGet = (state={}, action) => {
 
 export default fbGet
 
-//used for getting all commongrounds and comments for a discussion. Those are all accessible in state.campGet
+// //used for getting all commongrounds and comments for a discussion. Those are all accessible in state.campGet
+// {
+//         userId: action.userId,
+//         fbName: action.fbName,
+//         fbId: action.fbId,
+//         fbGender: action.fbGender,
+//         fbLocale: action.fbLocale,
+//         fbEmail: action.fbEmail,
+//         fbPicture: action.fbPicture,
+//         title: action.title,
+//         age: action.age,
+//         hometown: action.hometown,
+//         race: action.race,
+//         industry: action.industry,
+//         politicalleaning: action.politicalleaning,
+//         religion: action.religion,
+//         yearlyincome: action.yearlyincome
+//       }

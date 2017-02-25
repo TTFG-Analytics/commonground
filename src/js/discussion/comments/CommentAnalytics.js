@@ -160,8 +160,8 @@ class CommentAnalytics extends React.Component{
         data: this.state.downvoters
       }]
     }
-    console.log('this state upvotes', this.state.upvoters)
-    console.log('this state downvotes', this.state.downvoters)
+    // console.log('this state upvotes', this.state.upvoters)
+    // console.log('this state downvotes', this.state.downvoters)
     var upvotePieData = [];
     if(this.state.upvoters){
       this.state.upvoters.forEach(upvoter => {
@@ -169,9 +169,9 @@ class CommentAnalytics extends React.Component{
         let name = ''
         if(this.state.demographic === 'age'){
           let upvoterCategory = upvoter[0]
-          console.log('upvoter category', upvoterCategory)
+          //console.log('upvoter category', upvoterCategory)
           name = upvoterCategory
-          console.log('name', name);
+          //console.log('name', name);
         } else {
           name = categories[upvoter[0]]
         }
@@ -184,7 +184,7 @@ class CommentAnalytics extends React.Component{
         upvotePieData.push(pieTuple)
       })
     }
-    console.log('upvotePieData', upvotePieData)
+    // console.log('upvotePieData', upvotePieData)
 
     var downvotePieData = [];
     if(this.state.downvoters){
@@ -193,9 +193,9 @@ class CommentAnalytics extends React.Component{
         let name = ''
         if(this.state.demographic === 'age'){
           let downvoterCategory = downvoter[0]
-          console.log('upvoter category', downvoterCategory)
+          // console.log('upvoter category', downvoterCategory)
           name = downvoterCategory
-          console.log('name', name);
+          // console.log('name', name);
         } else {
           name = categories[downvoter[0]]
         }

@@ -114,11 +114,12 @@ app.get('/comments/:campId', function(req, res) {
     })
 })
 
-app.get('/profile', function(req, res) {
+app.get('/profile/:fbId', function(req, res) {
+  console.log('req params fbid', req.params)
   knex('users').select('*')
-  .where({id: 16})
+  .where({facebookid: req.params.fbId})
     .then(function(data) {
-      // console.log('datatatatata', data)
+      console.log('datatatatata', data)
       res.send(data[0]);
     })
 })
@@ -143,14 +144,14 @@ app.post('/login', function(req,res) {
 // profile route upserts data into database that user inputs in profile page.
 // may need updating once profile page is built
 app.post('/profile', function(req,res) {
-  console.log('REQ.BODY', req.body);
+  console.log('profile REQ.BODY', req.body);
   knex.raw(`
     UPDATE users
     SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}', '${req.body.politicalleaning}', '${req.body.religion}')
     `).then(function(data){
-      // console.log(data);
+      console.log(data);
+      res.status(200).send(data);
     });
-    res.status(200).send();
 })
 
 
