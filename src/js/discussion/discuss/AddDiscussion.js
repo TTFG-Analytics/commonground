@@ -19,6 +19,15 @@ class AddDiscussion extends React.Component{
     })
   }
 
+  componentWillUnmount() {
+    console.log('started unmounting')
+    if(window.discussionSocket) {
+      console.log('unmounting window discussionSocket', window.discussionSocket)
+      window.discussionSocket.disconnect()
+      console.log('unmounted window discussionSocket', window.discussionSocket)
+    }
+  }
+
   render() {
     return (
       <div>

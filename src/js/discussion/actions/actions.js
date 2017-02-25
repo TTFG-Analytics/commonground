@@ -237,15 +237,24 @@ export function increaseDownvotesPost(downvote) {
 }
 
 export const cachingFbData = (fbUser) => {
-  // console.log('cachingFBData', fbUser)
+  console.log('cachingFBData', fbUser)
   return {
     type: 'GET_FBDATA_SUCCESS',
-    fbName: fbUser.name,
-    fbId: fbUser.id,
-    fbGender: fbUser.gender,
-    fbLocale: fbUser.locale,
-    fbEmail: fbUser.email,
-    fbPicture: fbUser.picture
+    id: fbUser.id,
+    fullname: fbUser.fullname,
+    facebookid: fbUser.facebookid,
+    gender: fbUser.gender,
+    gocale: fbUser.locale,
+    email: fbUser.email,
+    facebookpicture: fbUser.facebookpicture,
+    title: fbUser.title,
+    age: fbUser.age,
+    hometown: fbUser.hometown,
+    race: fbUser.race,
+    industry: fbUser.industry,
+    politicalleaning: fbUser.politicalleaning,
+    religion: fbUser.religion,
+    yearlyincome: fbUser.yearlyincome
   }
 }
 
@@ -255,22 +264,25 @@ export function sendingFbData(fbData) {
   return (dispatch) => {
     return axios.post('/login', fbData)
       .then(response => {
-        console.log('POSTING SUCCESS:', response)
-        dispatch(sendingFbDataSuccess(response))
+        console.log('POSTING SUCCESS>>>>>>>>>:', response.data.rows[0])
+        // dispatch(sendingFbDataSuccess(response.data.rows[0]))
+        dispatch(cachingFbData(response.data.rows[0]))
       })
   }
 }
 
+//not sure why we need this
 export function sendingFbDataSuccess(fbUser) {
-  // console.log('cachingFBData', fbUser)
+  console.log('****sendingFBData', fbUser)
   return {
-    type: 'GET_FBDATA_SUCCESS',
-    fbName: fbUser.name,
-    fbId: fbUser.id,
+    type: 'GET_FBDATA',
+    userId: fbUser.id,
+    fbName: fbUser.fullname,
+    fbId: fbUser.facebookid,
     fbGender: fbUser.gender,
     fbLocale: fbUser.locale,
     fbEmail: fbUser.email,
-    fbPicture: fbUser.picture
+    fbPicture: fbUser.facebookpicture
   }
 }
 

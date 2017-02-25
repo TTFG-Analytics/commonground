@@ -85,18 +85,18 @@ app.get('/analytics/:campName/:demographic', (req, res) => {
         .whereRaw(`commonground.input=('${req.params.campName}')`)
         .then(data2 => {
           var ans = data2.concat(data)
-          // console.log('responseArr analytics array ---------------', ans)
+          console.log('responseArr analytics array ---------------', ans)
           res.send(ans)
         })
     })
 })
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
-  // console.log('req params', req.params)
+  console.log('req params', req.params)
   knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
     .whereRaw(`vote.comment_id=('${req.params.commentId}')`)
     .then(data => {
-      // console.log('comment vote analytics', data)
+      console.log('comment vote analytics', data)
       res.send(data)
     })
 })
@@ -114,11 +114,12 @@ app.get('/comments/:campId', function(req, res) {
     })
 })
 
-app.get('/profile', function(req, res) {
+app.get('/profile/:fbId', function(req, res) {
+  console.log('req params fbid', req.params)
   knex('users').select('*')
-  .where({id: 18})
+  .where({facebookid: req.params.fbId})
     .then(function(data) {
-      // console.log('datatatatata', data)
+      console.log('datatatatata', data)
       res.send(data[0]);
     })
 })
@@ -131,26 +132,41 @@ app.post('/login', function(req,res) {
     VALUES ('${req.body.name}', '${req.body.id}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
     ON CONFLICT (facebookid) DO UPDATE
     SET (fullname, gender, email, facebookpicture, locale) = ('${req.body.name}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
-    RETURNING id
+    RETURNING *
     `).then(function(data){
-      currentUser.id = data.rows[0].id
+      //currentUser.id = data.rows[0].id
+      //console.log('fb data from db', data)
+      //console.log('fb user logged in', currentUser.id)
+      res.status(200).send(data);
     });
-    res.status(200).send();
 })
 
 // profile route upserts data into database that user inputs in profile page.
 // may need updating once profile page is built
 app.post('/profile', function(req,res) {
-  console.log('REQ.BODY', req.body);
-  knex.raw(`
-    UPDATE users
-    SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}', '${req.body.politicalleaning}', '${req.body.religion}')
-    `).then(function(data){
-      // console.log(data);
-    });
-    res.status(200).send();
+  console.log('profile REQ.BODY', req.body);
+  knex('users').returning('*').where('id', req.body.id).update({
+    title: `${req.body.title}`,
+    age: `${req.body.age}`,
+    hometown: `${req.body.hometown}`,
+    race: `${req.body.race}`,
+    industry: `${req.body.industry}`,
+    politicalleaning: `${req.body.politicalleaning}`,
+    religion: `${req.body.religion}`,
+    yearlyincome: `${req.body.yearlyincome}`
+  })
+  .then((data) => {
+    console.log('updated profile data........',data[0]);
+    res.send(data[0]);
+  })
 })
 
+  // knex.raw(`
+  //   UPDATE users WHERE id=('${req.body.id}')
+  //   SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = 
+  //('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}',
+  // '${req.body.politicalleaning}', '${req.body.religion}', '${req.body.yearlyincome}')
+  //   `).then(function(data){
 
 app.post('/commonground', function(req, res){
   // console.log('req body commonground', req.body)
@@ -166,11 +182,12 @@ app.post('/commonground', function(req, res){
       cgNsp.on('connection', (socketClient) => {
         console.log('connected to commonground')
         console.log('============================================')
+        console.log('object keys nsps........', Object.keys(io.nsps))
         cgNsp.emit('cgConnection', {namespace: `/${cgNspName.name}`});
 
         socketClient.on('comment', (commentData) => {
-          console.log('~~~~~~~~~~ new comment has been made ~~~~~~~~~~~')
-          knex('comment').returning(['id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: commentData.comment, user_id: 16, commonground_id: commentData.commongroundId })
+          console.log('~~~~~~~~~~ new comment has been made ~~~~~~~~~~~', commentData)
+          knex('comment').returning(['id', 'user_id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: commentData.comment, user_id: commentData.userId, commonground_id: commentData.commongroundId })
           .then(function(data){
             console.log('----- data comment res -------------------', data)
             commentResObj = {
@@ -179,7 +196,8 @@ app.post('/commonground', function(req, res){
               commonground_id: data[0].commonground_id,
               upvotecounter: data[0].upvotecounter,
               downvotecounter: data[0].downvotecounter,
-              delta: data[0].delta
+              delta: data[0].delta,
+              user_id: data[0].user_id
             }
             // knex('users_join').insert({user_id: 16, commonground_id: data[0].commonground_id, comment_id:data[0].id}).then(function(){});
             // })
@@ -206,7 +224,7 @@ app.post('/vote', function(req,res){
   // console.log(req.body);
   var commentId = req.body.commentId
   var vote = req.body.vote
-  knex('vote').returning('id').insert({input: req.body.vote, user_id: 16, comment_id: req.body.commentId })
+  knex('vote').returning('id').insert({input: req.body.vote, user_id: req.body.userId, comment_id: req.body.commentId })
   .then(function(data1){
     if (vote === '1') {
       knex('comment').returning(['id', 'upvotecounter', 'downvotecounter', 'commonground_id']).where({id: commentId}).increment('upvotecounter', 1)
