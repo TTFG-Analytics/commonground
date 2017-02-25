@@ -36,17 +36,19 @@ class UserProfile extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault()
-    console.log('nnnnnnnn', this.refs.name.refs.wrappedInstance.inputNode.value)
-    /*title, age, hometown, race, industry, politicalleaning, religion, yearlyincome*/
+    console.log('this', this)
+    var thisObj = this
+    console.log('thisObj', thisObj)
     this.props.postProfile({
-      title: this.refs.title.refs.wrappedInstance.inputNode.value,
-      age: this.refs.age.refs.wrappedInstance.inputNode.value,
-      hometown: this.refs.hometown.refs.wrappedInstance.inputNode.value,
-      race: this.refs.race.refs.wrappedInstance.inputNode.value,
-      industry: this.refs.industry.refs.wrappedInstance.inputNode.value,
-      politicalleaning: this.refs.politicalleaning.refs.wrappedInstance.inputNode.value,
-      religion: this.refs.religion.refs.wrappedInstance.inputNode.value,
-      yearlyincome: this.refs.yearlyincome.refs.wrappedInstance.inputNode.value
+      id: thisObj.props.profile.id,
+      title: thisObj.refs.title.refs.wrappedInstance.inputNode.value,
+      age: thisObj.refs.age.refs.wrappedInstance.inputNode.value,
+      hometown: thisObj.refs.hometown.refs.wrappedInstance.inputNode.value,
+      race: thisObj.refs.race.refs.wrappedInstance.inputNode.value,
+      industry: thisObj.refs.industry.refs.wrappedInstance.inputNode.value,
+      politicalleaning: thisObj.refs.politicalleaning.refs.wrappedInstance.inputNode.value,
+      religion: thisObj.refs.religion.refs.wrappedInstance.inputNode.value,
+      yearlyincome: thisObj.refs.yearlyincome.refs.wrappedInstance.inputNode.value
     })
   }
 
@@ -62,6 +64,8 @@ class UserProfile extends React.Component{
       <Input type='text' ref='hometown' label={this.props.profile.hometown} />
       <p>Gender: </p>
       <Input type='text' ref='gender' label={this.props.profile.gender}  />
+      <p>Age: </p>
+      <Input type='text' ref='age' label={this.props.profile.age}  />
       <p>Race: </p>
       <Input type='text' ref='race' label={this.props.profile.race}  />
       <p>Political Leaning: </p>
@@ -71,7 +75,7 @@ class UserProfile extends React.Component{
       <p>Religion: </p>
       <Input type='text' ref='religion' label={this.props.profile.religion}  />
       <p>Income: </p>
-      <Input type='text' ref='yearlyIncome' label={this.props.profile.yearlyincome} />
+      <Input type='text' ref='yearlyincome' label={this.props.profile.yearlyincome} />
 
       <Button type='submit' label='Submit' raised primary/>
       </form>

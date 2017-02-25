@@ -22,8 +22,16 @@ export const getProfile = (uid) => {
 }
 
 export const postProfileSuccess = (profile) => {
+  console.log('postProfileSuccess', profile)
   return {
     type: 'POST_PROFILE',
+    userId: profile.id,
+    fbName: profile.fullname,
+    fbId: profile.facebookid,
+    fbGender: profile.gender,
+    fbLocale: profile.locale,
+    fbEmail: profile.email,
+    fbPicture: profile.facebookpicture,
     title: profile.title,
     age: profile.age,
     hometown: profile.hometown,
@@ -35,9 +43,9 @@ export const postProfileSuccess = (profile) => {
   }
 }
 
-export const postProfile = () => {
+export const postProfile = (profile) => {
   return (dispatch) => {
-    return axios.post('/profile')
+    return axios.post('/profile', profile)
       .then(response => {
         console.log('workssss!', response.data);
         dispatch(postProfileSuccess(response.data))

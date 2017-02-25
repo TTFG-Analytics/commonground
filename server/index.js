@@ -145,15 +145,28 @@ app.post('/login', function(req,res) {
 // may need updating once profile page is built
 app.post('/profile', function(req,res) {
   console.log('profile REQ.BODY', req.body);
-  knex.raw(`
-    UPDATE users
-    SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}', '${req.body.politicalleaning}', '${req.body.religion}')
-    `).then(function(data){
-      console.log(data);
-      res.status(200).send(data);
-    });
+  knex('users').returning('*').where('id', req.body.id).update({
+    title: `${req.body.title}`,
+    age: `${req.body.age}`,
+    hometown: `${req.body.hometown}`,
+    race: `${req.body.race}`,
+    industry: `${req.body.industry}`,
+    politicalleaning: `${req.body.politicalleaning}`,
+    religion: `${req.body.religion}`,
+    yearlyincome: `${req.body.yearlyincome}`
+  })
+  .then((data) => {
+    console.log('updated profile data........',data[0]);
+    res.send(data[0]);
+  })
 })
 
+  // knex.raw(`
+  //   UPDATE users WHERE id=('${req.body.id}')
+  //   SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = 
+  //('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}',
+  // '${req.body.politicalleaning}', '${req.body.religion}', '${req.body.yearlyincome}')
+  //   `).then(function(data){
 
 app.post('/commonground', function(req, res){
   // console.log('req body commonground', req.body)
