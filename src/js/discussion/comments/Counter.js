@@ -32,10 +32,10 @@ class Counter extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state user id', state.fbGet.userId)
+  console.log('state user id', state.profileReducer.id)
   return {
     comments: state.commentGet.comments,
-    userId: state.fbGet.userId
+    userId: state.profileReducer.id
   }
 }
 

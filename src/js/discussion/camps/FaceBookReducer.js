@@ -1,12 +1,12 @@
 const fbGet = (state={}, action) => {
-  if(action.type === 'GET_FBDATA_SUCCESS') {
-    console.log('fbGET action', action)
-    return Object.assign(
-      {},
-      state,
-      action.payload
-    )
-  }
+  // if(action.type === 'GET_FBDATA_SUCCESS') {
+  //   console.log('fbGET action', action)
+  //   return Object.assign(
+  //     {},
+  //     state,
+  //     action.payload
+  //   )
+  // }
   
   return state
 }
