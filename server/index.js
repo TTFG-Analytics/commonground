@@ -147,7 +147,6 @@ app.post('/login', function(req,res) {
 app.post('/profile', function(req,res) {
   console.log('profile REQ.BODY', req.body);
   knex('users').returning('*').where('id', req.body.id).update({
-    title: `${req.body.title}`,
     age: `${req.body.age}`,
     hometown: `${req.body.hometown}`,
     race: `${req.body.race}`,
@@ -164,7 +163,7 @@ app.post('/profile', function(req,res) {
 
   // knex.raw(`
   //   UPDATE users WHERE id=('${req.body.id}')
-  //   SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = 
+  //   SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) =
   //('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}',
   // '${req.body.politicalleaning}', '${req.body.religion}', '${req.body.yearlyincome}')
   //   `).then(function(data){

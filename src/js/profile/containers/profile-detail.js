@@ -13,7 +13,13 @@ class UserProfile extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      gender: null
+      age: null,
+      hometown: null,
+      race: null,
+      industry: null,
+      politicalleaning: null,
+      religion: null,
+      yearlyincome: null
     }
   }
 
@@ -40,17 +46,16 @@ class UserProfile extends React.Component{
     console.log('this', this)
     var thisObj = this
     console.log('thisObj', thisObj)
-    // this.props.postProfile({
-      // id: thisObj.props.profile.id,
-      // title: thisObj.refs.title.refs.wrappedInstance.inputNode.value,
-      // age: thisObj.refs.age.refs.wrappedInstance.inputNode.value,
-      // hometown: thisObj.refs.hometown.refs.wrappedInstance.inputNode.value,
-      // race: thisObj.refs.race.refs.wrappedInstance.inputNode.value,
-      // industry: thisObj.refs.industry.refs.wrappedInstance.inputNode.value,
-      // politicalleaning: thisObj.refs.politicalleaning.refs.wrappedInstance.inputNode.value,
-      // religion: thisObj.refs.religion.refs.wrappedInstance.inputNode.value,
-      // yearlyincome: thisObj.refs.yearlyincome.refs.wrappedInstance.inputNode.value
-    // })
+    this.props.postProfile({
+      id: thisObj.props.profile.id,
+      age: thisObj.state.age,
+      hometown: thisObj.state.hometown,
+      race: thisObj.state.race,
+      industry: thisObj.state.industry,
+      politicalleaning: thisObj.state.politicalleaning,
+      religion: thisObj.state.religion,
+      yearlyincome: thisObj.state.yearlyincome
+    })
   }
 
 
@@ -64,18 +69,18 @@ class UserProfile extends React.Component{
 
   render (){
 
-    const gender = [
-      {value: 0, label: 'Select'},
-      {value: 1, label: 'Male'},
-      {value: 2, label: 'Female'},
-      {value: 3, label: 'Other'},
-    ];
+    // const gender = [
+    //   {value: 0, label: 'Select'},
+    //   {value: 1, label: 'Male'},
+    //   {value: 2, label: 'Female'},
+    //   {value: 3, label: 'Other'},
+    // ];
 
-    var genderList = gender.map((item) => {
-      return (
-        <option value={item.value}>{item.label}</option>
-      )
-    })
+    // var genderList = gender.map((item) => {
+    //   return (
+    //     <option value={item.value}>{item.label}</option>
+    //   )
+    // })
 
     const race = [
       {value: 0, label: 'Select'},
@@ -190,9 +195,6 @@ class UserProfile extends React.Component{
 
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup controlId="formControlsSelect">
-          <ControlLabel>Gender: </ControlLabel>
-          <FormControl onChange={this.handleChange.bind(this, 'gender')} componentClass="select" placeholder="select" ref="select">{genderList}</FormControl>
-
           <FormGroup onChange={this.handleChange.bind(this, 'age')} controlId="formBasicText">
             <ControlLabel>Age:</ControlLabel>
             <FormControl
@@ -211,8 +213,8 @@ class UserProfile extends React.Component{
           <FormControl onChange={this.handleChange.bind(this, 'industry')} componentClass="select" placeholder="select" ref="select">{industryList}</FormControl>
           <ControlLabel>Religion: </ControlLabel>
           <FormControl onChange={this.handleChange.bind(this, 'religion')} componentClass="select" placeholder="select" ref="select">{religionList}</FormControl>
-          <ControlLabel>Income: </ControlLabel>
-          <FormControl onChange={this.handleChange.bind(this, 'income')} componentClass="select" placeholder="select" ref="select">{incomeList}</FormControl>
+          <ControlLabel>Yearly Income: </ControlLabel>
+          <FormControl onChange={this.handleChange.bind(this, 'yearlyincome')} componentClass="select" placeholder="select" ref="select">{incomeList}</FormControl>
         </FormGroup>
 
         <Button type='submit' bsStyle="primary">Submit</Button>
