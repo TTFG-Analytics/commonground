@@ -2,11 +2,33 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createCommentSuccess, createUpvote } from '../actions/actions'
 import Input from 'react-toolbox/lib/input'
-import {Button, IconButton} from 'react-toolbox/lib/button'
+//import {Button, IconButton} from 'react-toolbox/lib/button'
 import io from 'socket.io-client'
+import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
+
 
 
 class AddComment extends React.Component{
+  constructor(props){
+    super(props)
+
+    this.state = {
+      commentValue: ''
+    }
+  }
+
+  getValidationState() {
+    const length = this.state.value.length;
+    if (length > 10) return 'success';
+    else if (length > 5) return 'warning';
+    else if (length > 0) return 'error';
+  }
+
+  handleChange(e) {
+    console.log('HANDLE CHANGE THIS', this);
+    this.setState({ commentValue: e.target.value });
+  }
+
   render() {
   console.log('this nsp comment', this.props.nsp)
   var nsp = this.props.nsp
@@ -14,9 +36,8 @@ class AddComment extends React.Component{
       <div>
         <form onSubmit={e => {
           e.preventDefault()
-          console.log('refs comment', this.refs.comment.refs.wrappedInstance.inputNode.value)
           let newComment = {
-            comment: this.refs.comment.refs.wrappedInstance.inputNode.value,
+            comment: this.state.commentValue,
             commongroundId: this.props.campId,
             userId: this.props.userId
           }
@@ -26,10 +47,23 @@ class AddComment extends React.Component{
           }
           // this.props.createCommentSuccess(newComment)
           this.props.createUpvote()
-          this.refs.comment.refs.wrappedInstance.inputNode.value = ''
+          this.state.commentValue = ''
         }}>
-          <Input type='text' label='Comment' ref='comment' />
-          <Button type='submit' label='Reply' raised primary />
+
+          <FormGroup controlId="formBasicText">
+            <ControlLabel>Create a New Comment</ControlLabel>
+            <FormControl
+              type="text"
+              value={this.state.commentValue}
+              placeholder="Enter text"
+              ref='comment'
+              onChange={this.handleChange.bind(this)}
+            />
+            <FormControl.Feedback />
+            <HelpBlock>Character limit: </HelpBlock>
+          </FormGroup>
+          <Button type='submit' bsStyle="primary">Submit</Button>
+
         </form>
       </div>
     )
@@ -57,3 +91,9 @@ const mapDispatchToProps = (dispatch) => {
 AddComment = connect(mapStateToProps, mapDispatchToProps)(AddComment)
 
 export default AddComment
+
+
+
+// Old react toolbox code
+// <Input type='text' label='Comment' ref='comment' />
+//           <Button type='submit' label='Reply' raised primary />
