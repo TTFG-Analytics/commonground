@@ -145,7 +145,6 @@ app.post('/login', function(req,res) {
 // profile route upserts data into database that user inputs in profile page.
 // may need updating once profile page is built
 app.post('/profile', function(req,res) {
-<<<<<<< HEAD
   console.log('profile REQ.BODY', req.body);
   knex('users').returning('*').where('id', req.body.id).update({
     title: `${req.body.title}`,
@@ -160,17 +159,7 @@ app.post('/profile', function(req,res) {
   .then((data) => {
     console.log('updated profile data........',data[0]);
     res.send(data[0]);
-  })
-=======
-  console.log('REQ.BODY', req.body);
-  knex.raw(`
-    UPDATE users
-    SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = ('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}', '${req.body.politicalleaning}', '${req.body.religion}')
-    `).then(function(data){
-      // console.log(data);
-    }).catch((err) => console.log(chalk.red.inverse(err)));
-    res.status(200).send();
->>>>>>> testing works for get, due to our changing nature of post request they have been commented out
+  }).catch((err) => console.log(chalk.red.inverse(err)));
 })
 
   // knex.raw(`

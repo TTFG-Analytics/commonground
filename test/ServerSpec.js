@@ -173,35 +173,35 @@ describe(chalk.yellow('Server API routes'), () => {
   //   });
   // });
 
-  describe('GET /profile', () => {
-    it(chalk.cyan('should be getting user profile data from the db'), (done) => {
-      chai.request(server)
-      .get('/profile')
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.should.be.JSON;
-        res.body.should.be.a('object');
-        res.body.should.have.property('id');
-        res.body.should.have.property('facebookid');
-        res.body.should.have.property('fullname');
-        res.body.should.have.property('title');
-        res.body.should.have.property('age');
-        res.body.should.have.property('hometown');
-        res.body.should.have.property('gender');
-        res.body.should.have.property('race');
-        res.body.should.have.property('industry');
-        res.body.should.have.property('politicalleaning');
-        res.body.should.have.property('religion');
-        res.body.should.have.property('yearlyincome');
-        res.body.should.have.property('email');
-        res.body.should.have.property('facebookpicture');
-        res.body.should.have.property('locale');
-        res.body.should.have.property('admin');
-        res.body.should.have.property('createdat');
-        done()
-      });
-    });  
-  });
+  // describe('GET /profile', () => {
+  //   it(chalk.cyan('should be getting user profile data from the db'), (done) => {
+  //     chai.request(server)
+  //     .get('/profile')
+  //     .end((err, res) => {
+  //       res.should.have.status(200);
+  //       res.should.be.JSON;
+  //       res.body.should.be.a('object');
+  //       res.body.should.have.property('id');
+  //       res.body.should.have.property('facebookid');
+  //       res.body.should.have.property('fullname');
+  //       res.body.should.have.property('title');
+  //       res.body.should.have.property('age');
+  //       res.body.should.have.property('hometown');
+  //       res.body.should.have.property('gender');
+  //       res.body.should.have.property('race');
+  //       res.body.should.have.property('industry');
+  //       res.body.should.have.property('politicalleaning');
+  //       res.body.should.have.property('religion');
+  //       res.body.should.have.property('yearlyincome');
+  //       res.body.should.have.property('email');
+  //       res.body.should.have.property('facebookpicture');
+  //       res.body.should.have.property('locale');
+  //       res.body.should.have.property('admin');
+  //       res.body.should.have.property('createdat');
+  //       done()
+  //     });
+  //   });  
+  // });
 
   // describe('POST /Login', () => {
   //   it(chalk.cyan('should be uploading user facebooklogin data to the db'), (done) => {
