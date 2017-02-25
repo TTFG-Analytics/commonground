@@ -17,7 +17,8 @@ Run knex seed file
 To Run Test
 
 -cd to db
--mocha ../test*.js
+
+-mocha -R nyan ../test/*.js
 
 On Deployment
 
