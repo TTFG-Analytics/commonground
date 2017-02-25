@@ -2,7 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import ReactHighcharts from 'react-highcharts'
 import Dropdown from 'react-toolbox/lib/dropdown'
-import {Button, IconButton} from 'react-toolbox/lib/button'
+// import {Button, IconButton} from 'react-toolbox/lib/button'
+import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
+
 
 class CommentAnalytics extends React.Component{
   constructor(props){
@@ -73,6 +75,8 @@ class CommentAnalytics extends React.Component{
   }
 
   render() {
+
+
 
     var demographics = [
       {value:'age', label: 'age'},
@@ -238,11 +242,24 @@ class CommentAnalytics extends React.Component{
       }
       ]
     }
+
+
+    var list = demographics.map((demographic) => {
+      return(
+          <option value={demographic.value}>{demographic.value}</option>
+        )
+    })
+
     return (
       <div>
-      <Dropdown ref="demographicSelect" onChange={(value)=> this.demographicChange(value)}
-      source={demographics} value={this.state.demographic} />
-      <Button onClick={() => this.getVoteData()} label='Get Data' raised primary/>
+      <FormGroup controlId="formControlsSelect">
+        <ControlLabel>Select Demographic Property</ControlLabel>
+        <FormControl componentClass="select" placeholder="select">
+          {list}
+        </FormControl>
+      </FormGroup>
+
+
       {this.state.showChart && <ReactHighcharts config={config} />}
       {this.state.showChart && <ReactHighcharts config={pieConfig} />}
       </div>
@@ -255,3 +272,7 @@ export default CommentAnalytics
         // {demographics.map(demographicOption => {
         //   return <option>{demographicOption}</option>
         // })}
+
+      //   <Dropdown ref="demographicSelect" onChange={(value)=> this.demographicChange(value)}
+      // source={demographics} value={this.state.demographic} />
+       // <Button onClick={() => this.getVoteData()} label='Get Data' raised primary/>

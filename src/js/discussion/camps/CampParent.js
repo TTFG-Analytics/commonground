@@ -9,7 +9,8 @@ import BackButton from './BackButton'
 import FaceBookIntegration from './FaceBookIntegration'
 import ProfileButton from './ProfileButton'
 import Analytics from '../discuss/Analytics'
-import { AppBar } from 'react-toolbox/lib/app_bar'
+import Navigation from '../../navbar/navbar'
+//import { AppBar } from 'react-toolbox/lib/app_bar'
 import { Link } from 'react-router'
 
 //discussionId is used to associate which camps belong to which discussions
@@ -41,15 +42,20 @@ class CampParent extends React.Component{
 
   render(){
     var discussionId = this.props.params.discussionId
-    var discussionName = this.props.discussions[discussionId-1].input
+    console.log("THIS", this);
+
+    let arrayIndex;
+    this.props.discussions.forEach((index) => {
+      if(index.id == discussionId) {
+        arrayIndex = index;
+      }
+    })
+    console.log('arrayIndex', arrayIndex.input);
+    //var discussionName = this.props.discussions[discussionId-1].input
     return (
       <div>
-        <AppBar>
-          <BackButton />
-          <ProfileButton />
-          <Link to={`/logout`} style={{marginLeft: '45px'}}><h4>Logout</h4></Link>
-        </AppBar>
-        <h2>{discussionName}</h2>
+        <Navigation />
+        <h2>{arrayIndex.input}</h2>
         <AddCamp discussionId={discussionId} />
         <CampList discussionId={discussionId} />
         <Analytics />
