@@ -158,12 +158,18 @@ class AddDiscussion extends React.Component{
               <div className='well'>
                   <Media>
                     <Media.Left align="top">
-                      <img width={64} height={64} src={dummyComment.pic} alt="Image"/>
+                      <img width={64} height={64} src={dummyComment.facebook} alt="Image"/>
                     </Media.Left>
                     <Media.Body>
-                      <Media.Heading>{dummyComment.name}</Media.Heading>
-                      <p>{dummyComment.input + ' - '}<em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
+                      <Media.Heading>{dummyComment.name}<span style={deltaStyle} >{dummyComment.delta}</span></Media.Heading>
+                      <p>{dummyComment.input}</p>
+                      <p style={timeStyle}> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
                     </Media.Body>
+                    <Media>
+                      <span className="glyphicon glyphicon-menu-up" aria-hidden="true" style={upStyle}></span>
+                      <span className="glyphicon glyphicon-menu-down" aria-hidden="true" style={downStyle}></span>
+                      <span className="glyphicon glyphicon-flag" aria-hidden="true" style={flagStyle}></span>
+                    </Media>
                   </Media>
                 </div>
               </Col>
