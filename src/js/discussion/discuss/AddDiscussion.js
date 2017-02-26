@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { createDiscussionPost, createDiscussionSuccess } from '../actions/actions'
-import Input from 'react-toolbox/lib/input'
-//import { IconButton} from 'react-toolbox/lib/button'
+import { createDiscussionSuccess } from '../actions/actions'
 import io from 'socket.io-client'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 import Navigation from '../../navbar/navbar'
@@ -108,7 +106,6 @@ class AddDiscussion extends React.Component{
             console.log('New Discussion', newDiscussion);
             window.discussionSocket.emit('discussion', newDiscussion)
           }
-          // this.props.createDiscussionSuccess(newDiscussion)
           this.refs.discussion.value = '';
         }}>
 
