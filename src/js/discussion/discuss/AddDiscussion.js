@@ -27,7 +27,6 @@ class AddDiscussion extends React.Component{
       console.log('Joined discussions page');
     });
     discussionSocket.on('discussion', (data) => {
-      console.log('FRONT END DATA', data);
       this.props.createDiscussionSuccess(data)
     })
   }
