@@ -19,11 +19,8 @@ class Camp extends React.Component{
 
   fetchComments(campId) {
     this.disconnectFromPrev();
-    console.log('this fetchComments', this, campId)
     var context = this;
     window.socket = io(`/${campId}`)
-    // var socket = io.connect(`http://localhost:4040/${campId}`)
-    console.log('-------SOCKETS FTW----', window.socket)
     window.socket.on('cgConnection', (data)=> {
       console.log('connected to commonground', data)
       this.setState({
@@ -32,7 +29,6 @@ class Camp extends React.Component{
       console.log('^^^^^^^^^^^ socket nsp ^^^^^', this.state)
     });
     window.socket.on('comment', (data) => {
-      console.log('context props', context.props)
       this.props.createCommentSuccess(data)
     })
     this.props.getComments(campId)
@@ -43,7 +39,6 @@ class Camp extends React.Component{
 
   disconnectFromPrev() {
     if(window.socket) {
-      console.log('starting disconnect')
       window.socket.disconnect()
       console.log('disconnected from sockets!!!!!')
     }
@@ -56,20 +51,12 @@ class Camp extends React.Component{
     var campId = this.props.campId
     console.log("~!@", this.state);
     return (
-
       <Col md={6}>
         <Panel header={campName}>
           {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
         </Panel>
       </Col>
-
     )
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    comments: state.commentGet
   }
 }
 
@@ -83,4 +70,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Camp)
+export default connect(null, mapDispatchToProps)(Camp)
