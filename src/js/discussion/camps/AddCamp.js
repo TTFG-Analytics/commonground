@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createCampPost } from '../actions/actions'
-//import Input from 'react-toolbox/lib/input'
-//import {Button, IconButton} from 'react-toolbox/lib/button'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
 
@@ -23,22 +21,23 @@ class AddCamp extends React.Component{
   }
 
   handleChange(e) {
-    console.log('HANDLE CHANGE THIS', this);
     this.setState({ cgValue: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    let newCamp = {
+      commonground: this.state.cgValue,
+      discussionId: this.props.discussionId
+    }
+    this.props.createCampPost(newCamp);
+    this.state.cgValue = '';
   }
 
   render() {
     return (
       <div>
-        <form onSubmit={e => {
-          e.preventDefault()
-          let newCamp = {
-            commonground: this.state.cgValue,
-            discussionId: this.props.discussionId
-          }
-          this.props.createCampPost(newCamp);
-          this.state.cgValue = '';
-        }}>
+        <form onSubmit={this.handleSubmit.bind(this)}>
 
           <FormGroup controlId="formBasicText">
             <ControlLabel>Create a New CommonGround</ControlLabel>
@@ -52,8 +51,8 @@ class AddCamp extends React.Component{
             <FormControl.Feedback />
             <HelpBlock>Character limit: </HelpBlock>
           </FormGroup>
-          <Button type='submit' bsStyle="primary">Submit</Button>
 
+          <Button type='submit' bsStyle="primary">Submit</Button>
         </form>
       </div>
     )
@@ -68,9 +67,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-AddCamp = connect(null, mapDispatchToProps)(AddCamp)
-
-export default AddCamp
+export default connect(null, mapDispatchToProps)(AddCamp)
 
 // Old react toolbox code
 // <Input ref='camp' type='text' label='CommonGround' />
