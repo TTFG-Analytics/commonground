@@ -70,7 +70,6 @@ export const getComments = (campId) => {
 //post request section
 
 export const createDiscussionSuccess = (discussion) => {
-  // console.log('discussion create success', discussion)
   return {
     type: 'CREATE_DISCUSSION_SUCCESS',
     id: discussion.id,
