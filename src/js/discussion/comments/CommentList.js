@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 class CommentList extends React.Component{
   render(){
     var currComments = [];
-    // console.log('this.props', this.props)
     currComments = this.props.comments.filter(comment => {
       return comment.commonground_id === this.props.campId
     });
