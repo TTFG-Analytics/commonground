@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import CommentList from './CommentList'
 import Counter from './Counter'
 import CommentAnalytics from './CommentAnalytics'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
@@ -50,55 +49,40 @@ class Comment extends React.Component{
       deltaStyle = {float: 'right', color:'red', fontSize: '16px'}
     }
 
-
-    console.log('inputStr', this.props)
-    console.log('user HERE', this.props.user)
-
-    var currentComment;
-
-    this.props.comments.forEach((comment) => {
-      if (comment.id === this.props.commentId) {
-        currentComment = comment;
-      }
-    })
-    console.log("current comment", currentComment)
-
     return (
 
-    <div>
+      <div>
 
-      <li>
-      <h4>{this.props.inputStr}</h4>
-      <Counter commentId={this.props.commentId}/>
-      <CommentAnalytics commentId={this.props.commentId}/>
-      </li>
+        <li>
+        <h4>{this.props.inputStr}</h4>
+        <Counter commentId={this.props.commentId}/>
+        <CommentAnalytics commentId={this.props.commentId}/>
+        </li>
 
-      <Grid>
-        <Row className="show-grid">
-          <Col md={6} mdPush={6}>
-            <div className='well'>
-              <Media>
-                <Media.Left align="top">
-                  <img width={64} height={64} src={dummyComment.facebook} alt="Image"/>
-                </Media.Left>
-                <Media.Body>
-                  <Media.Heading>{this.props.user.fullname}<span style={deltaStyle} >{dummyComment.delta}</span></Media.Heading>
-                  <p>{this.props.inputStr}</p>
-                  <p style={timeStyle}> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
-                </Media.Body>
+        <Grid>
+          <Row className="show-grid">
+            <Col md={6} mdPush={6}>
+              <div className='well'>
                 <Media>
-                  <span className="glyphicon glyphicon-menu-up" aria-hidden="true" style={upStyle}></span>
-                  <span className="glyphicon glyphicon-menu-down" aria-hidden="true" style={downStyle}></span>
-                  <span className="glyphicon glyphicon-flag" aria-hidden="true" style={flagStyle}></span>
+                  <Media.Left align="top">
+                    <img width={64} height={64} src={dummyComment.facebook} alt="Image"/>
+                  </Media.Left>
+                  <Media.Body>
+                    <Media.Heading>{this.props.user.fullname}<span style={deltaStyle} >{dummyComment.delta}</span></Media.Heading>
+                    <p>{this.props.inputStr}</p>
+                    <p style={timeStyle}> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
+                  </Media.Body>
+                  <Media>
+                    <span className="glyphicon glyphicon-menu-up" aria-hidden="true" style={upStyle}></span>
+                    <span className="glyphicon glyphicon-menu-down" aria-hidden="true" style={downStyle}></span>
+                    <span className="glyphicon glyphicon-flag" aria-hidden="true" style={flagStyle}></span>
+                  </Media>
                 </Media>
-              </Media>
-            </div>
-          </Col>
-        </Row>
-      </Grid>
-    </div>
-
-
+              </div>
+            </Col>
+          </Row>
+        </Grid>
+      </div>
 
     )
   }

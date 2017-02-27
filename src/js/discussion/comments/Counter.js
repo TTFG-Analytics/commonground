@@ -5,7 +5,6 @@ import { Button } from 'react-bootstrap';
 
 class Counter extends React.Component {
   render() {
-    console.log('upvotes props -----', this.props)
     let currentUpvote = 0;
     let currentDownvote = 0;
     let commentId = this.props.commentId
@@ -23,7 +22,11 @@ class Counter extends React.Component {
           type='submit'
           bsStyle="primary"
           onClick={() => {
-            this.props.increaseUpvotesPost({vote: '1', commentId: commentId, userId: userId})
+            this.props.increaseUpvotesPost({
+              vote: '1',
+              commentId: commentId,
+              userId: userId
+            })
           }}
           >Upvote
           </Button>
@@ -32,7 +35,11 @@ class Counter extends React.Component {
           type='submit'
           bsStyle="primary"
           onClick={() => {
-            this.props.increaseDownvotesPost({vote: '0', commentId: commentId, userId: userId})
+            this.props.increaseDownvotesPost({
+              vote: '0',
+              commentId: commentId,
+              userId: userId
+            })
           }}
           >Downvote
           </Button>
@@ -42,7 +49,6 @@ class Counter extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state user id', state.profileReducer.id)
   return {
     comments: state.commentGet.comments,
     userId: state.profileReducer.id

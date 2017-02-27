@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { createDiscussionPost, createDiscussionSuccess } from '../actions/actions'
-import Input from 'react-toolbox/lib/input'
-//import { IconButton} from 'react-toolbox/lib/button'
+import { createDiscussionSuccess } from '../actions/actions'
 import io from 'socket.io-client'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 import Navigation from '../../navbar/navbar'
@@ -23,6 +21,16 @@ class AddDiscussion extends React.Component{
     }
   }
 
+  componentDidMount(){
+    window.discussionSocket = io();
+    discussionSocket.on('connect', function() {
+      console.log('Joined discussions page');
+    });
+    discussionSocket.on('discussion', (data) => {
+      this.props.createDiscussionSuccess(data)
+    })
+  }
+
   getValidationState() {
     const length = this.state.value.length;
     if (length > 10) return 'success';
@@ -31,27 +39,21 @@ class AddDiscussion extends React.Component{
   }
 
   handleChange(e) {
-    console.log('HANDLE CHANGE THIS', this);
     this.setState({ discussionValue: e.target.value });
   }
 
-  componentDidMount(){
-    window.discussionSocket = io();
-    discussionSocket.on('connect', function() {
-      console.log('AddDiscussion hit');
-    });
-    discussionSocket.on('discussion', (data) => {
-      console.log('FRONT END DATA', data);
-        this.props.createDiscussionSuccess(data)
-    })
+  handleSubmit(e) {
+    e.preventDefault()
+    let newDiscussion = {topic: this.state.discussionValue}
+    if(window.discussionSocket){
+      window.discussionSocket.emit('discussion', newDiscussion)
+    }
+    this.state.discussionValue = '';
   }
 
   componentWillUnmount() {
-    console.log('started unmounting')
     if(window.discussionSocket) {
-      console.log('unmounting window discussionSocket', window.discussionSocket)
       window.discussionSocket.disconnect()
-      console.log('unmounted window discussionSocket', window.discussionSocket)
     }
   }
 
@@ -99,20 +101,7 @@ class AddDiscussion extends React.Component{
 
     return (
       <div>
-        <form onSubmit={e => {
-          e.preventDefault()
-          let newDiscussion = {topic: this.state.discussionValue}
-
-          if(window.discussionSocket){
-            console.log('window discussionSocket', window, window.discussionSocket)
-            console.log('New Discussion', newDiscussion);
-            window.discussionSocket.emit('discussion', newDiscussion)
-          }
-          // this.props.createDiscussionSuccess(newDiscussion)
-          this.refs.discussion.value = '';
-        }}>
-
-
+        <form onSubmit={this.handleSubmit.bind(this)}>
           <FormGroup controlId="formBasicText">
             <ControlLabel>Create a New Discussion</ControlLabel>
             <FormControl
@@ -126,7 +115,6 @@ class AddDiscussion extends React.Component{
             <HelpBlock>Character limit: </HelpBlock>
           </FormGroup>
           <Button type='submit' bsStyle="primary">Submit</Button>
-
         </form>
 
         <br></br>
@@ -191,8 +179,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-AddDiscussion = connect(null, mapDispatchToProps)(AddDiscussion)
-
-export default AddDiscussion
-
-
+export default connect(null, mapDispatchToProps)(AddDiscussion)

@@ -1,6 +1,4 @@
 import React from 'react'
-import CampParent from '../camps/CampParent'
-import DiscussionList from './DiscussionList'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { getCamps } from '../actions/actions'
@@ -11,12 +9,15 @@ class Discussion extends React.Component{
   }
 
   render(){
-    // console.log('this props discussion', this.props)
     var discussionId = this.props.discussionId;
     var inputStr = this.props.inputStr;
     return (
       <li>
-        <Link to={`/discuss/${discussionId}`}><h3 onClick={()=> this.fetchCamps(discussionId)}>{inputStr}</h3></Link>
+        <Link to={`/discuss/${discussionId}`}>
+          <h3 onClick={()=> this.fetchCamps(discussionId)}>
+            {inputStr}
+          </h3>
+        </Link>
       </li>
     )
   }
@@ -31,5 +32,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(null, mapDispatchToProps)(Discussion)
-
-//<CampParent discussionId={discussionId} />
