@@ -7,15 +7,22 @@ class Navigation extends React.Component {
 
   render() {
    return (
+    
     <Navbar>
-      <Nav>
-        <NavItem>
-          <a>Home</a>
-        </NavItem>
-        <NavItem>
+    <nav>
           <ProfileButton />
-        </NavItem>
-      </Nav>
+    </nav>
+    <Navbar.Header>
+      <Navbar.Brand>
+        <img src="./Common.png"></img>
+      </Navbar.Brand>
+    </Navbar.Header>
+    <Nav style={{marginRight: 0 + 'em'}}>
+        <NavDropdown eventKey={3} title="Menu" id="basic-nav-dropdown">
+        <MenuItem eventKey={3.1}>About</MenuItem>
+        <MenuItem eventKey={3.2}>Login/Logout</MenuItem>
+      </NavDropdown>
+    </Nav>
     </Navbar>
     )
   }
@@ -23,4 +30,4 @@ class Navigation extends React.Component {
 
 
 export default Navigation;
-        //<Link to={`/home`}><h4>Home</h4></Link>
+        <a href="/as" target="_blank">COMMON X GROUND</a>
