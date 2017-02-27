@@ -4,6 +4,7 @@ import Counter from './Counter'
 import CommentAnalytics from './CommentAnalytics'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
+//Require this if you plan on doing custom css in your component!
 require('./comment.css');
 
 class Comment extends React.Component{
@@ -15,7 +16,7 @@ class Comment extends React.Component{
       name: "Greg Bacus",
       input: "Hello, my name is Greg and I am posting the greatest comment of all time. This comment should be upvoted into the stratosphere. Thanks for your support.",
       createdAt: new Date(),
-      delta: -102
+      delta: 102
     }
 
 
@@ -36,7 +37,7 @@ class Comment extends React.Component{
 
         <Grid>
           <Row className="show-grid">
-            <Col md={6} mdPush={6}>
+            <Col md={5}>
               <div className='well'>
                 <Media>
                   <Media.Left align="top">
@@ -45,7 +46,7 @@ class Comment extends React.Component{
                   <Media.Body>
                     <Media.Heading>{this.props.user.fullname}<span style={deltaStyle} >{dummyComment.delta}</span></Media.Heading>
                     <p>{this.props.inputStr}</p>
-                    <p> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
+                    <p className="timeStyle"> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
                   </Media.Body>
                   <Media>
                     <span className="glyphicon glyphicon-menu-up upStyle" aria-hidden="true" ></span>

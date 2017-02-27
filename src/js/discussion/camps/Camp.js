@@ -4,6 +4,8 @@ import CampList from './CampList'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments, createCommentSuccess } from '../actions/actions'
+import { Panel, Col, Row, Grid } from 'react-bootstrap';
+
 
 class Camp extends React.Component{
   constructor(props){
@@ -48,12 +50,19 @@ class Camp extends React.Component{
   }
 
   render() {
+    const campName = (
+      <h3 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h3>
+    );
     var campId = this.props.campId
+    console.log("~!@", this.state);
     return (
-      <div style={{width: '100%'}}>
-      <div onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</div>
-        {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
-      </div>
+
+      <Col md={6}>
+        <Panel header={campName}>
+          {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
+        </Panel>
+      </Col>
+
     )
   }
 }

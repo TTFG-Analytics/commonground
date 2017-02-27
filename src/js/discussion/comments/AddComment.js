@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
-import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
+import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
 
 class AddComment extends React.Component{
   constructor(props){
@@ -42,17 +42,18 @@ class AddComment extends React.Component{
           <form onSubmit={this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
               <ControlLabel>Create a New Comment</ControlLabel>
-              <FormControl
-                type="text"
-                value={this.state.commentValue}
-                placeholder="Enter text"
-                ref='comment'
-                onChange={this.handleChange.bind(this)}
-              />
-              <FormControl.Feedback />
+              <InputGroup>
+                <FormControl
+                  type="text"
+                  value={this.state.commentValue}
+                  placeholder="Enter text"
+                  ref='comment'
+                  onChange={this.handleChange.bind(this)}
+                />
+                <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
+              </InputGroup>
               <HelpBlock>Character limit: </HelpBlock>
             </FormGroup>
-            <Button type='submit' bsStyle="primary">Submit</Button>
           </form>
         </div>
       )
