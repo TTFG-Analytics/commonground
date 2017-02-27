@@ -12,7 +12,9 @@ import Splash from './splash/Splash'
 import Logout from './logout/Logout'
 
 //Load bootstrap css
-//require('bootstrap/dist/css/bootstrap.min.css')
+import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
+
+require('applicationStyles')
 
 //7) in client.js, import all components and render using ReactDOM
 const app = document.getElementById('app')

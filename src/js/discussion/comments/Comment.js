@@ -4,6 +4,7 @@ import Counter from './Counter'
 import CommentAnalytics from './CommentAnalytics'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
+require('./comment.css');
 
 class Comment extends React.Component{
   render(){
@@ -17,29 +18,7 @@ class Comment extends React.Component{
       delta: -102
     }
 
-    var upStyle = {
-      fontSize: '25px',
-      color: 'green',
-      float: 'right'
-    }
 
-    var downStyle = {
-      fontSize: '25px',
-      color: 'red',
-      float: 'right'
-    }
-
-    var flagStyle = {
-      fontSize: '20px',
-      color: 'red',
-      float: 'left',
-      align: 'left'
-    }
-
-    var timeStyle = {
-      float: 'right',
-      fontSize: '14px'
-    }
 
     var deltaStyle;
 
@@ -53,11 +32,7 @@ class Comment extends React.Component{
 
       <div>
 
-        <li>
-        <h4>{this.props.inputStr}</h4>
-        <Counter commentId={this.props.commentId}/>
-        <CommentAnalytics commentId={this.props.commentId}/>
-        </li>
+
 
         <Grid>
           <Row className="show-grid">
@@ -70,12 +45,12 @@ class Comment extends React.Component{
                   <Media.Body>
                     <Media.Heading>{this.props.user.fullname}<span style={deltaStyle} >{dummyComment.delta}</span></Media.Heading>
                     <p>{this.props.inputStr}</p>
-                    <p style={timeStyle}> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
+                    <p> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
                   </Media.Body>
                   <Media>
-                    <span className="glyphicon glyphicon-menu-up" aria-hidden="true" style={upStyle}></span>
-                    <span className="glyphicon glyphicon-menu-down" aria-hidden="true" style={downStyle}></span>
-                    <span className="glyphicon glyphicon-flag" aria-hidden="true" style={flagStyle}></span>
+                    <span className="glyphicon glyphicon-menu-up upStyle" aria-hidden="true" ></span>
+                    <span className="glyphicon glyphicon-menu-down downStyle" aria-hidden="true" ></span>
+                    <span className="glyphicon glyphicon-flag flagStyle" aria-hidden="true" ></span>
                   </Media>
                 </Media>
               </div>

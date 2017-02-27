@@ -1,0 +1,23 @@
+.upStyle {
+  float: right;
+  font-size: 25px;
+  color: green;
+}
+
+.downStyle {
+  float: right;
+  font-size: 25px;
+  color: red;
+}
+
+.flagStyle {
+  float: left;
+  font-size: 20px;
+  color: red;
+  align: left;
+}
+
+.timeStyle {
+  float: right;
+  font-size: 14px;
+}
