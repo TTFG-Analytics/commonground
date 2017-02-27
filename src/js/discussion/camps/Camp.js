@@ -4,7 +4,6 @@ import CampList from './CampList'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments, createCommentSuccess } from '../actions/actions'
-import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 
 class Camp extends React.Component{
   constructor(props){
@@ -51,10 +50,10 @@ class Camp extends React.Component{
   render() {
     var campId = this.props.campId
     return (
-      <Card style={{width: '100%'}}>
-      <CardTitle onClick={()=> this.fetchComments(campId)} title={this.props.inputStr} />
+      <div style={{width: '100%'}}>
+      <div onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</div>
         {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
-      </Card>
+      </div>
     )
   }
 }
