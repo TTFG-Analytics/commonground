@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Counter from './Counter'
 import CommentAnalytics from '../../analytics/CommentAnalytics'
+import VoteDetail from './VoteDetail'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
 //Require this if you plan on doing custom css in your component!
@@ -34,6 +35,8 @@ class Comment extends React.Component{
 
     if(delta > 0) {
       deltaStyle = {float: 'right', color:'green', fontSize: '16px'}
+    } else if (delta === 0) {
+      deltaStyle = {float: 'right', color:'black', fontSize: '16px'}
     } else {
       deltaStyle = {float: 'right', color:'red', fontSize: '16px'}
     }
@@ -50,7 +53,7 @@ class Comment extends React.Component{
                     <img width={64} height={64} src={facebookpicture} alt="Image"/>
                   </Media.Left>
                   <Media.Body>
-                    <Media.Heading>{fullname}<span style={deltaStyle} >{delta}</span></Media.Heading>
+                    <Media.Heading>{fullname}<VoteDetail className="delta" deltaStyle={deltaStyle} >{delta}</VoteDetail></Media.Heading>
                     <p>{this.props.inputStr}</p>
                     <p className="timeStyle"> - <em>{new Date(createdat).toLocaleString()}</em></p>
                   </Media.Body>

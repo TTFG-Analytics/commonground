@@ -7,11 +7,18 @@ require('./comment.css');
 
 
 class Counter extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      flagStyle: 'flagStyleInactive'
+    }
+  }
+
   render() {
     let currentUpvote = 0;
     let currentDownvote = 0;
     let commentId = this.props.commentId
-    let userId = this.props.userId
+    let userId = this.props.userId;
 
     return (
       <div>
@@ -42,8 +49,18 @@ class Counter extends React.Component {
              <OverlayTrigger placement="top" overlay={
                 <Tooltip id="tooltip">Flag Comment as Inappropriate</Tooltip>
               }>
-              <Button>
-                <Glyphicon className="flagStyle" glyph="flag"></Glyphicon>
+              <Button onClick={()=> {
+                if (this.state.flagStyle === 'flagStyleInactive') {
+                  this.setState({
+                    flagStyle:'flagStyleActive'
+                  })
+                } else {
+                  this.setState({
+                    flagStyle:'flagStyleInactive'
+                  })
+                }
+              }}>
+                <Glyphicon className={this.state.flagStyle} glyph="flag"></Glyphicon>
               </Button>
             </OverlayTrigger>
           </ButtonGroup>

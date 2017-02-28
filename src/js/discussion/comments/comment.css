@@ -18,11 +18,27 @@
   float: left;
 }
 
-.flagStyle {
-  font-size: 20px;
+.flagStyleInactive {
+  color: black;
+}
+
+.flagStyleActive {
+  color: red;
 }
 
 .timeStyle {
   float: right;
   font-size: 14px;
+}
+
+.delta:hover {
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.inlineRight {
+  float: right;
+  display: inline-block;
 }
