@@ -110,36 +110,21 @@ export const createCommentSuccess = (comment) => {
   }
 }
 
-export const increaseUpvotesSuccess = (upvote) => {
+export const votesSuccess = (vote) => {
   return {
-    type: 'UPVOTE_SUCCESS',
-    commentId: upvote.id,
-    delta: upvote.delta
+    type: 'VOTE_SUCCESS',
+    commentId: vote.id,
+    delta: vote.delta,
+    upvotecounter: vote.upvotecounter,
+    downvotecounter: vote.downvotecounter
   }
 }
 
-export function increaseUpvotesPost(vote) {
+export function votesPost(vote) {
   return (dispatch) => {
     return axios.post('/vote', vote)
       .then(response => {
-        dispatch(increaseUpvotesSuccess(response.data))
-      })
-  }
-}
-
-export const increaseDownvotesSuccess = (downvote) => {
-  return {
-    type: 'DOWNVOTE_SUCCESS',
-    commentId: downvote.id,
-    delta: downvote.delta
-  }
-}
-
-export function increaseDownvotesPost(downvote) {
-  return (dispatch) => {
-    return axios.post('/vote', downvote)
-      .then(response => {
-        dispatch(increaseDownvotesSuccess(response.data))
+        dispatch(votesSuccess(response.data))
       })
   }
 }
@@ -190,3 +175,20 @@ export function sendingFbDataSuccess(fbUser) {
     fbPicture: fbUser.facebookpicture
   }
 }
+
+// export const increaseDownvotesSuccess = (downvote) => {
+//   return {
+//     type: 'DOWNVOTE_SUCCESS',
+//     commentId: downvote.id,
+//     delta: downvote.delta
+//   }
+// }
+
+// export function increaseDownvotesPost(downvote) {
+//   return (dispatch) => {
+//     return axios.post('/vote', downvote)
+//       .then(response => {
+//         dispatch(increaseDownvotesSuccess(response.data))
+//       })
+//   }
+// }

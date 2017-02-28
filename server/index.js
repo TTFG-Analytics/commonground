@@ -233,11 +233,17 @@ app.post('/vote', function(req,res){
   knex('vote').returning('id').insert({input: req.body.vote, user_id: req.body.userId, comment_id: req.body.commentId })
   .then(function(data1){
     if (vote === '1') {
-      knex('comment').returning(['id', 'commonground_id', 'delta']).where({id: commentId}).increment('delta', 1)
+      knex('comment').returning(['id', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).where({id: commentId})
+      .update({
+        'upvotecounter': knex.raw('upvotecounter + 1'),
+        'delta': knex.raw('delta + 1')
+      })
       .then(function(data2){
           console.log('----------DATA 2======: ', data2)
           var voteResObj = {
             id: data2[0].id,
+            upvotecounter: data2[0].upvotecounter,
+            downvotecounter: data2[0].downvotecounter,
             delta: data2[0].delta
           }
           console.log('voteResObj ---------------', voteResObj)
@@ -247,11 +253,17 @@ app.post('/vote', function(req,res){
           });
         });
     } else {
-      knex('comment').returning(['id', 'commonground_id', 'delta']).where({id: commentId}).increment('delta', -1)
+      knex('comment').returning(['id', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).where({id: commentId})
+      .update({
+        'downvotecounter': knex.raw('downvotecounter + 1'),
+        'delta': knex.raw('delta - 1')
+      })
       .then(function(data2){
           console.log('DATA 2: ', data2)
           var downvoteResObj = {
             id: data2[0].id,
+            upvotecounter: data2[0].upvotecounter,
+            downvotecounter: data2[0].downvotecounter,
             delta: data2[0].delta
           }
           console.log('downvoteResObj ---------------', downvoteResObj)

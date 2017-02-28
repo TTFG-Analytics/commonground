@@ -1,5 +1,5 @@
 import React from 'react'
-import { increaseUpvotesPost, increaseDownvotesPost } from '../actions/actions'
+import { votesPost } from '../actions/actions'
 import { connect } from 'react-redux'
 import { OverlayTrigger, Tooltip, ButtonToolbar, Glyphicon, Media, ButtonGroup, Button } from 'react-bootstrap';
 require('./comment.css');
@@ -18,7 +18,7 @@ class Counter extends React.Component {
         <ButtonToolbar className="vote">
           <ButtonGroup>
             <Button onClick={() => {
-              this.props.increaseUpvotesPost({
+              this.props.votesPost({
                 vote: '1',
                 commentId: commentId,
                 userId: userId
@@ -27,7 +27,7 @@ class Counter extends React.Component {
             ><Glyphicon className="upStyle" glyph="menu-up"></Glyphicon>
             </Button>
             <Button onClick={() => {
-              this.props.increaseDownvotesPost({
+              this.props.votesPost({
                 vote: '0',
                 commentId: commentId,
                 userId: userId
@@ -62,11 +62,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increaseUpvotesPost: (vote) => {
-      dispatch(increaseUpvotesPost(vote))
-    },
-    increaseDownvotesPost: (vote) => {
-      dispatch(increaseDownvotesPost(vote))
+    votesPost: (vote) => {
+      dispatch(votesPost(vote))
     }
   }
 }
