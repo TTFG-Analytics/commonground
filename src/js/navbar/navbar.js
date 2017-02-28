@@ -3,6 +3,7 @@ import { Navbar, NavItem, NavDropdown, MenuItem, Nav} from 'react-bootstrap';
 import ProfileButton from '../discussion/camps/ProfileButton'
 import { Link } from 'react-router'
 require('./navStyles.css')
+import { LinkContainer} from 'react-router-bootstrap'
 
 class Navigation extends React.Component {
 
@@ -15,8 +16,12 @@ class Navigation extends React.Component {
     </NavItem>
     <NavItem >
         <NavDropdown eventKey={3} title="Menu" id="basic-nav-dropdown">
-        <MenuItem eventKey={3.1}>About</MenuItem>
-        <MenuItem eventKey={3.2}>Login/Logout</MenuItem>
+          <LinkContainer to='/about'>
+            <MenuItem eventKey={3.1}>About</MenuItem>
+          </LinkContainer>
+          <LinkContainer to='/logout'>
+            <MenuItem eventKey={3.2}>Login/Logout</MenuItem>
+          </LinkContainer>
       </NavDropdown>
     </NavItem>
     </Nav>
@@ -27,7 +32,7 @@ class Navigation extends React.Component {
 
 
 export default Navigation;
-        <a href="/as" target="_blank">COMMON X GROUND</a>
+        // <a href="/as" target="_blank">COMMON X GROUND</a>
 
     /*<Navbar.Header>
       <Navbar.Brand>
@@ -35,3 +40,21 @@ export default Navigation;
       </Navbar.Brand>
     </Navbar.Header>*/
     // style={{marginRight: 0 + 'em'}}
+        // <a href="/as" target="_blank">COMMON X GROUND</a>
+
+  // <NavDropdown eventKey={3} title="Authorization" id="basic-nav-dropdown">
+  //   <LinkContainer to="/logout">
+  //     <MenuItem eventKey={3.1}>Logout</MenuItem>    
+  //   </LinkContainer> 
+
+    
+    // <Navbar>
+    // <nav>
+    //       <ProfileButton />
+    // </nav>
+    // <Navbar.Header>
+    //   <Navbar.Brand>
+    //     <h1>Common Ground</h1>
+    //   </Navbar.Brand>
+    // </Navbar.Header>
+    // <Nav>

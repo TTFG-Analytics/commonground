@@ -9,6 +9,7 @@ import FaceBookIntegration from './discussion/camps/FaceBookIntegration'
 import ProfileApp from './profile/components/profileApp'
 import Splash from './splash/Splash'
 import Logout from './logout/Logout'
+import About from './about/About'
 
 //Load bootstrap css
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
@@ -24,6 +25,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path='/' component={App} />
       <Route path='/home' component={Splash} />
+      <Route path='/about' component={About}/>
       <Route path='/discuss/:discussionId' component={CampParent} />
       <Route path='/userprofile' component={ProfileApp} />
       <Route path='/logout' component={Logout} />
