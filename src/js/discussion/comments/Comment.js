@@ -20,7 +20,6 @@ class Comment extends React.Component{
     }
 
 
-
     var deltaStyle;
 
     if(dummyComment.delta > 0) {
@@ -32,9 +31,6 @@ class Comment extends React.Component{
     return (
 
       <div>
-
-
-
         <Grid>
           <Row className="show-grid">
             <Col md={6}>

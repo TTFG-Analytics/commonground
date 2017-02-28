@@ -1,7 +1,7 @@
 import React from 'react'
 import { increaseUpvotesPost, increaseDownvotesPost } from '../actions/actions'
 import { connect } from 'react-redux'
-import { ButtonToolbar, Glyphicon, Media, ButtonGroup, Button } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip, ButtonToolbar, Glyphicon, Media, ButtonGroup, Button } from 'react-bootstrap';
 require('./comment.css');
 
 
@@ -39,9 +39,13 @@ class Counter extends React.Component {
         </ButtonToolbar>
         <ButtonToolbar className="flag">
           <ButtonGroup>
-            <Button>
-              <Glyphicon className="flagStyle" glyph="flag"></Glyphicon>
-            </Button>
+             <OverlayTrigger placement="top" overlay={
+                <Tooltip id="tooltip">Flag Comment as Inappropriate</Tooltip>
+              }>
+              <Button>
+                <Glyphicon className="flagStyle" glyph="flag"></Glyphicon>
+              </Button>
+            </OverlayTrigger>
           </ButtonGroup>
         </ButtonToolbar>
       </div>
