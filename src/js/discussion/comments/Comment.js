@@ -21,11 +21,13 @@ class Comment extends React.Component{
     var delta = 0;
     var facebookpicture = ''
     var fullname = ''
+    var createdat = new Date();
     this.props.comments.forEach((comment) => {
       if(comment.id === this.props.commentId) {
         delta = comment.delta
         facebookpicture = comment.facebookpicture
         fullname = comment.fullname
+        createdat = comment.createdat || new Date();
       }
     })
     var deltaStyle;
@@ -50,7 +52,7 @@ class Comment extends React.Component{
                   <Media.Body>
                     <Media.Heading>{fullname}<span style={deltaStyle} >{delta}</span></Media.Heading>
                     <p>{this.props.inputStr}</p>
-                    <p className="timeStyle"> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
+                    <p className="timeStyle"> - <em>{new Date(createdat).toLocaleString()}</em></p>
                   </Media.Body>
                   <Media>
                     <Counter commentId={this.props.commentId}/>

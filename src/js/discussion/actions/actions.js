@@ -105,7 +105,8 @@ export const createCommentSuccess = (comment) => {
     user_id: comment.user_id,
     fullname: comment.fullname,
     facebookpicture: comment.facebookpicture,
-    delta: 0
+    delta: 0,
+    createdat: comment.createdat
   }
 }
 
