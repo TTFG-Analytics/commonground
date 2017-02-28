@@ -104,7 +104,6 @@ class Analytics extends React.Component{
 
     var demographics = [
       {value:'age', label: 'age'},
-      {value: 'hometown', label:'hometown'},
       {value: 'race', label:'race'},
       {value: 'industry', label:'industry'},
       {value: 'politicalleaning', label:'politicalleaning'},
