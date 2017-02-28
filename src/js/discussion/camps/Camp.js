@@ -1,10 +1,11 @@
 import React from 'react'
 import io from 'socket.io-client'
 import CampList from './CampList'
+import Analytics from '../discuss/Analytics'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments, createCommentSuccess } from '../actions/actions'
-import { Panel, Col, Row, Grid } from 'react-bootstrap';
+import { Button, Glyphicon, Panel, Col, Row, Grid } from 'react-bootstrap';
 
 
 class Camp extends React.Component{
@@ -13,7 +14,9 @@ class Camp extends React.Component{
     this.state = {
       showComments: false,
       hasFetched: false,
-      ioNamespace: null
+      ioNamespace: null,
+      showChart: false,
+      showModal: false
     }
   }
 
@@ -44,6 +47,12 @@ class Camp extends React.Component{
     }
   }
 
+  showModal(){
+    this.setState({
+      showModal: !this.state.showModal
+    })
+  }
+
   render() {
     const campName = (
       <h3 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h3>
@@ -54,6 +63,11 @@ class Camp extends React.Component{
       <Col md={6}>
         <Panel header={campName}>
           {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
+          <Button onClick={() => this.showModal()}>
+            <Glyphicon glyph="stats">
+            </Glyphicon>
+          </Button>
+          {this.state.showModal && <Analytics />}
         </Panel>
       </Col>
     )

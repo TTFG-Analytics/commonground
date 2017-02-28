@@ -220,7 +220,7 @@ class Analytics extends React.Component{
 
     <div>
 
-      <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
+      <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.props.showModal}>
         <Modal.Header closeButton onClick={this.showModal.bind(this)}>
           <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
         </Modal.Header>
@@ -247,9 +247,6 @@ class Analytics extends React.Component{
           <Button onClick={this.showModal.bind(this)}>Close</Button>
         </Modal.Footer>
       </Modal>
-
-      <Button onClick={() => this.showModal()} bsStyle="primary">POPUP</Button>
-
     </div>
 
     )
