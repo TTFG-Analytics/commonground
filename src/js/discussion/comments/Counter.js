@@ -19,7 +19,6 @@ class Counter extends React.Component {
     let currentDownvote = 0;
     let commentId = this.props.commentId
     let userId = this.props.userId;
-    // let flagStyle = 'flagStyleInactive';
 
     return (
       <div>
