@@ -3,6 +3,10 @@ import Discussion from './Discussion'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { getDiscussions } from '../actions/actions'
+import { Col, Button, ButtonGroup } from 'react-bootstrap';
+import { Link } from 'react-router'
+require('./styles.css')
+
 
 class DiscussionList extends React.Component{
   constructor(props){
@@ -15,15 +19,21 @@ class DiscussionList extends React.Component{
   render() {
     let thisObj = this;
     return (
-      <ul>
-        {thisObj.props.discussionsList.length > 0 && thisObj.props.discussionsList.map((discussionX, index) =>
-          <Discussion
-            key={discussionX.id}
-            discussionId={discussionX.id}
-            inputStr={discussionX.input}
-          />
-        )}
-      </ul>
+        <div>
+              {thisObj.props.discussionsList.length > 0 && thisObj.props.discussionsList.map((discussionX, index) =>
+            <ButtonGroup vertical block >
+              <Link to={`/discuss/${discussionX.id}`}>
+                <Button className="col-md-10 col-md-offset-1">
+                  <Discussion
+                    key={discussionX.id}
+                    discussionId={discussionX.id}
+                    inputStr={discussionX.input}
+                  />
+                </Button>
+              </Link>
+            </ButtonGroup>
+              )}
+        </div>
     );
   }
 }

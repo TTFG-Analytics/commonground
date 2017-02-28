@@ -28,3 +28,13 @@
 .discussion:hover {
   text-decoration: none;
 }
+
+.btn {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.topic {
+  white-space: normal;
+  word-wrap: break-word;
+}
