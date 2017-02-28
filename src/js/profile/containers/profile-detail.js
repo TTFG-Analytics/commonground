@@ -2,11 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getProfile, postProfile} from '../actions/profileActions';
-import Input from 'react-toolbox/lib/input';
 // import Dropdown from 'react-toolbox/lib/dropdown';
 // import {Button, IconButton} from 'react-toolbox/lib/button';
 import FaceBookIntegration from '../../discussion/camps/FaceBookIntegration'
-import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
 
 class UserProfile extends React.Component{

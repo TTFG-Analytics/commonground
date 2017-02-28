@@ -14,7 +14,7 @@ class Discussion extends React.Component{
     return (
       <li>
         <Link to={`/discuss/${discussionId}`}>
-          <h3 onClick={()=> this.fetchCamps(discussionId)}>
+          <h3 className="test" onClick={()=> this.fetchCamps(discussionId)}>
             {inputStr}
           </h3>
         </Link>

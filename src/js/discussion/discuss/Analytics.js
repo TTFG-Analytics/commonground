@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ReactHighcharts from 'react-highcharts'
 // import Dropdown from 'react-toolbox/lib/dropdown'
 // import {Button, IconButton} from 'react-toolbox/lib/button'
-import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
+import { Modal, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
 
 class Analytics extends React.Component{
@@ -16,7 +16,8 @@ class Analytics extends React.Component{
       commenters: null,
       upvoters: null,
       downvoters: null,
-      showChart: false
+      showChart: false,
+      showModal: false
     }
   }
 
@@ -32,6 +33,12 @@ class Analytics extends React.Component{
       demographic: e.target.value
     });
     // console.log('demo change', this.state)
+  }
+
+  showModal(){
+    this.setState({
+      showModal: !this.state.showModal
+    })
   }
 
   getData() {
@@ -210,23 +217,41 @@ class Analytics extends React.Component{
     })
 
     return (
-      <div>
-      <FormGroup controlId="formControlsSelect">
-        <ControlLabel>Select a CommonGround</ControlLabel>
-        <FormControl onChange={this.campChange.bind(this)} componentClass="select" placeholder="select" ref="select">
-          {listCommonground}
-        </FormControl>
-      </FormGroup>
-      <FormGroup controlId="formControlsSelect">
-        <ControlLabel>Select Demographic Property</ControlLabel>
-        <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
-          {listDemographics}
-        </FormControl>
-      </FormGroup>
-      <Button onClick={() => this.getData()} type='submit' bsStyle="primary">Get Data</Button>
 
-      {this.state.showChart && <ReactHighcharts config={config} />}
-      </div>
+    <div>
+
+      <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
+        <Modal.Header closeButton onClick={this.showModal.bind(this)}>
+          <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Select a CommonGround</ControlLabel>
+              <FormControl onChange={this.campChange.bind(this)} componentClass="select" placeholder="select" ref="select">
+                {listCommonground}
+              </FormControl>
+            </FormGroup>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Select Demographic Property</ControlLabel>
+              <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
+                {listDemographics}
+              </FormControl>
+            </FormGroup>
+            <Button onClick={() => this.getData()} type='submit' bsStyle="primary">Get Data</Button>
+
+            {this.state.showChart && <ReactHighcharts config={config} />}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.showModal.bind(this)}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Button onClick={() => this.showModal()} bsStyle="primary">POPUP</Button>
+
+    </div>
+
     )
   }
 }

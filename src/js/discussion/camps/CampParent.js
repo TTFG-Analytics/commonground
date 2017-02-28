@@ -12,6 +12,7 @@ import Analytics from '../discuss/Analytics'
 import Navigation from '../../navbar/navbar'
 //import { AppBar } from 'react-toolbox/lib/app_bar'
 import { Link } from 'react-router'
+require('applicationStyles')
 
 //discussionId is used to associate which camps belong to which discussions
 class CampParent extends React.Component{
@@ -55,7 +56,7 @@ class CampParent extends React.Component{
     return (
       <div>
         <Navigation />
-        <h2>{arrayIndex.input}</h2>
+        <h2 className="test">{arrayIndex.input}</h2>
         <AddCamp discussionId={discussionId} />
         <CampList discussionId={discussionId} />
         <Analytics />

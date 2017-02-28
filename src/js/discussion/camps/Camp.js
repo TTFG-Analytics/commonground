@@ -4,7 +4,8 @@ import CampList from './CampList'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments, createCommentSuccess } from '../actions/actions'
-import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import { Panel, Col, Row, Grid } from 'react-bootstrap';
+
 
 class Camp extends React.Component{
   constructor(props){
@@ -49,12 +50,19 @@ class Camp extends React.Component{
   }
 
   render() {
+    const campName = (
+      <h3 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h3>
+    );
     var campId = this.props.campId
+    console.log("~!@", this.state);
     return (
-      <Card style={{width: '100%'}}>
-      <CardTitle onClick={()=> this.fetchComments(campId)} title={this.props.inputStr} />
-        {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
-      </Card>
+
+      <Col md={6}>
+        <Panel header={campName}>
+          {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
+        </Panel>
+      </Col>
+
     )
   }
 }

@@ -4,6 +4,8 @@ import Counter from './Counter'
 import CommentAnalytics from './CommentAnalytics'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
+//Require this if you plan on doing custom css in your component!
+require('./comment.css');
 
 class Comment extends React.Component{
   render(){
@@ -14,32 +16,9 @@ class Comment extends React.Component{
       name: "Greg Bacus",
       input: "Hello, my name is Greg and I am posting the greatest comment of all time. This comment should be upvoted into the stratosphere. Thanks for your support.",
       createdAt: new Date(),
-      delta: -102
+      delta: 102
     }
 
-    var upStyle = {
-      fontSize: '25px',
-      color: 'green',
-      float: 'right'
-    }
-
-    var downStyle = {
-      fontSize: '25px',
-      color: 'red',
-      float: 'right'
-    }
-
-    var flagStyle = {
-      fontSize: '20px',
-      color: 'red',
-      float: 'left',
-      align: 'left'
-    }
-
-    var timeStyle = {
-      float: 'right',
-      fontSize: '14px'
-    }
 
     var deltaStyle;
 
@@ -52,16 +31,9 @@ class Comment extends React.Component{
     return (
 
       <div>
-
-        <li>
-        <h4>{this.props.inputStr}</h4>
-        <Counter commentId={this.props.commentId}/>
-        <CommentAnalytics commentId={this.props.commentId}/>
-        </li>
-
         <Grid>
           <Row className="show-grid">
-            <Col md={6} mdPush={6}>
+            <Col md={6}>
               <div className='well'>
                 <Media>
                   <Media.Left align="top">
@@ -70,12 +42,10 @@ class Comment extends React.Component{
                   <Media.Body>
                     <Media.Heading>{this.props.user.fullname}<span style={deltaStyle} >{dummyComment.delta}</span></Media.Heading>
                     <p>{this.props.inputStr}</p>
-                    <p style={timeStyle}> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
+                    <p className="timeStyle"> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
                   </Media.Body>
                   <Media>
-                    <span className="glyphicon glyphicon-menu-up" aria-hidden="true" style={upStyle}></span>
-                    <span className="glyphicon glyphicon-menu-down" aria-hidden="true" style={downStyle}></span>
-                    <span className="glyphicon glyphicon-flag" aria-hidden="true" style={flagStyle}></span>
+                    <Counter commentId={this.props.commentId}/>
                   </Media>
                 </Media>
               </div>
