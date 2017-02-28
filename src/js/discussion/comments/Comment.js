@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Counter from './Counter'
-import CommentAnalytics from './CommentAnalytics'
+import CommentAnalytics from '../../analytics/CommentAnalytics'
 import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
 //Require this if you plan on doing custom css in your component!

@@ -8,7 +8,6 @@ import { getCamps } from '../actions/actions'
 import BackButton from './BackButton'
 import FaceBookIntegration from './FaceBookIntegration'
 import ProfileButton from './ProfileButton'
-import Analytics from '../discuss/Analytics'
 import Navigation from '../../navbar/navbar'
 import { Link } from 'react-router'
 require('applicationStyles')
