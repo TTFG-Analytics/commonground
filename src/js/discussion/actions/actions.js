@@ -111,7 +111,7 @@ export const increaseUpvotesSuccess = (upvote) => {
   return {
     type: 'UPVOTE_SUCCESS',
     commentId: upvote.id,
-    upvotecounter: upvote.upvotecounter
+    delta: upvote.delta
   }
 }
 
@@ -128,7 +128,7 @@ export const increaseDownvotesSuccess = (downvote) => {
   return {
     type: 'DOWNVOTE_SUCCESS',
     commentId: downvote.id,
-    downvotecounter: downvote.downvotecounter
+    delta: downvote.delta
   }
 }
 

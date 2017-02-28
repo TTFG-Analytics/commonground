@@ -16,10 +16,14 @@ class Comment extends React.Component{
       name: "Greg Bacus",
       input: "Hello, my name is Greg and I am posting the greatest comment of all time. This comment should be upvoted into the stratosphere. Thanks for your support.",
       createdAt: new Date(),
-      delta: 102
     }
 
-
+    var delta = 0;
+    this.props.comments.forEach((comment) => {
+      if(comment.id === this.props.commentId) {
+        delta = comment.delta
+      }
+    })
     var deltaStyle;
 
     if(dummyComment.delta > 0) {
@@ -40,7 +44,7 @@ class Comment extends React.Component{
                     <img width={64} height={64} src={dummyComment.facebook} alt="Image"/>
                   </Media.Left>
                   <Media.Body>
-                    <Media.Heading>{this.props.user.fullname}<span style={deltaStyle} >{dummyComment.delta}</span></Media.Heading>
+                    <Media.Heading>{this.props.user.fullname}<span style={deltaStyle} >{delta}</span></Media.Heading>
                     <p>{this.props.inputStr}</p>
                     <p className="timeStyle"> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
                   </Media.Body>

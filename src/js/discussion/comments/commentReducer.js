@@ -32,7 +32,7 @@ const commentGet = (state={comments:[]}, action) => {
       state,
       comments: update(state.comments, {
         [commentIndex]: { 
-          upvotecounter: {$set: action.upvotecounter} 
+          delta: {$set: action.delta} 
         }
       })
     }
@@ -49,7 +49,7 @@ const commentGet = (state={comments:[]}, action) => {
       state,
       comments: update(state.comments, {
         [commentIndex]: {
-          downvotecounter: {$set: action.downvotecounter}
+          delta: {$set: action.delta}
         }
       })
     }
