@@ -51,7 +51,6 @@ class Counter extends React.Component {
                 <Tooltip id="tooltip">Flag Comment as Inappropriate</Tooltip>
               }>
               <Button onClick={()=> {
-                console.log("CLICKED Again", this.state);
                 if (this.state.flagStyle === 'flagStyleInactive') {
                   this.setState({
                     flagStyle:'flagStyleActive'

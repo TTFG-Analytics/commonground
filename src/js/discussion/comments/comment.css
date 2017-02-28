@@ -30,3 +30,10 @@
   float: right;
   font-size: 14px;
 }
+
+.delta:hover {
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+  cursor: hand;
+}
