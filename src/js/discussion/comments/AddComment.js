@@ -24,10 +24,14 @@ class AddComment extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault()
+    console.log('this props user', this.props.user.fullname)
+    var userPic = this.props.user.facebookpicture.replace('2oh', 'oh')
     let newComment = {
       comment: this.state.commentValue,
       commongroundId: this.props.campId,
-      userId: this.props.userId
+      userId: this.props.user.id,
+      userName: this.props.user.fullname,
+      userPic: userPic
     }
     if(window.socket){
       console.log('window socket', window, window.socket)
@@ -62,7 +66,7 @@ class AddComment extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.profileReducer.id
+    user: state.profileReducer
   }
 }
 

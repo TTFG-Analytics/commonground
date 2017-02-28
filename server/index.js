@@ -187,17 +187,23 @@ app.post('/commonground', function(req, res){
 
         socketClient.on('comment', (commentData) => {
           console.log('~~~~~~~~~~ new comment has been made ~~~~~~~~~~~', commentData)
-          knex('comment').returning(['id', 'user_id', 'input', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).insert({input: commentData.comment, user_id: commentData.userId, commonground_id: commentData.commongroundId })
+          knex('comment').returning(['id', 'user_id', 'fullname', 'facebookpicture', 'input', 'commonground_id', 'delta']).insert({
+            input: commentData.comment,
+            user_id: commentData.userId,
+            fullname: commentData.userName,
+            commonground_id: commentData.commongroundId,
+            facebookpicture: commentData.userPic
+          })
           .then(function(data){
             console.log('----- data comment res -------------------', data)
             commentResObj = {
               id: data[0].id,
               input: data[0].input,
               commonground_id: data[0].commonground_id,
-              upvotecounter: data[0].upvotecounter,
-              downvotecounter: data[0].downvotecounter,
               delta: data[0].delta,
-              user_id: data[0].user_id
+              user_id: data[0].user_id,
+              fullname: data[0].fullname,
+              facebookpicture: data[0].facebookpicture
             }
             // knex('users_join').insert({user_id: 16, commonground_id: data[0].commonground_id, comment_id:data[0].id}).then(function(){});
             // })

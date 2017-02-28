@@ -96,13 +96,15 @@ export const createCampPost = (camp) => {
 }
 
 export const createCommentSuccess = (comment) => {
+  console.log('created comment', comment)
   return {
     type: 'CREATE_COMMENT_SUCCESS',
     id: comment.id,
     commonground_id: comment.commonground_id,
     input: comment.input,
-    upvotecounter: comment.upvotecounter,
-    downvotecounter: comment.downvotecounter,
+    user_id: comment.user_id,
+    fullname: comment.fullname,
+    facebookpicture: comment.facebookpicture,
     delta: 0
   }
 }
