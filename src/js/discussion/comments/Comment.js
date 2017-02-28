@@ -49,9 +49,7 @@ class Comment extends React.Component{
                     <p className="timeStyle"> - <em>{dummyComment.createdAt.toDateString() + ' at ' + dummyComment.createdAt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</em></p>
                   </Media.Body>
                   <Media>
-                    <span className="glyphicon glyphicon-menu-up upStyle" aria-hidden="true" ></span>
-                    <span className="glyphicon glyphicon-menu-down downStyle" aria-hidden="true" ></span>
-                    <span className="glyphicon glyphicon-flag flagStyle" aria-hidden="true" ></span>
+                    <Counter commentId={this.props.commentId}/>
                   </Media>
                 </Media>
               </div>

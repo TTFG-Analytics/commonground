@@ -1,20 +1,26 @@
 .upStyle {
   float: right;
-  font-size: 25px;
+  font-size: 20px;
   color: green;
 }
 
 .downStyle {
   float: right;
-  font-size: 25px;
+  font-size: 20px;
   color: red;
 }
 
-.flagStyle {
+.vote {
+  float: right;
+}
+
+.flag {
   float: left;
+}
+
+.flagStyle {
   font-size: 20px;
   color: red;
-  align: left;
 }
 
 .timeStyle {
