@@ -1,10 +1,11 @@
 import React from 'react'
 import io from 'socket.io-client'
 import CampList from './CampList'
+import Analytics from '../discuss/Analytics'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments, createCommentSuccess } from '../actions/actions'
-import { Panel, Col, Row, Grid } from 'react-bootstrap';
+import { Button, Glyphicon, Panel, Col, Row, Grid } from 'react-bootstrap';
 
 
 class Camp extends React.Component{
@@ -13,17 +14,16 @@ class Camp extends React.Component{
     this.state = {
       showComments: false,
       hasFetched: false,
-      ioNamespace: null
+      ioNamespace: null,
+      showChart: false,
+      showModal: false
     }
   }
 
   fetchComments(campId) {
     this.disconnectFromPrev();
-    console.log('this fetchComments', this, campId)
     var context = this;
     window.socket = io(`/${campId}`)
-    // var socket = io.connect(`http://localhost:4040/${campId}`)
-    console.log('-------SOCKETS FTW----', window.socket)
     window.socket.on('cgConnection', (data)=> {
       console.log('connected to commonground', data)
       this.setState({
@@ -32,7 +32,6 @@ class Camp extends React.Component{
       console.log('^^^^^^^^^^^ socket nsp ^^^^^', this.state)
     });
     window.socket.on('comment', (data) => {
-      console.log('context props', context.props)
       this.props.createCommentSuccess(data)
     })
     this.props.getComments(campId)
@@ -43,7 +42,6 @@ class Camp extends React.Component{
 
   disconnectFromPrev() {
     if(window.socket) {
-      console.log('starting disconnect')
       window.socket.disconnect()
       console.log('disconnected from sockets!!!!!')
     }
@@ -54,22 +52,16 @@ class Camp extends React.Component{
       <h3 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h3>
     );
     var campId = this.props.campId
-    console.log("~!@", this.state);
+    console.log("camp w/ Analytics", this.state);
     return (
-
       <Col md={6}>
         <Panel header={campName}>
+          <Analytics campId={campId} />
           {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
+
         </Panel>
       </Col>
-
     )
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    comments: state.commentGet
   }
 }
 
@@ -83,4 +75,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Camp)
+export default connect(null, mapDispatchToProps)(Camp)

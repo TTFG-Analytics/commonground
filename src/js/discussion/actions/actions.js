@@ -96,47 +96,35 @@ export const createCampPost = (camp) => {
 }
 
 export const createCommentSuccess = (comment) => {
+  console.log('created comment', comment)
   return {
     type: 'CREATE_COMMENT_SUCCESS',
     id: comment.id,
     commonground_id: comment.commonground_id,
     input: comment.input,
-    upvotecounter: comment.upvotecounter,
-    downvotecounter: comment.downvotecounter,
-    delta: 0
+    user_id: comment.user_id,
+    fullname: comment.fullname,
+    facebookpicture: comment.facebookpicture,
+    delta: 0,
+    createdat: comment.createdat
   }
 }
 
-export const increaseUpvotesSuccess = (upvote) => {
+export const votesSuccess = (vote) => {
   return {
-    type: 'UPVOTE_SUCCESS',
-    commentId: upvote.id,
-    upvotecounter: upvote.upvotecounter
+    type: 'VOTE_SUCCESS',
+    commentId: vote.id,
+    delta: vote.delta,
+    upvotecounter: vote.upvotecounter,
+    downvotecounter: vote.downvotecounter
   }
 }
 
-export function increaseUpvotesPost(vote) {
+export function votesPost(vote) {
   return (dispatch) => {
     return axios.post('/vote', vote)
       .then(response => {
-        dispatch(increaseUpvotesSuccess(response.data))
-      })
-  }
-}
-
-export const increaseDownvotesSuccess = (downvote) => {
-  return {
-    type: 'DOWNVOTE_SUCCESS',
-    commentId: downvote.id,
-    downvotecounter: downvote.downvotecounter
-  }
-}
-
-export function increaseDownvotesPost(downvote) {
-  return (dispatch) => {
-    return axios.post('/vote', downvote)
-      .then(response => {
-        dispatch(increaseDownvotesSuccess(response.data))
+        dispatch(votesSuccess(response.data))
       })
   }
 }

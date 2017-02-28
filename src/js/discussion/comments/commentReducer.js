@@ -19,8 +19,8 @@ const commentGet = (state={comments:[]}, action) => {
       comments: [...state.comments, newComment]
     }
   }
-  if(action.type === 'UPVOTE_SUCCESS') {
-    console.log('action upvote', action)
+  if(action.type === 'VOTE_SUCCESS') {
+    console.log('action vote', action)
     let commentIndex = 0;
     state.comments.forEach((comment, index) => {
       if(comment.id === action.commentId){
@@ -32,24 +32,9 @@ const commentGet = (state={comments:[]}, action) => {
       state,
       comments: update(state.comments, {
         [commentIndex]: { 
-          upvotecounter: {$set: action.upvotecounter} 
-        }
-      })
-    }
-  }
-  if(action.type === 'DOWNVOTE_SUCCESS') {
-    console.log('action downvote', action)
-    let commentIndex = 0
-    state.comments.forEach((comment, index) => {
-      if(comment.id === action.commentId) {
-        commentIndex = index;
-      }
-    })
-    return {
-      state,
-      comments: update(state.comments, {
-        [commentIndex]: {
-          downvotecounter: {$set: action.downvotecounter}
+          delta: {$set: action.delta},
+          upvotecounter: {$set: action.upvotecounter},
+          downvotecounter: {$set: action.downvotecounter} 
         }
       })
     }
@@ -58,5 +43,3 @@ const commentGet = (state={comments:[]}, action) => {
 }
 
 export default commentGet
-
-//[...state.comments].concat(action.comments)

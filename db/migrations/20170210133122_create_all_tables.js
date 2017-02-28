@@ -48,6 +48,8 @@ exports.up = function(knex, Promise) {
       t.timestamp('createdat').defaultTo(knex.fn.now());
       t.integer('commonground_id')
       t.integer('user_id')
+      t.string('fullname', 2000).defaultTo('Unknown')
+      t.string('facebookpicture', 2000).defaultTo('Unknown')
       t.foreign('commonground_id').references('commonground.id');
       t.foreign('user_id').references('users.id');
     }),
