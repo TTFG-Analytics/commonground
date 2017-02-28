@@ -11,7 +11,8 @@ class Counter extends React.Component {
     let currentUpvote = 0;
     let currentDownvote = 0;
     let commentId = this.props.commentId
-    let userId = this.props.userId
+    let userId = this.props.userId;
+    let flagStyle = {color:'black'};
 
     return (
       <div>
@@ -42,8 +43,15 @@ class Counter extends React.Component {
              <OverlayTrigger placement="top" overlay={
                 <Tooltip id="tooltip">Flag Comment as Inappropriate</Tooltip>
               }>
-              <Button>
-                <Glyphicon className="flagStyle" glyph="flag"></Glyphicon>
+              <Button onClick={()=> {
+                if (flagStyle === 'flagStyleInactive') {
+                  flagStyle = {color:'red'};
+                  debugger;
+                } else {
+                  flagStyle = {color:'black'};
+                }
+              }}>
+                <Glyphicon style={flagStyle} glyph="flag"></Glyphicon>
               </Button>
             </OverlayTrigger>
           </ButtonGroup>

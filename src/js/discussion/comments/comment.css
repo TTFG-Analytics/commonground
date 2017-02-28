@@ -18,8 +18,12 @@
   float: left;
 }
 
-.flagStyle {
-  font-size: 20px;
+.flagStyleInactive {
+  color: black;
+}
+
+.flagStyleActive {
+  color:red;
 }
 
 .timeStyle {
