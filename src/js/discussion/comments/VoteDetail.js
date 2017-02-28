@@ -93,9 +93,10 @@ class VoteDetail extends React.Component{
 
   render() {
 
+
     return (
 
-    <div>
+    <div className="inlineRight">
 
       <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
         <Modal.Header closeButton onClick={this.toggleModal.bind(this)}>
@@ -109,7 +110,7 @@ class VoteDetail extends React.Component{
         </Modal.Footer>
       </Modal>
 
-      <div onClick={this.toggleModal.bind(this)}></div>
+      <span className="delta" style={this.props.deltaStyle} onClick={this.toggleModal.bind(this)}>{this.props.children}</span>
 
     </div>
 

@@ -37,3 +37,8 @@
   cursor: pointer;
   cursor: hand;
 }
+
+.inlineRight {
+  float: right;
+  display: inline-block;
+}

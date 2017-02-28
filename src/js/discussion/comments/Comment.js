@@ -51,7 +51,7 @@ class Comment extends React.Component{
                     <img width={64} height={64} src={facebookpicture} alt="Image"/>
                   </Media.Left>
                   <Media.Body>
-                    <Media.Heading>{fullname}<div onClick={()=> alert('hello')}className="delta" style={deltaStyle} >{delta}<VoteDetail></VoteDetail></div></Media.Heading>
+                    <Media.Heading>{fullname}<VoteDetail className="delta" deltaStyle={deltaStyle} >{delta}</VoteDetail></Media.Heading>
                     <p>{this.props.inputStr}</p>
                     <p className="timeStyle"> - <em>{new Date(createdat).toLocaleString()}</em></p>
                   </Media.Body>
