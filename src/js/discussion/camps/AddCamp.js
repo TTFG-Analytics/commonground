@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createCampPost } from '../actions/actions'
-import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
+import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
 
 class AddCamp extends React.Component{
@@ -38,21 +38,20 @@ class AddCamp extends React.Component{
     return (
       <div>
         <form onSubmit={this.handleSubmit.bind(this)}>
-
-          <FormGroup controlId="formBasicText">
-            <ControlLabel>Create a New CommonGround</ControlLabel>
-            <FormControl
-              type="text"
-              value={this.state.cgValue}
-              placeholder="Enter text"
-              ref='cg'
-              onChange={this.handleChange.bind(this)}
-            />
-            <FormControl.Feedback />
+            <FormGroup controlId="formBasicText">
+              <ControlLabel>Create a New CommonGround</ControlLabel>
+              <InputGroup>
+              <FormControl
+                type="text"
+                value={this.state.cgValue}
+                placeholder="Enter text"
+                ref='cg'
+                onChange={this.handleChange.bind(this)}
+              />
+              <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
+              </InputGroup>
             <HelpBlock>Character limit: </HelpBlock>
           </FormGroup>
-
-          <Button type='submit' bsStyle="primary">Submit</Button>
         </form>
       </div>
     )

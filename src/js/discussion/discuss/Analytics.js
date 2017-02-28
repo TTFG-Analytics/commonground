@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ReactHighcharts from 'react-highcharts'
 // import Dropdown from 'react-toolbox/lib/dropdown'
 // import {Button, IconButton} from 'react-toolbox/lib/button'
-import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
+import { Modal, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
 
 class Analytics extends React.Component{
@@ -16,7 +16,8 @@ class Analytics extends React.Component{
       commenters: null,
       upvoters: null,
       downvoters: null,
-      showChart: false
+      showChart: false,
+      showModal: false
     }
   }
 
@@ -32,6 +33,12 @@ class Analytics extends React.Component{
       demographic: e.target.value
     });
     // console.log('demo change', this.state)
+  }
+
+  showModal(){
+    this.setState({
+      showModal: !this.state.showModal
+    })
   }
 
   getData() {
@@ -210,6 +217,30 @@ class Analytics extends React.Component{
     })
 
     return (
+
+    <div>
+
+      <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
+        <Modal.Header closeButton onClick={this.showModal.bind(this)}>
+          <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Wrapped Text</h4>
+          <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+          <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+          <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.showModal.bind(this)}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+
       <div>
       <FormGroup controlId="formControlsSelect">
         <ControlLabel>Select a CommonGround</ControlLabel>
@@ -225,8 +256,14 @@ class Analytics extends React.Component{
       </FormGroup>
       <Button onClick={() => this.getData()} type='submit' bsStyle="primary">Get Data</Button>
 
+      <Button onClick={() => this.showModal()} bsStyle="primary">POPUP</Button>
+
+
       {this.state.showChart && <ReactHighcharts config={config} />}
       </div>
+
+    </div>
+
     )
   }
 }

@@ -37,7 +37,7 @@ class Comment extends React.Component{
 
         <Grid>
           <Row className="show-grid">
-            <Col md={5}>
+            <Col md={6}>
               <div className='well'>
                 <Media>
                   <Media.Left align="top">
