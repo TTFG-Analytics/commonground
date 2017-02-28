@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ReactHighcharts from 'react-highcharts'
 // import Dropdown from 'react-toolbox/lib/dropdown'
 // import {Button, IconButton} from 'react-toolbox/lib/button'
-import { Modal, Glyphicon, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
+import { Panel, Modal, Glyphicon, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
 class VoteDetail extends React.Component{
   constructor(props){
@@ -93,7 +93,6 @@ class VoteDetail extends React.Component{
 
   render() {
 
-
     return (
 
     <div className="inlineRight">
@@ -103,7 +102,14 @@ class VoteDetail extends React.Component{
           <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          HELLO
+          <div>
+            <Panel header="Upvoters">
+              Panel content
+            </Panel>
+            <Panel header="Downvoters">
+              Panel content
+            </Panel>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.toggleModal.bind(this)}>Close</Button>

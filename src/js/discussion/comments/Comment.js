@@ -35,6 +35,8 @@ class Comment extends React.Component{
 
     if(delta > 0) {
       deltaStyle = {float: 'right', color:'green', fontSize: '16px'}
+    } else if (delta === 0) {
+      deltaStyle = {float: 'right', color:'black', fontSize: '16px'}
     } else {
       deltaStyle = {float: 'right', color:'red', fontSize: '16px'}
     }
