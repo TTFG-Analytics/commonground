@@ -104,10 +104,10 @@ class VoteDetail extends React.Component{
         <Modal.Body>
           <div>
             <Panel header="Upvoters">
-              Panel content
+              COMING SOON!
             </Panel>
             <Panel header="Downvoters">
-              Panel content
+              COMING SOON!
             </Panel>
           </div>
         </Modal.Body>
