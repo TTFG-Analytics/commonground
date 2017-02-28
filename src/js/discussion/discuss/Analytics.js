@@ -225,42 +225,30 @@ class Analytics extends React.Component{
           <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Wrapped Text</h4>
-          <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-          <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-          <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-          <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+          <div>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Select a CommonGround</ControlLabel>
+              <FormControl onChange={this.campChange.bind(this)} componentClass="select" placeholder="select" ref="select">
+                {listCommonground}
+              </FormControl>
+            </FormGroup>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Select Demographic Property</ControlLabel>
+              <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
+                {listDemographics}
+              </FormControl>
+            </FormGroup>
+            <Button onClick={() => this.getData()} type='submit' bsStyle="primary">Get Data</Button>
+
+            {this.state.showChart && <ReactHighcharts config={config} />}
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.showModal.bind(this)}>Close</Button>
         </Modal.Footer>
       </Modal>
 
-      <div>
-      <FormGroup controlId="formControlsSelect">
-        <ControlLabel>Select a CommonGround</ControlLabel>
-        <FormControl onChange={this.campChange.bind(this)} componentClass="select" placeholder="select" ref="select">
-          {listCommonground}
-        </FormControl>
-      </FormGroup>
-      <FormGroup controlId="formControlsSelect">
-        <ControlLabel>Select Demographic Property</ControlLabel>
-        <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
-          {listDemographics}
-        </FormControl>
-      </FormGroup>
-      <Button onClick={() => this.getData()} type='submit' bsStyle="primary">Get Data</Button>
-
       <Button onClick={() => this.showModal()} bsStyle="primary">POPUP</Button>
-
-
-      {this.state.showChart && <ReactHighcharts config={config} />}
-      </div>
 
     </div>
 
