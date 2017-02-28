@@ -175,20 +175,3 @@ export function sendingFbDataSuccess(fbUser) {
     fbPicture: fbUser.facebookpicture
   }
 }
-
-// export const increaseDownvotesSuccess = (downvote) => {
-//   return {
-//     type: 'DOWNVOTE_SUCCESS',
-//     commentId: downvote.id,
-//     delta: downvote.delta
-//   }
-// }
-
-// export function increaseDownvotesPost(downvote) {
-//   return (dispatch) => {
-//     return axios.post('/vote', downvote)
-//       .then(response => {
-//         dispatch(increaseDownvotesSuccess(response.data))
-//       })
-//   }
-// }

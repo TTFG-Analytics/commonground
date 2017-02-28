@@ -43,22 +43,3 @@ const commentGet = (state={comments:[]}, action) => {
 }
 
 export default commentGet
-
-//[...state.comments].concat(action.comments)
-  // if(action.type === 'DOWNVOTE_SUCCESS') {
-  //   console.log('action downvote', action)
-  //   let commentIndex = 0
-  //   state.comments.forEach((comment, index) => {
-  //     if(comment.id === action.commentId) {
-  //       commentIndex = index;
-  //     }
-  //   })
-  //   return {
-  //     state,
-  //     comments: update(state.comments, {
-  //       [commentIndex]: {
-  //         delta: {$set: action.delta}
-  //       }
-  //     })
-  //   }
-  // }

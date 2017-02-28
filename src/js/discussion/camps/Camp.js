@@ -47,27 +47,18 @@ class Camp extends React.Component{
     }
   }
 
-  showModal(){
-    this.setState({
-      showModal: !this.state.showModal
-    })
-  }
-
   render() {
     const campName = (
       <h3 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h3>
     );
     var campId = this.props.campId
-    console.log("~!@", this.state);
+    console.log("camp w/ Analytics", this.state);
     return (
       <Col md={6}>
         <Panel header={campName}>
+          <Analytics campId={campId} />
           {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
-          <Button onClick={() => this.showModal()}>
-            <Glyphicon glyph="stats">
-            </Glyphicon>
-          </Button>
-          {this.state.showModal && <Analytics />}
+
         </Panel>
       </Col>
     )

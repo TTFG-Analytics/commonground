@@ -5,6 +5,7 @@ import {getProfile, postProfile} from '../actions/profileActions';
 // import Dropdown from 'react-toolbox/lib/dropdown';
 // import {Button, IconButton} from 'react-toolbox/lib/button';
 import FaceBookIntegration from '../../discussion/camps/FaceBookIntegration'
+import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
 
 class UserProfile extends React.Component{

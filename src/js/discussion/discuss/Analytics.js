@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import ReactHighcharts from 'react-highcharts'
 // import Dropdown from 'react-toolbox/lib/dropdown'
 // import {Button, IconButton} from 'react-toolbox/lib/button'
-import { Modal, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
-
+import { Modal, Glyphicon, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 
 class Analytics extends React.Component{
   constructor(props){
@@ -21,13 +20,6 @@ class Analytics extends React.Component{
     }
   }
 
-  campChange(e){
-    this.setState({
-      camp: e.target.value
-    });
-    console.log('camp change', this.state)
-  }
-
   demographicChange(e){
     this.setState({
       demographic: e.target.value
@@ -35,16 +27,18 @@ class Analytics extends React.Component{
     // console.log('demo change', this.state)
   }
 
-  showModal(){
+  toggleModal(e){
+    console.log('showing modal----------------')
     this.setState({
       showModal: !this.state.showModal
     })
   }
 
   getData() {
-    console.log('THIS.STATE in getData()', this.state);
-    axios.get(`/analytics/${this.state.camp}/${this.state.demographic}`)
+    var campId = this.props.campId
+    axios.get(`/analytics/${campId}/${this.state.demographic}`)
       .then(function(response) {
+        console.log('response from getData', response)
         var people = response.data
         let demographic = this.state.demographic
         var commentDataObj = {}
@@ -107,13 +101,10 @@ class Analytics extends React.Component{
   }
 
   render() {
-    var commongrounds = this.props.campList.map(camp => {
-      return {value: camp.input, label: camp.input}
-    })
+
     var demographics = [
       {value:'age', label: 'age'},
       {value: 'hometown', label:'hometown'},
-      {value: 'gender', label:'gender'},
       {value: 'race', label:'race'},
       {value: 'industry', label:'industry'},
       {value: 'politicalleaning', label:'politicalleaning'},
@@ -121,7 +112,6 @@ class Analytics extends React.Component{
       {value: 'yearlyincome', label:'yearlyincome'}
     ];
     var politicalleaning = ['','Conservative', 'Authoritarian', 'Centrist', 'Libertarian', 'Progressive']
-    var gender = ['', 'Male', 'Female', 'Other']
     var race = ['', 'White Hispanic', 'White Non-Hispanic', 'Black or African American', 'American Indian or Alaska Native',
     'Asian', 'Native Hawaiian or Other Pacific Islander', 'Other']
     var industry = ['',
@@ -158,8 +148,6 @@ class Analytics extends React.Component{
     var categories = [];
     if(this.state.demographic === 'politicalleaning') {
       categories = politicalleaning;
-    } else if(this.state.demographic === 'gender') {
-      categories = gender
     } else if(this.state.demographic === 'race') {
       categories = race
     } else if(this.state.demographic === 'industry') {
@@ -170,14 +158,14 @@ class Analytics extends React.Component{
       categories = income
     }
     // console.log('categories =============', categories, this.state)
-    let camp = this.state.camp
+    // let camp = this.state.camp
     // console.log('camp', camp)
     var config = {
       chart: {
         type: 'column'
       },
       title: {
-        text: `Statistics for ${camp}`
+        text: `Statistics`
       },
       plotOptions: {
         column: {
@@ -204,12 +192,6 @@ class Analytics extends React.Component{
       }]
     }
 
-    var listCommonground = commongrounds.map((commonground) => {
-      return(
-          <option value={commonground.value}>{commonground.value}</option>
-        )
-    })
-
     var listDemographics = demographics.map((demographic) => {
       return(
           <option value={demographic.value}>{demographic.value}</option>
@@ -220,18 +202,12 @@ class Analytics extends React.Component{
 
     <div>
 
-      <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.props.showModal}>
-        <Modal.Header closeButton onClick={this.showModal.bind(this)}>
+      <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
+        <Modal.Header closeButton onClick={this.toggleModal.bind(this)}>
           <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
-            <FormGroup controlId="formControlsSelect">
-              <ControlLabel>Select a CommonGround</ControlLabel>
-              <FormControl onChange={this.campChange.bind(this)} componentClass="select" placeholder="select" ref="select">
-                {listCommonground}
-              </FormControl>
-            </FormGroup>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Select Demographic Property</ControlLabel>
               <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
@@ -244,9 +220,15 @@ class Analytics extends React.Component{
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={this.showModal.bind(this)}>Close</Button>
+          <Button onClick={this.toggleModal.bind(this)}>Close</Button>
         </Modal.Footer>
       </Modal>
+
+      <Button onClick={this.toggleModal.bind(this)}>
+        <Glyphicon glyph="stats">
+        </Glyphicon>
+      </Button>
+
     </div>
 
     )
@@ -260,6 +242,20 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(Analytics)
+
+
+  // campChange(e){
+  //   this.setState({
+  //     camp: e.target.value
+  //   });
+  //   console.log('camp change', this.state)
+  // }
+
+      // var listCommonground = commongrounds.map((commonground) => {
+    //   return(
+    //       <option value={commonground.value}>{commonground.value}</option>
+    //     )
+    // })
 
     // var barchartData = [{
     //   label: 'somethingA',
@@ -313,3 +309,7 @@ export default connect(mapStateToProps)(Analytics)
       //     return <option>{demographicOption}</option>
       //   })}
       // </select>
+
+          // var commongrounds = this.props.campList.map(camp => {
+    //   return {value: camp.input, label: camp.input}
+    // })

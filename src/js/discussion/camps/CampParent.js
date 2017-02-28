@@ -46,7 +46,6 @@ class CampParent extends React.Component{
         <h2 className="test">{arrayIndex.input}</h2>
         <AddCamp discussionId={discussionId} />
         <CampList discussionId={discussionId} />
-        <Analytics />
       </div>
     )
   }

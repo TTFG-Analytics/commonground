@@ -73,17 +73,17 @@ app.get('/discussion/:discussionId', function(req, res) {
     })
 })
 
-app.get('/analytics/:campName/:demographic', (req, res) => {
+app.get('/analytics/:campId/:demographic', (req, res) => {
   knex.select(`${req.params.demographic}`, 'users.id').from('users').distinct('users.id')
     .innerJoin('comment', 'users.id', 'comment.user_id')
     .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
-    .whereRaw(`commonground.input=('${req.params.campName}')`)
+    .whereRaw(`commonground.id=('${req.params.campId}')`)
     .then(data => {
       knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id')
         .innerJoin('vote', 'users.id', 'vote.user_id')
         .innerJoin('comment', 'vote.comment_id', 'comment.id')
         .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
-        .whereRaw(`commonground.input=('${req.params.campName}')`)
+        .whereRaw(`commonground.id=('${req.params.campId}')`)
         .then(data2 => {
           var ans = data2.concat(data)
           console.log('responseArr analytics array ---------------', ans)
