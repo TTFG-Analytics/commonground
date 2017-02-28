@@ -1,7 +1,7 @@
 import React from 'react'
 import io from 'socket.io-client'
 import CampList from './CampList'
-import Analytics from '../discuss/Analytics'
+import Analytics from '../../analytics/Analytics'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments, createCommentSuccess } from '../actions/actions'

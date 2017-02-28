@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, Route, browserHistory } from 'react-router'
 import App from './discussion/discuss/App'
-import Analytics from './discussion/discuss/Analytics'
 import CampParent from './discussion/camps/CampParent'
 import store from './store' //tie react application to redux
 import FaceBookIntegration from './discussion/camps/FaceBookIntegration'
