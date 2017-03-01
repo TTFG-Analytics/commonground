@@ -63,7 +63,6 @@ app.get('/discussions', (req, res) => {
 
 app.get('/discussion/:discussionId', function(req, res) {
   let id = req.params.discussionId;
-  console.log('id', id, req.params);
   knex('commonground').where({discussion_id: id}).select('*')
     .then(function(data) {
       // console.log('data', data)
@@ -163,7 +162,7 @@ app.post('/profile', function(req,res) {
 
   // knex.raw(`
   //   UPDATE users WHERE id=('${req.body.id}')
-  //   SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) = 
+  //   SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) =
   //('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}',
   // '${req.body.politicalleaning}', '${req.body.religion}', '${req.body.yearlyincome}')
   //   `).then(function(data){
