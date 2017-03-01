@@ -14,38 +14,261 @@ exports.seed = function(knex, Promise) {
         yearlyincome: 7
       });
     }).then(function () {
+      return knex('users').insert({
+        fullname: "Tim Cook",
+        title: "CEO of Apple Inc.",
+        age: 56,
+        hometown: "Palo Alto, California",
+        gender: "male",
+        race: 2,
+        industry: 23,
+        politicalleaning: 5,
+        religion: 1,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: "Jeff Bezos",
+        title: "Founder, Chairman, and CEO of Amazon.com",
+        age: 53,
+        hometown: "Seattle, Washington",
+        gender: "male",
+        race: 2,
+        industry: 23,
+        politicalleaning: 3,
+        religion: 4,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: "Bill Gates",
+        title: "Technology Advisor of Microsoft",
+        age: 61,
+        hometown: "Medina, Washington",
+        gender: "male",
+        race: 2,
+        industry: 23,
+        politicalleaning: 3,
+        religion: 2,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: "Mary Barra",
+        title: "Chairman & CEO of General Motors Company",
+        age: 55,
+        hometown: "Royal Oak, Michigan",
+        gender: "female",
+        race: 2,
+        industry: 3,
+        politicalleaning: 3,
+        religion: 2,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: "Mark Fields",
+        title: "President and CEO of Ford Motor Company",
+        age: 56,
+        hometown: "Dearborn, Michigan",
+        gender: "male",
+        race: 2,
+        industry: 3,
+        politicalleaning: 1,
+        religion: 1,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Niel Degrasse Tyson',
+        title: "Astrophysicist, Cosmologist, Author, and Science Communicator",
+        age: 58,
+        hometown: 'Manhattan',
+        gender: "male",
+        race: 2,
+        industry: 25,
+        politicalleaning: 3,
+        religion: 10,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Bill Nye',
+        title: "The Science Guy",
+        age: 61,
+        hometown: 'Washington D.C.',
+        gender: "male",
+        race: 1,
+        industry: 25,
+        politicalleaning: 3,
+        religion: 10,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Steven Hawking',
+        title: "Theoretical Physicist, Cosmologist",
+        age: 75,
+        hometown: 'Oxford',
+        gender: "male",
+        race: 1,
+        industry: 25,
+        politicalleaning: 3,
+        religion: 10,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Rush Limbaugh',
+        title: 'Entertainer, Radio Talk Show Host, and Conservative Political Commentator',
+        age: 66,
+        hometown: 'Cape Girardeau',
+        gender: "male",
+        race: 1,
+        industry: 10,
+        politicalleaning: 1,
+        religion: 1,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Sarah Palin',
+        title: "American Politician, Commentator, and Author",
+        age: 53,
+        hometown: 'Sandpoint',
+        gender: "female",
+        race: 1,
+        industry: 13,
+        politicalleaning: 1,
+        religion: 1,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Ted Nugent',
+        title: "Musician and Political Activist",
+        age: 68,
+        hometown: 'Redford',
+        gender: "male",
+        race: 1,
+        industry: 10,
+        politicalleaning: 1,
+        religion: 1,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Chris Farley',
+        title: "Actor, Comedian",
+        age: 33,
+        hometown: 'Madison, Wisconsin',
+        gender: "male",
+        race: 1,
+        industry: 10,
+        politicalleaning: 3,
+        religion: 2,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Betty White',
+        title: "Actor",
+        age: 95,
+        hometown: 'Oak Park, Illinois',
+        gender: "female",
+        race: 1,
+        industry: 10,
+        politicalleaning: 3,
+        religion: 1,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Kevin Hart',
+        title: "Comedian and Actor",
+        age: 75,
+        hometown: 'Oxford',
+        gender: "male",
+        race: 2,
+        industry: 10,
+        politicalleaning: 3,
+        religion: 9,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Louis C.K.',
+        title: 'Entertainer, Comedian',
+        age: 66,
+        hometown: 'Cape Girardeau',
+        gender: "male",
+        race: 1,
+        industry: 10,
+        politicalleaning: 3,
+        religion: 9,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Amy Schumer',
+        title: "Comedian",
+        age: 53,
+        hometown: 'Sandpoint',
+        gender: "female",
+        race: 1,
+        industry: 10,
+        politicalleaning: 5,
+        religion: 10,
+        yearlyincome: 7
+      });
+    }).then(function () {
+      return knex('users').insert({
+        fullname: 'Tina Fey',
+        title: "Comedian",
+        age: 68,
+        hometown: 'Redford',
+        gender: "female",
+        race: 1,
+        industry: 10,
+        politicalleaning: 5,
+        religion: 10,
+        yearlyincome: 7
+      });
+    }).then(function () {
       return knex('discussion').insert({ //discussion1
-        input: 'This is a discussion topic. Make a discussion topic about something that you would like to see multiple different perspectives on. We will use the example of, "What is the best tech-city in the United States"',
+        input: '"What is the best tech-city in the United States" - DEMO',
         user_id: 1
       });
     }).then(function () {
       return knex('commonground').insert({ //commonground1
-        input: 'This is a commonground. Think of this as a social grouping of people with a common idea, opinion, or perspective (there are no limits to what commongrounds can be). An example of a commonground for this discussion would be "San Francisco"',
+        input: "San Francisco",
         user_id: 1,
         discussion_id: 1
       });
     }).then(function () {
       return knex('commonground').insert({// commonground2
-        input: 'Here is an opposing viewpoint to the "San Francisco" commonground. Here we will display a social grouping for people that believe "Austin" is the best tech-city in the United States',
+        input: "Austin",
         user_id: 1,
         discussion_id: 1
       });
     }).then(function () {
       return knex('comment').insert({ //comment1 in commonground1
-        input: "The comment at the top is the most representative comment of the commonground. The users decide which is the most representative comment by upvoting and downvoting - 'San Francisco is clearly the best 'tech-city' in the United States, if not the World. It is home to some of the most innovative and cutting-edge companies. That and the city is awesome!'",
-        user_id: 1,
+        input: "San Francisco is clearly the best 'tech-city' in the United States, if not the World. It is home to some of the most innovative and cutting-edge companies. That and the city is awesome!",
+        user_id: 2,
         commonground_id: 1,
         delta: 16
       });
     }).then(function () {
       return knex('comment').insert({ //comment2 commonground2
-        input: "Here is the most representative comment in the Austin commonground - 'Austin is by far the best 'tech-city' in the United States. The cost of living is still reasonable (compared to other 'tech-cities') and the BBQ is great! Also, the night life is incredible!",
-        user_id: 2,
+        input: "Austin is by far the best 'tech-city' in the United States. The cost of living is still reasonable (compared to other 'tech-cities') and the BBQ is great! Also, the night life is incredible!",
+        user_id: 3,
         commonground_id: 2,
         delta: 24
       });
     })
 };
+
+
 
 
 // exports.seed = function(knex, Promise) {
@@ -562,12 +785,6 @@ exports.seed = function(knex, Promise) {
 //       });
 //     })
 // };
-
-
-
-
-
-
 
 
 
