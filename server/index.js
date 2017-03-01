@@ -213,8 +213,14 @@ app.post('/commonground', function(req, res){
             cgNsp.emit('comment', commentResObj);
             return commentResObj;
           }).then(function(){
-            knex('users_join').insert({user_id: 16, commonground_id: commentResObj.commonground_id, comment_id:commentResObj.id})
-            .then(function(){});
+            knex('users_join').insert({user_id: 16, commonground_id: commentResObj.commonground_id, comment_id:commentResObj.id}).returning('commonground_id')
+            .then(function(data2){
+              console.log("comment data2", data2);
+              knex('commonground').where({id:data2[0]}).select('discussion_id')
+              .then(function(data4){
+                knex('users_join').where({commonground_id: data2[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
+              })
+            });
           })
         })
       })
@@ -253,8 +259,6 @@ app.post('/vote', function(req,res){
             console.log('This is commonground_id', data3[0])
             knex('commonground').where({id:data3[0]}).select('discussion_id')
             .then(function(data4){
-              console.log('This is commonground_id', data3[0])
-              console.log('inner data4', data4[0].discussion_id);
               knex('users_join').where({commonground_id: data3[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
             })
           });
@@ -280,8 +284,6 @@ app.post('/vote', function(req,res){
             console.log('This is commonground_id', data3[0])
             knex('commonground').where({id:data3[0]}).select('discussion_id')
             .then(function(data4){
-              console.log('This is commonground_id', data3[0])
-              console.log('inner data4', data4[0].discussion_id);
               knex('users_join').where({commonground_id: data3[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
             })
           });
