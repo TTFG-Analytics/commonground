@@ -6,12 +6,43 @@ class About extends React.Component{
     return (
       <div>
       <Navigation />
-      <h3>About Component</h3>
-      <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et eleifend turpis. Morbi eleifend nisi eu ornare blandit. Nulla auctor risus id metus fermentum maximus. Nulla facilisi. Pellentesque eget finibus lectus. In eu hendrerit purus, et malesuada ante. Mauris dolor nisi, laoreet id lectus feugiat, congue consequat turpis. Donec id nunc augue.
+      <h1>About</h1>
 
-Nunc orci nulla, iaculis a nulla vel, imperdiet rutrum nulla. Sed gravida, lectus eget mattis viverra, dui mauris suscipit dolor, quis molestie massa purus at diam. Fusce lobortis ullamcorper sem ac feugiat. Cras maximus mi bibendum, accumsan ipsum vitae, tempus nulla. Vivamus nec sodales nunc, ut porta diam. Fusce euismod, dolor et dictum tincidunt, magna est aliquam elit, ac ultrices erat quam et nibh. Suspendisse luctus posuere ante. Vivamus in orci id lacus imperdiet suscipit ac ut nisi.
+        <div>
+          <h3>What this app is about</h3>
+          <p>
+            This is a social app designed to facilitate comunication between different viewpoints.
+          </p>
+          <h3>How to use this app</h3>
+          <p>
+            By signing in through facebook, you will be able to create a discussion, create a comment, or vote on a post.
+            However you are not required to be signed in to browse content. If there are multiple users on your computer,
+            there is an ability to logout and login with a different facebook ID. Please note that this will also log you
+            out of facebook proper.
+          </p>
+          <h3>Rules</h3>
+          <p>
+            <ul>
+              <li>No ad hominem attacks</li>
+              <li>Be nice and civil</li>
+            </ul>
+          </p>
+          <h3>How we use your data</h3>
+          <p>
+            Nunc orci nulla, iaculis a nulla vel, imperdiet rutrum nulla. Sed gravida, 
+            lectus eget mattis viverra, dui mauris suscipit dolor, quis molestie massa 
+            purus at diam. Fusce lobortis ullamcorper sem ac feugiat. Cras maximus mi 
+            bibendum, accumsan ipsum vitae, tempus nulla. Vivamus nec sodales nunc, ut 
+            porta diam. Fusce euismod, dolor et dictum tincidunt, magna est aliquam 
+            elit, ac ultrices erat quam et nibh. Suspendisse luctus posuere ante. 
+            Vivamus in orci id lacus imperdiet suscipit ac ut nisi.
+          </p>
+          <h3>About Us</h3>
+          <p>
+            TTFG are a group of like minded software engineers hoping to make the world a better place, one app at a time.
+          </p>
 
-Sed non rutrum ante. Nullam blandit justo id scelerisque varius. Maecenas eget hendrerit felis. Duis ultricies orci turpis. Donec euismod dui nec augue volutpat, quis ultricies elit bibendum. Duis feugiat maximus rutrum. In dignissim faucibus mattis. Sed egestas nulla vitae nulla interdum semper.</div>
+        </div>
       </div>
     )
   }
