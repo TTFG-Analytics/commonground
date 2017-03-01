@@ -1,0 +1,11 @@
+/*.navStuff {
+    float: right;
+}*/
+
+/*.navbar {
+    position: relative;
+}*/
+
+.nav {
+    float: right !important;
+}

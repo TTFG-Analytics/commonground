@@ -5,9 +5,11 @@ import { Link } from 'react-router'
 class ProfileButton extends React.Component{
   render() {
     return (
-      <Link to={"/userprofile"}><h4 style={{marginLeft: '40px'}}>User Profile</h4></Link>
+      <Link to={"/userprofile"}>User Profile</Link>
     )
   }
 }
 
 export default ProfileButton
+
+// <h4 style={{marginLeft: '40px'}}>
