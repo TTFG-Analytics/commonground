@@ -69,6 +69,7 @@ app.get('/discussion/:discussionId/:userFullname', function(req, res) {
       // console.log('data', data)
       var commongroundsResponse = {};
       commongroundsResponse.data = data;
+<<<<<<< HEAD
       knex.select('*').from('users_join')
         .innerJoin('users', 'users_join.user_id', 'users.id')
         .whereRaw(`users.fullname=('${fullname}') and users_join.discussion_id=('${id}')`)
@@ -78,6 +79,11 @@ app.get('/discussion/:discussionId/:userFullname', function(req, res) {
           console.log('commongroundsResponse', commongroundsResponse)
           res.send(commongroundsResponse);
         })
+=======
+      res.send(commongroundsResponse);
+      console.log("WE ARE HERE", data);
+      knex('users_join')
+>>>>>>> working on knex call for constraints
     })
 })
 
