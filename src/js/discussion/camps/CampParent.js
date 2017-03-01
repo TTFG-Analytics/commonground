@@ -10,7 +10,7 @@ import FaceBookIntegration from './FaceBookIntegration'
 import ProfileButton from './ProfileButton'
 import Navigation from '../../navbar/navbar'
 import { Link } from 'react-router'
-require('applicationStyles')
+require('./camp.css')
 
 //discussionId is used to associate which camps belong to which discussions
 class CampParent extends React.Component{
@@ -42,7 +42,7 @@ class CampParent extends React.Component{
     return (
       <div>
         <Navigation />
-        <h2 className="test">{arrayIndex.input}</h2>
+        <h2 className="campText">{arrayIndex.input}</h2>
         <AddCamp discussionId={discussionId} />
         <CampList discussionId={discussionId} />
       </div>

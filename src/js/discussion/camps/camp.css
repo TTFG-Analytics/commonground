@@ -1,0 +1,23 @@
+.campText {
+  color: #EBF5EE;
+}
+
+.campground {
+  background-color: #293E6A !important;
+}
+.campBox {
+  background-color: #98C1D9 !important;
+  opacity: 0.9;
+}
+
+.panel {
+  border: none !important;
+}
+
+.panel-heading {
+  background-image: none;
+  background-color: #FACCE1 !important;
+  color: #78A1BB !important;
+  text-align: center;
+  font-weight: bold !important;
+}

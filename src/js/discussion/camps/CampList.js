@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import Camp from './Camp'
 import { connect } from 'react-redux'
+require('./camp.css')
 
 class CampList extends React.Component{
   render(){
@@ -9,7 +10,7 @@ class CampList extends React.Component{
     });
 
     return (
-      <div>
+      <div className='campground'>
         {currCamps.map(currCamp =>
           <Camp
             key={currCamp.id}

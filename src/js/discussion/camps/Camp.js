@@ -6,7 +6,7 @@ import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
 import { getComments, createCommentSuccess } from '../actions/actions'
 import { Button, Glyphicon, Panel, Col, Row, Grid } from 'react-bootstrap';
-
+require('./camp.css')
 
 class Camp extends React.Component{
   constructor(props){
@@ -55,7 +55,7 @@ class Camp extends React.Component{
     console.log("camp w/ Analytics", this.state);
     return (
       <Col md={6}>
-        <Panel header={campName}>
+        <Panel header={campName} className='campBox'>
           <Analytics campId={campId} />
           {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
 

@@ -20,7 +20,8 @@ class DiscussionList extends React.Component{
     return (
       <div>
         {thisObj.props.discussionsList.length > 0 && thisObj.props.discussionsList.map((discussionX, index) =>
-        <ButtonGroup vertical block >
+        <ButtonGroup vertical block>
+          <div className='topic'></div>
           <Link to={`/discuss/${discussionX.id}`}>
             <Button className="col-md-10 col-md-offset-1">
               <Discussion
@@ -30,6 +31,7 @@ class DiscussionList extends React.Component{
               />
             </Button>
           </Link>
+         
         </ButtonGroup>
         )}
       </div>

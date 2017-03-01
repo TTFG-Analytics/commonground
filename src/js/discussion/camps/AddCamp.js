@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createCampPost } from '../actions/actions'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
-
+require('./camp.css')
 
 class AddCamp extends React.Component{
   constructor(props){
@@ -39,7 +39,7 @@ class AddCamp extends React.Component{
       <div>
         <form onSubmit={this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
-              <ControlLabel>Create a New CommonGround</ControlLabel>
+              <ControlLabel className='campText'>Create a New CommonGround</ControlLabel>
               <InputGroup>
               <FormControl
                 type="text"
@@ -50,7 +50,7 @@ class AddCamp extends React.Component{
               />
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
               </InputGroup>
-            <HelpBlock>Character limit: </HelpBlock>
+            <HelpBlock className='campText'>Character limit: </HelpBlock>
           </FormGroup>
         </form>
       </div>

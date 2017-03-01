@@ -42,3 +42,7 @@
   float: right;
   display: inline-block;
 }
+
+.well {
+  background-color: #B2B0C4 !important;
+}
