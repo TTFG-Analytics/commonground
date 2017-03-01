@@ -4,6 +4,7 @@ import ProfileButton from '../discussion/camps/ProfileButton'
 import { Link } from 'react-router'
 require('./navStyles.css')
 import { LinkContainer} from 'react-router-bootstrap'
+require('./navbarstyles.css');
 
 class Navigation extends React.Component {
 
@@ -11,6 +12,9 @@ class Navigation extends React.Component {
    return (
     <Navbar inverse>
     <Nav className='navStuff'>
+        <LinkContainer to='/'>
+          <h1>Common Ground</h1>
+        </LinkContainer> 
     <NavItem>
     <ProfileButton />
     </NavItem>
