@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import ProfileDetail from '../containers/profile-detail';
-import BackButton from '../../discussion/camps/BackButton'
+// import BackButton from '../../discussion/camps/BackButton'
 import {fbHolding} from '../../discussion/camps/FaceBookIntegration'
 import {getProfile} from '../actions/profileActions';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import Navigation from '../../navbar/navbar'
 
 ProfileDetail.need = [
   getProfile
@@ -13,7 +14,7 @@ class ProfileApp extends React.Component {
 
   render() {
    return ( <div>
-    <BackButton />
+    <Navigation />
     <h2>Profile Settings: </h2>
     <ProfileDetail />
     </div>
