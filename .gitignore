@@ -2,3 +2,10 @@
 node_modules
 public/bundle.js
 db/knexfile.js
+public/bootstrap.css
+*.ttf
+*.eot
+*.woff
+*.woff2
+*.svg
+debug.log
