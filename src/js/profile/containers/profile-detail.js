@@ -2,8 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getProfile, postProfile} from '../actions/profileActions';
-// import Dropdown from 'react-toolbox/lib/dropdown';
-// import {Button, IconButton} from 'react-toolbox/lib/button';
 import FaceBookIntegration from '../../discussion/camps/FaceBookIntegration'
 import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
@@ -67,19 +65,6 @@ class UserProfile extends React.Component{
   }
 
   render (){
-
-    // const gender = [
-    //   {value: 0, label: 'Select'},
-    //   {value: 1, label: 'Male'},
-    //   {value: 2, label: 'Female'},
-    //   {value: 3, label: 'Other'},
-    // ];
-
-    // var genderList = gender.map((item) => {
-    //   return (
-    //     <option value={item.value}>{item.label}</option>
-    //   )
-    // })
 
     const race = [
       {value: 0, label: 'Select'},
@@ -186,11 +171,8 @@ class UserProfile extends React.Component{
       )
     })
 
-
-
     console.log('--------render props ************', this.props)
     return (
-
 
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup controlId="formControlsSelect">
@@ -222,7 +204,6 @@ class UserProfile extends React.Component{
     )
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {
