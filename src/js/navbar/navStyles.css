@@ -1,11 +1,15 @@
-/*.navStuff {
-    float: right;
-}*/
+.navStuff {
+    float: right !important;
+}
+
+.navLeft {
+    float: left !important;
+}
 
 /*.navbar {
     position: relative;
 }*/
 
-.nav {
+/*.nav {
     float: right !important;
-}
+}*/

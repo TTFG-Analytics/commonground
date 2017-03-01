@@ -11,10 +11,14 @@ class Navigation extends React.Component {
   render() {
    return (
     <Navbar inverse>
-    <Nav className='navStuff'>
+    <Nav className='navLeft'>
+      <NavItem>
         <LinkContainer to='/'>
-          <h1>Common Ground</h1>
-        </LinkContainer> 
+          <h4>Common Ground</h4>
+        </LinkContainer>
+      </NavItem>
+    </Nav>
+    <Nav className='navStuff'>
     <NavItem>
     <ProfileButton />
     </NavItem>
