@@ -174,6 +174,7 @@ class UserProfile extends React.Component{
     console.log('--------render props ************', this.props)
     return (
       <Col md={10} mdOffset={1}>
+      <h2>Profile Settings: </h2>
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup controlId="formControlsSelect">
           <FormGroup onChange={this.handleChange.bind(this, 'age')} controlId="formBasicText">

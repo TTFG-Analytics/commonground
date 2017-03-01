@@ -4,6 +4,7 @@ import DiscussionList from './DiscussionList'
 import { getDiscussions } from '../actions/actions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import FaceBookIntegration from '../camps/FaceBookIntegration'
 
 //import ProfileButton from '../camps/ProfileButton'
 import { Link } from 'react-router'
@@ -14,6 +15,18 @@ DiscussionList.need = [
 ]
 
 class App extends React.Component{
+  // componentDidMount() {
+  //   FB.getLoginStatus(function(response) {
+  //     if (response.status === 'connected') {
+  //       var uid = response.authResponse.userID;
+  //       var accessToken = response.authResponse.accessToken;
+  //     } else if (response.status === 'not_authorized') {
+  //       console.log('user is logged into Facebook but not authenticated');
+  //     } else {
+  //       console.log('user is not logged in to to facebook');
+  //     }
+  //   });
+  // }
 
   render(){
     return (

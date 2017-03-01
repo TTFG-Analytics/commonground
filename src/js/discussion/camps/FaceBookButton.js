@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {cachingFbData} from '../actions/actions'
 import {sendingFbData} from '../actions/actions'
 
-class FaceBookIntegration extends React.Component{
+class FaceBookButton extends React.Component{
     componentDidMount() {
     // facebook signin  button render
     window.fbAsyncInit = function() {
@@ -55,8 +55,10 @@ class FaceBookIntegration extends React.Component{
 
   render(){
     return (
-    <div>
-    </div>)
+      <div className="fb-login-button" data-max-row="1" data-size="xlarge" data-show-faces="false"
+      data-auto-logout-link="true" data-scope="public_profile, email"
+      href="javascript:void(0)">Login</div>
+    )
   }
 }
 
@@ -84,7 +86,7 @@ const mapDispatchToProps = (dispatch) => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(FaceBookIntegration)
+export default connect(mapStateToProps, mapDispatchToProps)(FaceBookButton)
 
       /*<div className="fb-login-button" data-max-row="1" data-size="xlarge" data-show-faces="false"
       data-auto-logout-link="true" data-scope="public_profile, email"

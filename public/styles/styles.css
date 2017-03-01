@@ -1,5 +1,5 @@
 
-#app {
+body {
   background: url('../commonground.jpg') no-repeat center center fixed;
   height: 100%;
   background-attachment: fixed;
@@ -7,6 +7,4 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  overflow-x: hidden;
-  overflow-y: hidden;
 }
