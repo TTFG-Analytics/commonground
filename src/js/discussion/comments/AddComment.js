@@ -25,7 +25,7 @@ class AddComment extends React.Component{
   handleSubmit(e) {
     e.preventDefault()
     console.log('this props user', this.props.user.fullname)
-    var userPic = this.props.user.facebookpicture.replace('2oh', 'oh')
+    var userPic = this.props.user.facebookpicture || 'unknown'
     let newComment = {
       comment: this.state.commentValue,
       commongroundId: this.props.campId,
