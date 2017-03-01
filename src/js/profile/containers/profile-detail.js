@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getProfile, postProfile} from '../actions/profileActions';
 import FaceBookIntegration from '../../discussion/camps/FaceBookIntegration'
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
+import { FormGroup, FormControl, ControlLabel, Button, Col } from 'react-bootstrap'
 
 
 class UserProfile extends React.Component{
@@ -173,7 +173,7 @@ class UserProfile extends React.Component{
 
     console.log('--------render props ************', this.props)
     return (
-
+      <Col md={10} mdOffset={1}>
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup controlId="formControlsSelect">
           <FormGroup onChange={this.handleChange.bind(this, 'age')} controlId="formBasicText">
@@ -201,6 +201,7 @@ class UserProfile extends React.Component{
         <Button type='submit' bsStyle="primary">Submit</Button>
 
       </form>
+      </Col>
     )
   }
 }

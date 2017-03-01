@@ -36,10 +36,11 @@ class AddCamp extends React.Component{
 
   render() {
     return (
-      <div>
+      <div className='campForm'>
+        <Col md={8} mdOffset={2}>
         <form onSubmit={this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
-              <ControlLabel className='campText'>Create a New CommonGround</ControlLabel>
+              <ControlLabel className='campFormLabel'>Create a New CommonGround</ControlLabel>
               <InputGroup>
               <FormControl
                 type="text"
@@ -50,9 +51,9 @@ class AddCamp extends React.Component{
               />
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
               </InputGroup>
-            <HelpBlock className='campText'>Character limit: </HelpBlock>
           </FormGroup>
         </form>
+        </Col>
       </div>
     )
   }

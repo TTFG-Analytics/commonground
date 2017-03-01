@@ -57,9 +57,10 @@ class AddDiscussion extends React.Component{
 
     return (
       <div>
+        <Col md={8} mdOffset={2}>
         <form onSubmit={this.handleSubmit.bind(this)}>
           <FormGroup controlId="formBasicText">
-            <h2 className='discussHelp'>Create a New Discussion</h2>
+            <h1 className='discussHelp'>Create a New Discussion</h1>
             <InputGroup>
               <FormControl
                 type="text"
@@ -70,9 +71,10 @@ class AddDiscussion extends React.Component{
               />
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
             </InputGroup>
-            <HelpBlock className='discussHelp'>Character limit: </HelpBlock>
+            <br/>
           </FormGroup>
         </form>
+        </Col>
       </div>
     )
   }

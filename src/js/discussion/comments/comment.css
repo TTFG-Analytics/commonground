@@ -40,9 +40,9 @@
 
 .inlineRight {
   float: right;
-  display: inline-block;
 }
 
 .well {
+  display: inline-block !important;
   background-color: #B2B0C4 !important;
 }
