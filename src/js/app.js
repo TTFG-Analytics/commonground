@@ -20,7 +20,6 @@ const app = document.getElementById('app')
 
 ReactDOM.render(
   <div>
-  <FaceBookIntegration store={store} />
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={App} />
@@ -33,4 +32,4 @@ ReactDOM.render(
   );
 
 //      <Route path='*' component={NoMatch} /> add this to routing eventually for 404 page
-
+// <FaceBookIntegration store={store} />

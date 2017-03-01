@@ -5,11 +5,7 @@ import { createDiscussionSuccess } from '../actions/actions'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 import Navigation from '../../navbar/navbar'
-
-// import styles from "../../../styles.css"
-//import 'bootstrap';
-//import 'bootstrap/dist/css/bootstrap.css';
-
+require('./styles.css')
 
 class AddDiscussion extends React.Component{
 
@@ -61,9 +57,10 @@ class AddDiscussion extends React.Component{
 
     return (
       <div>
+        <Col md={8} mdOffset={2}>
         <form onSubmit={this.handleSubmit.bind(this)}>
           <FormGroup controlId="formBasicText">
-            <ControlLabel>Create a New Discussion</ControlLabel>
+            <h1 className='discussHelp'>Create a New Discussion</h1>
             <InputGroup>
               <FormControl
                 type="text"
@@ -74,10 +71,10 @@ class AddDiscussion extends React.Component{
               />
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
             </InputGroup>
-            <HelpBlock>Character limit: </HelpBlock>
+            <br/>
           </FormGroup>
         </form>
-        <hr />
+        </Col>
       </div>
     )
   }

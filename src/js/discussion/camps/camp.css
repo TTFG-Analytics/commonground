@@ -1,0 +1,36 @@
+.campText {
+  color: #EBF5EE;
+  margin-left: 50px; 
+}
+
+.campForm {
+  margin-top: 40px; 
+}
+
+.campFormLabel {
+  color: #EBF5EE;
+}
+
+.campground {
+  background-color: #293E6A !important;
+}
+
+.campBox {
+  /*background-color: #063563 !important;*/
+  background-color: #2C3340 !important;
+  opacity: 0.85;
+  margin-bottom: 50px !important;
+}
+
+.panel {
+  border: none !important;
+  margin-bottom: 50px !important;
+}
+
+.panel-heading {
+  background-image: none;
+  background-color: #FACCE1 !important;
+  color: #2C3340 !important;
+  text-align: center;
+  font-weight: bold !important;
+}

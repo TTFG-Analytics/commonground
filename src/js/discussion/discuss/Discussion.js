@@ -12,7 +12,7 @@ class Discussion extends React.Component{
     var discussionId = this.props.discussionId;
     var inputStr = this.props.inputStr;
     return (
-      <div>
+      <div className='discussionName'>
         <h3 className="topic" onClick={()=> this.fetchCamps(discussionId)}>
           {inputStr}
         </h3>
