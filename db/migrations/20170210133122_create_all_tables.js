@@ -68,7 +68,7 @@ exports.up = function(knex, Promise) {
       t.increments('id').unsigned().primary();
       t.integer('user_id').notNull();
       t.integer('commonground_id').notNull();
-      t.integer('discussion_id').notNull();
+      t.integer('discussion_id').nullable();
       t.integer('comment_id').nullable();
       t.integer('vote_id').nullable();
       t.timestamp('createdat').defaultTo(knex.fn.now());
