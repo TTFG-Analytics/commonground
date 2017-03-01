@@ -248,8 +248,15 @@ app.post('/vote', function(req,res){
           }
           console.log('voteResObj ---------------', voteResObj)
           res.status(200).send(voteResObj);
-          knex('users_join').insert({user_id: 16, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).then(function(data){
-            console.log('users joined', data)
+          knex('users_join').insert({user_id: 16, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).returning('commonground_id')
+          .then(function(data3){
+            console.log('This is commonground_id', data3[0])
+            knex('commonground').where({id:data3[0]}).select('discussion_id')
+            .then(function(data4){
+              console.log('This is commonground_id', data3[0])
+              console.log('inner data4', data4[0].discussion_id);
+              knex('users_join').where({commonground_id: data3[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
+            })
           });
         });
     } else {
@@ -268,8 +275,15 @@ app.post('/vote', function(req,res){
           }
           console.log('downvoteResObj ---------------', downvoteResObj)
           res.status(200).send(downvoteResObj);
-          knex('users_join').insert({user_id: 16, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).then(function(data){
-            console.log('users joined', data)
+          knex('users_join').insert({user_id: 16, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).returning('commonground_id')
+          .then(function(data3){
+            console.log('This is commonground_id', data3[0])
+            knex('commonground').where({id:data3[0]}).select('discussion_id')
+            .then(function(data4){
+              console.log('This is commonground_id', data3[0])
+              console.log('inner data4', data4[0].discussion_id);
+              knex('users_join').where({commonground_id: data3[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
+            })
           });
         });
     }
