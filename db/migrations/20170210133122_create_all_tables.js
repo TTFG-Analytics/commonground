@@ -68,11 +68,13 @@ exports.up = function(knex, Promise) {
       t.increments('id').unsigned().primary();
       t.integer('user_id').notNull();
       t.integer('commonground_id').notNull();
+      t.integer('discussion_id').notNull();
       t.integer('comment_id').nullable();
       t.integer('vote_id').nullable();
       t.timestamp('createdat').defaultTo(knex.fn.now());
       t.foreign('user_id').references('users.id');
       t.foreign('commonground_id').references('commonground.id');
+      t.foreign('discussion_id').references('discussion.id');
       t.foreign('vote_id').references('vote.id');
     })
   ]);
