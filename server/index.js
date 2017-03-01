@@ -147,7 +147,6 @@ app.post('/login', function(req,res) {
 app.post('/profile', function(req,res) {
   console.log('profile REQ.BODY', req.body);
   knex('users').returning('*').where('id', req.body.id).update({
-    title: `${req.body.title}`,
     age: `${req.body.age}`,
     hometown: `${req.body.hometown}`,
     race: `${req.body.race}`,
