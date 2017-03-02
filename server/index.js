@@ -228,7 +228,10 @@ app.post('/commonground', function(req, res){
             cgNsp.emit('comment', commentResObj);
             return commentResObj;
           }).then(function(){
-
+            // console.log("socketClient!", socketClient)
+            // console.log("commentData!", commentData)
+            // console.log("data!", data)
+            // console.log("commentResObj", commentResObj)
 
 
           knex('commonground').where({id:commentResObj.commonground_id}).select('discussion_id')
@@ -258,21 +261,14 @@ app.post('/commonground', function(req, res){
           });
 
 
-
-
-
-
-
-
-            knex('users_join').insert({user_id: 16, commonground_id: commentResObj.commonground_id, comment_id:commentResObj.id}).returning('commonground_id')
-
-            .then(function(data2){
-              console.log("comment data2", data2);
-              knex('commonground').where({id:data2[0]}).select('discussion_id')
-              .then(function(data4){
-                knex('users_join').where({commonground_id: data2[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
-              })
-            });
+            // knex('users_join').insert({user_id: commentResObj.user_id, commonground_id: commentResObj.commonground_id, comment_id:commentResObj.id}).returning('commonground_id')
+            // .then(function(data2){
+            //   console.log("comment data2", data2);
+            //   knex('commonground').where({id:data2[0]}).select('discussion_id')
+            //   .then(function(data4){
+            //     knex('users_join').where({commonground_id: data2[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
+            //   })
+            // });
           })
         })
       })
@@ -308,14 +304,6 @@ app.post('/vote', function(req,res){
           console.log('voteResObj ---------------', voteResObj)
           res.status(200).send(voteResObj);
 
-          knex('users_join').insert({user_id: req.body.userId, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).returning('commonground_id')
-          .then(function(data3){
-            console.log('This is commonground_id', data3[0])
-            knex('commonground').where({id:data3[0]}).select('discussion_id')
-            .then(function(data4){
-              knex('users_join').where({commonground_id: data3[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
-            })
-
 
           knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
           .then(function(data3){
@@ -341,7 +329,6 @@ app.post('/vote', function(req,res){
                 })
               }
             })
-
           });
         })
 
@@ -362,9 +349,7 @@ app.post('/vote', function(req,res){
           console.log('downvoteResObj ---------------', downvoteResObj)
           res.status(200).send(downvoteResObj);
 
-
           knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
-
           .then(function(data3){
             console.log("data1 - Vote ID", data1)
             console.log("data2 - commentID", data2)
