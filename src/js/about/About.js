@@ -26,6 +26,8 @@ class About extends React.Component{
             <ol>
               <li>No ad hominem attacks</li>
               <li>Be nice and civil</li>
+              <li>Per discussion you get 1 comment or upvote, use it wisely</li>
+              <li>Do your best to support facts with sources, actual sources... not news articles</li>
             </ol>
           </Panel>          
 
