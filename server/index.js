@@ -40,7 +40,7 @@ io.on('connection', (client) => {
 
 
 app.get('/discussions', (req, res) => {
-  knex('discussion').select('*')
+  knex('discussion').select('*').orderBy('createdat', 'desc')
     .then((data) => {
       // console.log('discussions data', data)
       res.status(200).send(data)
@@ -115,7 +115,7 @@ app.get('/comments/:campId', function(req, res) {
   // console.log('req params', req.params)
   let id = req.params.campId;
   // console.log('id', id, req.params);
-  knex('comment').where({commonground_id: id}).select('*')
+  knex('comment').where({commonground_id: id}).select('*').orderBy('delta', 'desc')
     .then(function(data) {
       // console.log('data', data)
       var commentsResponse = {};
