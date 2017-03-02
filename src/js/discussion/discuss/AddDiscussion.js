@@ -40,7 +40,10 @@ class AddDiscussion extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault()
-    let newDiscussion = {topic: this.state.discussionValue}
+    let newDiscussion = {
+      topic: this.state.discussionValue,
+      user: this.props.user.id
+    }
     if(window.discussionSocket){
       window.discussionSocket.emit('discussion', newDiscussion)
     }

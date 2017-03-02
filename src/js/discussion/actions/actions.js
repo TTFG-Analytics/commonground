@@ -78,7 +78,8 @@ export const createDiscussionSuccess = (discussion) => {
   return {
     type: 'CREATE_DISCUSSION_SUCCESS',
     id: discussion.id,
-    input: discussion.input
+    input: discussion.input,
+    user_id: discussion.user_id
   }
 } //sends action that's picked up by discussionReducer
 
