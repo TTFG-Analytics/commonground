@@ -54,6 +54,10 @@ class AddDiscussion extends React.Component{
   }
 
   render() {
+    let notLoggedIn = false
+    if(!this.props.user.id){
+      notLoggedIn = true
+    }
 
     return (
       <div>
@@ -63,6 +67,7 @@ class AddDiscussion extends React.Component{
             <h1 className='discussHelp'>Create a New Discussion</h1>
             <InputGroup>
               <FormControl
+                disabled={notLoggedIn}
                 type="text"
                 value={this.state.discussionValue}
                 placeholder="Enter text"
@@ -80,6 +85,12 @@ class AddDiscussion extends React.Component{
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.profileReducer
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     createDiscussionSuccess: (discussion) => {
@@ -88,4 +99,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AddDiscussion)
+export default connect(mapStateToProps, mapDispatchToProps)(AddDiscussion)

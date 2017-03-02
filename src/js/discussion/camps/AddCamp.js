@@ -35,6 +35,11 @@ class AddCamp extends React.Component{
   }
 
   render() {
+    let notLoggedIn = false
+    if(!this.props.user.id){
+      notLoggedIn = true
+    }
+
     return (
       <div className='campForm'>
         <Col md={8} mdOffset={2}>
@@ -44,6 +49,7 @@ class AddCamp extends React.Component{
               <InputGroup>
               <FormControl
                 type="text"
+                disabled={notLoggedIn}
                 value={this.state.cgValue}
                 placeholder="Enter text"
                 ref='cg'
@@ -59,6 +65,12 @@ class AddCamp extends React.Component{
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.profileReducer
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     createCampPost: (camp) => {
@@ -67,7 +79,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AddCamp)
+export default connect(mapStateToProps, mapDispatchToProps)(AddCamp)
 
 // Old react toolbox code
 // <Input ref='camp' type='text' label='CommonGround' />
