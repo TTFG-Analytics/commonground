@@ -18,7 +18,8 @@ const campGet = (state={commongrounds: []}, action) => {
       commongrounds: [...state.commongrounds, newCamp]
     }
   }
-  if(action.type === 'CREATE_COMMENT_SUCCESS') { //change state so user can't make more comments
+  if(action.type === 'CONTRIBUTED') { //change state so user can't make more comments
+    console.log('contributed once')
     return Object.assign(
       {},
       state,
@@ -28,6 +29,7 @@ const campGet = (state={commongrounds: []}, action) => {
     )
   }
   if(action.type === 'CONTRIBUTE_AGAIN') { //change state so user can't make more comments
+    console.log('contribute more')
     return Object.assign(
       {},
       state,

@@ -181,7 +181,13 @@ export function sendingFbDataSuccess(fbUser) {
   }
 }
 
-export const contribute = () => {
+export const contributedOnce = () => {
+  return {
+    type: 'CONTRIBUTED'
+  }
+}
+
+export const contributeAgain = () => {
   return {
     type: 'CONTRIBUTE_AGAIN'
   }

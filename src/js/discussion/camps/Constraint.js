@@ -1,27 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Modal, Glyphicon, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
-import { contribute } from '../actions/actions'
+import { contributeAgain } from '../actions/actions'
 
 class Constraint extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      showModal: false
+      showModal: this.props.showModal
     }
   }
 
-  componentWillReceiveProps() {
-    console.log('props changed again', this.props.showModal)
+  componentWillReceiveProps(nextProps) {
+    console.log('props changed again', nextProps.showModal)
     this.setState({
-      showModal: true
+      showModal: nextProps.showModal
     })
   }
 
   allowContribution() {
-    this.props.contribute()
+    console.log('allowContribution this', this)
+    this.props.contributeAgain()
     this.setState({
-      showModal: false
+      showModal: !this.props.showModal
     })
   }
 
@@ -30,11 +31,12 @@ class Constraint extends React.Component{
       <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
         <Modal.Body>
           <div>
-            
-            <Button onClick={() => this.allowContribution()} type='submit' bsStyle="primary">Delete old contribution and Add new</Button>
-
+            <h4>You have already contributed to this discussion. By clicking the button, you'll be removing your previous contribution and creating a new one.</h4>
           </div>
         </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => this.allowContribution()} type='submit' bsStyle="primary">Delete old contribution and Add new</Button>
+        </Modal.Footer>
       </Modal>
     )
   }
@@ -42,8 +44,8 @@ class Constraint extends React.Component{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    contribute: () => {
-      dispatch(contribute())
+    contributeAgain: () => {
+      dispatch(contributeAgain())
     }
   }
 }

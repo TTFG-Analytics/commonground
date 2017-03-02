@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
 import Constraint from '../camps/Constraint'
+import { contributedOnce } from '../actions/actions'
 
 class AddComment extends React.Component{
   constructor(props){
@@ -38,6 +39,7 @@ class AddComment extends React.Component{
     if(window.socket){
       console.log('window socket', window, window.socket)
       window.socket.emit('comment', newComment)
+      this.props.contributedOnce()
     }
     this.state.commentValue = ''
   }
@@ -48,6 +50,7 @@ class AddComment extends React.Component{
       showModal: true
     })
     console.log('user stopped', this.state)
+    this.forceUpdate()
   }
 
   render() {
@@ -82,7 +85,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(AddComment)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    contributedOnce: () => {
+      dispatch(contributedOnce())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddComment)
 
 // Old react toolbox code
 // <Input type='text' label='Comment' ref='comment' />
