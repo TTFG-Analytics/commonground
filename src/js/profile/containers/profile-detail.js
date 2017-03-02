@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getProfile, postProfile} from '../actions/profileActions';
 import FaceBookIntegration from '../../discussion/camps/FaceBookIntegration'
-import { FormGroup, FormControl, ControlLabel, Button, Col } from 'react-bootstrap'
+import { FormGroup, FormControl, ControlLabel, Button, Col, Alert } from 'react-bootstrap'
 
 
 class UserProfile extends React.Component{
@@ -16,7 +16,8 @@ class UserProfile extends React.Component{
       industry: null,
       politicalleaning: null,
       religion: null,
-      yearlyincome: null
+      yearlyincome: null,
+      infoUpdated: false
     }
   }
 
@@ -52,6 +53,12 @@ class UserProfile extends React.Component{
       politicalleaning: thisObj.state.politicalleaning,
       religion: thisObj.state.religion,
       yearlyincome: thisObj.state.yearlyincome
+    }, function(){
+      console.log('profile callback started......', thisObj)
+      thisObj.setState({
+        infoUpdated: true
+      })
+      return;
     })
   }
 
@@ -62,6 +69,12 @@ class UserProfile extends React.Component{
     console.log('profile', profile);
     this.setState({[propertyName]: profile[propertyName]});
     console.log(this.state);
+  }
+
+  handleAlertDismiss() {
+    this.setState({
+      infoUpdated: false
+    })
   }
 
   render (){
@@ -198,7 +211,12 @@ class UserProfile extends React.Component{
           <ControlLabel>Yearly Income: </ControlLabel>
           <FormControl onChange={this.handleChange.bind(this, 'yearlyincome')} componentClass="select" placeholder="select" ref="select">{incomeList}</FormControl>
         </FormGroup>
-
+        {this.state.infoUpdated && <Alert bsStyle="success" onDismiss={this.handleAlertDismiss}>
+          <h4>Your profile has been updated!</h4>
+          <p>
+            <Button onClick={this.handleAlertDismiss.bind(this)}>Hide Alert</Button>
+          </p>
+        </Alert>}
         <Button type='submit' bsStyle="primary">Submit</Button>
 
       </form>
@@ -219,8 +237,8 @@ const matchDispatchToProps = (dispatch) => {
     getProfile: (uid) => {
       dispatch(getProfile(uid))
     },
-    postProfile: (profile) => {
-      dispatch(postProfile(profile))
+    postProfile: (profile, callback) => {
+      dispatch(postProfile(profile, callback))
     }
   }
 }

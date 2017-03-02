@@ -71,7 +71,7 @@ class Analytics extends React.Component{
 
       <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
         <Modal.Header closeButton onClick={this.toggleModal.bind(this)}>
-          <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
+          <Modal.Title id="contained-modal-title-lg">CommonGround Analytics</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {hasData ? <div>
