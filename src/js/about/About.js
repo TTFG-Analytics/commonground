@@ -1,6 +1,8 @@
 const React = require('react');
 import Navigation from '../navbar/navbar'
 import { Panel, Col, Grid, Accordion } from 'react-bootstrap';
+require('./aboutStyles.css');
+
 
 
 class About extends React.Component{
@@ -9,7 +11,7 @@ class About extends React.Component{
       <div>
       <Navigation />
       <Col md={8} mdOffset={2}>
-      <Panel> 
+      <Panel className="abtBox"> 
         <Accordion>
           <Panel header="What this app is about" eventKey="1">
             This is a social app designed to facilitate comunication between different viewpoints.
@@ -28,13 +30,10 @@ class About extends React.Component{
           </Panel>          
 
           <Panel header="How we use your data" eventKey="4">
-            Nunc orci nulla, iaculis a nulla vel, imperdiet rutrum nulla. Sed gravida, 
-            lectus eget mattis viverra, dui mauris suscipit dolor, quis molestie massa 
-            purus at diam. Fusce lobortis ullamcorper sem ac feugiat. Cras maximus mi 
-            bibendum, accumsan ipsum vitae, tempus nulla. Vivamus nec sodales nunc, ut 
-            porta diam. Fusce euismod, dolor et dictum tincidunt, magna est aliquam 
-            elit, ac ultrices erat quam et nibh. Suspendisse luctus posuere ante. 
-            Vivamus in orci id lacus imperdiet suscipit ac ut nisi.
+            We gather data from your public profile. This includes your name, facebook ID, Nationality, and Profile picture. These
+            are only used for providing an intuitive user interface and providing light metrics for analytics based on comments and
+            commongrounds. In your user profile, you are able to input more information about yourself that also only goes towards displaying
+            and graphing information. We do not sell your information, it is kept in house.
           </Panel>
           
           <Panel header="About Us" eventKey="5">
