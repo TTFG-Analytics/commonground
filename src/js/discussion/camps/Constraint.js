@@ -12,6 +12,7 @@ class Constraint extends React.Component{
   }
 
   componentWillReceiveProps() {
+    console.log('props changed again', this.props.showModal)
     this.setState({
       showModal: true
     })

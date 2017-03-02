@@ -44,10 +44,10 @@ class AddComment extends React.Component{
 
   stopUser(e) {
     e.preventDefault()
-    console.log('user stopped', this.state)
     this.setState({
       showModal: true
     })
+    console.log('user stopped', this.state)
   }
 
   render() {
