@@ -16,7 +16,7 @@ const discussionsGet = (state = {isFetching: false, discussions: [], error: null
     var newDiscuss = action;
     return {
       state,
-      discussions: [...state.discussions, newDiscuss]
+      discussions: [newDiscuss, ...state.discussions ]
     }
   }
   return state

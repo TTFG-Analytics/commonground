@@ -31,7 +31,9 @@ class AddCamp extends React.Component{
       discussionId: this.props.discussionId
     }
     this.props.createCampPost(newCamp);
-    this.state.cgValue = '';
+    this.setState({
+      cgValue: ''
+    })
   }
 
   render() {

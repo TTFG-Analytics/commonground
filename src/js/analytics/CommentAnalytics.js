@@ -76,14 +76,20 @@ class CommentAnalytics extends React.Component{
       )
     })
 
+    var hasData = false
+      console.log('has data', this.props.upvotecounter, this.props.downvotecounter)
+    if(this.props.upvotecounter !== 0 || this.props.downvotecounter !== 0) {
+      hasData = true
+    }
+
     return (
       <div className="inlineRight">
       <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
         <Modal.Header closeButton onClick={this.toggleModal.bind(this)}>
-          <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
+          <Modal.Title id="contained-modal-title-lg">Comment Analytics</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div>
+          {hasData ? <div>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Select Demographic Property</ControlLabel>
               <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
@@ -94,7 +100,10 @@ class CommentAnalytics extends React.Component{
 
             {this.state.showChart && <ReactHighcharts config={columnConfig} />}
             {this.state.showChart && <ReactHighcharts config={pieConfig} />}
-          </div>
+          </div> :
+          <div>
+            <h4>No one has upvoted or downvoted this comment.</h4>
+          </div>}
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.toggleModal.bind(this)}>Close</Button>

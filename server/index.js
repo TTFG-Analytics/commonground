@@ -28,7 +28,7 @@ io.on('connection', (client) => {
   client.emit('connection')
   client.on('discussion', (data) => {
     console.log("banana", data);
-     knex('discussion').returning(['id', 'input']).insert({input: data.topic, user_id: 11}) //currentUser.id --- hard coding for now
+     knex('discussion').returning(['id', 'input', 'user_id']).insert({input: data.topic, user_id: data.user}) //currentUser.id --- hard coding for now
     .then(function(data){
       console.log('.then data', data)
       io.emit('discussion', data[0])
@@ -40,7 +40,7 @@ io.on('connection', (client) => {
 
 
 app.get('/discussions', (req, res) => {
-  knex('discussion').select('*')
+  knex('discussion').select('*').orderBy('createdat', 'desc')
     .then((data) => {
       // console.log('discussions data', data)
       res.status(200).send(data)
@@ -115,7 +115,7 @@ app.get('/comments/:campId', function(req, res) {
   // console.log('req params', req.params)
   let id = req.params.campId;
   // console.log('id', id, req.params);
-  knex('comment').where({commonground_id: id}).select('*')
+  knex('comment').where({commonground_id: id}).select('*').orderBy('delta', 'desc')
     .then(function(data) {
       // console.log('data', data)
       var commentsResponse = {};

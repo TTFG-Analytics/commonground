@@ -31,19 +31,21 @@ class CampParent extends React.Component{
     var discussionId = this.props.params.discussionId
     console.log("THIS", this);
 
-    let arrayIndex;
-    this.props.discussions.forEach((index) => {
-      if(index.id == discussionId) {
-        arrayIndex = index;
+    let discussionObj;
+    let discussionCreator;
+    this.props.discussions.forEach((discussion) => {
+      if(discussion.id == discussionId) {
+        discussionObj = discussion;
+        discussionCreator = discussion.user_id
       }
     })
-    console.log('arrayIndex', arrayIndex.input);
+    console.log('discussionObj', discussionObj.input, discussionCreator);
     
     return (
       <div>
         <Navigation />
-        <h2 className="campText">{arrayIndex.input}</h2>
-        <AddCamp discussionId={discussionId} />
+        <h2 className="campText">{discussionObj.input}</h2>
+        {this.props.user === discussionCreator && <AddCamp discussionId={discussionId} />}
         <CampList discussionId={discussionId} />
       </div>
     )
@@ -53,7 +55,8 @@ class CampParent extends React.Component{
 const mapStateToProps = (state) => {
   return {
     camps: state.campGet,
-    discussions: state.discussionsGet.discussions
+    discussions: state.discussionsGet.discussions,
+    user: state.profileReducer.id
   }
 }
 
