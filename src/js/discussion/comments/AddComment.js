@@ -54,6 +54,11 @@ class AddComment extends React.Component{
   }
 
   render() {
+    var notLoggedIn = false
+    if(!this.props.user.id){
+      console.log('this props user', this.props.user)
+      notLoggedIn = true
+    }
     return (
         <div>
           <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
@@ -61,6 +66,7 @@ class AddComment extends React.Component{
               <ControlLabel>Create a New Comment</ControlLabel>
               <InputGroup>
                 <FormControl
+                  disabled={notLoggedIn}
                   type="text"
                   value={this.state.commentValue}
                   placeholder="Enter text"

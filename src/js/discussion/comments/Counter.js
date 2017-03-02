@@ -20,7 +20,7 @@ class Counter extends React.Component {
     this.props.votesPost({
       vote: '1',
       commentId: this.props.commentId,
-      userId: this.props.userId
+      userId: this.props.user.id
     })
     this.props.contributedOnce()
   }
@@ -29,7 +29,7 @@ class Counter extends React.Component {
     this.props.votesPost({
       vote: '0',
       commentId: this.props.commentId,
-      userId: this.props.userId
+      userId: this.props.user.id
     })
     this.props.contributedOnce()
   }
@@ -46,15 +46,23 @@ class Counter extends React.Component {
   render() {
     let currentUpvote = 0;
     let currentDownvote = 0;
+    let notLoggedIn = false
+    if(!this.props.user.id){
+      notLoggedIn = true
+    }
 
     return (
       <div>
         <ButtonToolbar className="vote">
           <ButtonGroup>
-            <Button onClick={this.props.contributed ? this.stopUser.bind(this) : this.handleUpvote.bind(this)}
+            <Button 
+              disabled={notLoggedIn}
+              onClick={this.props.contributed ? this.stopUser.bind(this) : this.handleUpvote.bind(this)}
             ><Glyphicon className="upStyle" glyph="menu-up"></Glyphicon>
             </Button>
-            <Button onClick={this.props.contributed ? this.stopUser.bind(this) : this.handleDownvote.bind(this)}
+            <Button
+              disabled={notLoggedIn}
+              onClick={this.props.contributed ? this.stopUser.bind(this) : this.handleDownvote.bind(this)}
             ><Glyphicon className="downStyle" glyph="menu-down"></Glyphicon>
             </Button>
           </ButtonGroup>
@@ -89,7 +97,7 @@ class Counter extends React.Component {
 const mapStateToProps = (state) => {
   return {
     comments: state.commentGet.comments,
-    userId: state.profileReducer.id,
+    user: state.profileReducer,
     contributed: state.campGet.contributed
   }
 }
