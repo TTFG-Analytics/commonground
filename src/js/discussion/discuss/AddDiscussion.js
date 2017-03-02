@@ -47,7 +47,9 @@ class AddDiscussion extends React.Component{
     if(window.discussionSocket){
       window.discussionSocket.emit('discussion', newDiscussion)
     }
-    this.state.discussionValue = '';
+    this.setState({
+      discussionValue: ''
+    })
   }
 
   componentWillUnmount() {
