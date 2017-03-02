@@ -5,6 +5,7 @@ import ReactHighcharts from 'react-highcharts'
 import { Modal, Glyphicon, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 import demographics from './demographics/demographics'
 import handleData from './utils/handleData'
+import checkForData from './utils/checkForData'
 import columnChartConfig from './utils/columnChartConfig'
 import selectCategory from './utils/selectCategory'
 
@@ -62,6 +63,9 @@ class Analytics extends React.Component{
       )
     })
 
+    var hasData = checkForData(this.props.upvotecounter, this.props.downvotecounter, this.props.commentList)
+    console.log('hasData analytics', hasData)
+
     return (
     <div>
 
@@ -70,7 +74,7 @@ class Analytics extends React.Component{
           <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div>
+          {hasData ? <div>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Select Demographic Property</ControlLabel>
               <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
@@ -80,7 +84,10 @@ class Analytics extends React.Component{
             <Button onClick={() => this.getData()} type='submit' bsStyle="primary">Get Data</Button>
 
             {this.state.showChart && <ReactHighcharts config={config} />}
-          </div>
+          </div> :
+          <div>
+            <h4>No one has contributed to this CommonGround.</h4>
+          </div>}
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.toggleModal.bind(this)}>Close</Button>
@@ -99,7 +106,8 @@ class Analytics extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    campList: state.campGet.commongrounds
+    campList: state.campGet.commongrounds,
+    commentList: state.commentGet.comments
   }
 }
 

@@ -56,7 +56,7 @@ class Camp extends React.Component{
     return (
       <Col md={6}>
         <Panel header={campName} className='campBox'>
-          <Analytics campId={campId} />
+          {this.state.showComments && <Analytics campId={campId} />}
           {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
 
         </Panel>
