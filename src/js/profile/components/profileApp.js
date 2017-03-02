@@ -15,7 +15,6 @@ class ProfileApp extends React.Component {
   render() {
    return ( <div>
     <Navigation />
-    <h2>Profile Settings: </h2>
     <ProfileDetail />
     </div>
     )
