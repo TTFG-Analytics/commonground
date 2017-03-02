@@ -1,17 +1,47 @@
 const React = require('react');
 import Navigation from '../navbar/navbar'
+import { Panel, Col, Grid, Accordion } from 'react-bootstrap';
+require('./aboutStyles.css');
+
+
 
 class About extends React.Component{
   render(){
     return (
       <div>
       <Navigation />
-      <h3>About Component</h3>
-      <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et eleifend turpis. Morbi eleifend nisi eu ornare blandit. Nulla auctor risus id metus fermentum maximus. Nulla facilisi. Pellentesque eget finibus lectus. In eu hendrerit purus, et malesuada ante. Mauris dolor nisi, laoreet id lectus feugiat, congue consequat turpis. Donec id nunc augue.
+      <Col md={8} mdOffset={2}>
+      <Panel className="abtBox"> 
+        <Accordion>
+          <Panel header="What this app is about" eventKey="1">
+            This is a social app designed to facilitate comunication between different viewpoints.
+          </Panel>
+          <Panel header="How to use this app" eventKey="2">
+            By signing in through facebook, you will be able to create a discussion, create a comment, or vote on a post.
+            However you are not required to be signed in to browse content. If there are multiple users on your computer,
+            there is an ability to logout and login with a different facebook ID. Please note that this will also log you
+            out of facebook proper.
+          </Panel>
+          <Panel header="Rules" eventKey="3">
+            <ol>
+              <li>No ad hominem attacks</li>
+              <li>Be nice and civil</li>
+            </ol>
+          </Panel>          
 
-Nunc orci nulla, iaculis a nulla vel, imperdiet rutrum nulla. Sed gravida, lectus eget mattis viverra, dui mauris suscipit dolor, quis molestie massa purus at diam. Fusce lobortis ullamcorper sem ac feugiat. Cras maximus mi bibendum, accumsan ipsum vitae, tempus nulla. Vivamus nec sodales nunc, ut porta diam. Fusce euismod, dolor et dictum tincidunt, magna est aliquam elit, ac ultrices erat quam et nibh. Suspendisse luctus posuere ante. Vivamus in orci id lacus imperdiet suscipit ac ut nisi.
-
-Sed non rutrum ante. Nullam blandit justo id scelerisque varius. Maecenas eget hendrerit felis. Duis ultricies orci turpis. Donec euismod dui nec augue volutpat, quis ultricies elit bibendum. Duis feugiat maximus rutrum. In dignissim faucibus mattis. Sed egestas nulla vitae nulla interdum semper.</div>
+          <Panel header="How we use your data" eventKey="4">
+            We gather data from your public profile. This includes your name, facebook ID, Nationality, and Profile picture. These
+            are only used for providing an intuitive user interface and providing light metrics for analytics based on comments and
+            commongrounds. In your user profile, you are able to input more information about yourself that also only goes towards displaying
+            and graphing information. We do not sell your information, it is kept in house.
+          </Panel>
+          
+          <Panel header="About Us" eventKey="5">
+            TTFG are a group of like minded software engineers hoping to make the world a better place, one app at a time.
+          </Panel>
+        </Accordion>
+        </Panel>
+      </Col>  
       </div>
     )
   }

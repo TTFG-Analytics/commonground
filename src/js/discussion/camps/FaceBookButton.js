@@ -46,6 +46,7 @@ class FaceBookButton extends React.Component{
       js.src = "//connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+    
   }
 
   // (FB.Event.subscribe('auth.logout', (response) => console.log('*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*LOGOUT')))
