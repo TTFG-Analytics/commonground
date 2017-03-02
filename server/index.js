@@ -66,9 +66,10 @@ app.get('/discussion/:discussionId/:userFullname', function(req, res) {
   let fullname = req.params.userFullname;
   knex('commonground').where({discussion_id: id}).select('*')
     .then(function(data) {
-      console.log('data123', data)
+      console.log('DATA123', data)
       var commongroundsResponse = {};
       commongroundsResponse.data = data;
+
 
       knex.select('*').from('users_join')
         .innerJoin('users', 'users_join.user_id', 'users.id')
@@ -79,6 +80,7 @@ app.get('/discussion/:discussionId/:userFullname', function(req, res) {
           console.log('commongroundsResponse', commongroundsResponse)
           res.send(commongroundsResponse);
         })
+
 
     })
 })
@@ -247,6 +249,7 @@ app.post('/commonground', function(req, res){
 app.post('/vote', function(req,res){
   var commentId = req.body.commentId
   var vote = req.body.vote
+  var user = req.body.userId
   knex('vote').returning('id').insert({input: req.body.vote, user_id: req.body.userId, comment_id: req.body.commentId })
   .then(function(data1){
     if (vote === '1') {
@@ -265,6 +268,7 @@ app.post('/vote', function(req,res){
           }
           console.log('voteResObj ---------------', voteResObj)
           res.status(200).send(voteResObj);
+
           knex('users_join').insert({user_id: req.body.userId, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).returning('commonground_id')
           .then(function(data3){
             console.log('This is commonground_id', data3[0])
@@ -272,6 +276,7 @@ app.post('/vote', function(req,res){
             .then(function(data4){
               knex('users_join').where({commonground_id: data3[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
             })
+
           });
         });
     } else {
