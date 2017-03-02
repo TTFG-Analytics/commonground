@@ -1,11 +1,12 @@
 const campGet = (state={commongrounds: []}, action) => {
   if(action.type === 'GET_CAMPS_SUCCESS') {
-    console.log('action commongrounds', action.camps)
+    console.log('action commongrounds', action.camps, action.contributed)
     return Object.assign(
       {},
       state,
       {
-        commongrounds: action.camps
+        commongrounds: action.camps,
+        contributed: action.contributed
       }
     )
   }
