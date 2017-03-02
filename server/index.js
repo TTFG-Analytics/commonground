@@ -69,7 +69,7 @@ app.get('/discussion/:discussionId/:userFullname', function(req, res) {
       // console.log('data', data)
       var commongroundsResponse = {};
       commongroundsResponse.data = data;
-<<<<<<< HEAD
+
 
 
       knex.select('*').from('users_join')
@@ -83,9 +83,7 @@ app.get('/discussion/:discussionId/:userFullname', function(req, res) {
         })
 
 
-=======
-      res.send(commongroundsResponse);
->>>>>>> vote upserting now working in user_join table
+
     })
 })
 
@@ -230,10 +228,34 @@ app.post('/commonground', function(req, res){
             cgNsp.emit('comment', commentResObj);
             return commentResObj;
           }).then(function(){
-<<<<<<< HEAD
-            knex('users_join').insert({user_id: commentResObj.user_id, commonground_id: commentResObj.commonground_id, comment_id:commentResObj.id}).returning('commonground_id')
-=======
 
+
+
+          knex('commonground').where({id:commentResObj.commonground_id}).select('discussion_id')
+          .then(function(data3){
+            // console.log("data1 - Vote ID", data1)
+            // console.log("data2 - commentID", data2)
+            // console.log("data3 - discussion_id", data3)
+            knex('users_join').where({user_id: commentResObj.user_id, discussion_id:data3[0].discussion_id}).select('id')
+            .then(function(data4){
+              console.log("This is data4", data4);
+              if(!data4.length) {
+                knex.raw(`
+                INSERT INTO users_join (user_id, commonground_id, discussion_id, comment_id, vote_id)
+                VALUES (${commentResObj.user_id}, ${commentResObj.commonground_id}, ${data3[0].discussion_id}, ${commentResObj.id}, NULL)
+                `).then(function(data){
+                  console.log("ADDED NEW FIELD IN JOIN TABLE")
+                })
+              } else {
+                knex.raw(`
+                UPDATE users_join SET commonground_id = ${commentResObj.commonground_id}, comment_id = ${commentResObj.id}, vote_id = NULL
+                WHERE user_id = ${commentResObj.user_id} AND discussion_id = ${data3[0].discussion_id}
+                `).then(function(data){
+                  console.log("UPDATED!")
+                })
+              }
+            })
+          });
 
 
 
@@ -243,7 +265,7 @@ app.post('/commonground', function(req, res){
 
 
             knex('users_join').insert({user_id: 16, commonground_id: commentResObj.commonground_id, comment_id:commentResObj.id}).returning('commonground_id')
->>>>>>> vote upserting now working in user_join table
+
             .then(function(data2){
               console.log("comment data2", data2);
               knex('commonground').where({id:data2[0]}).select('discussion_id')
@@ -294,8 +316,7 @@ app.post('/vote', function(req,res){
               knex('users_join').where({commonground_id: data3[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
             })
 
-<<<<<<< HEAD
-=======
+
           knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
           .then(function(data3){
             console.log("data1 - Vote ID", data1)
@@ -306,21 +327,21 @@ app.post('/vote', function(req,res){
               console.log("This is data4", data4);
               if(!data4.length) {
                 knex.raw(`
-                INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id)
-                VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]})
+                INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id, comment_id)
+                VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]}, NULL)
                 `).then(function(data){
                   console.log("ADDED NEW FIELD IN JOIN TABLE")
                 })
               } else {
                 knex.raw(`
-                UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}
+                UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}, comment_id = NULL
                 WHERE user_id = ${req.body.userId} AND discussion_id = ${data3[0].discussion_id}
                 `).then(function(data){
                   console.log("UPDATED!")
                 })
               }
             })
->>>>>>> vote upserting now working in user_join table
+
           });
         })
 
@@ -340,12 +361,10 @@ app.post('/vote', function(req,res){
           }
           console.log('downvoteResObj ---------------', downvoteResObj)
           res.status(200).send(downvoteResObj);
-<<<<<<< HEAD
-          knex('users_join').insert({user_id: req.body.userId, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).returning('commonground_id')
-=======
+
 
           knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
->>>>>>> vote upserting now working in user_join table
+
           .then(function(data3){
             console.log("data1 - Vote ID", data1)
             console.log("data2 - commentID", data2)
@@ -355,14 +374,14 @@ app.post('/vote', function(req,res){
               console.log("This is data4", data4);
               if(!data4.length) {
                 knex.raw(`
-                INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id)
-                VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]})
+                INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id, comment_id)
+                VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]}, NULL)
                 `).then(function(data){
                   console.log("ADDED NEW FIELD IN JOIN TABLE")
                 })
               } else {
                 knex.raw(`
-                UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}
+                UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}, comment_id = NULL
                 WHERE user_id = ${req.body.userId} AND discussion_id = ${data3[0].discussion_id}
                 `).then(function(data){
                   console.log("UPDATED!")
