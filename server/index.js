@@ -102,6 +102,7 @@ app.get('/analytics/:campId/:demographic', (req, res) => {
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
   // console.log(chalk.red.inverse('req params', req.params))
+  console.log('voteanalytics req params', req.params)
   knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
     .whereRaw(`vote.comment_id=('${req.params.commentId}')`)
     .then(data => {

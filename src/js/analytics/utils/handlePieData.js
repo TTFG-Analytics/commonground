@@ -1,9 +1,9 @@
-const handlePieData = (voters) => {
+const handlePieData = (voters, demographic, categories) => {
   var votePieData = []
   voters.forEach(voter => {
     let pieTuple = []
     let name = ''
-    if(this.state.demographic === 'age'){
+    if(demographic === 'age'){
       let voterCategory = voter[0]
       name = voterCategory
     } else {
