@@ -180,3 +180,9 @@ export function sendingFbDataSuccess(fbUser) {
     fbPicture: fbUser.facebookpicture
   }
 }
+
+export const contribute = () => {
+  return {
+    type: 'CONTRIBUTE_AGAIN'
+  }
+}

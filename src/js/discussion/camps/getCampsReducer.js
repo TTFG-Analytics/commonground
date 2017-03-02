@@ -27,9 +27,19 @@ const campGet = (state={commongrounds: []}, action) => {
       }
     )
   }
+  if(action.type === 'CONTRIBUTE_AGAIN') { //change state so user can't make more comments
+    return Object.assign(
+      {},
+      state,
+      {
+        contributed: false
+      }
+    )
+  }
   return state
 }
 
 export default campGet
 
 //used for getting all commongrounds and comments for a discussion. Those are all accessible in state.campGet
+// ''

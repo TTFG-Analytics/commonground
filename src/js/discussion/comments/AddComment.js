@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
+import Constraint from '../camps/Constraint'
 
 class AddComment extends React.Component{
   constructor(props){
@@ -68,6 +69,7 @@ class AddComment extends React.Component{
               <HelpBlock>Character limit: </HelpBlock>
             </FormGroup>
           </form>
+          <Constraint showModal={this.state.showModal} />
         </div>
       )
   }
