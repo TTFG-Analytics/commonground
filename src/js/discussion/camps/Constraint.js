@@ -4,13 +4,29 @@ import { Modal, Glyphicon, Button, FormControl, HelpBlock, FormGroup, ControlLab
 import { contribute } from '../actions/actions'
 
 class Constraint extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      showModal: false
+    }
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      showModal: true
+    })
+  }
+
   allowContribution() {
     this.props.contribute()
+    this.setState({
+      showModal: false
+    })
   }
 
   render() {
     return (
-      <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.props.showModal}>
+      <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
         <Modal.Body>
           <div>
             
