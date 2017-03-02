@@ -2,12 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
+import Constraint from '../camps/Constraint'
+import { contributedOnce } from '../actions/actions'
 
 class AddComment extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      commentValue: ''
+      commentValue: '',
+      showModal: false
     }
   }
 
@@ -36,18 +39,34 @@ class AddComment extends React.Component{
     if(window.socket){
       console.log('window socket', window, window.socket)
       window.socket.emit('comment', newComment)
+      this.props.contributedOnce()
     }
     this.state.commentValue = ''
   }
 
+  stopUser(e) {
+    e.preventDefault()
+    this.setState({
+      showModal: true
+    })
+    console.log('user stopped', this.state)
+    this.forceUpdate()
+  }
+
   render() {
+    var notLoggedIn = false
+    if(!this.props.user.id){
+      console.log('this props user', this.props.user)
+      notLoggedIn = true
+    }
     return (
         <div>
-          <form onSubmit={this.handleSubmit.bind(this)}>
+          <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
               <ControlLabel>Create a New Comment</ControlLabel>
               <InputGroup>
                 <FormControl
+                  disabled={notLoggedIn}
                   type="text"
                   value={this.state.commentValue}
                   placeholder="Enter text"
@@ -59,6 +78,7 @@ class AddComment extends React.Component{
               <HelpBlock>Character limit: </HelpBlock>
             </FormGroup>
           </form>
+          <Constraint showModal={this.state.showModal} />
         </div>
       )
   }
@@ -66,11 +86,20 @@ class AddComment extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    user: state.profileReducer
+    user: state.profileReducer,
+    contributed: state.campGet.contributed
   }
 }
 
-export default connect(mapStateToProps)(AddComment)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    contributedOnce: () => {
+      dispatch(contributedOnce())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddComment)
 
 // Old react toolbox code
 // <Input type='text' label='Comment' ref='comment' />

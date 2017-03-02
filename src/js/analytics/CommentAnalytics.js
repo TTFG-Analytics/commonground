@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import ReactHighcharts from 'react-highcharts'
-import { Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
+import { Button, FormControl, FormGroup, ControlLabel, Grid, Row, Col, Media, Modal } from 'react-bootstrap';
 import demographics from './demographics/demographics'
 import selectCategory from './utils/selectCategory'
 import handleData from './utils/handleData'
@@ -34,6 +34,7 @@ class CommentAnalytics extends React.Component{
   }
 
   getVoteData() {
+    console.log('this props commentId', this.props)
     let commentId = this.props.commentId
     let demographic = this.state.demographic
     axios.get(`/voteanalytics/${commentId}/${demographic}`)
@@ -56,27 +57,27 @@ class CommentAnalytics extends React.Component{
     
     var upvotePieData = [];
     if(this.state.upvoters){
-      upvotePieData = handlePieData(this.state.upvoters)
+      upvotePieData = handlePieData(this.state.upvoters, this.state.demographic, categories)
     }
     console.log('upvotePieData', upvotePieData)
 
     var downvotePieData = [];
     if(this.state.downvoters){
-      downvotePieData = handlePieData(this.state.downvoters)
+      downvotePieData = handlePieData(this.state.downvoters, this.state.demographic, categories)
     }
     console.log('downvotePieData', downvotePieData)
     var pieData = upvotePieData.concat(downvotePieData)
 
     var pieConfig = pieChartConfig(pieData)
 
-    var list = demographics.map((demographic) => {
+    var listDemographics = demographics.map((demographic) => {
       return(
         <option value={demographic.value}>{demographic.value}</option>
       )
     })
 
     return (
-      <div>
+      <div className="inlineRight">
       <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
         <Modal.Header closeButton onClick={this.toggleModal.bind(this)}>
           <Modal.Title id="contained-modal-title-lg">Modal heading</Modal.Title>
@@ -89,7 +90,7 @@ class CommentAnalytics extends React.Component{
                 {listDemographics}
               </FormControl>
             </FormGroup>
-            <Button onClick={() => this.getData()} type='submit' bsStyle="primary">Get Data</Button>
+            <Button onClick={() => this.getVoteData()} type='submit' bsStyle="primary">Get Data</Button>
 
             {this.state.showChart && <ReactHighcharts config={columnConfig} />}
             {this.state.showChart && <ReactHighcharts config={pieConfig} />}
@@ -100,10 +101,8 @@ class CommentAnalytics extends React.Component{
         </Modal.Footer>
       </Modal>
 
-      <Button onClick={this.toggleModal.bind(this)}>
-        <Glyphicon glyph="stats">
-        </Glyphicon>
-      </Button>
+      <span className="delta" style={this.props.deltaStyle} onClick={this.toggleModal.bind(this)}>{this.props.children}</span>
+
       </div>
     )
   }

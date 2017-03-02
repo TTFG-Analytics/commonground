@@ -53,7 +53,14 @@ class Comment extends React.Component{
                     <img width={64} height={64} src={facebookpicture} alt="Image"/>
                   </Media.Left>
                   <Media.Body>
-                    <Media.Heading>{this.props.inputStr}<VoteDetail className="delta" deltaStyle={deltaStyle} >{delta}</VoteDetail></Media.Heading>
+                    <Media.Heading>{this.props.inputStr}
+                      <CommentAnalytics 
+                        commentId={this.props.commentId}
+                        className="delta" 
+                        deltaStyle={deltaStyle} >
+                        {delta}
+                      </CommentAnalytics>
+                    </Media.Heading>
                     <p>{fullname}</p>
                     <p className="timeStyle"> - <em>{new Date(createdat).toLocaleString()}</em></p>
                   </Media.Body>

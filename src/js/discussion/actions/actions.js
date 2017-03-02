@@ -29,15 +29,20 @@ export const getDiscussions = () => {
 }
 
 export const getCampsSuccess = (camps) => {
+  var contributed = false;
+  if(camps.discussionContribution && camps.discussionContribution.length > 0) {
+    contributed = true;
+  }
   return {
     type: 'GET_CAMPS_SUCCESS',
-    camps: camps.data
+    camps: camps.data,
+    contributed: contributed
   }
 } //sends action that is picked up by getCampsReducer
 
-export const getCamps = (discussionId) => {
+export const getCamps = (discussionId, fullname) => {
   return (dispatch) => {
-    return axios.get('/discussion/' + discussionId)
+    return axios.get(`/discussion/${discussionId}/${fullname}`)
       .then(response => {
         dispatch(getCampsSuccess(response.data))
       })
@@ -173,5 +178,17 @@ export function sendingFbDataSuccess(fbUser) {
     fbLocale: fbUser.locale,
     fbEmail: fbUser.email,
     fbPicture: fbUser.facebookpicture
+  }
+}
+
+export const contributedOnce = () => {
+  return {
+    type: 'CONTRIBUTED'
+  }
+}
+
+export const contributeAgain = () => {
+  return {
+    type: 'CONTRIBUTE_AGAIN'
   }
 }
