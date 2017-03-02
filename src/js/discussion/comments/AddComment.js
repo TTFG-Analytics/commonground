@@ -7,7 +7,8 @@ class AddComment extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      commentValue: ''
+      commentValue: '',
+      showModal: false
     }
   }
 
@@ -40,10 +41,18 @@ class AddComment extends React.Component{
     this.state.commentValue = ''
   }
 
+  stopUser(e) {
+    e.preventDefault()
+    console.log('user stopped', this.state)
+    this.setState({
+      showModal: true
+    })
+  }
+
   render() {
     return (
         <div>
-          <form onSubmit={this.handleSubmit.bind(this)}>
+          <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
               <ControlLabel>Create a New Comment</ControlLabel>
               <InputGroup>
@@ -66,7 +75,8 @@ class AddComment extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    user: state.profileReducer
+    user: state.profileReducer,
+    contributed: state.campGet.contributed
   }
 }
 

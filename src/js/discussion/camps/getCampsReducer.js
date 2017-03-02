@@ -18,6 +18,15 @@ const campGet = (state={commongrounds: []}, action) => {
       commongrounds: [...state.commongrounds, newCamp]
     }
   }
+  if(action.type === 'CREATE_COMMENT_SUCCESS') { //change state so user can't make more comments
+    return Object.assign(
+      {},
+      state,
+      {
+        contributed: true
+      }
+    )
+  }
   return state
 }
 
