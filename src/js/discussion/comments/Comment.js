@@ -56,6 +56,7 @@ class Comment extends React.Component{
                     <Media.Heading>{this.props.inputStr}
                       <CommentAnalytics 
                         commentId={this.props.commentId}
+                        delta={delta}
                         className="delta" 
                         deltaStyle={deltaStyle} >
                         {delta}
