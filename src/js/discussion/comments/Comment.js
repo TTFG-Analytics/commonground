@@ -23,9 +23,13 @@ class Comment extends React.Component{
     var facebookpicture = ''
     var fullname = ''
     var createdat = new Date();
+    var upvotecounter = 0
+    var downvotecounter = 0
     this.props.comments.forEach((comment) => {
       if(comment.id === this.props.commentId) {
         delta = comment.delta
+        upvotecounter = comment.upvotecounter
+        downvotecounter = comment.downvotecounter
         facebookpicture = comment.facebookpicture
         fullname = comment.fullname
         createdat = comment.createdat || new Date();
@@ -56,7 +60,8 @@ class Comment extends React.Component{
                     <Media.Heading>{this.props.inputStr}
                       <CommentAnalytics 
                         commentId={this.props.commentId}
-                        delta={delta}
+                        upvotecounter={upvotecounter}
+                        downvotecounter={downvotecounter}
                         className="delta" 
                         deltaStyle={deltaStyle} >
                         {delta}

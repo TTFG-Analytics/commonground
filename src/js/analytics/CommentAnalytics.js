@@ -76,6 +76,12 @@ class CommentAnalytics extends React.Component{
       )
     })
 
+    var hasData = false
+      console.log('has data', this.props.upvotecounter, this.props.downvotecounter)
+    if(this.props.upvotecounter !== 0 || this.props.downvotecounter !== 0) {
+      hasData = true
+    }
+
     return (
       <div className="inlineRight">
       <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
@@ -83,7 +89,7 @@ class CommentAnalytics extends React.Component{
           <Modal.Title id="contained-modal-title-lg">Comment Analytics</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {this.props.delta !== 0 ? <div>
+          {hasData ? <div>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Select Demographic Property</ControlLabel>
               <FormControl onChange={this.demographicChange.bind(this)} componentClass="select" placeholder="select" ref="select">
