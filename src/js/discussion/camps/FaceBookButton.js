@@ -23,7 +23,7 @@ class FaceBookButton extends React.Component{
           FB.api('/me', 'GET', {fields: 'name, id, gender, locale, age_range, email, picture'}, function(response) {
             console.log('Good to see you, ' + response.name + '.');
             console.log('Response', response);
-            console.log('Response.email', response.email)
+            console.log('Response.picture', response.picture)
             console.log('CONTEXT', context)
             context.getFbData(response)
 
@@ -32,6 +32,8 @@ class FaceBookButton extends React.Component{
         } else {
           console.log('User cancelled login or did not fully authorize.');
           window.location.href = "http://localhost:4040"
+          // http://localhost:4040
+          // http://138.197.202.152:4040/
         }
       },
       {scope: 'email'}
@@ -64,6 +66,7 @@ class FaceBookButton extends React.Component{
 }
 
 const mapStateToProps = (state) => {
+  console.log('$%$%', state.fbGet.fbPicture)
   return {
     fbName: state.fbGet.fbName,
     fbId: state.fbGet.fbId,
