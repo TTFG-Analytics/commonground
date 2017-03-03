@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getProfile, postProfile} from '../actions/profileActions';
 import FaceBookIntegration from '../../discussion/camps/FaceBookIntegration'
-import { FormGroup, FormControl, ControlLabel, Button, Col, Alert } from 'react-bootstrap'
+import { FormGroup, FormControl, ControlLabel, Button, Col, Panel, Alert } from 'react-bootstrap'
 
 
 class UserProfile extends React.Component{
@@ -183,13 +183,17 @@ class UserProfile extends React.Component{
         <option value={item.value}>{item.label}</option>
       )
     })
+    const profileHeader = (
+        <h2>Profile Settings: </h2>
+      );
 
     console.log('--------render props ************', this.props)
     return (
-      <Col md={10} mdOffset={1}>
-      <h2>Profile Settings: </h2>
+      <Col md={8} mdOffset={2}>
+      <Panel header={profileHeader}>
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup controlId="formControlsSelect">
+          <div>
           <FormGroup onChange={this.handleChange.bind(this, 'age')} controlId="formBasicText">
             <ControlLabel>Age:</ControlLabel>
             <FormControl
@@ -200,16 +204,23 @@ class UserProfile extends React.Component{
             />
             <FormControl.Feedback />
           </FormGroup>
-          <ControlLabel>Race: </ControlLabel>
-          <FormControl onChange={this.handleChange.bind(this, 'race')} componentClass="select" placeholder="select" ref="select">{raceList}</FormControl>
-          <ControlLabel>Political Leaning: </ControlLabel>
-          <FormControl onChange={this.handleChange.bind(this, 'politicalleaning')} componentClass="select" placeholder="select" ref="select">{politicalleaningList}</FormControl>
-          <ControlLabel>Industry: </ControlLabel>
-          <FormControl onChange={this.handleChange.bind(this, 'industry')} componentClass="select" placeholder="select" ref="select">{industryList}</FormControl>
-          <ControlLabel>Religion: </ControlLabel>
-          <FormControl onChange={this.handleChange.bind(this, 'religion')} componentClass="select" placeholder="select" ref="select">{religionList}</FormControl>
-          <ControlLabel>Yearly Income: </ControlLabel>
-          <FormControl onChange={this.handleChange.bind(this, 'yearlyincome')} componentClass="select" placeholder="select" ref="select">{incomeList}</FormControl>
+          </div>
+          <div>  
+            <ControlLabel>Race: </ControlLabel>
+            <FormControl onChange={this.handleChange.bind(this, 'race')} componentClass="select" placeholder="select" ref="select">{raceList}</FormControl>
+          </div>
+            <ControlLabel>Political Leaning: </ControlLabel>
+            <FormControl onChange={this.handleChange.bind(this, 'politicalleaning')} componentClass="select" placeholder="select" ref="select">{politicalleaningList}</FormControl>
+
+            <ControlLabel>Industry: </ControlLabel>
+            <FormControl onChange={this.handleChange.bind(this, 'industry')} componentClass="select" placeholder="select" ref="select">{industryList}</FormControl>
+
+            <ControlLabel>Religion: </ControlLabel>
+            <FormControl onChange={this.handleChange.bind(this, 'religion')} componentClass="select" placeholder="select" ref="select">{religionList}</FormControl>
+
+            <ControlLabel>Yearly Income: </ControlLabel>
+            <FormControl onChange={this.handleChange.bind(this, 'yearlyincome')} componentClass="select" placeholder="select" ref="select">{incomeList}</FormControl>
+
         </FormGroup>
         {this.state.infoUpdated && <Alert bsStyle="success" onDismiss={this.handleAlertDismiss}>
           <h4>Your profile has been updated!</h4>
@@ -220,6 +231,7 @@ class UserProfile extends React.Component{
         <Button type='submit' bsStyle="primary">Submit</Button>
 
       </form>
+      </Panel>
       </Col>
     )
   }

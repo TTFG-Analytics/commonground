@@ -137,6 +137,7 @@ export function votesPost(vote) {
 
 export const cachingFbData = (fbUser) => {
   console.log('cachingFBData', fbUser)
+  console.log('!#!#!#!#!#!#!#!',fbUser.facebookpicture)
   return {
     type: 'GET_FBDATA_SUCCESS',
     id: fbUser.id,
@@ -159,6 +160,7 @@ export const cachingFbData = (fbUser) => {
 
 // get data from facebook auth
 export function sendingFbData(fbData) {
+  console.log('!!!Sending fbData!!!', fbData)
   return (dispatch) => {
     return axios.post('/login', fbData)
       .then(response => {
