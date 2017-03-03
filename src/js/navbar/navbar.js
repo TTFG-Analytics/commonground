@@ -19,19 +19,19 @@ class Navigation extends React.Component {
       </NavItem>
     </Nav>
     <Nav className='navStuff'>
-    <NavItem>
-    <ProfileButton />
-    </NavItem>
-    <NavItem >
-        <NavDropdown eventKey={3} title="Menu" id="basic-nav-dropdown">
-          <LinkContainer to='/about'>
-            <MenuItem eventKey={3.1}>About</MenuItem>
-          </LinkContainer>
-          <LinkContainer to='/logout'>
-            <MenuItem eventKey={3.2}>Login/Logout</MenuItem>
-          </LinkContainer>
-      </NavDropdown>
-    </NavItem>
+      <NavItem className='navbarItem'>
+        <ProfileButton />
+      </NavItem>
+      <NavItem className='navbarItem'>
+          <NavDropdown eventKey={3} title="Menu" id="basic-nav-dropdown">
+            <LinkContainer to='/about'>
+              <MenuItem eventKey={3.1}>About</MenuItem>
+            </LinkContainer>
+            <LinkContainer to='/logout'>
+              <MenuItem eventKey={3.2}>Login/Logout</MenuItem>
+            </LinkContainer>
+        </NavDropdown>
+      </NavItem>
     </Nav>
     </Navbar>
     )

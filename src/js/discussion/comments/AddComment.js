@@ -54,11 +54,10 @@ class AddComment extends React.Component{
   }
 
   render() {
-    var notLoggedIn = false
-    if(!this.props.user.id){
-      console.log('this props user', this.props.user)
-      notLoggedIn = true
-    }
+    let notLoggedIn = true //should be false, but am changing for testing
+    // if(!this.props.user.id){
+    //   notLoggedIn = true
+    // }
     return (
         <div>
           <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
