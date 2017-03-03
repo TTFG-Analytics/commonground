@@ -8,6 +8,7 @@ import handleData from './utils/handleData'
 import handlePieData from './utils/handlePieData'
 import columnChartConfig from './utils/columnChartConfig'
 import pieChartConfig from './utils/pieChartConfig'
+import checkForData from './utils/checkForData'
 
 
 class CommentAnalytics extends React.Component{
@@ -76,11 +77,7 @@ class CommentAnalytics extends React.Component{
       )
     })
 
-    var hasData = false
-      console.log('has data', this.props.upvotecounter, this.props.downvotecounter)
-    if(this.props.upvotecounter !== 0 || this.props.downvotecounter !== 0) {
-      hasData = true
-    }
+    var hasData = checkForData(this.props.upvotecounter, this.props.downvotecounter)
 
     return (
       <div className="inlineRight">

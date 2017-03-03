@@ -43,12 +43,15 @@ export const postProfileSuccess = (profile) => {
   }
 }
 
-export const postProfile = (profile) => {
+export const postProfile = (profile, callback) => {
   return (dispatch) => {
     return axios.post('/profile', profile)
       .then(response => {
         console.log('workssss!', response.data);
         dispatch(postProfileSuccess(response.data))
+      })
+      .then(() => {
+        callback();
       })
       .catch(error => {
         console.log('Error in postProfile', error);
