@@ -143,15 +143,18 @@ app.get('/profile/:fbId', function(req, res) {
 // /login route puts user facebook data in database upon login
 app.post('/login', function(req,res) {
   currentUser = req.body;
+  console.log('login req body login', req.body)
+  var fbPic = req.body.picture.data.url.replace(/([?])/g, '\\?')
+  console.log('fbPic', fbPic)
   knex.raw(`
     INSERT INTO users (fullname, facebookid, gender, email, facebookpicture, locale)
     VALUES ('${req.body.name}', '${req.body.id}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
     ON CONFLICT (facebookid) DO UPDATE
-    SET (fullname, gender, email, facebookpicture, locale) = ('${req.body.name}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
+    SET (fullname, gender, email, facebookpicture, locale) = ('${req.body.name}', '${req.body.gender}', '${req.body.email}', '${fbPic}', '${req.body.locale}')
     RETURNING *
     `).then(function(data){
       //currentUser.id = data.rows[0].id
-      //console.log('fb data from db', data)
+      console.log('fb data from db', data)
       //console.log('fb user logged in', currentUser.id)
       res.status(200).send(data);
     }).catch((err) => console.log(chalk.red.inverse(err)));

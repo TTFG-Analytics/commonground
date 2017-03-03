@@ -25,7 +25,6 @@ class FaceBookIntegration extends React.Component{
             console.log('Response', response);
             console.log('Response.email', response.email)
             console.log('CONTEXT', context)
-            context.getFbData(response)
 
             context.props.sendingFbData(response)
           });
@@ -49,9 +48,6 @@ class FaceBookIntegration extends React.Component{
   }
 
   // (FB.Event.subscribe('auth.logout', (response) => console.log('*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*LOGOUT')))
-  getFbData(fbUserData){
-    this.props.cachingFbData(fbUserData)
-  }
 
   render(){
     return (
@@ -73,9 +69,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    cachingFbData: (fbUserData) => {
-      dispatch(cachingFbData(fbUserData))
-    },
     sendingFbData: (response) => {
       dispatch(sendingFbData(response))
     }
