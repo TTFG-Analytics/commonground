@@ -35,7 +35,13 @@ class Constraint extends React.Component{
     })
     let thisObj = this;
     this.props.contributeAgain(currentContribution, function() {
-      thisObj.props.hideModal()
+      if(thisObj.props.hideModal){
+        thisObj.props.hideModal()
+      } else {
+        thisObj.setState({
+          showModal: !thisObj.props.showModal
+        })
+      }
       return;
     })
   }
