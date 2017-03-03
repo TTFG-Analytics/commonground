@@ -59,13 +59,13 @@ class AddDiscussion extends React.Component{
   }
 
   render() {
-    let notLoggedIn = false
+    var notLoggedIn = false
     if(!this.props.user.id){
       notLoggedIn = true
     }
 
     return (
-      <div>
+      <div className='discussionForm'>
         <Col md={8} mdOffset={2}>
         <form onSubmit={this.handleSubmit.bind(this)}>
           <FormGroup controlId="formBasicText">
@@ -75,12 +75,13 @@ class AddDiscussion extends React.Component{
                 disabled={notLoggedIn}
                 type="text"
                 value={this.state.discussionValue}
-                placeholder="Enter text"
+                placeholder="Ask a question"
                 ref='discussion'
                 onChange={this.handleChange.bind(this)}
               />
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
             </InputGroup>
+            <br/>
             <br/>
           </FormGroup>
         </form>

@@ -189,7 +189,7 @@ class UserProfile extends React.Component{
 
     console.log('--------render props ************', this.props)
     return (
-      <Col md={8} mdOffset={2}>
+      <Col md={8} mdOffset={2} style={{marginTop: '175px'}}>
       <Panel header={profileHeader}>
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup controlId="formControlsSelect">

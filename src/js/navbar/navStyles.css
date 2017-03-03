@@ -1,15 +1,27 @@
+.navbarTotal {
+  background-color: #2C3340 !important;
+}
+
 .navStuff {
-    float: right !important;
+  float: right !important;
+  /*top: 100%;*/
+  /*height: 100%;*/
+  /*transform: translateY(-50%);*/
+  position: relative;
 }
 
 .navLeft {
-    float: left !important;
+  float: left !important;
 }
 
 /*.navbar {
     position: relative;
 }*/
 
-/*.nav {
-    float: right !important;
-}*/
+.navbarItem {
+  float: right !important;
+  position: absolute;
+  /*top: 50%;*/
+  transform: translateY(25%);
+  font-weight: bold;  
+}

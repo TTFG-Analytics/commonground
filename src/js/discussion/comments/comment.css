@@ -1,3 +1,7 @@
+.commentForm {
+  margin-bottom: 30px;
+}
+
 .upStyle {
   float: right;
   font-size: 20px;
@@ -38,6 +42,11 @@
   cursor: hand;
 }
 
+.delta {
+  float: right !important;
+  margin-top: -25px;
+}
+
 .inlineRight {
   float: right;
 }
@@ -45,4 +54,9 @@
 .well {
   display: inline-block !important;
   background-color: #B2B0C4 !important;
+  margin-left: -20px !important;
+  margin-bottom: 30px !important;
 }
+
+/*.commentDiv {
+}*/

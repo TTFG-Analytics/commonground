@@ -71,7 +71,6 @@ export const getComments = (campId) => {
   }
 }
 
-
 //post request section
 
 export const createDiscussionSuccess = (discussion) => {
@@ -190,8 +189,19 @@ export const contributedOnce = () => {
   }
 }
 
-export const contributeAgain = () => {
+export const contributeAgainSuccess = () => {
   return {
     type: 'CONTRIBUTE_AGAIN'
+  }
+}
+
+export const contributeAgain = (currentContribution, callback) => {
+  return (dispatch) => {
+    return axios.post('/delete', currentContribution)
+      .then(response => {
+        dispatch(getCommentsSuccess(response))
+        dispatch(contributeAgainSuccess())
+        callback()
+      })
   }
 }

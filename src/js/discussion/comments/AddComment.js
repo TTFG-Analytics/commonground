@@ -27,7 +27,6 @@ class AddComment extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault()
-    console.log('this props user', this.props.user.fullname)
     var userPic = this.props.user.facebookpicture || 'unknown'
     let newComment = {
       comment: this.state.commentValue,
@@ -39,28 +38,34 @@ class AddComment extends React.Component{
     if(window.socket){
       console.log('window socket', window, window.socket)
       window.socket.emit('comment', newComment)
-      this.props.contributedOnce()
     }
     this.state.commentValue = ''
   }
 
   stopUser(e) {
+    console.log('stop user being called')
     e.preventDefault()
     this.setState({
       showModal: true
     })
     console.log('user stopped', this.state)
-    this.forceUpdate()
+    // this.forceUpdate() <--commenting out for testing. uncomment later
+  }
+
+  hideModal() {
+    this.setState({
+      showModal: false
+    })
   }
 
   render() {
     var notLoggedIn = false
     if(!this.props.user.id){
-      console.log('this props user', this.props.user)
       notLoggedIn = true
     }
+
     return (
-        <div>
+        <div className='commentForm'>
           <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
               <ControlLabel>Create a New Comment</ControlLabel>
@@ -75,10 +80,12 @@ class AddComment extends React.Component{
                 />
                 <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
               </InputGroup>
-              <HelpBlock>Character limit: </HelpBlock>
             </FormGroup>
           </form>
-          <Constraint showModal={this.state.showModal} />
+          <Constraint 
+            showModal={this.state.showModal}
+            campId={this.props.campId}
+            hideModal={this.hideModal.bind(this)} />
         </div>
       )
   }
@@ -100,7 +107,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddComment)
-
-// Old react toolbox code
-// <Input type='text' label='Comment' ref='comment' />
-//           <Button type='submit' label='Reply' raised primary />

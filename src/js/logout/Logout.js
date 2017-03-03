@@ -25,7 +25,7 @@ class Logout extends React.Component{
         </div>
         </Col>
         <Col md={4} mdOffset={4}>
-        <Panel><h3>Facebook is required to use many features of this App</h3></Panel>
+        <Panel><h4>Facebook is required to use many features of this app</h4></Panel>
         </Col>
       </div>
     )

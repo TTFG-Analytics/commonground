@@ -37,13 +37,13 @@ class AddCamp extends React.Component{
   }
 
   render() {
-    let notLoggedIn = false
+    var notLoggedIn = false
     if(!this.props.user.id){
       notLoggedIn = true
     }
 
     return (
-      <div className='campForm'>
+      <div className='container campForm'>
         <Col md={8} mdOffset={2}>
         <form onSubmit={this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">

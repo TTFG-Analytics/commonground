@@ -15,19 +15,6 @@ DiscussionList.need = [
 ]
 
 class App extends React.Component{
-  // componentDidMount() {
-  //   FB.getLoginStatus(function(response) {
-  //     if (response.status === 'connected') {
-  //       var uid = response.authResponse.userID;
-  //       var accessToken = response.authResponse.accessToken;
-  //     } else if (response.status === 'not_authorized') {
-  //       console.log('user is logged into Facebook but not authenticated');
-  //     } else {
-  //       console.log('user is not logged in to to facebook');
-  //     }
-  //   });
-  // }
-
   render(){
     return (
     <div>

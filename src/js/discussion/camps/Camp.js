@@ -4,7 +4,7 @@ import CampList from './CampList'
 import Analytics from '../../analytics/Analytics'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
-import { getComments, createCommentSuccess } from '../actions/actions'
+import { getComments, createCommentSuccess, contributedOnce } from '../actions/actions'
 import { Button, Glyphicon, Panel, Col, Row, Grid } from 'react-bootstrap';
 require('./camp.css')
 
@@ -33,6 +33,7 @@ class Camp extends React.Component{
     });
     window.socket.on('comment', (data) => {
       this.props.createCommentSuccess(data)
+      this.props.contributedOnce()
     })
     this.props.getComments(campId)
     this.setState({
@@ -70,8 +71,12 @@ const mapDispatchToProps = (dispatch) => {
     getComments: (campId) => {
       dispatch(getComments(campId))
     },
-    createCommentSuccess: (campId) =>
+    createCommentSuccess: (campId) => {
       dispatch(createCommentSuccess(campId))
+    },
+    contributedOnce: () => {
+      dispatch(contributedOnce())
+    }
   }
 }
 

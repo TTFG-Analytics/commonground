@@ -44,8 +44,10 @@ class CampParent extends React.Component{
     return (
       <div>
         <Navigation />
-        <h2 className="campText">{discussionObj.input}</h2>
+        <h2 className="col-md-offset-2 campText">{discussionObj.input}</h2>
         {this.props.user === discussionCreator && <AddCamp discussionId={discussionId} />}
+        <br></br>
+        <br></br>
         <CampList discussionId={discussionId} />
       </div>
     )

@@ -392,19 +392,28 @@ app.post('/vote', function(req,res){
   }).then(function(){});
 });
 
-app.delete('/delete', function(req, res) {
-
-  // if () { //conditional to check if comment
-    knex('comment').where('comment_id', req.body.comment_id).returning('commonground_id').del()
+app.post('/delete', function(req, res) {
+  console.log('req body delete', req.body)
+  let commongroundId = req.body.campId
+  if (req.body.commentId !== null) { //conditional to check if comment
+    knex('comment').where('id', req.body.commentId).returning('commonground_id').del()
     .then(function(data){
-        console.log("DELETED!")
-        knex('comment').where('commonground_id', data[0].commonground_id).select('*')
+        console.log("DELETED!", data)
+        knex('comment').where('commonground_id', data[0]).select('*')
         .then(function(data1){
-          console.log(data1);
-          res.status(200).send(data1[0]);
+          console.log('other comments from delete', data1);
+          res.status(200).send(data1);
         })
 
       })
+  } else {
+    console.log('commonground id', commongroundId)
+    knex('comment').where('commonground_id', commongroundId).select('*')
+    .then(function(data1){
+      console.log('other comments from delete', data1);
+      res.status(200).send(data1);
+    })
+  }
   // }
   // if () { //conditional to check if vote
   //   knex('vote').where('comment_id', req.body.vote_id).del() //CHECK REQ.BODY
