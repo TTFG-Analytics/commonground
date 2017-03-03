@@ -81,6 +81,7 @@ class CommentAnalytics extends React.Component{
 
     return (
       <div className="inlineRight">
+
       <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
         <Modal.Header closeButton onClick={this.toggleModal.bind(this)}>
           <Modal.Title id="contained-modal-title-lg">Comment Analytics</Modal.Title>

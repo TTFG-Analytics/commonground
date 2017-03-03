@@ -40,8 +40,11 @@ class Analytics extends React.Component{
     axios.get(`/analytics/${campId}/${demographic}`)
       .then(function(response) {
         var people = response.data
+        console.log('commentDataArr about to handleData')
         var commentDataArr = handleData(people, demographic);
+        console.log('upvoteDataArr about to handleData')
         var upvoteDataArr = handleData(people, demographic, 1)
+        console.log('downvoteDataArr about to handleData')
         var downvoteDataArr = handleData(people, demographic, 0)
         this.setState({
           commenters: commentDataArr,
