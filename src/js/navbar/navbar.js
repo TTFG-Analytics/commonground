@@ -10,7 +10,7 @@ class Navigation extends React.Component {
 
   render() {
    return (
-    <Navbar inverse>
+    <Navbar inverse fixedTop className='navbarTotal'>
     <Nav className='navLeft'>
       <NavItem>
         <LinkContainer to='/'>

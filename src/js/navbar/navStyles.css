@@ -1,3 +1,7 @@
+.navbarTotal {
+  background-color: #2C3340 !important;
+}
+
 .navStuff {
   float: right !important;
   /*top: 100%;*/
@@ -18,5 +22,6 @@
   float: right !important;
   position: absolute;
   /*top: 50%;*/
-  transform: translateY(25%);  
+  transform: translateY(25%);
+  font-weight: bold;  
 }

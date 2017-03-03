@@ -37,7 +37,7 @@ class AddCamp extends React.Component{
   }
 
   render() {
-    let notLoggedIn = true //should be false, but am changing for testing
+    let notLoggedIn = false //should be false, but am changing for testing
     // if(!this.props.user.id){
     //   notLoggedIn = true
     // }

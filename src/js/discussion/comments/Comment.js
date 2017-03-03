@@ -45,41 +45,40 @@ class Comment extends React.Component{
       deltaStyle = {float: 'right', color:'red', fontSize: '16px'}
     }
 
+    // <Grid>
+          // <Row className="show-grid">
+// <Col md={6} smOffset={1}>
+// </Col>
+// </Row>
+        // </Grid>
+
     return (
-
-      <div>
-        <Grid>
-          <Row className="show-grid">
-            <Col md={6}>
-              <div className='well'>
-                <Media>
-                  <Media.Left align="top">
-                    <img width={64} height={64} src={facebookpicture} alt="Image"/>
-                  </Media.Left>
-                  <Media.Body>
-                    <Media.Heading>{this.props.inputStr}
-                      <CommentAnalytics 
-                        commentId={this.props.commentId}
-                        upvotecounter={upvotecounter}
-                        downvotecounter={downvotecounter}
-                        className="delta" 
-                        deltaStyle={deltaStyle} >
-                        {delta}
-                      </CommentAnalytics>
-                    </Media.Heading>
-                    <p>{fullname}</p>
-                    <p className="timeStyle"> - <em>{new Date(createdat).toLocaleString()}</em></p>
-                  </Media.Body>
-                  <Media>
-                    <Counter commentId={this.props.commentId}/>
-                  </Media>
-                </Media>
-              </div>
-            </Col>
-          </Row>
-        </Grid>
-      </div>
-
+      <Col md={11} >
+        <div className='well commentDiv'>
+          <Media>
+            <Media.Left align="top">
+              <img width={64} height={64} src={facebookpicture} alt="Image"/>
+            </Media.Left>
+            <Media.Body>
+              <Media.Heading>{this.props.inputStr}
+              </Media.Heading>
+                <CommentAnalytics 
+                  commentId={this.props.commentId}
+                  upvotecounter={upvotecounter}
+                  downvotecounter={downvotecounter}
+                  className="delta" 
+                  deltaStyle={deltaStyle} >
+                  {delta}
+                </CommentAnalytics>
+              <p>{fullname}</p>
+              <p className="timeStyle"> - <em>{new Date(createdat).toLocaleString()}</em></p>
+            </Media.Body>
+            <Media>
+              <Counter commentId={this.props.commentId}/>
+            </Media>
+          </Media>
+        </div>
+      </Col>
     )
   }
 }

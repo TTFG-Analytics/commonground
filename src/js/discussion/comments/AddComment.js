@@ -54,12 +54,12 @@ class AddComment extends React.Component{
   }
 
   render() {
-    let notLoggedIn = true //should be false, but am changing for testing
+    let notLoggedIn = false //should be false, but am changing for testing
     // if(!this.props.user.id){
     //   notLoggedIn = true
     // }
     return (
-        <div>
+        <div className='commentForm'>
           <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
               <ControlLabel>Create a New Comment</ControlLabel>

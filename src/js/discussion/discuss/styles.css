@@ -1,5 +1,5 @@
-.discussionList {
-  margin-top: 50px; 
+.discussionForm {
+  margin-top: 175px;
 }
 
 .discussion {
@@ -25,11 +25,12 @@
   background-color: #2C3340 !important;
   /*filter: alpha(opacity=80);*/
   /* IE */
-  -moz-opacity: 0.8;
+  -moz-opacity: 0.82;
   /* Mozilla */
-  opacity: 0.8;
+  opacity: 0.82;
   /* CSS3 */ 
   margin-top: 10px;
+  border: 10px #EDEDED !important;
 }
 
 .discussionName {
@@ -39,4 +40,9 @@
 .topic {
   white-space: normal;
   word-wrap: break-word;
+}
+
+.buttonGroupEl {
+  margin-bottom:15px;
+  
 }
