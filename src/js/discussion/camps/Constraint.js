@@ -12,7 +12,6 @@ class Constraint extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('props changed again', nextProps.showModal)
     this.setState({
       showModal: nextProps.showModal
     })
@@ -25,10 +24,19 @@ class Constraint extends React.Component{
   }
 
   allowContribution() {
-    console.log('allowContribution this', this)
-    this.props.contributeAgain()
-    this.setState({
-      showModal: !this.props.showModal
+    var currentContribution = {
+      campId: this.props.campId,
+      commentId: null
+    }
+    this.props.comments.forEach((comment) => {
+      if(comment.user_id === this.props.user) {
+        currentContribution.commentId = comment.id;
+      }
+    })
+    let thisObj = this;
+    this.props.contributeAgain(currentContribution, function() {
+      thisObj.props.hideModal()
+      return;
     })
   }
 
@@ -37,24 +45,31 @@ class Constraint extends React.Component{
       <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" show={this.state.showModal}>
         <Modal.Body>
           <div>
-            <h4>You have already contributed to this discussion. By clicking the button, you'll be removing your previous contribution and creating a new one.</h4>
+            <h4>You have already contributed to this discussion. By clicking the button, you'll be removing your previous contribution.</h4>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => this.doNothing()} type='submit' bsStyle='default'>Keep old contribution and do nothing</Button>
-          <Button onClick={() => this.allowContribution()} type='submit' bsStyle="warning">Delete old contribution and Add new</Button>
+          <Button onClick={() => this.allowContribution()} type='submit' bsStyle="warning">Delete old contribution</Button>
         </Modal.Footer>
       </Modal>
     )
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    comments: state.commentGet.comments,
+    user: state.profileReducer.id
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    contributeAgain: () => {
-      dispatch(contributeAgain())
+    contributeAgain: (currentContribution, callback) => {
+      dispatch(contributeAgain(currentContribution, callback))
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(Constraint)
+export default connect(mapStateToProps, mapDispatchToProps)(Constraint)
