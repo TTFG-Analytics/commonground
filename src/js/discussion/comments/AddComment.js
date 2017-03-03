@@ -80,7 +80,6 @@ class AddComment extends React.Component{
                 />
                 <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
               </InputGroup>
-              <HelpBlock>Character limit: </HelpBlock>
             </FormGroup>
           </form>
           <Constraint 

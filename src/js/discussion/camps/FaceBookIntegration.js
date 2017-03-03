@@ -30,9 +30,7 @@ class FaceBookIntegration extends React.Component{
           });
         } else {
           console.log('User cancelled login or did not fully authorize.');
-          window.location.href = "http://localhost:4040"
-          // http://localhost:4040
-          // http://138.197.202.152:4040/
+          window.location.href = "http://138.197.202.152:4040/"
         }
       },
       {scope: 'email'}

@@ -6,16 +6,18 @@
 }
 
 .campForm {
-  margin-top: 40px; 
+  margin-top: 40px;
+  margin-bottom: 40px; 
 }
 
 .campFormLabel {
   color: #EBF5EE;
 }
 
-.campground {
-  background-color: #293E6A !important;
-}
+/*.campground {
+  /*background-color: #293E6A !important;
+  margin-top: 30px;
+}*/
 
 .campBox {
   /*background-color: #063563 !important;*/
