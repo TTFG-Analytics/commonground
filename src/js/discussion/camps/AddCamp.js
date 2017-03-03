@@ -14,14 +14,15 @@ class AddCamp extends React.Component{
   }
 
   getValidationState() {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
+    const length = this.state.cgValue.length;
+    if (length > 2) return 'success'
+    else return 'error';
   }
 
   handleChange(e) {
     this.setState({ cgValue: e.target.value });
+    if (this.getValidationState() === 'success') {this.state.validInput = true}
+    if (this.getValidationState() === 'error') {this.state.validInput = false}
   }
 
   handleSubmit(e) {
@@ -46,7 +47,7 @@ class AddCamp extends React.Component{
       <div className='campForm'>
         <Col md={8} mdOffset={2}>
         <form onSubmit={this.handleSubmit.bind(this)}>
-            <FormGroup controlId="formBasicText">
+            <FormGroup controlId="formBasicText" validationState={this.getValidationState()}>
               <ControlLabel className='campFormLabel'>Create a New CommonGround</ControlLabel>
               <InputGroup>
               <FormControl
@@ -66,6 +67,7 @@ class AddCamp extends React.Component{
     )
   }
 }
+
 
 const mapStateToProps = (state) => {
   return {

@@ -10,19 +10,21 @@ class AddComment extends React.Component{
     super(props)
     this.state = {
       commentValue: '',
-      showModal: false
+      showModal: false,
+      validInput: false
     }
   }
 
   getValidationState() {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
+    const length = this.state.commentValue.length;
+    if (length > 9) return 'success'
+    else if (length > 1000 || length < 2) return 'error';
   } //need to use this for the form submit later
 
   handleChange(e) {
     this.setState({ commentValue: e.target.value });
+    if (this.getValidationState() === 'success') {this.state.validInput = true}
+    if (this.getValidationState() === 'error') {this.state.validInput = false}
   }
 
   handleSubmit(e) {
@@ -62,7 +64,7 @@ class AddComment extends React.Component{
     return (
         <div>
           <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
-            <FormGroup controlId="formBasicText">
+            <FormGroup controlId="formBasicText" validationState={this.getValidationState()}>
               <ControlLabel>Create a New Comment</ControlLabel>
               <InputGroup>
                 <FormControl
@@ -75,13 +77,17 @@ class AddComment extends React.Component{
                 />
                 <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
               </InputGroup>
-              <HelpBlock>Character limit: </HelpBlock>
+            {this.getValidationState() === 'success' ? <div></div> : ValidateHelp()}
             </FormGroup>
           </form>
           <Constraint showModal={this.state.showModal} />
         </div>
       )
   }
+}
+
+const ValidateHelp = () => {
+  return (<HelpBlock>'Must Be Minimum Length of 2 Characters'</HelpBlock>)
 }
 
 const mapStateToProps = (state) => {

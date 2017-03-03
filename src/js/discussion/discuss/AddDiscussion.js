@@ -13,7 +13,8 @@ class AddDiscussion extends React.Component{
     super(props)
 
     this.state = {
-      discussionValue: ''
+      discussionValue: '',
+      validInput: false
     }
   }
 
@@ -28,14 +29,16 @@ class AddDiscussion extends React.Component{
   }
 
   getValidationState() {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
+    const length = this.state.discussionValue.length;
+    if (length > 9) return 'success'
+    else if (length > 140|| length < 10) return 'error';
   }
 
   handleChange(e) {
     this.setState({ discussionValue: e.target.value });
+    if (this.getValidationState() === 'success') {this.state.validInput = true}
+    if (this.getValidationState() === 'error') {this.state.validInput = false}
+
   }
 
   handleSubmit(e) {
@@ -52,11 +55,13 @@ class AddDiscussion extends React.Component{
     })
   }
 
+
   componentWillUnmount() {
     if(window.discussionSocket) {
       window.discussionSocket.disconnect()
     }
   }
+
 
   render() {
     let notLoggedIn = false
@@ -68,9 +73,9 @@ class AddDiscussion extends React.Component{
       <div>
         <Col md={8} mdOffset={2}>
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <FormGroup controlId="formBasicText">
+          <FormGroup className = 'formText' controlId="formBasicText" validationState={this.getValidationState()}>
             <h1 className='discussHelp'>Create a New Discussion</h1>
-            <InputGroup>
+            <InputGroup className = 'inputText'>
               <FormControl
                 disabled={notLoggedIn}
                 type="text"
@@ -79,8 +84,9 @@ class AddDiscussion extends React.Component{
                 ref='discussion'
                 onChange={this.handleChange.bind(this)}
               />
-              <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
+              <InputGroup.Button><Button type='submit' bsStyle="primary" disabled={!this.state.validInput}>Submit</Button></InputGroup.Button>
             </InputGroup>
+            {this.getValidationState() === 'success' ? <div></div> : ValidateHelp()}
             <br/>
           </FormGroup>
         </form>
@@ -90,6 +96,13 @@ class AddDiscussion extends React.Component{
   }
 }
 
+
+
+const ValidateHelp = () => {
+  return (<HelpBlock>'Must Be Minimum Length of 10 Characters'</HelpBlock>)
+}
+
+
 const mapStateToProps = (state) => {
   return {
     user: state.profileReducer
@@ -98,10 +111,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createDiscussionSuccess: (discussion) => {
+    createDiscussionDenied: (discussion) => {
       dispatch(createDiscussionSuccess(discussion))
     }
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddDiscussion)
+
+
+            // {this.getValidationState()} ? '<HelpBlock>Success</HelpBlock>' : '<HelpBlock>Denied</HelpBlock>';
