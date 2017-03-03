@@ -392,6 +392,28 @@ app.post('/vote', function(req,res){
   }).then(function(){});
 });
 
+app.delete('/delete', function(req, res) {
+
+  // if () { //conditional to check if comment
+    knex('comment').where('comment_id', req.body.comment_id).returning('commonground_id').del()
+    .then(function(data){
+        console.log("DELETED!")
+        knex('comment').where('commonground_id', data[0].commonground_id).select('*')
+        .then(function(data1){
+          console.log(data1);
+          res.status(200).send(data1[0]);
+        })
+
+      })
+  // }
+  // if () { //conditional to check if vote
+  //   knex('vote').where('comment_id', req.body.vote_id).del() //CHECK REQ.BODY
+  //   .then(function(data){
+  //       console.log("DELETED!")
+  //     })
+  // }
+})
+
 app.get('/*', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
 });
