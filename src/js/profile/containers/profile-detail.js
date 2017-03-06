@@ -43,7 +43,7 @@ class UserProfile extends React.Component{
     e.preventDefault()
     console.log('this', this)
     var thisObj = this
-    console.log('thisObj', thisObj)
+    console.log('thisObj handleSubmit', thisObj)
     this.props.postProfile({
       id: thisObj.props.profile.id,
       age: thisObj.state.age,
@@ -188,9 +188,10 @@ class UserProfile extends React.Component{
       );
 
     console.log('--------render props ************', this.props)
+    
     return (
       <Col md={8} mdOffset={2} style={{marginTop: '175px'}}>
-      <Panel header={profileHeader}>
+      <Panel header={profileHeader} style={{backgroundColor: '#2C3340', color: '#EBF5EE'}}>
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <FormGroup controlId="formControlsSelect">
           <div>
