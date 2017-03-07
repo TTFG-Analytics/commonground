@@ -1,23 +1,38 @@
-const discussionsGet = (state = {isFetching: false, discussions: [], error: null}, action) => {
+const discussionsGet = (state = { discussions: [] }, action) => {
   if(action.type === 'GET_DISCUSSIONS_SUCCESS') {
-    console.log('action discussions', action.discussions)
     return Object.assign(
       {},
       state,
       {
-        isFetching: false,
-        error: false,
-        discussions: action.discussions
+        discussions: action.discussions.reduce((hash, discussion) => (
+          hash[discussion.id] = discussion, hash
+        ), {})
       }
-    )
+    ) //normalized the discussionsGet reducer
+    // console.log('action discussions', action.discussions)
+    // return Object.assign(
+    //   {},
+    //   state,
+    //   {
+    //     isFetching: false,
+    //     error: false,
+    //     discussions: action.discussions
+    //   }
+    // )
   }
   if(action.type === "CREATE_DISCUSSION_SUCCESS") {
-    console.log('discussion made!!!', action)
-    var newDiscuss = action;
-    return {
+    let newDiscussions =  Object.assign(
+      {},
+      state.discussions,
+      {[action.id]: action}
+    )
+    return Object.assign(
+      {},
       state,
-      discussions: [newDiscuss, ...state.discussions ]
-    }
+      {
+        discussions: newDiscussions
+      }
+    )
   }
   return state
 }

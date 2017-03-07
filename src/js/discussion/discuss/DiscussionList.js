@@ -16,22 +16,20 @@ class DiscussionList extends React.Component{
   }
 
   render() {
-    let thisObj = this;
     return (
-      <div className='discussionList'>
-        {thisObj.props.discussionsList.length > 0 && thisObj.props.discussionsList.map((discussionX, index) =>
+      <div className='discussionsList'>
+        {Object.keys(this.props.discussionsList).length > 0 && Object.keys(this.props.discussionsList).map((discussionId, index) =>
         <ButtonGroup vertical block className='buttonGroupEl'>
           <div className='topic'></div>
-          <Link to={`/discuss/${discussionX.id}`}>
+          <Link to={`/discuss/${discussionId}`}>
             <Button className="col-md-10 col-md-offset-1 discussButton">
               <Discussion
-                key={discussionX.id}
-                discussionId={discussionX.id}
-                inputStr={discussionX.input}
+                key={discussionId}
+                discussionId={discussionId}
+                inputStr={this.props.discussionsList[discussionId].input}
               />
             </Button>
           </Link>
-         
         </ButtonGroup>
         )}
       </div>

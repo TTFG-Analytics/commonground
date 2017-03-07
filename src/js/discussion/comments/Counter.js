@@ -47,9 +47,9 @@ class Counter extends React.Component {
     let currentUpvote = 0;
     let currentDownvote = 0;
     let notLoggedIn = false
-    if(!this.props.user.id){
-      notLoggedIn = true
-    }
+    // if(!this.props.user.id){
+    //   notLoggedIn = true
+    // }
 
     return (
       <div>

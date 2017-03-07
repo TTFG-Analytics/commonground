@@ -5,17 +5,13 @@ require('./camp.css')
 
 class CampList extends React.Component{
   render(){
-    var currCamps = this.props.camps.filter(camp => {
-      return camp.discussion_id == this.props.discussionId
-    });
-
     return (
       <div className='campground'>
-        {currCamps.map(currCamp =>
+        {Object.keys(this.props.camps).map(campId =>
           <Camp
-            key={currCamp.id}
-            campId={currCamp.id}
-            inputStr={currCamp.input}
+            key={campId}
+            campId={campId}
+            inputStr={this.props.camps[campId].input}
           />
         )}
       </div>

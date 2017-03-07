@@ -8,7 +8,7 @@ class FaceBookIntegration extends React.Component{
     // facebook signin  button render
     window.fbAsyncInit = function() {
       FB.init({
-        appId      : '1791758217766999',
+        appId      : '1291611520915418', // '1791758217766999', <-- is the old id for the group
         cookie     : true,  // enable cookies to allow the server to access
         // the session
         xfbml      : true,  // parse social plugins on this page
@@ -30,7 +30,8 @@ class FaceBookIntegration extends React.Component{
           });
         } else {
           console.log('User cancelled login or did not fully authorize.');
-          window.location.href = "http://138.197.202.152:4040/"
+          // window.location.href = "http://138.197.202.152:4040/"
+          //window.location.href = 'http://localhost:4040'
         }
       },
       {scope: 'email'}

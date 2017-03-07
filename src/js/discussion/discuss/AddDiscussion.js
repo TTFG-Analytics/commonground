@@ -60,9 +60,9 @@ class AddDiscussion extends React.Component{
 
   render() {
     var notLoggedIn = false
-    if(!this.props.user.id){
-      notLoggedIn = true
-    }
+    // if(!this.props.user.id){
+    //   notLoggedIn = true
+    // }
 
     return (
       <div className='discussionForm'>

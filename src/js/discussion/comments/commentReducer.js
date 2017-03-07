@@ -7,16 +7,21 @@ const commentGet = (state={comments:[]}, action) => {
       {},
       state,
       {
-        comments: action.comments
+        comments: action.comments.reduce((hash, comment) => (
+          hash[comment.id] = comment, hash
+        ), {})
       }
     )
   }
   if(action.type === 'CREATE_COMMENT_SUCCESS') {
-    var newComment = action;
-    console.log('action create comment', newComment, action)
+    let newComments = Object.assign(
+      {},
+      state.comments,
+      {[action.id]: action}
+    )
     return {
       state,
-      comments: [...state.comments, newComment]
+      comments: newComments
     }
   }
   if(action.type === 'VOTE_SUCCESS') {

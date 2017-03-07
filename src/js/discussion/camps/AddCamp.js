@@ -38,9 +38,9 @@ class AddCamp extends React.Component{
 
   render() {
     var notLoggedIn = false
-    if(!this.props.user.id){
-      notLoggedIn = true
-    }
+    // if(!this.props.user.id){
+    //   notLoggedIn = true
+    // }
 
     return (
       <div className='container campForm'>
@@ -54,7 +54,6 @@ class AddCamp extends React.Component{
                 disabled={notLoggedIn}
                 value={this.state.cgValue}
                 placeholder="Enter text"
-                ref='cg'
                 onChange={this.handleChange.bind(this)}
               />
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>

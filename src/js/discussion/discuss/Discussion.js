@@ -9,13 +9,12 @@ class Discussion extends React.Component{
   }
 
   render(){
-    var discussionId = this.props.discussionId;
-    var inputStr = this.props.inputStr;
-    var fullname = this.props.fullname;
+    let discussionId = this.props.discussionId
+
     return (
       <div className='discussionName'>
-        <h3 className="topic" onClick={()=> this.fetchCamps(discussionId, fullname)}>
-          {inputStr}
+        <h3 className="topic" onClick={()=> this.fetchCamps(discussionId, this.props.fullname)}>
+          {this.props.discussionsList[discussionId].input}
         </h3>
       </div>
     )
@@ -24,7 +23,8 @@ class Discussion extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    fullname: state.profileReducer.fullname
+    fullname: state.profileReducer.fullname,
+    discussionsList: state.discussionsGet.discussions 
   }
 }
 

@@ -8,7 +8,7 @@ class FaceBookButton extends React.Component{
     // facebook signin  button render
     window.fbAsyncInit = function() {
       FB.init({
-        appId      : '1791758217766999',
+        appId      : '1291611520915418', // '1791758217766999',
         cookie     : true,  // enable cookies to allow the server to access
         // the session
         xfbml      : true,  // parse social plugins on this page

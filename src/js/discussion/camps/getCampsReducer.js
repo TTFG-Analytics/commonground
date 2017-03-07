@@ -5,18 +5,27 @@ const campGet = (state={commongrounds: []}, action) => {
       {},
       state,
       {
-        commongrounds: action.camps,
+        commongrounds: action.camps.reduce((hash, camp) => (
+          hash[camp.id] = camp, hash
+        ), {}),
         contributed: action.contributed
       }
     )
   }
   if(action.type === 'CREATE_CAMP_SUCCESS') {
-    var newCamp = action;
-    console.log('action create camp', newCamp, action)
-    return {
+    let newCamps = Object.assign(
+      {},
+      state.commongrounds,
+      {[action.id]: action}
+    )
+    return Object.assign(
+      {},
       state,
-      commongrounds: [...state.commongrounds, newCamp]
-    }
+      {
+        contributed: false,
+        commongrounds: newCamps
+      }
+    )
   }
   if(action.type === 'CONTRIBUTED') { //change state so user can't make more comments
     console.log('contributed once')

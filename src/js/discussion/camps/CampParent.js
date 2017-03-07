@@ -29,26 +29,15 @@ class CampParent extends React.Component{
 
   render(){
     var discussionId = this.props.params.discussionId
-    console.log("THIS", this);
-
-    let discussionObj;
-    let discussionCreator;
-    this.props.discussions.forEach((discussion) => {
-      if(discussion.id == discussionId) {
-        discussionObj = discussion;
-        discussionCreator = discussion.user_id
-      }
-    })
-    console.log('discussionObj', discussionObj.input, discussionCreator);
     
     return (
       <div>
         <Navigation />
-        <h2 className="col-md-offset-2 campText">{discussionObj.input}</h2>
-        {this.props.user === discussionCreator && <AddCamp discussionId={discussionId} />}
+        <h2 className="col-md-offset-2 campText">{this.props.discussions[discussionId].input}</h2>
+        {this.props.user === this.props.discussions[discussionId].user_id && <AddCamp discussionId={discussionId} />}
         <br></br>
         <br></br>
-        <CampList discussionId={discussionId} />
+        <CampList />
       </div>
     )
   }
