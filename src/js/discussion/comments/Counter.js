@@ -2,6 +2,7 @@ import React from 'react'
 import { votesPost } from '../actions/actions'
 import { connect } from 'react-redux'
 import Constraint from '../camps/Constraint'
+import Flag from './Flag'
 import { contributedOnce } from '../actions/actions'
 import { OverlayTrigger, Tooltip, ButtonToolbar, Glyphicon, Media, ButtonGroup, Button } from 'react-bootstrap';
 require('./comment.css');
@@ -44,8 +45,8 @@ class Counter extends React.Component {
   }
 
   render() {
-    let currentUpvote = 0;
-    let currentDownvote = 0;
+    // let currentUpvote = 0;
+    // let currentDownvote = 0;
     let notLoggedIn = false
     // if(!this.props.user.id){
     //   notLoggedIn = true
@@ -67,27 +68,7 @@ class Counter extends React.Component {
             </Button>
           </ButtonGroup>
         </ButtonToolbar>
-        <ButtonToolbar className="flag">
-          <ButtonGroup>
-             <OverlayTrigger placement="top" overlay={
-                <Tooltip id="tooltip">Flag Comment as Inappropriate</Tooltip>
-              }>
-              <Button onClick={()=> {
-                if (this.state.flagStyle === 'flagStyleInactive') {
-                  this.setState({
-                    flagStyle:'flagStyleActive'
-                  })
-                } else {
-                  this.setState({
-                    flagStyle:'flagStyleInactive'
-                  })
-                }
-              }}>
-                <Glyphicon className={this.state.flagStyle} glyph="flag"></Glyphicon>
-              </Button>
-            </OverlayTrigger>
-          </ButtonGroup>
-        </ButtonToolbar>
+        <Flag />
         <Constraint showModal={this.state.showModal} />
       </div>
     )
