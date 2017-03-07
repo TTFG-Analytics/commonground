@@ -96,32 +96,3 @@ const mapDispatchToProps = (dispatch) => {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter)
-
-
-
-// <Button
-//             type='submit'
-//             onClick={() => {
-//               console.log('arrow just upvoted')
-//               this.props.increaseUpvotesPost({
-//                 vote: '1',
-//                 commentId: commentId,
-//                 userId: userId
-//             })
-//           }}>
-//           <span className="glyphicon glyphicon-menu-up upStyle" aria-hidden="true"></span>
-//         </Button>
-//         <span
-//           className="glyphicon glyphicon-menu-down downStyle"
-//           aria-hidden="true"
-//           type='submit'
-//           bsStyle="primary"
-//           onClick={() => {
-//             console.log('arrow just downvoted')
-//             this.props.increaseDownvotesPost({
-//               vote: '0',
-//               commentId: commentId,
-//               userId: userId
-//             })
-//           }}>
-//         </span>

@@ -25,14 +25,7 @@ const commentGet = (state={comments:[]}, action) => {
     }
   }
   if(action.type === 'VOTE_SUCCESS') {
-    console.log('action vote', action)
-    let commentIndex = 0;
-    state.comments.forEach((comment, index) => {
-      if(comment.id === action.commentId){
-        commentIndex = index;
-      }
-    })
-    console.log('commentIndex', commentIndex)
+    let commentIndex = action.commentId;
     return {
       state,
       comments: update(state.comments, {
