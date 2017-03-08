@@ -7,10 +7,6 @@ class Demographic extends React.Component{
     super(props)
   }
 
-  // handleChange(e){
-  //   this.props.demographicChange()
-  // }
-
   render() {
     let listDemographics = demographics.map((demographic) => {
       return(

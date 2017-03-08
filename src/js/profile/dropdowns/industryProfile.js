@@ -1,0 +1,30 @@
+const industryProfile = [
+  {value: 0, label: 'Select'},
+  {value: 1, label: 'Aerospace, defence & security'},
+  {value: 2, label: 'Asset & wealth management'},
+  {value: 3, label: 'Automotive'},
+  {value: 4, label: 'Banking & capital markets'},
+  {value: 5, label: 'Capital projects & infrastructure'},
+  {value: 6, label: 'Chemicals'},
+  {value: 7, label: 'Communications'},
+  {value: 8, label: 'Energy, utilities & mining'},
+  {value: 9, label: 'Engineering & construction'},
+  {value: 10, label: 'Entertainment & media'},
+  {value: 11, label: 'Financial services'},
+  {value: 12, label: 'Forest, paper & packaging'},
+  {value: 13, label: 'Government & public services'},
+  {value: 14, label: 'Healthcare'},
+  {value: 15, label: 'Hospitality & leisure'},
+  {value: 16, label: 'Industrial manufacturing'},
+  {value: 17, label: 'Insurance'},
+  {value: 18, label: 'Metals'},
+  {value: 19, label: 'Pharmaceuticals & life sciences'},
+  {value: 20, label: 'Private equity'},
+  {value: 21, label: 'Retail & consumer'},
+  {value: 22, label: 'Sovereign investment funds'},
+  {value: 23, label: 'Technology'},
+  {value: 24, label: 'Transportation & logistics'},
+  {value: 25, label: 'Other'}
+]
+
+export default industryProfile
