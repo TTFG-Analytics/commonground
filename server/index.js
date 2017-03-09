@@ -40,9 +40,13 @@ io.on('connection', (client) => {
 
 
 app.get('/discussions', (req, res) => {
-  knex('discussion').select('*').orderBy('createdat', 'desc')
+  knex('users').join('discussion', 'users.id', 'discussion.user_id').select('discussion.id',
+    'discussion.input',
+    'discussion.user_id',
+    'discussion.createdat',
+    'users.fullname').orderBy('createdat', 'desc')
     .then((data) => {
-      // console.log('discussions data', data)
+      console.log('discussions data', data)
       res.status(200).send(data)
     })
 })
@@ -166,7 +170,6 @@ app.post('/profile', function(req,res) {
   console.log('profile REQ.BODY', req.body);
   knex('users').returning('*').where('id', req.body.id).update({
     age: `${req.body.age}`,
-    hometown: `${req.body.hometown}`,
     race: `${req.body.race}`,
     industry: `${req.body.industry}`,
     politicalleaning: `${req.body.politicalleaning}`,

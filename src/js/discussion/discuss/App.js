@@ -1,7 +1,7 @@
 import React from 'react'
 import AddDiscussion from './AddDiscussion'
 import DiscussionList from './DiscussionList'
-import { getDiscussions } from '../actions/actions'
+import { getDiscussions } from './discussionActions'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import FaceBookIntegration from '../camps/FaceBookIntegration'

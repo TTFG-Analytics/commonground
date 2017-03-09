@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
 import Constraint from '../camps/Constraint'
-import { contributedOnce } from '../actions/actions'
+import { contributedOnce } from './commentActions'
 
 class AddComment extends React.Component{
   constructor(props){
@@ -60,9 +60,9 @@ class AddComment extends React.Component{
 
   render() {
     var notLoggedIn = false
-    if(!this.props.user.id){
-      notLoggedIn = true
-    }
+    // if(!this.props.user.id){
+    //   notLoggedIn = true
+    // }
 
     return (
         <div className='commentForm'>

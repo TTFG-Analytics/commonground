@@ -7,27 +7,25 @@ const commentGet = (state={comments:[]}, action) => {
       {},
       state,
       {
-        comments: action.comments
+        comments: action.comments.reduce((hash, comment) => (
+          hash[comment.id] = comment, hash
+        ), {})
       }
     )
   }
   if(action.type === 'CREATE_COMMENT_SUCCESS') {
-    var newComment = action;
-    console.log('action create comment', newComment, action)
+    let newComments = Object.assign(
+      {},
+      state.comments,
+      {[action.id]: action}
+    )
     return {
       state,
-      comments: [...state.comments, newComment]
+      comments: newComments
     }
   }
   if(action.type === 'VOTE_SUCCESS') {
-    console.log('action vote', action)
-    let commentIndex = 0;
-    state.comments.forEach((comment, index) => {
-      if(comment.id === action.commentId){
-        commentIndex = index;
-      }
-    })
-    console.log('commentIndex', commentIndex)
+    let commentIndex = action.commentId;
     return {
       state,
       comments: update(state.comments, {

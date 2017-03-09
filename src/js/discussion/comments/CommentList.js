@@ -4,18 +4,12 @@ import { connect } from 'react-redux'
 
 class CommentList extends React.Component{
   render(){
-    var currComments = [];
-    currComments = this.props.comments.filter(comment => {
-      return comment.commonground_id === this.props.campId
-    });
-
     return (
       <ul>
-        {currComments && currComments.length > 0 && currComments.map(currComment =>
+        {Object.keys(this.props.comments).length > 0 && Object.keys(this.props.comments).map(commentId =>
           <Comment
-            key={currComment.id}
-            commentId={currComment.id}
-            inputStr={currComment.input}
+            key={commentId}
+            commentId={commentId}
           />
         )}
       </ul>

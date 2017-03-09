@@ -14,7 +14,7 @@ class Navigation extends React.Component {
     <Nav className='navLeft'>
       <NavItem>
         <LinkContainer to='/'>
-          <h4>Common Ground</h4>
+          <h4>Commonground</h4>
         </LinkContainer>
       </NavItem>
     </Nav>

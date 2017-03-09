@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getCamps } from '../actions/actions'
+import { getCamps } from '../camps/campActions'
 require('./styles.css')
 
 class Discussion extends React.Component{
@@ -9,14 +9,14 @@ class Discussion extends React.Component{
   }
 
   render(){
-    var discussionId = this.props.discussionId;
-    var inputStr = this.props.inputStr;
-    var fullname = this.props.fullname;
+    let discussionId = this.props.discussionId
+    let discussion = this.props.discussionsList[discussionId]
     return (
       <div className='discussionName'>
-        <h3 className="topic" onClick={()=> this.fetchCamps(discussionId, fullname)}>
-          {inputStr}
+        <h3 className="topic" onClick={()=> this.fetchCamps(discussionId, this.props.fullname)}>
+          {discussion.input}
         </h3>
+        <em>by {discussion.fullname} on {new Date(discussion.createdat).toLocaleString()}</em>
       </div>
     )
   }
@@ -24,7 +24,8 @@ class Discussion extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    fullname: state.profileReducer.fullname
+    fullname: state.profileReducer.fullname,
+    discussionsList: state.discussionsGet.discussions 
   }
 }
 
