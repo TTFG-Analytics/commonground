@@ -10,13 +10,13 @@ class Discussion extends React.Component{
 
   render(){
     let discussionId = this.props.discussionId
-
+    let discussion = this.props.discussionsList[discussionId]
     return (
       <div className='discussionName'>
         <h3 className="topic" onClick={()=> this.fetchCamps(discussionId, this.props.fullname)}>
-          {this.props.discussionsList[discussionId].input}
+          {discussion.input}
         </h3>
-        <em>{new Date(this.props.discussionsList[discussionId].createdat).toLocaleString()}</em>
+        <em>by {discussion.fullname} on {new Date(discussion.createdat).toLocaleString()}</em>
       </div>
     )
   }
