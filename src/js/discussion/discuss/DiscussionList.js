@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react'
 import Discussion from './Discussion'
 import { connect } from 'react-redux'
-import axios from 'axios'
-import { getDiscussions } from '../actions/actions'
 import { Col, Button, ButtonGroup } from 'react-bootstrap';
 import { Link } from 'react-router'
 require('./styles.css')

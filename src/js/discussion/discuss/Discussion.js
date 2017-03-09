@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getCamps } from '../actions/actions'
+import { getCamps } from '../camps/campActions'
 require('./styles.css')
 
 class Discussion extends React.Component{
@@ -16,6 +16,7 @@ class Discussion extends React.Component{
         <h3 className="topic" onClick={()=> this.fetchCamps(discussionId, this.props.fullname)}>
           {this.props.discussionsList[discussionId].input}
         </h3>
+        <em>{new Date(this.props.discussionsList[discussionId].createdat).toLocaleString()}</em>
       </div>
     )
   }

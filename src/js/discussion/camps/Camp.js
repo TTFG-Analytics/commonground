@@ -4,7 +4,7 @@ import CampList from './CampList'
 import Analytics from '../../analytics/Analytics'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
-import { getComments, createCommentSuccess, contributedOnce } from '../actions/actions'
+import { getComments, createCommentSuccess, contributedOnce } from '../comments/commentActions'
 import { Button, Glyphicon, Panel, Col, Row, Grid } from 'react-bootstrap';
 require('./camp.css')
 

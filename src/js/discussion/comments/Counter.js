@@ -1,9 +1,9 @@
 import React from 'react'
-import { votesPost } from '../actions/actions'
+import { votesPost } from './commentActions'
 import { connect } from 'react-redux'
 import Constraint from '../camps/Constraint'
 import Flag from './Flag'
-import { contributedOnce } from '../actions/actions'
+import { contributedOnce } from './commentActions'
 import { OverlayTrigger, Tooltip, ButtonToolbar, Glyphicon, Media, ButtonGroup, Button } from 'react-bootstrap';
 require('./comment.css');
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { createDiscussionSuccess } from '../actions/actions'
+import { createDiscussionSuccess } from './discussionActions'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 import Navigation from '../../navbar/navbar'
