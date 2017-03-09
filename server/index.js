@@ -28,7 +28,7 @@ io.on('connection', (client) => {
   client.emit('connection')
   client.on('discussion', (data) => {
     console.log("banana", data);
-     knex('discussion').returning(['id', 'input', 'user_id']).insert({input: data.topic, user_id: data.user}) //currentUser.id --- hard coding for now
+     knex('discussion').returning(['id', 'input', 'user_id', 'createdat']).insert({input: data.topic, user_id: data.user}) //currentUser.id --- hard coding for now
     .then(function(data){
       console.log('.then data', data)
       io.emit('discussion', data[0])

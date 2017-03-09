@@ -16,7 +16,7 @@ class Discussion extends React.Component{
         <h3 className="topic" onClick={()=> this.fetchCamps(discussionId, this.props.fullname)}>
           {discussion.input}
         </h3>
-        <em>by {discussion.fullname} on {new Date(discussion.createdat).toLocaleString()}</em>
+        <em>by {discussion.fullname || this.props.fullname} on {new Date(discussion.createdat).toLocaleString()}</em>
       </div>
     )
   }

@@ -76,7 +76,6 @@ class AddDiscussion extends React.Component{
                 type="text"
                 value={this.state.discussionValue}
                 placeholder="Ask a question"
-                ref='discussion'
                 onChange={this.handleChange.bind(this)}
               />
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
