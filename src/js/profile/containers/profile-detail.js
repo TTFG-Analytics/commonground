@@ -11,6 +11,7 @@ import religionProfile from '../dropdowns/religionProfile'
 import incomeProfile from '../dropdowns/incomeProfile'
 import Select from '../components/Select'
 import AgeInput from '../components/AgeInput'
+import UserAlert from '../components/UserAlert'
 
 class UserProfile extends React.Component{
   constructor(props){
@@ -128,12 +129,11 @@ class UserProfile extends React.Component{
           
           <Select label='Yearly Income' demographicProperty='yearlyincome' list={incomeList} handleChange={this.handleChange.bind(this, 'yearlyincome')} />
         </FormGroup>
-        {this.state.infoUpdated && <Alert bsStyle="success" onDismiss={this.handleAlertDismiss}>
-          <h4>Your profile has been updated!</h4>
-          <p>
-            <Button onClick={this.handleAlertDismiss.bind(this)}>Hide Alert</Button>
-          </p>
-        </Alert>}
+        {this.state.infoUpdated && <UserAlert 
+          handleAlertDismiss={this.handleAlertDismiss.bind(this)} 
+          alertMessage='Your profile has been updated!'
+          alertStyle='success'
+          alertClose='Hide Alert' />}
         <Button type='submit' bsStyle="primary">Submit</Button>
 
       </form>

@@ -5,12 +5,14 @@ import { createDiscussionSuccess } from './discussionActions'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 import Navigation from '../../navbar/navbar'
+import UserAlert from '../../profile/components/UserAlert'
+import { Router, Route, Link, browserHistory } from 'react-router'
 require('./styles.css')
 
 class AddDiscussion extends React.Component{
 
-  constructor(props){
-    super(props)
+  constructor(props, context){
+    super(props, context)
 
     this.state = {
       discussionValue: ''
@@ -58,11 +60,18 @@ class AddDiscussion extends React.Component{
     }
   }
 
+  goLogin() {
+    console.log('goLogin', this.context)
+    this.context.router.push('/logout')
+    // this.history.pushState(null, `/logout`);
+    console.log('finished')
+  }
+
   render() {
     var notLoggedIn = false
-    // if(!this.props.user.id){
-    //   notLoggedIn = true
-    // }
+    if(!this.props.user.id){
+      notLoggedIn = true
+    }
 
     return (
       <div className='discussionForm'>
@@ -70,6 +79,11 @@ class AddDiscussion extends React.Component{
         <form onSubmit={this.handleSubmit.bind(this)}>
           <FormGroup controlId="formBasicText">
             <h1 className='discussHelp'>Create a New Discussion</h1>
+            {notLoggedIn && <UserAlert 
+              alertMessage='Log in with your Facebook to add a new discussion.'
+              handleAlertDismiss={this.goLogin.bind(this)}
+              alertStyle='info'
+              alertClose='Login' />}
             <InputGroup>
               <FormControl
                 disabled={notLoggedIn}
@@ -103,5 +117,11 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
+
+AddDiscussion.contextTypes = {
+  router: function contextType() {
+    return React.PropTypes.func.isRequired;
+  }
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddDiscussion)
