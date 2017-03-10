@@ -4,6 +4,7 @@ import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
 import Constraint from '../camps/Constraint'
 import { contributedOnce } from './commentActions'
+import UserAlert from '../../profile/components/UserAlert'
 require('./comment.css');
 
 class AddComment extends React.Component{
@@ -12,7 +13,8 @@ class AddComment extends React.Component{
     this.state = {
       commentValue: '',
       showModal: false,
-      remainingCharacters: 1000
+      remainingCharacters: 1000,
+      invalidComment: false
     }
   }
 
@@ -35,19 +37,25 @@ class AddComment extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault()
-    var userPic = this.props.user.facebookpicture || 'unknown'
-    let newComment = {
-      comment: this.state.commentValue,
-      commongroundId: this.props.campId,
-      userId: this.props.user.id,
-      userName: this.props.user.fullname,
-      userPic: userPic
+    if(this.state.commentValue.length >= 3) {
+      var userPic = this.props.user.facebookpicture || 'unknown'
+      let newComment = {
+        comment: this.state.commentValue,
+        commongroundId: this.props.campId,
+        userId: this.props.user.id,
+        userName: this.props.user.fullname,
+        userPic: userPic
+      }
+      if(window.socket){
+        console.log('window socket', window, window.socket)
+        window.socket.emit('comment', newComment)
+      }
+      this.state.commentValue = ''
+    } else {
+      this.setState({
+        invalidDiscussion: true
+      })
     }
-    if(window.socket){
-      console.log('window socket', window, window.socket)
-      window.socket.emit('comment', newComment)
-    }
-    this.state.commentValue = ''
   }
 
   stopUser(e) {
@@ -63,6 +71,12 @@ class AddComment extends React.Component{
   hideModal() {
     this.setState({
       showModal: false
+    })
+  }
+
+  hideCommentAlert() {
+    this.setState({
+      invalidDiscussion: false
     })
   }
 
@@ -91,6 +105,12 @@ class AddComment extends React.Component{
             </FormGroup>
           </form>
           <h5 id='charCount'>Remaining characters: {this.state.remainingCharacters}</h5>
+          <br />
+          {this.state.invalidDiscussion && <UserAlert 
+            alertMessage='Please enter a valid comment.'
+            handleAlertDismiss={this.hideCommentAlert.bind(this)}
+            alertStyle='warning'
+            alertClose='OK' />}
           <Constraint 
             showModal={this.state.showModal}
             campId={this.props.campId}
