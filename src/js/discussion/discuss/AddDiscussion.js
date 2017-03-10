@@ -15,7 +15,8 @@ class AddDiscussion extends React.Component{
     super(props, context)
 
     this.state = {
-      discussionValue: ''
+      discussionValue: '',
+      invalidDiscussion: false
     }
   }
 
@@ -42,16 +43,22 @@ class AddDiscussion extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault()
-    let newDiscussion = {
-      topic: this.state.discussionValue,
-      user: this.props.user.id
+    if(this.state.discussionValue.length >= 3) {
+      let newDiscussion = {
+        topic: this.state.discussionValue,
+        user: this.props.user.id
+      }
+      if(window.discussionSocket){
+        window.discussionSocket.emit('discussion', newDiscussion)
+      }
+      this.setState({
+        discussionValue: ''
+      })
+    } else {
+      this.setState({
+        invalidDiscussion: true
+      })
     }
-    if(window.discussionSocket){
-      window.discussionSocket.emit('discussion', newDiscussion)
-    }
-    this.setState({
-      discussionValue: ''
-    })
   }
 
   componentWillUnmount() {
@@ -65,6 +72,12 @@ class AddDiscussion extends React.Component{
     this.context.router.push('/logout')
     // this.history.pushState(null, `/logout`);
     console.log('finished')
+  }
+
+  hideDiscussionAlert() {
+    this.setState({
+      invalidDiscussion: false
+    })
   }
 
   render() {
@@ -95,6 +108,11 @@ class AddDiscussion extends React.Component{
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
             </InputGroup>
             <br/>
+            {this.state.invalidDiscussion && <UserAlert 
+              alertMessage='Please enter a valid discussion.'
+              handleAlertDismiss={this.hideDiscussionAlert.bind(this)}
+              alertStyle='warning'
+              alertClose='OK' />}
             <br/>
           </FormGroup>
         </form>

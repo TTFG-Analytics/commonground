@@ -4,13 +4,15 @@ import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
 import Constraint from '../camps/Constraint'
 import { contributedOnce } from './commentActions'
+require('./comment.css');
 
 class AddComment extends React.Component{
   constructor(props){
     super(props)
     this.state = {
       commentValue: '',
-      showModal: false
+      showModal: false,
+      remainingCharacters: 1000
     }
   }
 
@@ -22,7 +24,13 @@ class AddComment extends React.Component{
   } //need to use this for the form submit later
 
   handleChange(e) {
-    this.setState({ commentValue: e.target.value });
+    let charsUsed = 1000 - e.target.value.length
+    this.setState({
+      commentValue: e.target.value,
+      remainingCharacters: charsUsed
+    });
+
+    console.log('remainingCharacters', this.state.remainingCharacters)
   }
 
   handleSubmit(e) {
@@ -82,6 +90,7 @@ class AddComment extends React.Component{
               </InputGroup>
             </FormGroup>
           </form>
+          <h5 id='charCount'>Remaining characters: {this.state.remainingCharacters}</h5>
           <Constraint 
             showModal={this.state.showModal}
             campId={this.props.campId}
