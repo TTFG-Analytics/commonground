@@ -11,13 +11,14 @@ class Comment extends React.Component{
   render(){
     let commentId = this.props.commentId
     let comment = this.props.comments[commentId]
+    let fbPic = comment.facebookpicture.replace('$2', '?')
 
     return (
       <Col md={11} >
         <div className='well commentDiv'>
           <Media>
             <Media.Left align="top">
-              <img width={64} height={64} src={comment.facebookpicture} alt="Image"/>
+              <img width={64} height={64} src={fbPic} alt="Image"/>
             </Media.Left>
             <Media.Body>
               <Media.Heading>{comment.input}

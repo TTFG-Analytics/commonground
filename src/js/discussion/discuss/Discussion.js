@@ -5,6 +5,7 @@ require('./styles.css')
 
 class Discussion extends React.Component{
   fetchCamps(discussionId, fullname) {
+    console.log('fetching started')
     this.props.getCamps(discussionId, fullname)
   }
 

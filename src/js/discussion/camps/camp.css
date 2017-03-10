@@ -19,6 +19,10 @@
   margin-top: 30px;
 }*/
 
+#campInstruction {
+  color: white;
+}
+
 .campBox {
   /*background-color: #063563 !important;*/
   background-color: #2C3340 !important;

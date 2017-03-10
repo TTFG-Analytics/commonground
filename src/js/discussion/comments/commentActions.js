@@ -21,6 +21,7 @@ export const getComments = (campId) => {
 
 export const createCommentSuccess = (comment) => {
   console.log('created comment', comment)
+  let fbPic = comment.facebookpicture.replace('$2', '?')
   return {
     type: 'CREATE_COMMENT_SUCCESS',
     id: comment.id,
@@ -28,7 +29,7 @@ export const createCommentSuccess = (comment) => {
     input: comment.input,
     user_id: comment.user_id,
     fullname: comment.fullname,
-    facebookpicture: comment.facebookpicture,
+    facebookpicture: fbPic,
     delta: 0,
     createdat: comment.createdat
   }
