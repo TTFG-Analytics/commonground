@@ -44,6 +44,7 @@ export const postProfileSuccess = (profile) => {
 }
 
 export const postProfile = (profile, callback) => {
+  console.log('profile post before axios', profile)
   return (dispatch) => {
     return axios.post('/profile', profile)
       .then(response => {

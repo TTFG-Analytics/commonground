@@ -3,14 +3,18 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
 import Constraint from '../camps/Constraint'
-import { contributedOnce } from '../actions/actions'
+import { contributedOnce } from './commentActions'
+import UserAlert from '../../profile/components/UserAlert'
+require('./comment.css');
 
 class AddComment extends React.Component{
   constructor(props){
     super(props)
     this.state = {
       commentValue: '',
-      showModal: false
+      showModal: false,
+      remainingCharacters: 1000,
+      invalidComment: false
     }
   }
 
@@ -22,24 +26,36 @@ class AddComment extends React.Component{
   } //need to use this for the form submit later
 
   handleChange(e) {
-    this.setState({ commentValue: e.target.value });
+    let charsUsed = 1000 - e.target.value.length
+    this.setState({
+      commentValue: e.target.value,
+      remainingCharacters: charsUsed
+    });
+
+    console.log('remainingCharacters', this.state.remainingCharacters)
   }
 
   handleSubmit(e) {
     e.preventDefault()
-    var userPic = this.props.user.facebookpicture || 'unknown'
-    let newComment = {
-      comment: this.state.commentValue,
-      commongroundId: this.props.campId,
-      userId: this.props.user.id,
-      userName: this.props.user.fullname,
-      userPic: userPic
+    if(this.state.commentValue.length >= 3) {
+      var userPic = this.props.user.facebookpicture || 'unknown'
+      let newComment = {
+        comment: this.state.commentValue,
+        commongroundId: this.props.campId,
+        userId: this.props.user.id,
+        userName: this.props.user.fullname,
+        userPic: userPic
+      }
+      if(window.socket){
+        console.log('window socket', window, window.socket)
+        window.socket.emit('comment', newComment)
+      }
+      this.state.commentValue = ''
+    } else {
+      this.setState({
+        invalidDiscussion: true
+      })
     }
-    if(window.socket){
-      console.log('window socket', window, window.socket)
-      window.socket.emit('comment', newComment)
-    }
-    this.state.commentValue = ''
   }
 
   stopUser(e) {
@@ -58,11 +74,17 @@ class AddComment extends React.Component{
     })
   }
 
+  hideCommentAlert() {
+    this.setState({
+      invalidDiscussion: false
+    })
+  }
+
   render() {
     var notLoggedIn = false
-    if(!this.props.user.id){
-      notLoggedIn = true
-    }
+    // if(!this.props.user.id){
+    //   notLoggedIn = true
+    // }
 
     return (
         <div className='commentForm'>
@@ -82,6 +104,13 @@ class AddComment extends React.Component{
               </InputGroup>
             </FormGroup>
           </form>
+          <h5 id='charCount'>Remaining characters: {this.state.remainingCharacters}</h5>
+          <br />
+          {this.state.invalidDiscussion && <UserAlert 
+            alertMessage='Please enter a valid comment.'
+            handleAlertDismiss={this.hideCommentAlert.bind(this)}
+            alertStyle='warning'
+            alertClose='OK' />}
           <Constraint 
             showModal={this.state.showModal}
             campId={this.props.campId}

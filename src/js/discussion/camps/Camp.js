@@ -4,7 +4,7 @@ import CampList from './CampList'
 import Analytics from '../../analytics/Analytics'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
-import { getComments, createCommentSuccess, contributedOnce } from '../actions/actions'
+import { getComments, createCommentSuccess, contributedOnce } from '../comments/commentActions'
 import { Button, Glyphicon, Panel, Col, Row, Grid } from 'react-bootstrap';
 require('./camp.css')
 
@@ -29,7 +29,6 @@ class Camp extends React.Component{
       this.setState({
         ioNamespace: data.namespace
       })
-      console.log('^^^^^^^^^^^ socket nsp ^^^^^', this.state)
     });
     window.socket.on('comment', (data) => {
       this.props.createCommentSuccess(data)
@@ -50,16 +49,14 @@ class Camp extends React.Component{
 
   render() {
     const campName = (
-      <h2 onClick={()=> this.fetchComments(campId)}>{this.props.inputStr}</h2>
+      <h2 onClick={()=> this.fetchComments(this.props.campId)}>{this.props.inputStr}</h2>
     );
-    var campId = this.props.campId
-    console.log("camp w/ Analytics", this.state);
+
     return (
       <Col md={6}>
         <Panel header={campName} className='campBox'>
-          {this.state.showComments && <Analytics campId={campId} />}
-          {this.state.showComments && <CommentParent campId={campId} nsp={this.state.ioNamespace}/>}
-
+          {this.state.showComments && <Analytics campId={this.props.campId} />}
+          {this.state.showComments && <CommentParent campId={this.props.campId} nsp={this.state.ioNamespace}/>}
         </Panel>
       </Col>
     )

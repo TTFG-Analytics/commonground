@@ -4,7 +4,6 @@ import CommentList from './CommentList'
 require('./comment.css')
 
 class CommentParent extends React.Component{
-
   render(){
     return (<div className='commentParent'>
       <AddComment campId={this.props.campId} nsp={this.props.nsp} />

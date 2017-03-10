@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createCampPost } from '../actions/actions'
+import { createCampPost } from './campActions'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
+import UserAlert from '../../profile/components/UserAlert'
 require('./camp.css')
 
 class AddCamp extends React.Component{
@@ -9,7 +10,8 @@ class AddCamp extends React.Component{
     super(props)
 
     this.state = {
-      cgValue: ''
+      cgValue: '',
+      invalidCamp: false
     }
   }
 
@@ -26,21 +28,33 @@ class AddCamp extends React.Component{
 
   handleSubmit(e) {
     e.preventDefault()
-    let newCamp = {
-      commonground: this.state.cgValue,
-      discussionId: this.props.discussionId
+    if(this.state.cgValue.length >= 3) {
+      let newCamp = {
+        commonground: this.state.cgValue,
+        discussionId: this.props.discussionId
+      }
+      this.props.createCampPost(newCamp);
+      this.setState({
+        cgValue: ''
+      })
+    } else {
+      this.setState({
+        invalidCamp: true
+      })
     }
-    this.props.createCampPost(newCamp);
+  }
+
+  hideCampAlert() {
     this.setState({
-      cgValue: ''
+      invalidCamp: false
     })
   }
 
   render() {
     var notLoggedIn = false
-    if(!this.props.user.id){
-      notLoggedIn = true
-    }
+    // if(!this.props.user.id){
+    //   notLoggedIn = true
+    // }
 
     return (
       <div className='container campForm'>
@@ -54,13 +68,18 @@ class AddCamp extends React.Component{
                 disabled={notLoggedIn}
                 value={this.state.cgValue}
                 placeholder="Enter text"
-                ref='cg'
                 onChange={this.handleChange.bind(this)}
               />
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
               </InputGroup>
           </FormGroup>
         </form>
+        <br />
+        {this.state.invalidCamp && <UserAlert 
+          alertMessage='Please enter a valid CommonGround.'
+          handleAlertDismiss={this.hideCampAlert.bind(this)}
+          alertStyle='warning'
+          alertClose='OK' />}
         </Col>
       </div>
     )

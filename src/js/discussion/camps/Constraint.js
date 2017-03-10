@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Modal, Glyphicon, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
-import { contributeAgain } from '../actions/actions'
+import { contributeAgain } from '../comments/commentActions'
 
 class Constraint extends React.Component{
   constructor(props){
@@ -28,9 +28,9 @@ class Constraint extends React.Component{
       campId: this.props.campId,
       commentId: null
     }
-    this.props.comments.forEach((comment) => {
-      if(comment.user_id === this.props.user) {
-        currentContribution.commentId = comment.id;
+    Object.keys(this.props.comments).forEach((commentId) => {
+      if(this.props.comments[commentId].user_id === this.props.user) {
+        currentContribution.commentId = this.props.comments[commentId].id;
       }
     })
     let thisObj = this;

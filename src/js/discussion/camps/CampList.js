@@ -1,21 +1,29 @@
 import React, { PropTypes } from 'react'
 import Camp from './Camp'
 import { connect } from 'react-redux'
+import UserAlert from '../../profile/components/UserAlert'
+import { Col, Row, Grid } from 'react-bootstrap';
+
 require('./camp.css')
 
 class CampList extends React.Component{
   render(){
-    var currCamps = this.props.camps.filter(camp => {
-      return camp.discussion_id == this.props.discussionId
-    });
-
+    /*if(Object.keys(this.props.camps).length === 0){
+      return (
+        <Col md={10} mdOffset={1}>
+          <UserAlert 
+            alertMessage='The creator of this discussion never specified any CommonGrounds.'
+            alertStyle='info' />
+        </Col>
+      )
+    }*/
     return (
       <div className='campground'>
-        {currCamps.map(currCamp =>
+        {Object.keys(this.props.camps).map(campId =>
           <Camp
-            key={currCamp.id}
-            campId={currCamp.id}
-            inputStr={currCamp.input}
+            key={campId}
+            campId={campId}
+            inputStr={this.props.camps[campId].input}
           />
         )}
       </div>

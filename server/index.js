@@ -28,7 +28,7 @@ io.on('connection', (client) => {
   client.emit('connection')
   client.on('discussion', (data) => {
     console.log("banana", data);
-     knex('discussion').returning(['id', 'input', 'user_id']).insert({input: data.topic, user_id: data.user}) //currentUser.id --- hard coding for now
+     knex('discussion').returning(['id', 'input', 'user_id', 'createdat']).insert({input: data.topic, user_id: data.user}) //currentUser.id --- hard coding for now
     .then(function(data){
       console.log('.then data', data)
       io.emit('discussion', data[0])
@@ -40,9 +40,13 @@ io.on('connection', (client) => {
 
 
 app.get('/discussions', (req, res) => {
-  knex('discussion').select('*').orderBy('createdat', 'desc')
+  knex('users').join('discussion', 'users.id', 'discussion.user_id').select('discussion.id',
+    'discussion.input',
+    'discussion.user_id',
+    'discussion.createdat',
+    'users.fullname').orderBy('createdat', 'desc')
     .then((data) => {
-      // console.log('discussions data', data)
+      console.log('discussions data', data)
       res.status(200).send(data)
     })
 })
@@ -166,7 +170,6 @@ app.post('/profile', function(req,res) {
   console.log('profile REQ.BODY', req.body);
   knex('users').returning('*').where('id', req.body.id).update({
     age: `${req.body.age}`,
-    hometown: `${req.body.hometown}`,
     race: `${req.body.race}`,
     industry: `${req.body.industry}`,
     politicalleaning: `${req.body.politicalleaning}`,
