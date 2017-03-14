@@ -49,12 +49,19 @@ class Camp extends React.Component{
 
   render() {
     const campName = (
-      <h2>{this.props.inputStr}</h2>
+
+        <h2>{this.props.inputStr}</h2>
+
+
     );
 
     return (
       <Col md={6}>
-        <Panel header={campName} className='campBox' onClick={()=> this.fetchComments(this.props.campId)}>
+        <Panel header={campName} className='campBox'>
+                  <Button className='openPanel' onClick={()=> this.fetchComments(this.props.campId)}>
+          <Glyphicon glyph="resize-vertical">
+          </Glyphicon>
+        </Button>
           {this.state.showComments && <Analytics campId={this.props.campId} />}
           {this.state.showComments && <CommentParent campId={this.props.campId} nsp={this.state.ioNamespace}/>}
         </Panel>

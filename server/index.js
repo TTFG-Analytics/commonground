@@ -27,14 +27,10 @@ var knex = require('knex')({
 io.on('connection', (client) => {
   client.emit('connection')
   client.on('discussion', (data) => {
-    console.log("banana", data);
      knex('discussion').returning(['id', 'input', 'user_id', 'createdat']).insert({input: data.topic, user_id: data.user}) //currentUser.id --- hard coding for now
     .then(function(data){
-      console.log('.then data', data)
       io.emit('discussion', data[0])
-      // res.status(200).send(data)
     })
-    //.then(function(){})
   })
 })
 
@@ -46,31 +42,16 @@ app.get('/discussions', (req, res) => {
     'discussion.createdat',
     'users.fullname').orderBy('createdat', 'desc')
     .then((data) => {
-      console.log('discussions data', data)
       res.status(200).send(data)
     })
 })
 
-// app.post('/discuss', function(req,res) {
-//   // console.log(data);
-//   knex('discussion').returning('id').insert({input: req.body.topic, user_id: 11}) //currentUser.id --- hard coding for now
-//     .then(function(data){
-//       // console.log('data discuss', data)
-//       res.status(200).send(data)
-//     })
-//     .then(function(){})
-//   //   console.log(data);
-//   //   knex('commonground').insert({input: req.body.commonground1, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
-//   //   knex('commonground').insert({input: req.body.commonground2, discussion_id: data[0], user_id: currentUser.id}).then(function(){})
-//   // })
-// })
-
+//getting camps/commonground for a discussion
 app.get('/discussion/:discussionId/:userFullname', function(req, res) {
   let id = req.params.discussionId;
   let fullname = req.params.userFullname;
   knex('commonground').where({discussion_id: id}).select('*')
     .then(function(data) {
-      // console.log('data', data)
       var commongroundsResponse = {};
       commongroundsResponse.data = data;
 
@@ -82,7 +63,7 @@ app.get('/discussion/:discussionId/:userFullname', function(req, res) {
         .then(data2 => {
           console.log('data2 ==========', data2)
           commongroundsResponse.discussionContribution = data2
-          console.log('commongroundsResponse', commongroundsResponse)
+          console.log('commongroundsResponse<<<<<<<<<<<<<<<<<<', commongroundsResponse)
           res.send(commongroundsResponse);
         })
 
@@ -111,23 +92,17 @@ app.get('/analytics/:campId/:demographic', (req, res) => {
 })
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
-  // console.log(chalk.red.inverse('req params', req.params))
-  console.log('voteanalytics req params', req.params)
   knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
     .whereRaw(`vote.comment_id=('${req.params.commentId}')`)
     .then(data => {
-      console.log('comment vote analytics', data)
       res.send(data)
     })
 })
 
 app.get('/comments/:campId', function(req, res) {
-  // console.log('req params', req.params)
   let id = req.params.campId;
-  // console.log('id', id, req.params);
   knex('comment').where({commonground_id: id}).select('*').orderBy('delta', 'desc')
     .then(function(data) {
-      // console.log('data', data)
       var commentsResponse = {};
       commentsResponse.data = data;
       res.send(commentsResponse);
@@ -147,9 +122,7 @@ app.get('/profile/:fbId', function(req, res) {
 // /login route puts user facebook data in database upon login
 app.post('/login', function(req,res) {
   currentUser = req.body;
-  console.log('login req body login', req.body)
   var fbPic = req.body.picture.data.url.replace(/([?])/g, '\\?')
-  console.log('fbPic', fbPic)
   knex.raw(`
     INSERT INTO users (fullname, facebookid, gender, email, facebookpicture, locale)
     VALUES ('${req.body.name}', '${req.body.id}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
@@ -157,9 +130,6 @@ app.post('/login', function(req,res) {
     SET (fullname, gender, email, facebookpicture, locale) = ('${req.body.name}', '${req.body.gender}', '${req.body.email}', '${fbPic}', '${req.body.locale}')
     RETURNING *
     `).then(function(data){
-      //currentUser.id = data.rows[0].id
-      console.log('fb data from db', data)
-      //console.log('fb user logged in', currentUser.id)
       res.status(200).send(data);
     }).catch((err) => console.log(chalk.red.inverse(err)));
 })
@@ -190,7 +160,6 @@ app.post('/profile', function(req,res) {
   //   `).then(function(data){
 
 app.post('/commonground', function(req, res){
-  // console.log('req body commonground', req.body)
   var commentResObj;
 
   knex('commonground').returning(['id', 'discussion_id', 'input']).insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 16})
@@ -234,10 +203,6 @@ app.post('/commonground', function(req, res){
             cgNsp.emit('comment', commentResObj);
             return commentResObj;
           }).then(function(){
-            // console.log("socketClient!", socketClient)
-            // console.log("commentData!", commentData)
-            // console.log("data!", data)
-            // console.log("commentResObj", commentResObj)
 
 
           knex('commonground').where({id:commentResObj.commonground_id}).select('discussion_id')
@@ -279,11 +244,6 @@ app.post('/commonground', function(req, res){
         })
       })
       res.status(200).send(data);
-    // .then(function(){})
-
-// app.post('/comment', function(req,res){
-//   // console.log("THIS IS THE CURRENT req.body", req.body);
-
   })
 })
 
@@ -433,62 +393,3 @@ app.get('/*', function(req, res) {
 var port = process.env.PORT || 4040;
 http.listen(port); //needed to listen using the http server and not the express 'app' server
 console.log("Listening on port " + port);
-
-
-// app.get('/ages', (req, res) =>{
-//   knex('users').select('age')
-//     .then((data) => {
-//       console.log('age data', data)
-//       res.send(data)
-//     })
-// })
-
-// app.get('/discussionAges/:discussionId', (req, res) => {
-//   console.log('req params ages', req.params)
-//   knex.raw(`
-//     SELECT users.age FROM users INNER JOIN comment on users.id=comment.user_id
-//     INNER JOIN commonground on comment.commonground_id=commonground.id
-//     INNER JOIN discussion on commonground.discussion_id=discussion.id where discussion.id=('${req.params.discussionId}')
-//     `)
-//     .then(data => {
-//       console.log('ages data', data);
-//       res.send(data)
-//     })
-// })
-
-// app.get('/discussionPolitics/:discussionId', (req, res) => {
-//   console.log('req params', req.params)
-//   knex.raw(`
-//     SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id
-//     INNER JOIN commonground on comment.commonground_id=commonground.id
-//     INNER JOIN discussion on commonground.discussion_id=discussion.id where discussion.id=('${req.params.discussionId}')
-//   `)
-//   .then(data => {
-//     console.log('politics data', data);
-//     res.send(data)
-//   })
-// })
-
-// app.get('/campAges/:campId', (req, res) => {
-//   console.log('req params ages', req.params)
-//   knex.raw(`
-//     SELECT users.age FROM users INNER JOIN comment on users.id=comment.user_id
-//     INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')
-//     `)
-//     .then(data => {
-//       console.log('ages data', data);
-//       res.send(data)
-//     })
-// })
-
-// app.get('/campPolitics/:campId', (req, res) => {
-//   console.log('req params', req.params)
-//   knex.raw(`
-//     SELECT users.politicalleaning FROM users INNER JOIN comment on users.id=comment.user_id
-//     INNER JOIN commonground on comment.commonground_id=commonground.id where commonground.id=('${req.params.campId}')
-//   `)
-//   .then(data => {
-//     console.log('politics data', data);
-//     res.send(data)
-//   })
-// })
