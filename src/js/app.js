@@ -1,14 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { Router, Route, browserHistory } from 'react-router'
-import App from './discussion/discuss/App'
-import CampParent from './discussion/camps/CampParent'
-import store from './store' //tie react application to redux
-import FaceBookIntegration from './discussion/camps/FaceBookIntegration'
-import ProfileApp from './profile/components/profileApp'
-import Logout from './logout/Logout'
-import About from './about/About'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { Router, Route, browserHistory } from 'react-router';
+import App from 'App';
+import CampParent from 'CampParent';
+import store from './store'; //tie react application to redux
+import FaceBookIntegration from 'FaceBookIntegration';
+import ProfileApp from 'ProfileApp';
+import Logout from 'Logout';
+import About from 'About';
 
 //Load bootstrap css
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';

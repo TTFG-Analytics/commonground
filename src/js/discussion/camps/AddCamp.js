@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createCampPost } from './campActions'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
-import UserAlert from '../../profile/components/UserAlert'
+import UserAlert from 'UserAlert'
 require('./camp.css')
 
 class AddCamp extends React.Component{
@@ -75,7 +75,7 @@ class AddCamp extends React.Component{
           </FormGroup>
         </form>
         <br />
-        {this.state.invalidCamp && <UserAlert 
+        {this.state.invalidCamp && <UserAlert
           alertMessage='Please enter a valid CommonGround.'
           handleAlertDismiss={this.hideCampAlert.bind(this)}
           alertStyle='warning'
