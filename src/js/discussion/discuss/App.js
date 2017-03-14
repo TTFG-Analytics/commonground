@@ -1,14 +1,14 @@
-import React from 'react'
-import AddDiscussion from './AddDiscussion'
-import DiscussionList from './DiscussionList'
-import { getDiscussions } from './discussionActions'
-import { connect } from 'react-redux'
+import React from 'react';
+import AddDiscussion from './AddDiscussion';
+import DiscussionList from './DiscussionList';
+import { getDiscussions } from './discussionActions';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import FaceBookIntegration from '../camps/FaceBookIntegration'
+import FaceBookIntegration from 'FaceBookIntegration';
 
 //import ProfileButton from '../camps/ProfileButton'
-import { Link } from 'react-router'
-import Navigation from '../../navbar/navbar'
+import { Link } from 'react-router';
+import Navigation from 'Navigation';
 
 DiscussionList.need = [
   getDiscussions

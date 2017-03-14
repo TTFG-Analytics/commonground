@@ -1,9 +1,9 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { createCampPost } from './campActions'
+import React from 'react';
+import { connect } from 'react-redux';
+import { createCampPost } from './campActions';
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
-import UserAlert from 'UserAlert'
-require('./camp.css')
+import UserAlert from 'UserAlert';
+require('./camp.css');
 
 class AddCamp extends React.Component{
   constructor(props){

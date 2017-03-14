@@ -3,12 +3,12 @@ import FaceBookButton from '../discussion/camps/FaceBookButton'
 import store from '../store'
 import ProfileButton from '../discussion/camps/ProfileButton'
 import Router from 'react-router'
-import Navigation from '../navbar/navbar'
+import Navigation from 'Navigation'
 import { Panel, Col, Grid } from 'react-bootstrap';
 require('./logoutStyles.css');
 
 class Logout extends React.Component{
-  
+
   componentDidMount(){
     FB.XFBML.parse()
   }
@@ -20,7 +20,7 @@ class Logout extends React.Component{
         <Navigation />
         <Col md={2} mdOffset={5}>
         <div>
-          <Panel className="fbPan"> <FaceBookButton /> 
+          <Panel className="fbPan"> <FaceBookButton />
           </Panel>
         </div>
         </Col>

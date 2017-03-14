@@ -24,10 +24,7 @@ module.exports = {
   resolve: {
     root: __dirname,
     alias: {
-
       applicationStyles: 'public/styles/styles.css',
-      Navigation: 'src/js/navbar/navbar',
-      UserAlert: 'src/js/profile/components/UserAlert',
       //app.js
       App: 'src/js/discussion/discuss/App',
       CampParent: 'src/js/discussion/camps/CampParent',
@@ -40,12 +37,10 @@ module.exports = {
       campGet: 'src/js/discussion/camps/getCampsReducer',
       commentGet: 'src/js/discussion/comments/commentReducer',
       fbGet: 'src/js/discussion/camps/FaceBookReducer',
-      profileReducer: 'src/js/profile/reducers/profileReducer'
-
-
-
-
-
+      profileReducer: 'src/js/profile/reducers/profileReducer',
+      //subfolders
+      Navigation: 'src/js/navbar/navbar',
+      UserAlert: 'src/js/profile/components/UserAlert'
     },
     extensions: ['', '.js', '.jsx']
   },
