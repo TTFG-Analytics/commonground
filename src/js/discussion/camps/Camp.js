@@ -21,25 +21,26 @@ class Camp extends React.Component{
   }
 
   fetchComments(campId) {
+    var context = this;
     this.disconnectFromPrev();
     this.setState({
       showComments: !this.state.showComments
-    })
-    //if(!this.state.showComments) {
-      var context = this;
-      window.socket = io(`/${campId}`)
-      window.socket.on('cgConnection', (data)=> {
-        console.log('connected to commonground', data)
-        this.setState({
-          ioNamespace: data.namespace
+    }, function() {
+      if(this.state.showComments) {
+        window.socket = io(`/${campId}`)
+        window.socket.on('cgConnection', (data)=> {
+          console.log('connected to commonground', data)
+          context.setState({
+            ioNamespace: data.namespace
+          })
+        });
+        window.socket.on('comment', (data) => {
+          context.props.createCommentSuccess(data)
+          context.props.contributedOnce()
         })
-      });
-      window.socket.on('comment', (data) => {
-        this.props.createCommentSuccess(data)
-        this.props.contributedOnce()
-      })
-      this.props.getComments(campId)
-    //}
+        context.props.getComments(campId)
+      }
+    });
   }
 
   disconnectFromPrev() {
