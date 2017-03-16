@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { createDiscussionSuccess } from './discussionActions'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
-import Navigation from '../../navbar/navbar'
-import UserAlert from '../../profile/components/UserAlert'
+import Navigation from 'Navigation'
+import UserAlert from 'UserAlert'
 import { Router, Route, Link, browserHistory } from 'react-router'
 require('./styles.css')
 
@@ -92,7 +92,7 @@ class AddDiscussion extends React.Component{
         <form onSubmit={this.handleSubmit.bind(this)}>
           <FormGroup controlId="formBasicText">
             <h1 className='discussHelp'>Create a New Discussion</h1>
-            {notLoggedIn && <UserAlert 
+            {notLoggedIn && <UserAlert
               alertMessage='Log in with your Facebook to add a new discussion.'
               handleAlertDismiss={this.goLogin.bind(this)}
               alertStyle='info'
@@ -108,7 +108,7 @@ class AddDiscussion extends React.Component{
               <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
             </InputGroup>
             <br/>
-            {this.state.invalidDiscussion && <UserAlert 
+            {this.state.invalidDiscussion && <UserAlert
               alertMessage='Please enter a valid discussion.'
               handleAlertDismiss={this.hideDiscussionAlert.bind(this)}
               alertStyle='warning'

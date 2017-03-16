@@ -24,7 +24,23 @@ module.exports = {
   resolve: {
     root: __dirname,
     alias: {
-      applicationStyles: 'public/styles/styles.css'
+      applicationStyles: 'public/styles/styles.css',
+      //app.js
+      App: 'src/js/discussion/discuss/App',
+      CampParent: 'src/js/discussion/camps/CampParent',
+      FaceBookIntegration: 'src/js/discussion/camps/FaceBookIntegration',
+      ProfileApp: 'src/js/profile/components/profileApp',
+      Logout: 'src/js/logout/Logout',
+      About: 'src/js/about/About',
+      //index.js
+      discussionsGet: 'src/js/discussion/discuss/getDiscussionsReducer',
+      campGet: 'src/js/discussion/camps/getCampsReducer',
+      commentGet: 'src/js/discussion/comments/commentReducer',
+      fbGet: 'src/js/discussion/camps/FaceBookReducer',
+      profileReducer: 'src/js/profile/reducers/profileReducer',
+      //subfolders
+      Navigation: 'src/js/navbar/navbar',
+      UserAlert: 'src/js/profile/components/UserAlert'
     },
     extensions: ['', '.js', '.jsx']
   },

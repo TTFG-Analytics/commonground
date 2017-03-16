@@ -5,7 +5,7 @@ import {fbHolding} from '../../discussion/camps/FaceBookIntegration'
 import {getProfile} from '../actions/profileActions';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import Navigation from '../../navbar/navbar'
+import Navigation from 'Navigation'
 
 ProfileDetail.need = [
   getProfile

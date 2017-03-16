@@ -1,10 +1,11 @@
+
 # CommonGround
 
-This is a social app designed to facilitate comunication between different viewpoints. The goal is to allow users to post questions and 
+This is a social app designed to facilitate comunication between different viewpoints. The goal is to allow users to post questions and
 define the demographics/social groups/camps that they want to hear responses from. Then, the highest upvoted comment arises to the top,
 allowing them to see the most representative comment for that group. This can help people get a clearer picture of opposing viewpoints and allow them to see the most widely held viewpoint for a group and not the extreme viewpoints of those on the fringes. Hopefully, that will lead to a better understanding of someone elses' viewpoints and allow them to find a common ground with the other group.
 
-This app also allows users to view graphs displaying de-identified data on the respondents' ages, political leanings, industry, race, religion and income bracket so that the users can get a better idea of what types of people hold certain beliefs. 
+This app also allows users to view graphs displaying de-identified data on the respondents' ages, political leanings, industry, race, religion and income bracket so that the users can get a better idea of what types of people hold certain beliefs.
 
 # starting the application
 
@@ -17,6 +18,7 @@ Then, on the other terminal window, use 'cd ./server' to get into the server dir
 - nodemon index.js
 
 In your browser, navigate to http://localhost:4040.
+
 
 # starting database on Mac OS
 

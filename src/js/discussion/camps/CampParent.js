@@ -1,14 +1,14 @@
-import React from 'react'
-import Camp from './Camp'
-import AddCamp from './AddCamp'
-import CampList from './CampList'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import BackButton from './BackButton'
-import FaceBookIntegration from './FaceBookIntegration'
-import ProfileButton from './ProfileButton'
-import Navigation from '../../navbar/navbar'
-import { Link } from 'react-router'
+import React from 'react';
+import Camp from './Camp';
+import AddCamp from './AddCamp';
+import CampList from './CampList';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import BackButton from './BackButton';
+import FaceBookIntegration from 'FaceBookIntegration';
+import ProfileButton from './ProfileButton';
+import Navigation from 'Navigation';
+import { Link } from 'react-router';
 import { Col, Row, Grid } from 'react-bootstrap';
 require('./camp.css')
 
@@ -29,7 +29,7 @@ class CampParent extends React.Component{
 
   render(){
     var discussionId = this.props.params.discussionId
-    
+
     return (
       <div>
         <Navigation />

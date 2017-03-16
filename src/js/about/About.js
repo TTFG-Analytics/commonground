@@ -1,5 +1,5 @@
 const React = require('react');
-import Navigation from '../navbar/navbar'
+import Navigation from 'Navigation'
 import { Panel, Col, Grid, Accordion } from 'react-bootstrap';
 require('./aboutStyles.css');
 
@@ -11,7 +11,7 @@ class About extends React.Component{
       <div>
       <Navigation />
       <Col md={8} mdOffset={2}>
-      <Panel className="abtBox"> 
+      <Panel className="abtBox">
         <Accordion>
           <Panel header="What this app is about" eventKey="1">
             This is a social app designed to facilitate comunication between different viewpoints.
@@ -29,7 +29,7 @@ class About extends React.Component{
               <li>Per discussion you get 1 comment or upvote, use it wisely</li>
               <li>Do your best to support facts with sources, actual sources... not news articles</li>
             </ol>
-          </Panel>          
+          </Panel>
 
           <Panel header="How we use your data" eventKey="4">
             We gather data from your public profile. This includes your name, facebook ID, Nationality, and Profile picture. These
@@ -37,13 +37,13 @@ class About extends React.Component{
             commongrounds. In your user profile, you are able to input more information about yourself that also only goes towards displaying
             and graphing information. We do not sell your information, it is kept in house.
           </Panel>
-          
+
           <Panel header="About Us" eventKey="5">
             TTFG are a group of like minded software engineers hoping to make the world a better place, one app at a time.
           </Panel>
         </Accordion>
         </Panel>
-      </Col>  
+      </Col>
       </div>
     )
   }

@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
 import Constraint from '../camps/Constraint'
 import { contributedOnce } from './commentActions'
-import UserAlert from '../../profile/components/UserAlert'
+import UserAlert from 'UserAlert'
 require('./comment.css');
 
 class AddComment extends React.Component{
@@ -106,12 +106,12 @@ class AddComment extends React.Component{
           </form>
           <h5 id='charCount'>Remaining characters: {this.state.remainingCharacters}</h5>
           <br />
-          {this.state.invalidDiscussion && <UserAlert 
+          {this.state.invalidDiscussion && <UserAlert
             alertMessage='Please enter a valid comment.'
             handleAlertDismiss={this.hideCommentAlert.bind(this)}
             alertStyle='warning'
             alertClose='OK' />}
-          <Constraint 
+          <Constraint
             showModal={this.state.showModal}
             campId={this.props.campId}
             hideModal={this.hideModal.bind(this)} />

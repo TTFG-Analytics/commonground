@@ -11,7 +11,7 @@ import religionProfile from '../dropdowns/religionProfile'
 import incomeProfile from '../dropdowns/incomeProfile'
 import Select from '../components/Select'
 import AgeInput from '../components/AgeInput'
-import UserAlert from '../components/UserAlert'
+import UserAlert from 'UserAlert'
 
 class UserProfile extends React.Component{
   constructor(props){
@@ -110,7 +110,7 @@ class UserProfile extends React.Component{
     const profileHeader = (
       <h2>Profile Settings: </h2>
     );
-    
+
     return (
       <Col md={8} mdOffset={2} style={{marginTop: '175px'}}>
       <Panel header={profileHeader} style={{backgroundColor: '#2C3340', color: '#EBF5EE'}}>
@@ -124,13 +124,13 @@ class UserProfile extends React.Component{
           <Select label='Political Leaning' demographicProperty='politicalleaning' list={politicalList} handleChange={this.handleChange.bind(this, 'politicalleaning')} />
 
           <Select label='Industry' demographicProperty='industry' list={industryList} handleChange={this.handleChange.bind(this, 'industry')} />
-          
+
           <Select label='Religion' demographicProperty='religion' list={religionList} handleChange={this.handleChange.bind(this, 'religion')} />
-          
+
           <Select label='Yearly Income' demographicProperty='yearlyincome' list={incomeList} handleChange={this.handleChange.bind(this, 'yearlyincome')} />
         </FormGroup>
-        {this.state.infoUpdated && <UserAlert 
-          handleAlertDismiss={this.handleAlertDismiss.bind(this)} 
+        {this.state.infoUpdated && <UserAlert
+          handleAlertDismiss={this.handleAlertDismiss.bind(this)}
           alertMessage='Your profile has been updated!'
           alertStyle='success'
           alertClose='Hide Alert' />}
