@@ -26,12 +26,13 @@ class AddComment extends React.Component{
   } //need to use this for the form submit later
 
   handleChange(e) {
-    let charsUsed = 1000 - e.target.value.length
-    this.setState({
-      commentValue: e.target.value,
-      remainingCharacters: charsUsed
-    });
-
+    let charsLeft = 1000 - e.target.value.length
+    if(charsLeft >= 0) {
+      this.setState({
+        commentValue: e.target.value,
+        remainingCharacters: charsLeft
+      });
+    }
     console.log('remainingCharacters', this.state.remainingCharacters)
   }
 
@@ -91,20 +92,19 @@ class AddComment extends React.Component{
           <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
               <ControlLabel>Create a New Comment</ControlLabel>
-              <InputGroup>
-                <FormControl
-                  disabled={notLoggedIn}
-                  type="text"
-                  value={this.state.commentValue}
-                  placeholder="Enter text"
-                  ref='comment'
-                  onChange={this.handleChange.bind(this)}
-                />
-                <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
-              </InputGroup>
+              <FormControl
+                disabled={notLoggedIn}
+                componentClass='textarea'
+                value={this.state.commentValue}
+                placeholder="Enter text"
+                onChange={this.handleChange.bind(this)}
+              />
             </FormGroup>
+            <InputGroup.Button className='commentSubmit'>
+              <h5 id='charCount'>Remaining characters: {this.state.remainingCharacters}</h5>
+              <Button type='submit' bsStyle="primary" >Submit</Button>
+            </InputGroup.Button>
           </form>
-          <h5 id='charCount'>Remaining characters: {this.state.remainingCharacters}</h5>
           <br />
           {this.state.invalidDiscussion && <UserAlert
             alertMessage='Please enter a valid comment.'

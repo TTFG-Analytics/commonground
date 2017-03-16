@@ -2,9 +2,7 @@ import update from 'react-addons-update';
 
 const commentGet = (state={comments:{}}, action) => {
   if(action.type === 'GET_COMMENTS_SUCCESS') {
-    console.log('action comments', action.comments)
     var oldState = JSON.parse(JSON.stringify(state))
-    console.log('oldState', oldState, 'state', state)
     return {
         comments: action.comments.reduce((hash, comment) => (
           hash[comment.id] = comment, hash

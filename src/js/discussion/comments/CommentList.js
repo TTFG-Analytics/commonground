@@ -25,8 +25,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(CommentList)
-
-{/*{
-          return thisCampId == thisProps.comments[commentId].commonground_id ? alert('yes', thisProps.comments[commentId].commonground_id, thisCampId)
-            : console.log('no', thisCampId, thisProps.comments[commentId].commonground_id, commentId, typeof commentId)
-        }*/}

@@ -52,7 +52,7 @@ class Camp extends React.Component{
 
   render() {
     const campName = (
-      <div>
+      <div onClick={()=> this.fetchComments(this.props.campId)}>
       <h3>{this.props.inputStr}</h3>
       </div>
     );
