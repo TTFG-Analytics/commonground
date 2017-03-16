@@ -44,3 +44,7 @@
   cursor: pointer;
   cursor: hand;
 }
+
+.openPanel {
+  float: right;
+}

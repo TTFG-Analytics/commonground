@@ -6,11 +6,12 @@ class CommentList extends React.Component{
   render(){
     return (
       <ul>
-        {Object.keys(this.props.comments).length > 0 && Object.keys(this.props.comments).map(commentId =>
-          <Comment
-            key={commentId}
-            commentId={commentId}
-          />
+        {Object.keys(this.props.comments).length > 0 && Object.keys(this.props.comments).map(commentId => {
+            return this.props.campId == this.props.comments[commentId].commonground_id ? <Comment
+              key={commentId}
+              commentId={commentId}
+            /> : undefined
+          }
         )}
       </ul>
     );

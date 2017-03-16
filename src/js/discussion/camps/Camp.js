@@ -21,23 +21,26 @@ class Camp extends React.Component{
   }
 
   fetchComments(campId) {
-    this.disconnectFromPrev();
     var context = this;
-    window.socket = io(`/${campId}`)
-    window.socket.on('cgConnection', (data)=> {
-      console.log('connected to commonground', data)
-      this.setState({
-        ioNamespace: data.namespace
-      })
-    });
-    window.socket.on('comment', (data) => {
-      this.props.createCommentSuccess(data)
-      this.props.contributedOnce()
-    })
-    this.props.getComments(campId)
+    this.disconnectFromPrev();
     this.setState({
       showComments: !this.state.showComments
-    })
+    }, function() {
+      if(this.state.showComments) {
+        window.socket = io(`/${campId}`)
+        window.socket.on('cgConnection', (data)=> {
+          console.log('connected to commonground', data)
+          context.setState({
+            ioNamespace: data.namespace
+          })
+        });
+        window.socket.on('comment', (data) => {
+          context.props.createCommentSuccess(data)
+          context.props.contributedOnce()
+        })
+        context.props.getComments(campId)
+      }
+    });
   }
 
   disconnectFromPrev() {
@@ -49,12 +52,18 @@ class Camp extends React.Component{
 
   render() {
     const campName = (
-      <h2 onClick={()=> this.fetchComments(this.props.campId)}>{this.props.inputStr}</h2>
+      <div onClick={()=> this.fetchComments(this.props.campId)}>
+      <h3>{this.props.inputStr}</h3>
+      </div>
     );
 
     return (
       <Col md={6}>
         <Panel header={campName} className='campBox'>
+        <Button className='openPanel' onClick={()=> this.fetchComments(this.props.campId)}>
+          <Glyphicon glyph="resize-vertical">
+          </Glyphicon>
+        </Button>
           {this.state.showComments && <Analytics campId={this.props.campId} />}
           {this.state.showComments && <CommentParent campId={this.props.campId} nsp={this.state.ioNamespace}/>}
         </Panel>
