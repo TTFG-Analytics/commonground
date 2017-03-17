@@ -10,6 +10,7 @@ import ProfileButton from './ProfileButton';
 import Navigation from 'Navigation';
 import { Link } from 'react-router';
 import { Col, Row, Grid } from 'react-bootstrap';
+import { clearCamps, clearComments } from './campActions'
 require('./camp.css')
 
 //discussionId is used to associate which camps belong to which discussions
@@ -25,6 +26,11 @@ class CampParent extends React.Component{
         console.log('user is not logged in to to facebook');
       }
     });
+  }
+
+  componentWillUnmount() {
+    this.props.clearCamps()
+    this.props.clearComments()
   }
 
   render(){
@@ -56,4 +62,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(CampParent)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearCamps: () => {
+      dispatch(clearCamps())
+    },
+    clearComments: () => {
+      dispatch(clearComments())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CampParent)

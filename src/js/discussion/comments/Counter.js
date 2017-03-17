@@ -52,6 +52,8 @@ class Counter extends React.Component {
     //   notLoggedIn = true
     // }
 
+            // <Constraint showModal={this.state.showModal} /> <---- removing constraints for testing
+
     return (
       <div>
         <ButtonToolbar className="vote">
@@ -69,7 +71,7 @@ class Counter extends React.Component {
           </ButtonGroup>
         </ButtonToolbar>
         <Flag />
-        <Constraint showModal={this.state.showModal} />
+
       </div>
     )
   }

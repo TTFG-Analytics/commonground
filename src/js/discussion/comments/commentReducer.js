@@ -33,6 +33,12 @@ const commentGet = (state={comments:{}}, action) => {
       })
     }
   }
+  if(action.type === 'CLEAR_COMMENTS') {
+    console.log('clearing out the comments')
+    return {
+      comments: {}
+    }
+  }
   return state
 }
 

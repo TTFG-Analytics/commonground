@@ -30,13 +30,6 @@ class AddDiscussion extends React.Component{
     })
   }
 
-  getValidationState() {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-  }
-
   handleChange(e) {
     this.setState({ discussionValue: e.target.value });
   }
@@ -97,22 +90,20 @@ class AddDiscussion extends React.Component{
               handleAlertDismiss={this.goLogin.bind(this)}
               alertStyle='info'
               alertClose='Login' />}
-            <InputGroup>
               <FormControl
                 disabled={notLoggedIn}
-                type="text"
+                componentClass='textarea'
                 value={this.state.discussionValue}
                 placeholder="Ask a question"
                 onChange={this.handleChange.bind(this)}
               />
-              <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
-            </InputGroup>
             <br/>
             {this.state.invalidDiscussion && <UserAlert
               alertMessage='Please enter a valid discussion.'
               handleAlertDismiss={this.hideDiscussionAlert.bind(this)}
               alertStyle='warning'
               alertClose='OK' />}
+            <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
             <br/>
           </FormGroup>
         </form>

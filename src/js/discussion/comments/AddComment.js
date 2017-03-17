@@ -18,13 +18,6 @@ class AddComment extends React.Component{
     }
   }
 
-  getValidationState() {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-  } //need to use this for the form submit later
-
   handleChange(e) {
     let charsLeft = 1000 - e.target.value.length
     if(charsLeft >= 0) {
@@ -33,7 +26,6 @@ class AddComment extends React.Component{
         remainingCharacters: charsLeft
       });
     }
-    console.log('remainingCharacters', this.state.remainingCharacters)
   }
 
   handleSubmit(e) {
@@ -60,14 +52,11 @@ class AddComment extends React.Component{
   }
 
   stopUser(e) {
-    console.log('stop user being called')
     e.preventDefault()
     this.setState({
       showModal: true
     })
-    console.log('user stopped', this.state)
-    // this.forceUpdate() <--commenting out for testing. uncomment later
-  }
+  } 
 
   hideModal() {
     this.setState({
@@ -86,6 +75,10 @@ class AddComment extends React.Component{
     // if(!this.props.user.id){
     //   notLoggedIn = true
     // }
+              /*<Constraint
+            showModal={this.state.showModal}
+            campId={this.props.campId}
+            hideModal={this.hideModal.bind(this)} />*/  // <---- removing constraints for testing
 
     return (
         <div className='commentForm'>
@@ -111,10 +104,6 @@ class AddComment extends React.Component{
             handleAlertDismiss={this.hideCommentAlert.bind(this)}
             alertStyle='warning'
             alertClose='OK' />}
-          <Constraint
-            showModal={this.state.showModal}
-            campId={this.props.campId}
-            hideModal={this.hideModal.bind(this)} />
         </div>
       )
   }
