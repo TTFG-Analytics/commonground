@@ -4,7 +4,7 @@ import CampList from './CampList'
 import Analytics from '../../analytics/Analytics'
 import CommentParent from '../comments/CommentParent'
 import { connect } from 'react-redux'
-import { getComments, createCommentSuccess, contributedOnce } from '../comments/commentActions'
+import { getComments, createCommentSuccess } from '../comments/commentActions'
 import { Button, Glyphicon, Panel, Col, Row, Grid } from 'react-bootstrap';
 require('./camp.css')
 
@@ -25,7 +25,7 @@ class Camp extends React.Component{
     this.disconnectFromPrev();
     this.setState({
       showComments: !this.state.showComments
-    }, function() {
+    }, () => {
       if(this.state.showComments) {
         window.socket = io(`/${campId}`)
         window.socket.on('cgConnection', (data)=> {
@@ -36,7 +36,6 @@ class Camp extends React.Component{
         });
         window.socket.on('comment', (data) => {
           context.props.createCommentSuccess(data)
-          context.props.contributedOnce()
         })
         context.props.getComments(campId)
       }
@@ -79,11 +78,15 @@ const mapDispatchToProps = (dispatch) => {
     },
     createCommentSuccess: (campId) => {
       dispatch(createCommentSuccess(campId))
-    },
-    contributedOnce: () => {
-      dispatch(contributedOnce())
     }
   }
 }
 
 export default connect(null, mapDispatchToProps)(Camp)
+
+
+
+// contributedOnce: () => {  <-- removing contributedOnce since we don't need constraints for comments 
+//   dispatch(contributedOnce())
+// }
+// context.props.contributedOnce() <--removing constraint against making multiple comments for now

@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
-import Constraint from '../camps/Constraint'
 import { contributedOnce } from './commentActions'
 import UserAlert from 'UserAlert'
 require('./comment.css');
@@ -24,6 +23,16 @@ class AddComment extends React.Component{
       this.setState({
         commentValue: e.target.value,
         remainingCharacters: charsLeft
+      }, ()=>{
+        if(charsLeft < 997) {
+          this.setState({
+            invalidComment: false
+          });
+        } else {
+          this.setState({
+            invalidComment: true
+          });
+        }
       });
     }
   }
@@ -46,7 +55,7 @@ class AddComment extends React.Component{
       this.state.commentValue = ''
     } else {
       this.setState({
-        invalidDiscussion: true
+        invalidComment: true
       })
     }
   }
@@ -66,23 +75,19 @@ class AddComment extends React.Component{
 
   hideCommentAlert() {
     this.setState({
-      invalidDiscussion: false
+      invalidComment: false
     })
   }
 
   render() {
     var notLoggedIn = false
-    // if(!this.props.user.id){
-    //   notLoggedIn = true
-    // }
-              /*<Constraint
-            showModal={this.state.showModal}
-            campId={this.props.campId}
-            hideModal={this.hideModal.bind(this)} />*/  // <---- removing constraints for testing
-
+    if(!this.props.user.id){
+      notLoggedIn = true
+    }
+   
     return (
         <div className='commentForm'>
-          <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
+          <form onSubmit={this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
               <ControlLabel>Create a New Comment</ControlLabel>
               <FormControl
@@ -99,7 +104,7 @@ class AddComment extends React.Component{
             </InputGroup.Button>
           </form>
           <br />
-          {this.state.invalidDiscussion && <UserAlert
+          {this.state.invalidComment && <UserAlert
             alertMessage='Please enter a valid comment.'
             handleAlertDismiss={this.hideCommentAlert.bind(this)}
             alertStyle='warning'
@@ -125,3 +130,12 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddComment)
+
+//constraint piece that limits a user to one comment per commonground ---> might remove later or re-implement
+// import Constraint from '../camps/Constraint'
+/*<Constraint
+showModal={this.state.showModal}
+campId={this.props.campId}
+hideModal={this.hideModal.bind(this)} />*/  // <---- removing constraints for testing
+
+// <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}> removing constraint for now

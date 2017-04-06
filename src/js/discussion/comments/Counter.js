@@ -1,7 +1,6 @@
 import React from 'react'
 import { votesPost } from './commentActions'
 import { connect } from 'react-redux'
-import Constraint from '../camps/Constraint'
 import Flag from './Flag'
 import { contributedOnce } from './commentActions'
 import { OverlayTrigger, Tooltip, ButtonToolbar, Glyphicon, Media, ButtonGroup, Button } from 'react-bootstrap';
@@ -12,8 +11,7 @@ class Counter extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      flagStyle: 'flagStyleInactive',
-      showModal: false
+      flagStyle: 'flagStyleInactive'
     }
   }
 
@@ -37,22 +35,13 @@ class Counter extends React.Component {
 
   stopUser(e) {
     e.preventDefault()
-    this.setState({
-      showModal: true
-    })
-    console.log('user stopped', this.state)
-    this.forceUpdate()
   }
 
   render() {
-    // let currentUpvote = 0;
-    // let currentDownvote = 0;
     let notLoggedIn = false
-    // if(!this.props.user.id){
-    //   notLoggedIn = true
-    // }
-
-            // <Constraint showModal={this.state.showModal} /> <---- removing constraints for testing
+    if(!this.props.user.id){
+      notLoggedIn = true
+    }
 
     return (
       <div>
@@ -98,3 +87,10 @@ const mapDispatchToProps = (dispatch) => {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter)
+
+// import Constraint from '../camps/Constraint'
+// <Constraint showModal={this.state.showModal} /> <---- removing constraints for testing
+// this.state{showModal: false}
+// this.setState({
+//   showModal: true
+// }) <---this.setState belongs in the stopUser function. Since we're not using the constraint modal for now, we can leave this out of the function

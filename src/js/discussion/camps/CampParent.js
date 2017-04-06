@@ -43,7 +43,7 @@ class CampParent extends React.Component{
         {this.props.user === this.props.discussions[discussionId].user_id && <AddCamp discussionId={discussionId} />}
         <Col md={10} mdOffset={1}>
           <h5 id='campInstruction'>Each CommonGround is an opinion or social group that you could identify with. Click on one to expand it and see its comments.
-            Feel free to add your own contribution. You can make one contribution per discussion in the form of a comment, upvote, or downvote.
+            Feel free to add your own contribution.
           </h5>
         </Col>
         <br></br>
