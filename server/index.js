@@ -66,33 +66,40 @@ app.get('/discussion/:discussionId/:userFullname', function(req, res) {
           console.log('commongroundsResponse<<<<<<<<<<<<<<<<<<', commongroundsResponse)
           res.send(commongroundsResponse);
         })
-
+      // ^ this knex query is meant to see if the user has contributed to the discussion already.
 
 
     })
 })
 
 app.get('/analytics/:campId/:demographic', (req, res) => {
-  knex.select(`${req.params.demographic}`, 'users.id').from('users').distinct('users.id')
-    .innerJoin('comment', 'users.id', 'comment.user_id')
-    .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
-    .whereRaw(`commonground.id=('${req.params.campId}')`)
+  // knex.select(`${req.params.demographic}`, 'users.id').from('users').distinct('users.id')
+  //   .innerJoin('comment', 'users.id', 'comment.user_id')
+  //   .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
+  //   .whereRaw(`commonground.id=('${req.params.campId}')`)
+  //   .then(data => {
+  //     console.log('data after analytics req', data);
+  //     knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id')
+  //       .innerJoin('vote', 'users.id', 'vote.user_id')
+  //       .innerJoin('comment', 'vote.comment_id', 'comment.id')
+  //       .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
+  //       .whereRaw(`commonground.id=('${req.params.campId}')`)
+  //       .then(data2 => {
+  //         var ans = data2.concat(data)
+  //         console.log('responseArr analytics array ---------------', ans)
+  //         res.send(ans)
+  //       })
+  //   })
+  knex.raw(`select ${req.params.demographic}, users.id, vote.input from users, vote, comment where users.id=comment.user_id and vote.comment_id=comment.id and comment.commonground_id=('${req.params.campId}')`)
     .then(data => {
-      knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id')
-        .innerJoin('vote', 'users.id', 'vote.user_id')
-        .innerJoin('comment', 'vote.comment_id', 'comment.id')
-        .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
-        .whereRaw(`commonground.id=('${req.params.campId}')`)
-        .then(data2 => {
-          var ans = data2.concat(data)
-          console.log('responseArr analytics array ---------------', ans)
-          res.send(ans)
-        })
+      console.log('analytics data ------------', data.rows);
+      res.send(data.rows)
     })
-})
+}) //has a select query to grab data from comment table, and a select query to grab data from vote table
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
-  knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
+  knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote')
+    .distinct('users.id').orderBy('users.id').innerJoin('vote', 'users.id', 'vote.user_id')
     .whereRaw(`vote.comment_id=('${req.params.commentId}')`)
     .then(data => {
       res.send(data)
@@ -107,14 +114,12 @@ app.get('/comments/:campId', function(req, res) {
       commentsResponse.data = data;
       res.send(commentsResponse);
     })
-})
+}) //grabs the comments for a commonground
 
 app.get('/profile/:fbId', function(req, res) {
-  console.log('req params fbid', req.params)
   knex('users').select('*')
   .where({facebookid: req.params.fbId})
     .then(function(data) {
-      console.log('datatatatata', data)
       res.send(data[0]);
     }).catch((err) => console.log(chalk.red.inverse(err)));
 })

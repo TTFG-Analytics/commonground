@@ -49,12 +49,12 @@ class Counter extends React.Component {
           <ButtonGroup>
             <Button 
               disabled={notLoggedIn}
-              onClick={this.props.contributed ? this.stopUser.bind(this) : this.handleUpvote.bind(this)}
+              onClick={this.handleUpvote.bind(this)}
             ><Glyphicon className="upStyle" glyph="menu-up"></Glyphicon>
             </Button>
             <Button
               disabled={notLoggedIn}
-              onClick={this.props.contributed ? this.stopUser.bind(this) : this.handleDownvote.bind(this)}
+              onClick={this.handleDownvote.bind(this)}
             ><Glyphicon className="downStyle" glyph="menu-down"></Glyphicon>
             </Button>
           </ButtonGroup>
@@ -94,3 +94,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Counter)
 // this.setState({
 //   showModal: true
 // }) <---this.setState belongs in the stopUser function. Since we're not using the constraint modal for now, we can leave this out of the function
+
+// onClick={this.props.contributed ? this.stopUser.bind(this) : this.handleUpvote.bind(this)} <-- allowing for multiple upvotes/downvotes for testing
+// onClick={this.props.contributed ? this.stopUser.bind(this) : this.handleDownvote.bind(this)}
