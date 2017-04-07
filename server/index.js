@@ -73,29 +73,16 @@ app.get('/discussion/:discussionId/:userFullname', function(req, res) {
 })
 
 app.get('/analytics/:campId/:demographic', (req, res) => {
-  // knex.select(`${req.params.demographic}`, 'users.id').from('users').distinct('users.id')
-  //   .innerJoin('comment', 'users.id', 'comment.user_id')
-  //   .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
-  //   .whereRaw(`commonground.id=('${req.params.campId}')`)
-  //   .then(data => {
-  //     console.log('data after analytics req', data);
-  //     knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote').distinct('users.id')
-  //       .innerJoin('vote', 'users.id', 'vote.user_id')
-  //       .innerJoin('comment', 'vote.comment_id', 'comment.id')
-  //       .innerJoin('commonground', 'comment.commonground_id', 'commonground.id')
-  //       .whereRaw(`commonground.id=('${req.params.campId}')`)
-  //       .then(data2 => {
-  //         var ans = data2.concat(data)
-  //         console.log('responseArr analytics array ---------------', ans)
-  //         res.send(ans)
-  //       })
-  //   })
-  knex.raw(`select ${req.params.demographic}, users.id, vote.input from users, vote, comment where users.id=comment.user_id and vote.comment_id=comment.id and comment.commonground_id=('${req.params.campId}')`)
+  knex.raw(`select distinct on (users.id, vote.input) users.id, ${req.params.demographic}, vote.input
+    from users, vote, comment
+    where users.id=comment.user_id and vote.comment_id=comment.id and comment.commonground_id=('${req.params.campId}')
+    union all select distinct on (users.id) users.id, ${req.params.demographic}, null as input 
+    from users, comment
+    where users.id=comment.user_id and comment.commonground_id=('${req.params.campId}')`)
     .then(data => {
-      console.log('analytics data ------------', data.rows);
       res.send(data.rows)
     })
-}) //has a select query to grab data from comment table, and a select query to grab data from vote table
+}) //uses a select query to get users that voted and a union all to run another select query to get commenters
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
   knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote')

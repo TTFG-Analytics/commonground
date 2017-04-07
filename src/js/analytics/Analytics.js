@@ -41,9 +41,9 @@ class Analytics extends React.Component{
     axios.get(`/analytics/${campId}/${demographic}`)
       .then(function(response) {
         var people = response.data
-        var commentDataArr = handleData(people, demographic)
         var upvoteDataArr = handleData(people, demographic, 1)
         var downvoteDataArr = handleData(people, demographic, 0)
+        var commentDataArr = handleData(people, demographic, null)
         this.setState({
           showChart: true,
           columnConfig: columnChartConfig(this.state.categories, upvoteDataArr, downvoteDataArr, commentDataArr)
