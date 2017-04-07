@@ -47,30 +47,23 @@ app.get('/discussions', (req, res) => {
 })
 
 //getting camps/commonground for a discussion
-app.get('/discussion/:discussionId/:userFullname', function(req, res) {
+app.get('/discussion/:discussionId/:userFullname', (req, res) => {
   let id = req.params.discussionId;
   let fullname = req.params.userFullname;
   knex('commonground').where({discussion_id: id}).select('*')
     .then(function(data) {
       var commongroundsResponse = {};
       commongroundsResponse.data = data;
-
-
-
       knex.select('*').from('users_join')
         .innerJoin('users', 'users_join.user_id', 'users.id')
         .whereRaw(`users.fullname=('${fullname}') and users_join.discussion_id=('${id}')`)
         .then(data2 => {
-          console.log('data2 ==========', data2)
           commongroundsResponse.discussionContribution = data2
-          console.log('commongroundsResponse<<<<<<<<<<<<<<<<<<', commongroundsResponse)
           res.send(commongroundsResponse);
         })
       // ^ this knex query is meant to see if the user has contributed to the discussion already.
-
-
     })
-})
+});
 
 app.get('/analytics/:campId/:demographic', (req, res) => {
   knex.raw(`select distinct on (users.id, vote.input) users.id, ${req.params.demographic}, vote.input
@@ -82,7 +75,7 @@ app.get('/analytics/:campId/:demographic', (req, res) => {
     .then(data => {
       res.send(data.rows)
     })
-}) //uses a select query to get users that voted and a union all to run another select query to get commenters
+}); //uses a select query to get users that voted and a union all to run another select query to get commenters
 
 app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
   knex.select(`${req.params.demographic}`, 'users.id', 'vote.input').from('users', 'vote')
@@ -91,7 +84,7 @@ app.get('/voteanalytics/:commentId/:demographic', (req, res) => {
     .then(data => {
       res.send(data)
     })
-})
+});
 
 app.get('/comments/:campId', function(req, res) {
   let id = req.params.campId;
@@ -113,17 +106,20 @@ app.get('/profile/:fbId', function(req, res) {
 
 // /login route puts user facebook data in database upon login
 app.post('/login', function(req,res) {
-  currentUser = req.body;
   var fbPic = req.body.picture.data.url.replace(/([?])/g, '\\?')
   knex.raw(`
     INSERT INTO users (fullname, facebookid, gender, email, facebookpicture, locale)
     VALUES ('${req.body.name}', '${req.body.id}', '${req.body.gender}', '${req.body.email}', '${req.body.picture.data.url}', '${req.body.locale}')
-    ON CONFLICT (facebookid) DO UPDATE
-    SET (fullname, gender, email, facebookpicture, locale) = ('${req.body.name}', '${req.body.gender}', '${req.body.email}', '${fbPic}', '${req.body.locale}')
-    RETURNING *
-    `).then(function(data){
-      res.status(200).send(data);
-    }).catch((err) => console.log(chalk.red.inverse(err)));
+    ON CONFLICT (facebookid) DO NOTHING
+    RETURNING * `)
+  .then(data =>{
+    knex.select('*').from('users').where({
+      facebookid: req.body.id
+    })
+    .then(selectdata => {
+      res.status(200).send(selectdata);
+    })
+  })
 })
 
 // profile route upserts data into database that user inputs in profile page.
@@ -144,25 +140,15 @@ app.post('/profile', function(req,res) {
   }).catch((err) => console.log(chalk.red.inverse(err)));
 })
 
-  // knex.raw(`
-  //   UPDATE users WHERE id=('${req.body.id}')
-  //   SET (title, age, hometown, race, industry, politicalleaning, religion, yearlyincome) =
-  //('${req.body.title}', '${req.body.age}', '${req.body.hometown}', '${req.body.race}', '${req.body.industry}',
-  // '${req.body.politicalleaning}', '${req.body.religion}', '${req.body.yearlyincome}')
-  //   `).then(function(data){
-
 app.post('/commonground', function(req, res){
   var commentResObj;
 
   knex('commonground').returning(['id', 'discussion_id', 'input']).insert({input: req.body.commonground, discussion_id: req.body.discussionId, user_id: 16})
     .then(function(data){
-      // console.log('data commonground res --------------------------', data)
       //create namespace for sockets.io. This creates a namespace where users looking at a commonground see comments update instantaneously
       var cgNspName = data[0].id
       const cgNsp = io.of(`/${cgNspName}`);
-      console.log('cgNsp created!', cgNsp)
       cgNsp.on('connection', (socketClient) => {
-        console.log('connected to commonground')
         console.log('object keys nsps........', Object.keys(io.nsps));
         cgNsp.emit('cgConnection', {namespace: `/${socketClient.nsp.name}`});
 

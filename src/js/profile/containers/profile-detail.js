@@ -47,7 +47,7 @@ class UserProfile extends React.Component{
     e.preventDefault()
     var thisObj = this
     this.props.postProfile({
-      id: 19, //thisObj.props.profile.id,
+      id: thisObj.props.profile.id,
       age: thisObj.state.age,
       race: thisObj.state.race,
       industry: thisObj.state.industry,
