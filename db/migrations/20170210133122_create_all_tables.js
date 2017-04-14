@@ -58,8 +58,9 @@ exports.up = function(knex, Promise) {
       t.increments('id').unsigned().primary();
       t.integer('input');
       t.timestamp('createdat').defaultTo(knex.fn.now());
-      t.integer('comment_id')
-      t.integer('user_id')
+      t.integer('comment_id');
+      t.integer('user_id');
+      t.unique(['user_id', 'comment_id']);
       t.foreign('comment_id').references('comment.id');
       t.foreign('user_id').references('users.id');
     }),

@@ -204,18 +204,27 @@ app.post('/commonground', function(req, res){
 })
 
 app.post('/vote', function(req,res){
-  var commentId = req.body.commentId
-  var vote = req.body.vote
-  var user = req.body.userId
-  knex('vote').returning('id').insert({input: req.body.vote, user_id: req.body.userId, comment_id: req.body.commentId })
+  // knex('vote').returning('id').insert({input: req.body.vote, user_id: req.body.userId, comment_id: req.body.commentId })
+  console.log('req body', req.body)
+  let vote = parseInt(req.body.vote);
+  let userId = parseInt(req.body.userId);
+  let commentId = parseInt(req.body.commentId);
+  console.log('vote', vote, 'userId', userId);
+  knex.raw(`
+    INSERT INTO vote (input, user_id, comment_id)
+    VALUES ('${vote}', '${userId}', '${commentId}')
+    ON CONFLICT (user_id, comment_id) DO NOTHING
+    RETURNING *`)
   .then(function(data1){
-    if (vote === '1') {
-      knex('comment').returning(['id', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).where({id: commentId})
+    console.log('data vote', data1.rows)
+    if (data1.rows.length > 0 && req.body.vote === '1') {
+      knex('comment').returning(['id', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).where({id: req.body.commentId})
       .update({
         'upvotecounter': knex.raw('upvotecounter + 1'),
         'delta': knex.raw('delta + 1')
       })
       .then(function(data2){
+        console.log('data2 vote', data2)
           var voteResObj = {
             id: data2[0].id,
             upvotecounter: data2[0].upvotecounter,
@@ -224,76 +233,78 @@ app.post('/vote', function(req,res){
           }
           res.status(200).send(voteResObj);
 
+        // used for constraint to limit user to one contribution per discussion. Might keep this:
 
-          knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
-          .then(function(data3){
-            console.log("data1 - Vote ID", data1)
-            console.log("data2 - commentID", data2)
-            console.log("data3 - discussion_id", data3)
-            knex('users_join').where({user_id: req.body.userId, discussion_id:data3[0].discussion_id}).select('id')
-            .then(function(data4){
-              console.log("This is data4", data4);
-              if(!data4.length) {
-                knex.raw(`
-                INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id, comment_id)
-                VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]}, NULL)
-                `).then(function(data){
-                  console.log("ADDED NEW FIELD IN JOIN TABLE")
-                })
-              } else {
-                knex.raw(`
-                UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}, comment_id = NULL
-                WHERE user_id = ${req.body.userId} AND discussion_id = ${data3[0].discussion_id}
-                `).then(function(data){
-                  console.log("UPDATED!")
-                })
-              }
-            })
-          });
+        //   knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
+        //   .then(function(data3){
+        //     console.log("data1 - Vote ID", data1)
+        //     console.log("data2 - commentID", data2)
+        //     console.log("data3 - discussion_id", data3)
+        //     knex('users_join').where({user_id: req.body.userId, discussion_id:data3[0].discussion_id}).select('id')
+        //     .then(function(data4){
+        //       console.log("This is data4", data4);
+        //       if(!data4.length) {
+        //         knex.raw(`
+        //         INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id, comment_id)
+        //         VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]}, NULL)
+        //         `).then(function(data){
+        //           console.log("ADDED NEW FIELD IN JOIN TABLE")
+        //         })
+        //       } else {
+        //         knex.raw(`
+        //         UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}, comment_id = NULL
+        //         WHERE user_id = ${req.body.userId} AND discussion_id = ${data3[0].discussion_id}
+        //         `).then(function(data){
+        //           console.log("UPDATED!")
+        //         })
+        //       }
+        //     })
+        //   });
         })
 
-    } else {
-      knex('comment').returning(['id', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).where({id: commentId})
-      .update({
-        'downvotecounter': knex.raw('downvotecounter + 1'),
-        'delta': knex.raw('delta - 1')
-      })
-      .then(function(data2){
-          console.log('DATA 2: ', data2)
-          var downvoteResObj = {
-            id: data2[0].id,
-            upvotecounter: data2[0].upvotecounter,
-            downvotecounter: data2[0].downvotecounter,
-            delta: data2[0].delta
-          }
-          console.log('downvoteResObj ---------------', downvoteResObj)
-          res.status(200).send(downvoteResObj);
+    } 
+    // else {
+    //   knex('comment').returning(['id', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).where({id: commentId})
+    //   .update({
+    //     'downvotecounter': knex.raw('downvotecounter + 1'),
+    //     'delta': knex.raw('delta - 1')
+    //   })
+    //   .then(function(data2){
+    //       console.log('DATA 2: ', data2)
+    //       var downvoteResObj = {
+    //         id: data2[0].id,
+    //         upvotecounter: data2[0].upvotecounter,
+    //         downvotecounter: data2[0].downvotecounter,
+    //         delta: data2[0].delta
+    //       }
+    //       console.log('downvoteResObj ---------------', downvoteResObj)
+    //       res.status(200).send(downvoteResObj);
 
-          knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
-          .then(function(data3){
-            console.log("data1 - Vote ID", data1)
-            console.log("data2 - commentID", data2)
-            console.log("data3 - discussion_id", data3)
-            knex('users_join').where({user_id: req.body.userId, discussion_id:data3[0].discussion_id}).select('id')
-            .then(function(data4){
-              console.log("This is data4", data4);
-              if(!data4.length) {
-                knex.raw(`
-                INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id, comment_id)
-                VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]}, NULL)
-                `).then(function(data){
-                  console.log("ADDED NEW FIELD IN JOIN TABLE")
-                })
-              } else {
-                knex.raw(`
-                UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}, comment_id = NULL
-                WHERE user_id = ${req.body.userId} AND discussion_id = ${data3[0].discussion_id}
-                `).then(function(data){
-                  console.log("UPDATED!")
-                })
-              }
-            })
-          });
+    //       knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
+    //       .then(function(data3){
+    //         console.log("data1 - Vote ID", data1)
+    //         console.log("data2 - commentID", data2)
+    //         console.log("data3 - discussion_id", data3)
+    //         knex('users_join').where({user_id: req.body.userId, discussion_id:data3[0].discussion_id}).select('id')
+    //         .then(function(data4){
+    //           console.log("This is data4", data4);
+    //           if(!data4.length) {
+    //             knex.raw(`
+    //             INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id, comment_id)
+    //             VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]}, NULL)
+    //             `).then(function(data){
+    //               console.log("ADDED NEW FIELD IN JOIN TABLE")
+    //             })
+    //           } else {
+    //             knex.raw(`
+    //             UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}, comment_id = NULL
+    //             WHERE user_id = ${req.body.userId} AND discussion_id = ${data3[0].discussion_id}
+    //             `).then(function(data){
+    //               console.log("UPDATED!")
+    //             })
+    //           }
+    //         })
+    //       });
 
 
           // knex('users_join').insert({user_id: 16, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).returning('commonground_id')
@@ -305,8 +316,8 @@ app.post('/vote', function(req,res){
           //   })
           // });
         });
-    }
-  }).then(function(){});
+    // }
+  // }).then(function(){});
 });
 
 app.post('/delete', function(req, res) {

@@ -8,4 +8,8 @@ public/bootstrap.css
 *.woff
 *.woff2
 *.svg
-debug.log
+debug.log
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
