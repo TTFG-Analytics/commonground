@@ -1,4 +1,4 @@
-const campGet = (state={commongrounds: []}, action) => {
+const campGet = (state={commongrounds: {}}, action) => {
   if(action.type === 'GET_CAMPS_SUCCESS') {
     console.log('action commongrounds', action.camps, action.contributed)
     return Object.assign(
@@ -46,6 +46,12 @@ const campGet = (state={commongrounds: []}, action) => {
         contributed: false
       }
     )
+  }
+  if(action.type === 'CLEAR_CAMP') {
+    console.log('cleaning up the camp')
+    return {
+      commongrounds: {}
+    }
   }
   return state
 }

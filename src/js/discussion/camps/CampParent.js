@@ -10,6 +10,7 @@ import ProfileButton from './ProfileButton';
 import Navigation from 'Navigation';
 import { Link } from 'react-router';
 import { Col, Row, Grid } from 'react-bootstrap';
+import { clearCamps, clearComments } from './campActions'
 require('./camp.css')
 
 //discussionId is used to associate which camps belong to which discussions
@@ -27,6 +28,11 @@ class CampParent extends React.Component{
     });
   }
 
+  componentWillUnmount() {
+    this.props.clearCamps()
+    this.props.clearComments()
+  }
+
   render(){
     var discussionId = this.props.params.discussionId
 
@@ -37,7 +43,7 @@ class CampParent extends React.Component{
         {this.props.user === this.props.discussions[discussionId].user_id && <AddCamp discussionId={discussionId} />}
         <Col md={10} mdOffset={1}>
           <h5 id='campInstruction'>Each CommonGround is an opinion or social group that you could identify with. Click on one to expand it and see its comments.
-            Feel free to add your own contribution. You can make one contribution per discussion in the form of a comment, upvote, or downvote.
+            Feel free to add your own contribution.
           </h5>
         </Col>
         <br></br>
@@ -56,4 +62,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(CampParent)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearCamps: () => {
+      dispatch(clearCamps())
+    },
+    clearComments: () => {
+      dispatch(clearComments())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CampParent)

@@ -41,3 +41,15 @@ export const createCampPost = (camp) => {
       })
   }
 }
+
+export const clearCamps = () => {
+  return {
+    type: 'CLEAR_CAMP'
+  }
+}
+
+export const clearComments = () => {
+  return {
+    type: 'CLEAR_COMMENTS'
+  }
+}

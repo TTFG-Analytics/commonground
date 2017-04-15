@@ -15,13 +15,6 @@ class AddCamp extends React.Component{
     }
   }
 
-  getValidationState() {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-  }
-
   handleChange(e) {
     this.setState({ cgValue: e.target.value });
   }
@@ -62,17 +55,15 @@ class AddCamp extends React.Component{
         <form onSubmit={this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
               <ControlLabel className='campFormLabel'>Create a New CommonGround</ControlLabel>
-              <InputGroup>
               <FormControl
-                type="text"
+                componentClass='textarea'
                 disabled={notLoggedIn}
                 value={this.state.cgValue}
                 placeholder="Enter text"
                 onChange={this.handleChange.bind(this)}
               />
-              <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
-              </InputGroup>
           </FormGroup>
+          <InputGroup.Button><Button type='submit' bsStyle="primary">Submit</Button></InputGroup.Button>
         </form>
         <br />
         {this.state.invalidCamp && <UserAlert

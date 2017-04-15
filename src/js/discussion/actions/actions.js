@@ -38,7 +38,8 @@ export function sendingFbData(fbData) {
   return (dispatch) => {
     return axios.post('/login', fbData)
       .then(response => {
-        dispatch(cachingFbData(response.data.rows[0]))
+        console.log('response from sending fb data', response);
+        dispatch(cachingFbData(response.data[0]))
       })
   }
 }

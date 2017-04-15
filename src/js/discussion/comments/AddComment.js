@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
-import Constraint from '../camps/Constraint'
 import { contributedOnce } from './commentActions'
 import UserAlert from 'UserAlert'
 require('./comment.css');
@@ -18,22 +17,24 @@ class AddComment extends React.Component{
     }
   }
 
-  getValidationState() {
-    const length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-  } //need to use this for the form submit later
-
   handleChange(e) {
     let charsLeft = 1000 - e.target.value.length
     if(charsLeft >= 0) {
       this.setState({
         commentValue: e.target.value,
         remainingCharacters: charsLeft
+      }, ()=>{
+        if(charsLeft < 997) {
+          this.setState({
+            invalidComment: false
+          });
+        } else {
+          this.setState({
+            invalidComment: true
+          });
+        }
       });
     }
-    console.log('remainingCharacters', this.state.remainingCharacters)
   }
 
   handleSubmit(e) {
@@ -51,23 +52,22 @@ class AddComment extends React.Component{
         console.log('window socket', window, window.socket)
         window.socket.emit('comment', newComment)
       }
-      this.state.commentValue = ''
+      this.setState({
+        commentValue: ''
+      });
     } else {
       this.setState({
-        invalidDiscussion: true
+        invalidComment: true
       })
     }
   }
 
   stopUser(e) {
-    console.log('stop user being called')
     e.preventDefault()
     this.setState({
       showModal: true
     })
-    console.log('user stopped', this.state)
-    // this.forceUpdate() <--commenting out for testing. uncomment later
-  }
+  } 
 
   hideModal() {
     this.setState({
@@ -77,19 +77,19 @@ class AddComment extends React.Component{
 
   hideCommentAlert() {
     this.setState({
-      invalidDiscussion: false
+      invalidComment: false
     })
   }
 
   render() {
     var notLoggedIn = false
-    // if(!this.props.user.id){
-    //   notLoggedIn = true
-    // }
-
+    if(!this.props.user.id){
+      notLoggedIn = true
+    }
+   
     return (
         <div className='commentForm'>
-          <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}>
+          <form onSubmit={this.handleSubmit.bind(this)}>
             <FormGroup controlId="formBasicText">
               <ControlLabel>Create a New Comment</ControlLabel>
               <FormControl
@@ -106,15 +106,11 @@ class AddComment extends React.Component{
             </InputGroup.Button>
           </form>
           <br />
-          {this.state.invalidDiscussion && <UserAlert
+          {this.state.invalidComment && <UserAlert
             alertMessage='Please enter a valid comment.'
             handleAlertDismiss={this.hideCommentAlert.bind(this)}
             alertStyle='warning'
             alertClose='OK' />}
-          <Constraint
-            showModal={this.state.showModal}
-            campId={this.props.campId}
-            hideModal={this.hideModal.bind(this)} />
         </div>
       )
   }
@@ -136,3 +132,12 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddComment)
+
+//constraint piece that limits a user to one comment per commonground ---> might remove later or re-implement
+// import Constraint from '../camps/Constraint'
+/*<Constraint
+showModal={this.state.showModal}
+campId={this.props.campId}
+hideModal={this.hideModal.bind(this)} />*/  // <---- removing constraints for testing
+
+// <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}> removing constraint for now

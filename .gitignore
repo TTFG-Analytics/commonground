@@ -9,3 +9,13 @@ public/bootstrap.css
 *.woff2
 *.svg
 debug.log
+server/serverComments.js
+
+# Elastic Beanstalk Files
+
+.elasticbeanstalk/*
+
+!.elasticbeanstalk/*.cfg.yml
+
+!.elasticbeanstalk/*.global.yml
+
