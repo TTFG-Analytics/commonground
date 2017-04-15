@@ -48,7 +48,6 @@ class AddComment extends React.Component{
         facebookpicture: userPic
       }
       if(window.socket){
-        console.log('window socket', window, window.socket)
         window.socket.emit('comment', newComment)
       }
       this.setState({

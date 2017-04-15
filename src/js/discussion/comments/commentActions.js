@@ -14,13 +14,12 @@ export const getComments = (campId) => {
         dispatch(getCommentsSuccess(response.data))
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
   }
 }
 
 export const createCommentSuccess = (comment) => {
-  console.log('created comment', comment)
   let fbPic = comment.facebookpicture.replace('$2', '?')
   return {
     type: 'CREATE_COMMENT_SUCCESS',

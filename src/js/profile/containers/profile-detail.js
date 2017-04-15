@@ -55,7 +55,6 @@ class UserProfile extends React.Component{
       religion: thisObj.state.religion,
       yearlyincome: thisObj.state.yearlyincome
     }, function(){
-      console.log('profile callback started......', thisObj)
       thisObj.setState({
         infoUpdated: true
       })
