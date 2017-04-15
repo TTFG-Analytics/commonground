@@ -52,7 +52,9 @@ class AddComment extends React.Component{
         console.log('window socket', window, window.socket)
         window.socket.emit('comment', newComment)
       }
-      this.state.commentValue = ''
+      this.setState({
+        commentValue: ''
+      });
     } else {
       this.setState({
         invalidComment: true

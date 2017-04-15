@@ -12,9 +12,6 @@ module.exports = app;
 
 app.use(express.static(path.join(__dirname, '../public/')));
 
-//This mimics a user session being saved
-var currentUser;
-
 var knex = require('knex')({
   client: 'postgresql',
   connection: {
@@ -27,7 +24,7 @@ var knex = require('knex')({
 io.on('connection', (client) => {
   client.emit('connection')
   client.on('discussion', (data) => {
-     knex('discussion').returning(['id', 'input', 'user_id', 'createdat']).insert({input: data.topic, user_id: data.user}) //currentUser.id --- hard coding for now
+     knex('discussion').returning(['id', 'input', 'user_id', 'createdat']).insert({input: data.topic, user_id: data.user})
     .then(function(data){
       io.emit('discussion', data[0])
     })
@@ -125,7 +122,6 @@ app.post('/login', function(req,res) {
 // profile route upserts data into database that user inputs in profile page.
 // may need updating once profile page is built
 app.post('/profile', function(req,res) {
-  console.log('profile REQ.BODY', req.body);
   knex('users').returning('*').where('id', req.body.id).update({
     age: `${req.body.age}`,
     race: `${req.body.race}`,
@@ -135,7 +131,6 @@ app.post('/profile', function(req,res) {
     yearlyincome: `${req.body.yearlyincome}`
   })
   .then((data) => {
-    console.log('updated profile data........',data[0]);
     res.send(data[0]);
   }).catch((err) => console.log(chalk.red.inverse(err)));
 })
@@ -160,42 +155,9 @@ app.post('/commonground', function(req, res){
             commonground_id: commentData.commongroundId,
             facebookpicture: commentData.userPic
           })
-          .then(function(data){
-            commentResObj = {
-              id: data[0].id,
-              input: data[0].input,
-              commonground_id: data[0].commonground_id,
-              delta: data[0].delta,
-              user_id: data[0].user_id,
-              fullname: data[0].fullname,
-              facebookpicture: data[0].facebookpicture,
-              createdat: data[0].createdat
-            }
-            cgNsp.emit('comment', commentResObj);
-            return commentResObj;
-          }).then(function(){
-          knex('commonground').where({id:commentResObj.commonground_id}).select('discussion_id')
-          .then(function(data3){
-            knex('users_join').where({user_id: commentResObj.user_id, discussion_id:data3[0].discussion_id}).select('id')
-            .then(function(data4){
-              console.log("This is data4", data4);
-              if(!data4.length) {
-                knex.raw(`
-                INSERT INTO users_join (user_id, commonground_id, discussion_id, comment_id, vote_id)
-                VALUES (${commentResObj.user_id}, ${commentResObj.commonground_id}, ${data3[0].discussion_id}, ${commentResObj.id}, NULL)
-                `).then(function(data){
-                  console.log("ADDED NEW FIELD IN JOIN TABLE")
-                })
-              } else {
-                knex.raw(`
-                UPDATE users_join SET commonground_id = ${commentResObj.commonground_id}, comment_id = ${commentResObj.id}, vote_id = NULL
-                WHERE user_id = ${commentResObj.user_id} AND discussion_id = ${data3[0].discussion_id}
-                `).then(function(data){
-                  console.log("UPDATED!")
-                })
-              }
-            })
-          });
+          .then(function(commentObj){
+            cgNsp.emit('comment', commentObj[0]);
+            return commentObj;
           })
         })
       })
@@ -204,152 +166,36 @@ app.post('/commonground', function(req, res){
 })
 
 app.post('/vote', function(req,res){
-  // knex('vote').returning('id').insert({input: req.body.vote, user_id: req.body.userId, comment_id: req.body.commentId })
-  console.log('req body', req.body)
   let vote = parseInt(req.body.vote);
   let userId = parseInt(req.body.userId);
   let commentId = parseInt(req.body.commentId);
-  console.log('vote', vote, 'userId', userId);
   knex.raw(`
     INSERT INTO vote (input, user_id, comment_id)
     VALUES ('${vote}', '${userId}', '${commentId}')
     ON CONFLICT (user_id, comment_id) DO NOTHING
     RETURNING *`)
   .then(function(data1){
-    console.log('data vote', data1.rows)
     if (data1.rows.length > 0 && req.body.vote === '1') {
       knex('comment').returning(['id', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).where({id: req.body.commentId})
       .update({
         'upvotecounter': knex.raw('upvotecounter + 1'),
         'delta': knex.raw('delta + 1')
       })
-      .then(function(data2){
-        console.log('data2 vote', data2)
-          var voteResObj = {
-            id: data2[0].id,
-            upvotecounter: data2[0].upvotecounter,
-            downvotecounter: data2[0].downvotecounter,
-            delta: data2[0].delta
-          }
-          res.status(200).send(voteResObj);
-
-        // used for constraint to limit user to one contribution per discussion. Might keep this:
-
-        //   knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
-        //   .then(function(data3){
-        //     console.log("data1 - Vote ID", data1)
-        //     console.log("data2 - commentID", data2)
-        //     console.log("data3 - discussion_id", data3)
-        //     knex('users_join').where({user_id: req.body.userId, discussion_id:data3[0].discussion_id}).select('id')
-        //     .then(function(data4){
-        //       console.log("This is data4", data4);
-        //       if(!data4.length) {
-        //         knex.raw(`
-        //         INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id, comment_id)
-        //         VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]}, NULL)
-        //         `).then(function(data){
-        //           console.log("ADDED NEW FIELD IN JOIN TABLE")
-        //         })
-        //       } else {
-        //         knex.raw(`
-        //         UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}, comment_id = NULL
-        //         WHERE user_id = ${req.body.userId} AND discussion_id = ${data3[0].discussion_id}
-        //         `).then(function(data){
-        //           console.log("UPDATED!")
-        //         })
-        //       }
-        //     })
-        //   });
-        })
-
-    } 
-    // else {
-    //   knex('comment').returning(['id', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).where({id: commentId})
-    //   .update({
-    //     'downvotecounter': knex.raw('downvotecounter + 1'),
-    //     'delta': knex.raw('delta - 1')
-    //   })
-    //   .then(function(data2){
-    //       console.log('DATA 2: ', data2)
-    //       var downvoteResObj = {
-    //         id: data2[0].id,
-    //         upvotecounter: data2[0].upvotecounter,
-    //         downvotecounter: data2[0].downvotecounter,
-    //         delta: data2[0].delta
-    //       }
-    //       console.log('downvoteResObj ---------------', downvoteResObj)
-    //       res.status(200).send(downvoteResObj);
-
-    //       knex('commonground').where({id:data2[0].commonground_id}).select('discussion_id')
-    //       .then(function(data3){
-    //         console.log("data1 - Vote ID", data1)
-    //         console.log("data2 - commentID", data2)
-    //         console.log("data3 - discussion_id", data3)
-    //         knex('users_join').where({user_id: req.body.userId, discussion_id:data3[0].discussion_id}).select('id')
-    //         .then(function(data4){
-    //           console.log("This is data4", data4);
-    //           if(!data4.length) {
-    //             knex.raw(`
-    //             INSERT INTO users_join (user_id, commonground_id, discussion_id, vote_id, comment_id)
-    //             VALUES (${req.body.userId}, ${data2[0].commonground_id}, ${data3[0].discussion_id}, ${data1[0]}, NULL)
-    //             `).then(function(data){
-    //               console.log("ADDED NEW FIELD IN JOIN TABLE")
-    //             })
-    //           } else {
-    //             knex.raw(`
-    //             UPDATE users_join SET commonground_id = ${data2[0].commonground_id}, vote_id = ${data1[0]}, comment_id = NULL
-    //             WHERE user_id = ${req.body.userId} AND discussion_id = ${data3[0].discussion_id}
-    //             `).then(function(data){
-    //               console.log("UPDATED!")
-    //             })
-    //           }
-    //         })
-    //       });
-
-
-          // knex('users_join').insert({user_id: 16, commonground_id: data2[0].commonground_id, vote_id: data1[0]}).returning('commonground_id')
-          // .then(function(data3){
-          //   console.log('This is commonground_id', data3[0])
-          //   knex('commonground').where({id:data3[0]}).select('discussion_id')
-          //   .then(function(data4){
-          //     knex('users_join').where({commonground_id: data3[0]}).update({discussion_id: data4[0].discussion_id}).then(function(){})
-          //   })
-          // });
-        });
-    // }
-  // }).then(function(){});
-});
-
-app.post('/delete', function(req, res) {
-  console.log('req body delete', req.body)
-  let commongroundId = req.body.campId
-  if (req.body.commentId !== null) { //conditional to check if comment
-    knex('comment').where('id', req.body.commentId).returning('commonground_id').del()
-    .then(function(data){
-        console.log("DELETED!", data)
-        knex('comment').where('commonground_id', data[0]).select('*')
-        .then(function(data1){
-          console.log('other comments from delete', data1);
-          res.status(200).send(data1);
-        })
-
+      .then(function(upvoteObj){
+        res.status(200).send(upvoteObj[0]);
       })
-  } else {
-    console.log('commonground id', commongroundId)
-    knex('comment').where('commonground_id', commongroundId).select('*')
-    .then(function(data1){
-      console.log('other comments from delete', data1);
-      res.status(200).send(data1);
-    })
-  }
-  // }
-  // if () { //conditional to check if vote
-  //   knex('vote').where('comment_id', req.body.vote_id).del() //CHECK REQ.BODY
-  //   .then(function(data){
-  //       console.log("DELETED!")
-  //     })
-  // }
-})
+    } else if (data1.rows.length > 0 && req.body.vote === '0') {
+      knex('comment').returning(['id', 'commonground_id', 'upvotecounter', 'downvotecounter', 'delta']).where({id: commentId})
+      .update({
+        'downvotecounter': knex.raw('downvotecounter + 1'),
+        'delta': knex.raw('delta - 1')
+      })
+      .then(function(downvoteObj){
+        res.status(200).send(downvoteObj[0]);
+      });
+    }
+  })
+});
 
 app.get('/*', function(req, res) {
   res.sendFile(path.resolve(__dirname + '/../public/index.html'));
