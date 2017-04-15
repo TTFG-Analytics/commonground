@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import { InputGroup, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap'
-import { contributedOnce } from './commentActions'
 import UserAlert from 'UserAlert'
 require('./comment.css');
 
@@ -42,11 +41,11 @@ class AddComment extends React.Component{
     if(this.state.commentValue.length >= 3) {
       var userPic = this.props.user.facebookpicture || 'unknown'
       let newComment = {
-        comment: this.state.commentValue,
-        commongroundId: this.props.campId,
-        userId: this.props.user.id,
-        userName: this.props.user.fullname,
-        userPic: userPic
+        input: this.state.commentValue,
+        commonground_id: this.props.campId,
+        user_id: this.props.user.id,
+        fullname: this.props.user.fullname,
+        facebookpicture: userPic
       }
       if(window.socket){
         console.log('window socket', window, window.socket)
@@ -123,15 +122,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    contributedOnce: () => {
-      dispatch(contributedOnce())
-    }
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddComment)
+
+export default connect(mapStateToProps, null)(AddComment)
+
+// import { contributedOnce } from './commentActions'
 
 //constraint piece that limits a user to one comment per commonground ---> might remove later or re-implement
 // import Constraint from '../camps/Constraint'
@@ -141,3 +136,11 @@ campId={this.props.campId}
 hideModal={this.hideModal.bind(this)} />*/  // <---- removing constraints for testing
 
 // <form onSubmit={this.props.contributed ? this.stopUser.bind(this) : this.handleSubmit.bind(this)}> removing constraint for now
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     contributedOnce: () => {
+//       dispatch(contributedOnce())
+//     }
+//   }
+// } <-- removing contributedOnce() 

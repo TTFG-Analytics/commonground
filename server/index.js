@@ -148,13 +148,9 @@ app.post('/commonground', function(req, res){
         cgNsp.emit('cgConnection', {namespace: `/${socketClient.nsp.name}`});
 
         socketClient.on('comment', (commentData) => {
-          knex('comment').returning(['id', 'user_id', 'fullname', 'facebookpicture', 'input', 'commonground_id', 'delta', 'createdat']).insert({
-            input: commentData.comment,
-            user_id: commentData.userId,
-            fullname: commentData.userName,
-            commonground_id: commentData.commongroundId,
-            facebookpicture: commentData.userPic
-          })
+          knex('comment')
+          .returning(['id', 'user_id', 'fullname', 'facebookpicture', 'input', 'commonground_id', 'delta', 'createdat'])
+          .insert(commentData)
           .then(function(commentObj){
             cgNsp.emit('comment', commentObj[0]);
             return commentObj;

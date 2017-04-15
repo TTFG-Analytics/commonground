@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Modal, Glyphicon, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
-import { contributeAgain } from '../comments/commentActions'
+// import { contributeAgain } from '../comments/commentActions'
 
 class Constraint extends React.Component{
   constructor(props){
@@ -34,16 +34,16 @@ class Constraint extends React.Component{
       }
     })
     let thisObj = this;
-    this.props.contributeAgain(currentContribution, function() {
-      if(thisObj.props.hideModal){
-        thisObj.props.hideModal()
-      } else {
-        thisObj.setState({
-          showModal: !thisObj.props.showModal
-        })
-      }
-      return;
-    })
+    // this.props.contributeAgain(currentContribution, function() {
+    //   if(thisObj.props.hideModal){
+    //     thisObj.props.hideModal()
+    //   } else {
+    //     thisObj.setState({
+    //       showModal: !thisObj.props.showModal
+    //     })
+    //   }
+    //   return;
+    // })
   }
 
   render() {
@@ -70,12 +70,14 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    contributeAgain: (currentContribution, callback) => {
-      dispatch(contributeAgain(currentContribution, callback))
-    }
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Constraint)
+export default connect(mapStateToProps, null)(Constraint)
+
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     contributeAgain: (currentContribution, callback) => {
+//       dispatch(contributeAgain(currentContribution, callback))
+//     }
+//   }
+// }

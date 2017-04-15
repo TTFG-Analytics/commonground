@@ -55,25 +55,25 @@ export function votesPost(vote) {
 }
 
 
-export const contributedOnce = () => {
-  return {
-    type: 'CONTRIBUTED'
-  }
-}
+// export const contributedOnce = () => {
+//   return {
+//     type: 'CONTRIBUTED'
+//   }
+// }
 
-export const contributeAgainSuccess = () => {
-  return {
-    type: 'CONTRIBUTE_AGAIN'
-  }
-}
+// export const contributeAgainSuccess = () => {
+//   return {
+//     type: 'CONTRIBUTE_AGAIN'
+//   }
+// }
 
-export const contributeAgain = (currentContribution, callback) => {
-  return (dispatch) => {
-    return axios.post('/delete', currentContribution)
-      .then(response => {
-        dispatch(getCommentsSuccess(response))
-        dispatch(contributeAgainSuccess())
-        callback()
-      })
-  }
-}
+// export const contributeAgain = (currentContribution, callback) => {
+//   return (dispatch) => {
+//     return axios.post('/delete', currentContribution)
+//       .then(response => {
+//         dispatch(getCommentsSuccess(response))
+//         dispatch(contributeAgainSuccess())
+//         callback()
+//       })
+//   }
+// } <-- removing single contribution constraint for now
