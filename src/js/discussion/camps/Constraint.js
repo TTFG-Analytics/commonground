@@ -1,4 +1,6 @@
-import React from 'react'
+/* Commenting out the Constraint modal since, we're not using it for now. Might re-implement in the future.
+
+import React from 'react'  
 import { connect } from 'react-redux';
 import { Modal, Glyphicon, Button, FormControl, HelpBlock, FormGroup, ControlLabel, Grid, Row, Col, Media } from 'react-bootstrap';
 // import { contributeAgain } from '../comments/commentActions'
@@ -71,7 +73,7 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, null)(Constraint)
+export default connect(mapStateToProps, null)(Constraint)*/
 
 
 // const mapDispatchToProps = (dispatch) => {
