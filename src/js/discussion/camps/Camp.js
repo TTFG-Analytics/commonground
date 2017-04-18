@@ -22,18 +22,17 @@ class Camp extends React.Component{
 
   fetchComments(campId) {
     var context = this;
-    this.disconnectFromPrev();
     this.setState({
       showComments: !this.state.showComments
     }, () => {
       if(this.state.showComments) {
-        window.socket = io(`/${campId}`)
-        window.socket.on('cgConnection', (data)=> {
-          context.setState({
-            ioNamespace: data.namespace
-          })
+
+        window[campId] = io(`/${campId}`)
+        window[campId].on('cgConnection', (data)=> {
+          console.log(`Connected to namespace /${campId}`);
+
         });
-        window.socket.on('comment', (data) => {
+        window[campId].on('comment', (data) => {
           context.props.createCommentSuccess(data)
         })
         context.props.getComments(campId)
@@ -41,10 +40,18 @@ class Camp extends React.Component{
     });
   }
 
-  disconnectFromPrev() {
-    if(window.socket) {
-      window.socket.disconnect()
+
+  disconnectFromPrev(campId) {
+    if(window[campId]) {
+      window[campId].disconnect()
+      delete window[campId]
+      console.log('Disconnected from sockets!')
+
     }
+  }
+
+  componentWillUnmount() {
+    this.disconnectFromPrev(this.props.campId);
   }
 
   render() {
@@ -62,7 +69,7 @@ class Camp extends React.Component{
           </Glyphicon>
         </Button>
           {this.state.showComments && <Analytics campId={this.props.campId} />}
-          {this.state.showComments && <CommentParent campId={this.props.campId} nsp={this.state.ioNamespace}/>}
+          {this.state.showComments && <CommentParent campId={this.props.campId} />}
         </Panel>
       </Col>
     )

@@ -47,8 +47,10 @@ class AddComment extends React.Component{
         fullname: this.props.user.fullname,
         facebookpicture: userPic
       }
-      if(window.socket){
-        window.socket.emit('comment', newComment)
+
+      if(window[this.props.campId]){
+        window[this.props.campId].emit('comment', newComment)
+
       }
       this.setState({
         commentValue: ''

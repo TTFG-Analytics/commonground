@@ -6,7 +6,7 @@ require('./comment.css')
 class CommentParent extends React.Component{
   render(){
     return (<div className='commentParent'>
-      <AddComment campId={this.props.campId} nsp={this.props.nsp} />
+      <AddComment campId={this.props.campId} />
       <CommentList campId={this.props.campId} />
     </div>)
   }
