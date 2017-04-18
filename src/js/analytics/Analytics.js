@@ -53,7 +53,7 @@ class Analytics extends React.Component{
 
   render() {
     var hasData = true
-    // checkForData(this.props.upvotecounter, this.props.downvotecounter, this.props.commentList)
+    // hasData = checkForData(this.props.upvotecounter, this.props.downvotecounter, this.props.commentList)
     // console.log('hasData analytics', hasData)
 
     return (

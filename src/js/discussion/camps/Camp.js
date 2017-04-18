@@ -26,9 +26,11 @@ class Camp extends React.Component{
       showComments: !this.state.showComments
     }, () => {
       if(this.state.showComments) {
+
         window[campId] = io(`/${campId}`)
         window[campId].on('cgConnection', (data)=> {
           console.log(`Connected to namespace /${campId}`);
+
         });
         window[campId].on('comment', (data) => {
           context.props.createCommentSuccess(data)
@@ -38,11 +40,13 @@ class Camp extends React.Component{
     });
   }
 
+
   disconnectFromPrev(campId) {
     if(window[campId]) {
       window[campId].disconnect()
       delete window[campId]
       console.log('Disconnected from sockets!')
+
     }
   }
 
