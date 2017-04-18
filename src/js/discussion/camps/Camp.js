@@ -29,7 +29,6 @@ class Camp extends React.Component{
       if(this.state.showComments) {
         window.socket = io(`/${campId}`)
         window.socket.on('cgConnection', (data)=> {
-          console.log('connected to commonground', data)
           context.setState({
             ioNamespace: data.namespace
           })
@@ -45,7 +44,6 @@ class Camp extends React.Component{
   disconnectFromPrev() {
     if(window.socket) {
       window.socket.disconnect()
-      console.log('disconnected from sockets!!!!!')
     }
   }
 

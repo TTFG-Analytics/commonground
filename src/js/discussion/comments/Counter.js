@@ -2,7 +2,6 @@ import React from 'react'
 import { votesPost } from './commentActions'
 import { connect } from 'react-redux'
 import Flag from './Flag'
-import { contributedOnce } from './commentActions'
 import { OverlayTrigger, Tooltip, ButtonToolbar, Glyphicon, Media, ButtonGroup, Button } from 'react-bootstrap';
 require('./comment.css');
 
@@ -21,7 +20,6 @@ class Counter extends React.Component {
       commentId: this.props.commentId,
       userId: this.props.user.id
     })
-    this.props.contributedOnce()
   }
 
   handleDownvote(e) {
@@ -30,7 +28,6 @@ class Counter extends React.Component {
       commentId: this.props.commentId,
       userId: this.props.user.id
     })
-    this.props.contributedOnce()
   }
 
   stopUser(e) {
@@ -78,9 +75,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     votesPost: (vote) => {
       dispatch(votesPost(vote))
-    },
-    contributedOnce: () => {
-      dispatch(contributedOnce())
     }
   }
 }
